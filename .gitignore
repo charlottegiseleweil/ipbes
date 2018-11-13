@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+.DS_Store
+
+*.swp
+*.map
+.idea/
+Read the Docs
+
+package-lock.json
