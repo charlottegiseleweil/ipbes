@@ -55,7 +55,7 @@ class MapPlot {
 					return "grey"
 				})
 				.on("mouseover", function(d){
-					countryTooltip.text(d.id)
+					countryTooltip.text(d.name)
 						.style("left", (d3.event.pageX + 7) + "px")
 						.style("top", (d3.event.pageY - 15) + "px")
 						.style("display", "block")
