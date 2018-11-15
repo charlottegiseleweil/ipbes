@@ -1,4 +1,6 @@
 
+// python -m http.server
+
 class MapPlot {
 	constructor(svg_element_id) {
 		this.svg = d3.select('#' + svg_element_id);
@@ -24,26 +26,58 @@ class MapPlot {
 			
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 
-			let center_lon = -71.03;
-			let center_lat = 42.37;
-			let center_x = 330;
-			let center_y = 150;	
+			let center_x = this.svg_width/2;
+			let center_y = this.svg_height/2;	
+
 			let scale = 380;
-			let sense = 0.25;
+			const base_sense = 0.25;
+			let sense = base_sense;
 			let max_y_angle = 25;
 
 			let projection = d3.geoOrthographic()
-				.center([center_lon, center_lat])
 				.rotate([0, 0])
 				.scale(scale)
 				.translate([center_x, center_y])
 
 			let path = d3.geoPath(projection)		
 
+			var world = this.svg
+			//var worldGroup = world.append("g");
+
+			var zoom = d3.zoom()
+			.scaleExtent([1, 3]) //bound zoom
+			.on("zoom", () => {
+				console.log(sense)
+				sense = base_sense/d3.event.transform.translate(projection).k
+				console.log(sense)
+
+				projection.scale(d3.event.transform.translate(projection).k * scale)
+				this.svg.selectAll("path").attr("d", path);
+			});
+		
+
+			var countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
+
 			this.svg.selectAll("path")
 				.data(map_data)
 				.enter().append("path")
 				.attr("d", path)
+				.attr("fill", function(d){
+					return "grey"
+				})
+				.on("mouseover", function(d){
+					countryTooltip.text(d.name)
+						.style("left", (d3.event.pageX + 7) + "px")
+						.style("top", (d3.event.pageY - 15) + "px")
+						.style("display", "block")
+						.style("opacity", 1);
+					d3.select(this).classed("selected", true)
+				})
+				.on("mouseout", function(d){
+					countryTooltip.style("opacity", 0)
+						.style("display", "none");
+					d3.select(this).classed("selected", false)
+				})
 
 			this.svg.call(d3.drag()
 				.on("drag", () => {
@@ -57,7 +91,7 @@ class MapPlot {
 
 					projection.rotate([x_angle, y_angle]);
 					this.svg.selectAll("path").attr("d", path);
-				}))
+				})).call(zoom);
 		});
 	}
 }

@@ -37,3 +37,21 @@ svg {
 	width: 100%;
 	height: auto;
 }
+
+.selected {
+	fill: yellow;
+	opacity: 0.5;
+}
+
+.countryTooltip {
+	position: absolute;
+	display: none;
+	pointer-events: none;
+	background: #fff;
+	padding: 5px;
+	text-align: left;
+	border: solid #ccc 1px;
+	color: #666;
+	font-size: 14px;
+	font-family: sans-serif;
+  }
