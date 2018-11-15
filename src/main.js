@@ -26,16 +26,15 @@ class MapPlot {
 			
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 
-			let center_lon = -71.03;
-			let center_lat = 42.37;
-			let center_x = 330;
-			let center_y = 150;	
+			let center_x = this.svg_width/2;
+			let center_y = this.svg_height/2;	
+
 			let scale = 380;
-			let sense = 0.25;
+			const base_sense = 0.25;
+			let sense = base_sense;
 			let max_y_angle = 25;
 
 			let projection = d3.geoOrthographic()
-				.center([center_lon, center_lat])
 				.rotate([0, 0])
 				.scale(scale)
 				.translate([center_x, center_y])
@@ -43,7 +42,19 @@ class MapPlot {
 			let path = d3.geoPath(projection)		
 
 			var world = this.svg
-			var worldGroup = world.append("g");
+			//var worldGroup = world.append("g");
+
+			var zoom = d3.zoom()
+			.scaleExtent([1, 3]) //bound zoom
+			.on("zoom", () => {
+				console.log(sense)
+				sense = base_sense/d3.event.transform.translate(projection).k
+				console.log(sense)
+
+				projection.scale(d3.event.transform.translate(projection).k * scale)
+				this.svg.selectAll("path").attr("d", path);
+			});
+		
 
 			var countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
 
@@ -68,11 +79,6 @@ class MapPlot {
 					d3.select(this).classed("selected", false)
 				})
 
-
-
-				
-
-
 			this.svg.call(d3.drag()
 				.on("drag", () => {
 					let rotate = projection.rotate();
@@ -85,7 +91,7 @@ class MapPlot {
 
 					projection.rotate([x_angle, y_angle]);
 					this.svg.selectAll("path").attr("d", path);
-				}))
+				})).call(zoom);
 		});
 	}
 }
