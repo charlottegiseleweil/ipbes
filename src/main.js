@@ -10,15 +10,19 @@ class MapPlot {
 
 
 		const map_promise = d3.json("data/map_data/110m.json").then(topojson_raw => {
-			const countries = topojson.feature(topojson_raw, topojson_raw.objects.countries);
-			return countries.features;
+			const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
+			// remove leading zeros for the id:s
+			country_features.forEach(x => x.id = x.id.replace(/^0+/, ''));
+			return country_features;
 		})
 
-		const country_label_promise = d3.tsv("data/map_data/world-110m.v1.tsv").then(data => data)
+		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
 		Promise.all([map_promise, country_label_promise]).then((results) => {
 			let map_data = results[0];
-			let country_label_data = results[1];  // not used yet TODO: implement function using this		  
+			let country_label_data = results[1];
+			
+			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 
 			let center_lon = -71.03;
 			let center_lat = 42.37;
