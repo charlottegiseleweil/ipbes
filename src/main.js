@@ -43,12 +43,11 @@ class MapPlot {
 			let path = d3.geoPath(projection)		
 
 			var world = this.svg
-
 			var worldGroup = world.append("g");
 
 			var countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
 
-			worldGroup.selectAll("path")
+			this.svg.selectAll("path")
 				.data(map_data)
 				.enter().append("path")
 				.attr("d", path)
