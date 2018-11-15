@@ -23,9 +23,10 @@ class MapPlot {
 			let center_lon = -71.03;
 			let center_lat = 42.37;
 			let center_x = 330;
-			let center_y = 150;
+			let center_y = 150;	
 			let scale = 380;
 			let sense = 0.25;
+			let max_y_angle = 25;
 
 			let projection = d3.geoOrthographic()
 				.center([center_lon, center_lat])
@@ -43,7 +44,14 @@ class MapPlot {
 			this.svg.call(d3.drag()
 				.on("drag", () => {
 					let rotate = projection.rotate();
-					projection.rotate([rotate[0] + d3.event.dx * sense, rotate[1] - d3.event.dy * sense]);
+					let x_angle = rotate[0] + d3.event.dx * sense
+					let y_angle = rotate[1] - d3.event.dy * sense;
+					if (Math.abs(y_angle) > max_y_angle) {
+						if (y_angle > 0) y_angle = max_y_angle 
+						else y_angle = -max_y_angle
+					}
+
+					projection.rotate([x_angle, y_angle]);
 					this.svg.selectAll("path").attr("d", path);
 				}))
 		});
