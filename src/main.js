@@ -1,4 +1,6 @@
 
+// python -m http.server
+
 class MapPlot {
 	constructor(svg_element_id) {
 		this.svg = d3.select('#' + svg_element_id);
@@ -40,10 +42,37 @@ class MapPlot {
 
 			let path = d3.geoPath(projection)		
 
-			this.svg.selectAll("path")
+			var world = this.svg
+
+			var worldGroup = world.append("g");
+
+			var countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
+
+			worldGroup.selectAll("path")
 				.data(map_data)
 				.enter().append("path")
 				.attr("d", path)
+				.attr("fill", function(d){
+					return "grey"
+				})
+				.on("mouseover", function(d){
+					countryTooltip.text(d.id)
+						.style("left", (d3.event.pageX + 7) + "px")
+						.style("top", (d3.event.pageY - 15) + "px")
+						.style("display", "block")
+						.style("opacity", 1);
+					d3.select(this).classed("selected", true)
+				})
+				.on("mouseout", function(d){
+					countryTooltip.style("opacity", 0)
+						.style("display", "none");
+					d3.select(this).classed("selected", false)
+				})
+
+
+
+				
+
 
 			this.svg.call(d3.drag()
 				.on("drag", () => {
