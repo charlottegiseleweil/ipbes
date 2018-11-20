@@ -1,4 +1,3 @@
-
 // python -m http.server
 
 class MapPlot {
@@ -28,11 +27,7 @@ class MapPlot {
 
 			let center_x = this.svg_width/2;
 			let center_y = this.svg_height/2;	
-
 			let scale = 380;
-			const base_sense = 0.25;
-			let sense = base_sense;
-			let max_y_angle = 25;
 
 			let projection = d3.geoOrthographic()
 				.rotate([0, 0])
@@ -40,19 +35,6 @@ class MapPlot {
 				.translate([center_x, center_y])
 
 			let path = d3.geoPath(projection)		
-
-			var world = this.svg
-			//var worldGroup = world.append("g");
-
-			var zoom = d3.zoom()
-			.scaleExtent([1, 3]) //bound zoom
-			.on("zoom", () => {
-				sense = base_sense/d3.event.transform.translate(projection).k
-
-				projection.scale(d3.event.transform.translate(projection).k * scale)
-				this.svg.selectAll("path").attr("d", path);
-			});
-		
 
 			var countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
 
@@ -77,24 +59,17 @@ class MapPlot {
 					d3.select(this).classed("selected", false)
 				})
 
-			this.svg.call(d3.drag()
-				.on("drag", () => {
-					let rotate = projection.rotate();
-					let x_angle = rotate[0] + d3.event.dx * sense
-					let y_angle = rotate[1] - d3.event.dy * sense;
-					if (Math.abs(y_angle) > max_y_angle) {
-						if (y_angle > 0) y_angle = max_y_angle 
-						else y_angle = -max_y_angle
-					}
-
-					projection.rotate([x_angle, y_angle]);
-					this.svg.selectAll("path").attr("d", path);
-				})).call(zoom);
+			d3.geoZoom()
+				.projection(projection)
+				.scaleExtent([1, 5])
+				.northUp(true)
+				.onMove(() => this.svg.selectAll("path").attr('d', path))
+				(this.svg.node());
 		});
+
 	}
 }
 			
-
 function whenDocumentLoaded(action) {
 	if (document.readyState === "loading") {
 		document.addEventListener("DOMContentLoaded", action);
