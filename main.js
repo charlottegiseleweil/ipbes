@@ -47,9 +47,7 @@ class MapPlot {
 			var zoom = d3.zoom()
 			.scaleExtent([1, 3]) //bound zoom
 			.on("zoom", () => {
-				console.log(sense)
 				sense = base_sense/d3.event.transform.translate(projection).k
-				console.log(sense)
 
 				projection.scale(d3.event.transform.translate(projection).k * scale)
 				this.svg.selectAll("path").attr("d", path);

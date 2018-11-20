@@ -26,7 +26,7 @@ body {
 
 	/* background behind the plot */
 	/*background: rgb(40, 40, 40);*/
-	background: white;
+	background: black;
 
 	/* default text */
 	font-family: sans-serif;
@@ -39,8 +39,8 @@ svg {
 }
 
 .selected {
-	fill: yellow;
-	opacity: 0.5;
+	fill: white;
+	opacity: 1;
 }
 
 .countryTooltip {
