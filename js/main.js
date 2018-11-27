@@ -28,6 +28,7 @@ class MapPlot {
 			let center_x = this.svg_width/2;
 			let center_y = this.svg_height/2;	
 			let scale = 380;
+			let active = d3.select(null)
 
 			let projection = d3.geoOrthographic()
 				.rotate([0, 0])
@@ -58,10 +59,64 @@ class MapPlot {
 						.style("display", "none");
 					d3.select(this).classed("selected", false)
 				})
+				.on("click", clicked)
 
+				function clicked(d){
+					console.log(d.name)
+					if (active.node() === this) return reset();
+					active.classed("active", false);
+					active = d3.select(this).classed("active", true);
+
+					var currentRotate = projection.rotate();
+					var currentScale = projection.scale();
+					var p_center = d3.geoCentroid(d)
+
+					projection.rotate([-p_center[0], -p_center[1]]);
+					path.projection(projection);
+
+					// calculate the scale and translate required:
+					var b = path.bounds(d);
+					var nextScale = scale * 4;
+					var nextRotate = projection.rotate();
+
+					// Update the map:
+					d3.selectAll("path")
+						.transition()
+						.attrTween("d", function(d) {
+							var r = d3.interpolate(currentRotate, nextRotate);
+							var s = d3.interpolate(currentScale, nextScale);
+								return function(t) {
+									projection
+										.rotate(r(t))
+										.scale(s(t));
+								path.projection(projection);
+								return path(d);
+								}
+						})
+						.duration(1000);
+				}
+
+				function reset() {
+					active.classed("active", false);
+					active = d3.select(null);
+
+					d3.selectAll("path")
+					.transition()
+						.attrTween("d", function(d) {
+						var s = d3.interpolate(projection.scale(), scale);
+						return function(t) {
+							projection.scale(s(t));
+							path.projection(projection);
+							return path(d);
+						}
+					})
+					.duration(1000);
+				}
+
+			// plot centroid
 			d3.geoZoom()
 				.projection(projection)
-				.scaleExtent([1, 5])
+				.scaleExtent([0.8, 5])
 				.northUp(true)
 				.onMove(() => this.svg.selectAll("path").attr('d', path))
 				(this.svg.node());
@@ -83,3 +138,4 @@ whenDocumentLoaded(() => {
 	plot_object = new MapPlot('globe-plot');
 	// plot object is global, you can inspect it in the dev-console
 });
+
