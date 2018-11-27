@@ -1,0 +1,58 @@
+#story-board{
+    background: rgba(255, 129, 198, 0.2);
+    color: white;
+    position: absolute;
+    bottom: 1rem;
+    left: 3.8rem;
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+    font-size: 0.7rem;
+    height: 20rem;
+    width: 15rem;
+}
+
+#story-container {
+    position: relative;
+}
+  
+/* Stories */
+#story {
+    padding: 1rem;
+    text-align: center;
+}
+  
+  /* Next & previous buttons */
+.prev, .next {
+    width: auto;
+    padding: 0.5rem;
+    color: #888;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    position: absolute;
+    bottom: 1rem;
+}
+
+.prev{
+    left:1rem;
+}
+
+.next{
+    right:1rem;
+}
+  
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+}
+  
+/* Styling for the text */
+#story-header{
+    font-size: 1.3rem;
+}
+#story-text{
+    font-size: 0.9rem;
+}
+  

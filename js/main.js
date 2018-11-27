@@ -137,5 +137,69 @@ function whenDocumentLoaded(action) {
 whenDocumentLoaded(() => {
 	plot_object = new MapPlot('globe-plot');
 	// plot object is global, you can inspect it in the dev-console
+
+	// Initialize dashboard
+	is2050 = false;
+	slideIndex = 0;
+	showStory(slideIndex);
 });
 
+
+// Year toggle
+document.getElementById('toggle').addEventListener('click', function() {
+	is2050 = !is2050;
+	switchYear(is2050); 
+});
+
+function switchYear(toggle) {
+	let toggleContainer = document.getElementById('toggle-container');
+	let scenarioRow = document.getElementById('scenario');
+	if (toggle) {
+		toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
+		scenarioRow.style.opacity = '1';
+		scenarioRow.style.transition = 'opacity 0.5s linear';
+		scenarioRow.style.visibility = 'visible';
+    } else {
+		toggleContainer.style.clipPath = 'inset(0 50% 0 0)';
+		scenarioRow.style.visibility = 'collapse';
+		scenarioRow.style.opacity = '0';
+		scenarioRow.style.transition = 'opacity 0.5s linear';
+		scenarioRow.style.transition = 'visibility 0.15s linear';	
+    }
+};
+
+// Test stories
+const stories = [ {header: "Water OMG", 
+					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjdsf kjdsf dskjfdsfjk kdoapadf",
+					field: "a_radio-1",
+					scenario: "b_radio-1",
+					toggleState: false},
+				{header: "The year was 2050", 
+					text: "klsd jkdsf jkd fkjds fkjds fkdsjfd fkjdsf kjdsf dskjfdsfjk kdoapadf",
+					field: "a_radio-2",
+					scenario: "b_radio-3",
+					toggleState: true},
+				{header: "YEEAH", 
+					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjds skjfdsfjk kdoapadf",
+					field: "a_radio-3",
+					scenario: "b_radio-1",
+					toggleState: true},
+				];
+
+
+// Functions to display stories
+function plusStory(n) {
+  showStory(slideIndex += n);
+}
+
+function showStory(n) {
+	if (n > stories.length-1) {slideIndex = 0 }; 
+	if (n < 0) {slideIndex = stories.length-1}
+
+	const story = stories[slideIndex];
+	document.getElementById("story-header").innerHTML = story.header;
+	document.getElementById("story-text").innerHTML = story.text;
+	document.getElementById(story.field).checked = true;
+	document.getElementById(story.scenario).checked = true;
+	switchYear(story.toggleState);
+}
