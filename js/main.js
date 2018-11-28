@@ -1,13 +1,11 @@
-// python -m http.server
-
 class MapPlot {
 	constructor(svg_element_id) {
-		this.svg = d3.select('#' + svg_element_id);
+		let svg = d3.select('#' + svg_element_id);
 
 		// may be useful for calculating scales
-		const svg_viewbox = this.svg.node().viewBox.animVal;
-		this.svg_width = svg_viewbox.width;
-		this.svg_height = svg_viewbox.height;
+		const svg_viewbox = svg.node().viewBox.animVal;
+		let svgWidth = svg_viewbox.width;
+		let svgHeight = svg_viewbox.height;
 
 
 		const map_promise = d3.json("data/map_data/110m.json").then(topojson_raw => {
@@ -20,32 +18,39 @@ class MapPlot {
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
 		Promise.all([map_promise, country_label_promise]).then((results) => {
-			let map_data = results[0];
-			let country_label_data = results[1];
+			const map_data = results[0];
+			const country_label_data = results[1];
 			
+			// add country name labels to map_data objects
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
-
-			let center_x = this.svg_width/2;
-			let center_y = this.svg_height/2;	
+			let center_x = svgWidth/2;
+			let center_y = svgHeight/2;	
 			let scale = 380;
-			let active = d3.select(null)
+			let scaleExtent = [0.8, 5];
+			let resetScale = scale;
+			let resetRotate = [0, 0];
+			let activeClick = d3.select(null)
+			let clickedRotate; 
+			let clickedScale;
+
+			const render = () => {
+				svg.selectAll("path").attr('d', path)
+			};
 
 			let projection = d3.geoOrthographic()
 				.rotate([0, 0])
 				.scale(scale)
 				.translate([center_x, center_y])
 
-			let path = d3.geoPath(projection)		
+			let path = d3.geoPath(projection)
 
-			var countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
+			let countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
 
-			this.svg.selectAll("path")
+			svg.selectAll("path")
 				.data(map_data)
 				.enter().append("path")
+				.attr("fill", "grey")
 				.attr("d", path)
-				.attr("fill", function(d){
-					return "grey"
-				})
 				.on("mouseover", function(d){
 					countryTooltip.text(d.name)
 						.style("left", (d3.event.pageX + 7) + "px")
@@ -61,65 +66,92 @@ class MapPlot {
 				})
 				.on("click", clicked)
 
-				function clicked(d){
-					console.log(d.name)
-					if (active.node() === this) return reset();
-					active.classed("active", false);
-					active = d3.select(this).classed("active", true);
+			initializeZoom();
+			render();
 
-					var currentRotate = projection.rotate();
-					var currentScale = projection.scale();
-					var p_center = d3.geoCentroid(d)
+			var v0, r0, q0;
 
-					projection.rotate([-p_center[0], -p_center[1]]);
-					path.projection(projection);
+			function initializeZoom() {
+				// Call the zoom on the svg instead of the path elements to make sure that it is possible to drag 
+				// everywhere on the globe (and not just on land)
+				svg.call(d3.zoom()  
+					.on("start", zoomstarted)
+					.on('zoom', zoomed)
+					.scaleExtent(scaleExtent));
+			}
+			
+			function zoomstarted() {
+				v0 = versor.cartesian(projection.invert(d3.mouse(this)));
+				r0 = projection.rotate();
+				q0 = versor(r0);
+			}
+			
+			function zoomed() {
+				projection.scale(d3.event.transform.k * (svgHeight - 10) / 2);
+			
+				var v1 = versor.cartesian(projection.rotate(r0).invert(d3.mouse(this))),
+					q1 = versor.multiply(q0, versor.delta(v0, v1)),
+					r1 = versor.rotation(q1);
+				r1[2] = 0;  // Don't rotate Z axis
+				projection.rotate(r1);
+				
+				render()
+			}
 
-					// calculate the scale and translate required:
-					var b = path.bounds(d);
-					var nextScale = scale * 4;
-					var nextRotate = projection.rotate();
+			function clicked(d){
+				if (activeClick.node() === this) return resetClick();  // zoom out again if click on the same country
+				else if (activeClick.node() != null) return null;  // else if we are already zoomed in, do nothing
+				activeClick.classed("active", false);
+				activeClick = d3.select(this).classed("active", true);
+				
+				svg.on('.zoom', null).on('.start', null);  // disable zoom and drag while focused on a country
 
-					// Update the map:
-					d3.selectAll("path")
-						.transition()
-						.attrTween("d", function(d) {
-							var r = d3.interpolate(currentRotate, nextRotate);
-							var s = d3.interpolate(currentScale, nextScale);
-								return function(t) {
-									projection
-										.rotate(r(t))
-										.scale(s(t));
-								path.projection(projection);
-								return path(d);
-								}
-						})
-						.duration(1000);
-				}
+				let currentRotate = projection.rotate();
+				let currentScale = projection.scale();
+				resetRotate = currentRotate;
+				resetScale = currentScale
 
-				function reset() {
-					active.classed("active", false);
-					active = d3.select(null);
+				let p_center = d3.geoCentroid(d)
+				
+				projection.rotate([-p_center[0], -p_center[1]]);
+				path.projection(projection);
+				
+				// calculate the scale and translate required:
+				var b = path.bounds(d);
+				clickedScale = currentScale * 1 / Math.max((b[1][0] - b[0][0]) / (svgWidth/2), (b[1][1] - b[0][1]) / (svgHeight/2));
+				clickedRotate = projection.rotate();
 
-					d3.selectAll("path")
+				// Update the map:
+				d3.selectAll("path")
 					.transition()
-						.attrTween("d", function(d) {
-						var s = d3.interpolate(projection.scale(), scale);
-						return function(t) {
-							projection.scale(s(t));
-							path.projection(projection);
-							return path(d);
-						}
-					})
+					.attrTween("d", zoomRotateFactory(currentRotate, currentScale, clickedRotate, clickedScale))
 					.duration(1000);
-				}
+			}
 
-			// plot centroid
-			d3.geoZoom()
-				.projection(projection)
-				.scaleExtent([0.8, 5])
-				.northUp(true)
-				.onMove(() => this.svg.selectAll("path").attr('d', path))
-				(this.svg.node());
+			function resetClick() {
+				activeClick.classed("active", false);
+				activeClick = d3.select(null);
+
+				d3.selectAll("path")
+					.transition()
+					.attrTween("d", zoomRotateFactory(clickedRotate, clickedScale, resetRotate, resetScale))
+					.duration(1000)
+					.on("end", () => initializeZoom());
+			}
+
+			function zoomRotateFactory(currRot, currScale, nexRot, nexScale) {
+				return function(d) {
+					var r = d3.interpolate(currRot, nexRot);
+					var s = d3.interpolate(currScale, nexScale);
+						return function(t) {
+							projection
+								.rotate(r(t))
+								.scale(s(t));
+						path.projection(projection);
+						if (path(d) == null) return ""; else return path(d);
+						}
+					}
+			}
 		});
 
 	}
