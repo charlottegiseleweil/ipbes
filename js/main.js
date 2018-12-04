@@ -8,7 +8,15 @@ class MapPlot {
 		let svgHeight = svg_viewbox.height;
 
 
-		const map_promise = d3.json("data/map_data/110m.json").then(topojson_raw => {
+		// FIXME: better load function for both maps
+		const map_promise_110 = d3.json("data/map_data/110m.json").then(topojson_raw => {
+			const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
+			// remove leading zeros for the id:s
+			country_features.forEach(x => x.id = x.id.replace(/^0+/, ''));
+			return country_features;
+		})
+
+		const map_promise_50 = d3.json("data/map_data/50m.json").then(topojson_raw => {
 			const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
 			// remove leading zeros for the id:s
 			country_features.forEach(x => x.id = x.id.replace(/^0+/, ''));
@@ -17,12 +25,19 @@ class MapPlot {
 
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
-		Promise.all([map_promise, country_label_promise]).then((results) => {
+		Promise.all([map_promise_110, map_promise_50, country_label_promise]).then((results) => {
+			// 110map
 			const map_data = results[0];
-			const country_label_data = results[1];
+			// 50map
+			const map_data_50 = results[1]
+			console.log
+			// country label names
+			const country_label_data = results[2];
 			
 			// add country name labels to map_data objects
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
+			map_data_50.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
+
 			let center_x = svgWidth/2;
 			let center_y = svgHeight/2;	
 			let scale = 380;
@@ -33,10 +48,6 @@ class MapPlot {
 			let clickedRotate; 
 			let clickedScale;
 
-			const render = () => {
-				svg.selectAll("path").attr('d', path)
-			};
-
 			let projection = d3.geoOrthographic()
 				.rotate([0, 0])
 				.scale(scale)
@@ -46,11 +57,18 @@ class MapPlot {
 
 			let countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
 
-			svg.selectAll("path")
-				.data(map_data)
-				.enter().append("path")
+			const render = () => {
+				// Update paths
+				svg.selectAll("path").attr('d', path);
+			};
+
+			// the main globe object
+			 svg.selectAll("path")
+			 	.data(map_data)
+			 	.enter().append("path")
 				.attr("fill", "grey")
 				.attr("d", path)
+				.on("click", clicked)
 				.on("mouseover", function(d){
 					countryTooltip.text(d.name)
 						.style("left", (d3.event.pageX + 7) + "px")
@@ -62,12 +80,19 @@ class MapPlot {
 				.on("mouseout", function(d){
 					countryTooltip.style("opacity", 0)
 						.style("display", "none");
-					d3.select(this).classed("selected", false)
+					d3.select(this).classed("selected", false)	
 				})
-				.on("click", clicked)
-
+				
 			initializeZoom();
 			render();
+
+			
+			svg.selectAll("path").enter()
+				.append("circle")
+					.attr("transform", "translate([400,400])")
+					.attr('r', scale+10)
+					.attr("fill", "yellow")
+
 
 			var v0, r0, q0;
 
@@ -94,7 +119,6 @@ class MapPlot {
 					r1 = versor.rotation(q1);
 				r1[2] = 0;  // Don't rotate Z axis
 				projection.rotate(r1);
-				
 				render()
 			}
 
@@ -118,25 +142,88 @@ class MapPlot {
 				
 				// calculate the scale and translate required:
 				var b = path.bounds(d);
-				clickedScale = currentScale * 1 / Math.max((b[1][0] - b[0][0]) / (svgWidth/2), (b[1][1] - b[0][1]) / (svgHeight/2));
+				clickedScale = currentScale * 1.5 / Math.max((b[1][0] - b[0][0]) / (svgWidth/2), (b[1][1] - b[0][1]) / (svgHeight/2));
 				clickedRotate = projection.rotate();
 
+				let already_triggered = false
 				// Update the map:
 				d3.selectAll("path")
 					.transition()
 					.attrTween("d", zoomRotateFactory(currentRotate, currentScale, clickedRotate, clickedScale))
-					.duration(1000);
+					.duration(1000)
+					.on("end", function() {
+						if (!already_triggered) {
+							console.log(d.name)
+							init_50map(d)
+							already_triggered = true
+						}
+					})
+			}
+
+			// initializing HD map after zooming in
+			function init_50map(country_sel) {
+				console.log(country_sel)
+
+				svg.selectAll("path").remove().enter()
+					.data(map_data_50)
+					.enter().append("path")
+					.attr("fill", function (d){
+						if (d.name == country_sel.name) {
+							console.log("yoyoyo")
+							return "yellow"
+						}
+						// Pull data for this country
+						//d.total = data.get(d.id) || 0;
+						// Set the color
+						return "grey";
+					})
+					.attr("d", path)
+					.on("click", resetClick)
+					.attr()
+			}
+
+			// initializing LOW RES map after zooming in
+			function init_110map() {
+				svg.selectAll("path").remove().enter()
+
+				svg.selectAll("path")
+					.data(map_data)
+					.enter().append("path")
+					.attr("fill", "grey")
+					.attr("d", path)
+					.on("click", clicked)
+					.on("mouseover", function(d){
+						countryTooltip.text(d.name)
+							.style("left", (d3.event.pageX + 7) + "px")
+							.style("top", (d3.event.pageY - 15) + "px")
+							.style("display", "block")
+							.style("opacity", 1);
+						d3.select(this).classed("selected", true)
+					})
+					.on("mouseout", function(d){
+						countryTooltip.style("opacity", 0)
+							.style("display", "none");
+						d3.select(this).classed("selected", false)
+						
+					})
 			}
 
 			function resetClick() {
 				activeClick.classed("active", false);
 				activeClick = d3.select(null);
-
+				init_110map()
+				
+				let already_triggered = false
 				d3.selectAll("path")
 					.transition()
 					.attrTween("d", zoomRotateFactory(clickedRotate, clickedScale, resetRotate, resetScale))
 					.duration(1000)
-					.on("end", () => initializeZoom());
+					.on("end", function() {
+						if (!already_triggered) {
+							initializeZoom()
+							already_triggered = true
+						}
+					})
 			}
 
 			function zoomRotateFactory(currRot, currScale, nexRot, nexScale) {
