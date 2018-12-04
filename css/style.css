@@ -57,3 +57,9 @@ body {
 	font-size: 14px;
 	font-family: sans-serif;
   }
+
+
+  #country_name {
+	  color: white;
+	  background-color: white;
+  }
