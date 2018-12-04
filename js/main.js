@@ -86,12 +86,12 @@ class MapPlot {
 			initializeZoom();
 			render();
 
-			
-			svg.selectAll("path").enter()
-				.append("circle")
-					.attr("transform", "translate([400,400])")
-					.attr('r', scale+10)
-					.attr("fill", "yellow")
+			// TODO: CIRCLE AROUND WORLD 
+			// svg.selectAll("path").enter()
+			// 	.append("circle")
+			// 		.attr("transform", "translate([400,400])")
+			// 		.attr('r', scale+10)
+			// 		.attr("fill", "yellow")
 
 
 			var v0, r0, q0;
@@ -156,55 +156,9 @@ class MapPlot {
 							console.log(d.name)
 							init_50map(d)
 							already_triggered = true
+							d3.select(this).classed("selected", false)	
+
 						}
-					})
-			}
-
-			// initializing HD map after zooming in
-			function init_50map(country_sel) {
-				console.log(country_sel)
-
-				svg.selectAll("path").remove().enter()
-					.data(map_data_50)
-					.enter().append("path")
-					.attr("fill", function (d){
-						if (d.name == country_sel.name) {
-							console.log("yoyoyo")
-							return "yellow"
-						}
-						// Pull data for this country
-						//d.total = data.get(d.id) || 0;
-						// Set the color
-						return "grey";
-					})
-					.attr("d", path)
-					.on("click", resetClick)
-					.attr()
-			}
-
-			// initializing LOW RES map after zooming in
-			function init_110map() {
-				svg.selectAll("path").remove().enter()
-
-				svg.selectAll("path")
-					.data(map_data)
-					.enter().append("path")
-					.attr("fill", "grey")
-					.attr("d", path)
-					.on("click", clicked)
-					.on("mouseover", function(d){
-						countryTooltip.text(d.name)
-							.style("left", (d3.event.pageX + 7) + "px")
-							.style("top", (d3.event.pageY - 15) + "px")
-							.style("display", "block")
-							.style("opacity", 1);
-						d3.select(this).classed("selected", true)
-					})
-					.on("mouseout", function(d){
-						countryTooltip.style("opacity", 0)
-							.style("display", "none");
-						d3.select(this).classed("selected", false)
-						
 					})
 			}
 
@@ -238,6 +192,50 @@ class MapPlot {
 						if (path(d) == null) return ""; else return path(d);
 						}
 					}
+			}
+
+						// initializing HD map after zooming in
+			function init_50map(country_sel) {
+				console.log(country_sel)
+				svg.selectAll("path").remove()
+				svg.selectAll("path").remove().enter()
+					.data(map_data_50)
+					.enter().append("path")
+					.attr("fill", function (d){
+						if (d.name == country_sel.name) {
+							return "yellow"
+						}
+						return "grey";
+					})
+					.attr("d", path)
+					.on("click", resetClick)
+					.attr()
+			}
+
+			// initializing LOW RES map after zooming in
+			function init_110map() {
+				svg.selectAll("path").remove().enter()
+
+				svg.selectAll("path")
+					.data(map_data)
+					.enter().append("path")
+					.attr("fill", "grey")
+					.attr("d", path)
+					.on("click", clicked)
+					.on("mouseover", function(d){
+						countryTooltip.text(d.name)
+							.style("left", (d3.event.pageX + 7) + "px")
+							.style("top", (d3.event.pageY - 15) + "px")
+							.style("display", "block")
+							.style("opacity", 1);
+						d3.select(this).classed("selected", true)
+					})
+					.on("mouseout", function(d){
+						countryTooltip.style("opacity", 0)
+							.style("display", "none");
+						d3.select(this).classed("selected", false)
+						
+					})
 			}
 		});
 
