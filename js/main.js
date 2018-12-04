@@ -156,8 +156,7 @@ class MapPlot {
 							console.log(d.name)
 							init_50map(d)
 							already_triggered = true
-							d3.select(this).classed("selected", false)	
-
+							d3.select(this).classed("selected", false)
 						}
 					})
 			}
@@ -166,7 +165,7 @@ class MapPlot {
 				activeClick.classed("active", false);
 				activeClick = d3.select(null);
 				init_110map()
-				
+				showStory(0)
 				let already_triggered = false
 				d3.selectAll("path")
 					.transition()
@@ -194,15 +193,23 @@ class MapPlot {
 					}
 			}
 
-						// initializing HD map after zooming in
+			// initializing HD map after zooming in
 			function init_50map(country_sel) {
-				console.log(country_sel)
-				svg.selectAll("path").remove()
+
+				// hide tooltip
+				countryTooltip.style("opacity", 0)
+						.style("display", "none");
+
 				svg.selectAll("path").remove().enter()
 					.data(map_data_50)
 					.enter().append("path")
 					.attr("fill", function (d){
 						if (d.name == country_sel.name) {
+							let story = { 
+								header: d.name, 
+								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy \
+									eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."}
+							showStory_for_country_without_data(story)
 							return "yellow"
 						}
 						return "grey";
@@ -215,8 +222,6 @@ class MapPlot {
 			// initializing LOW RES map after zooming in
 			function init_110map() {
 				svg.selectAll("path").remove().enter()
-
-				svg.selectAll("path")
 					.data(map_data)
 					.enter().append("path")
 					.attr("fill", "grey")
@@ -285,8 +290,9 @@ function switchYear(toggle) {
     }
 };
 
+
 // Test stories
-const stories = [ {header: "Water OMG", 
+const stories = [ {header: "Initial Story", 
 					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjdsf kjdsf dskjfdsfjk kdoapadf",
 					field: "a_radio-1",
 					scenario: "b_radio-1",
@@ -310,6 +316,7 @@ function plusStory(n) {
 }
 
 function showStory(n) {
+	console.log(n + " mm")
 	if (n > stories.length-1) {slideIndex = 0 }; 
 	if (n < 0) {slideIndex = stories.length-1}
 
@@ -319,4 +326,10 @@ function showStory(n) {
 	document.getElementById(story.field).checked = true;
 	document.getElementById(story.scenario).checked = true;
 	switchYear(story.toggleState);
+}
+
+
+function showStory_for_country_without_data(story) {
+	document.getElementById("story-header").innerHTML = story.header;
+	document.getElementById("story-text").innerHTML = story.text;
 }
