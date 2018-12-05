@@ -33,7 +33,6 @@ class MapPlot {
 			console.log
 			// country label names
 			const country_label_data = results[2];
-			
 			// add country name labels to map_data objects
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 			map_data_50.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
@@ -60,10 +59,11 @@ class MapPlot {
 			const render = () => {
 				// Update paths
 				svg.selectAll("path").attr('d', path);
+				drawMarkers()
 			};
 
 			// the main globe object
-			 svg.selectAll("path")
+			svg.selectAll("path")
 			 	.data(map_data)
 			 	.enter().append("path")
 				.attr("fill", "grey")
@@ -85,14 +85,6 @@ class MapPlot {
 				
 			initializeZoom();
 			render();
-
-			// TODO: CIRCLE AROUND WORLD 
-			// svg.selectAll("path").enter()
-			// 	.append("circle")
-			// 		.attr("transform", "translate([400,400])")
-			// 		.attr('r', scale+10)
-			// 		.attr("fill", "yellow")
-
 
 			var v0, r0, q0;
 
@@ -122,7 +114,10 @@ class MapPlot {
 				render()
 			}
 
-			function clicked(d){
+			function clicked(d) {
+				// hide story points
+				svg.selectAll("circle").remove()
+
 				if (activeClick.node() === this) return resetClick();  // zoom out again if click on the same country
 				else if (activeClick.node() != null) return null;  // else if we are already zoomed in, do nothing
 				activeClick.classed("active", false);
@@ -153,7 +148,6 @@ class MapPlot {
 					.duration(1000)
 					.on("end", function() {
 						if (!already_triggered) {
-							console.log(d.name)
 							init_50map(d)
 							already_triggered = true
 							d3.select(this).classed("selected", false)
@@ -175,6 +169,7 @@ class MapPlot {
 						if (!already_triggered) {
 							initializeZoom()
 							already_triggered = true
+							render()	
 						}
 					})
 			}
@@ -195,7 +190,6 @@ class MapPlot {
 
 			// initializing HD map after zooming in
 			function init_50map(country_sel) {
-
 				// hide tooltip
 				countryTooltip.style("opacity", 0)
 						.style("display", "none");
@@ -242,6 +236,33 @@ class MapPlot {
 						
 					})
 			}
+
+			// Story Markers
+			function drawMarkers() {
+				const center = [svgWidth/2, svgHeight/2];
+				let locations = stories;
+                var markers = svg.selectAll('circle')
+                    .data(locations);
+				
+				markers.enter()
+					.append('circle')
+                	.merge(markers)
+                    .attr('cx', d => projection([d.lon, d.lat])[0])
+                    .attr('cy', d => projection([d.lon, d.lat])[1])
+                    .attr('fill', d => {
+						const coordinate = [d.lon, d.lat];
+                        let gdistance = d3.geoDistance(coordinate, projection.invert(center));
+						return gdistance > 1.58 ? 'none' : 'Peru';
+                    })
+                    .attr('r', 9);
+
+				// set them to the front layer
+                markers.each(function () {
+                    this.parentNode.appendChild(this);
+				});
+            }
+
+
 		});
 
 	}
@@ -291,22 +312,53 @@ function switchYear(toggle) {
 };
 
 
+let locationData = [
+	{"latitude": 22, "longitude": 88},
+	{"latitude": 12.61315, "longitude": 38.37723},
+	{"latitude": -30, "longitude": -58},
+	{"latitude": -14.270972, "longitude": -170.132217},
+	{"latitude": 28.033886, "longitude": 1.659626},
+	{"latitude": 40.463667, "longitude": -3.74922},
+	{"latitude": 35.907757, "longitude": 127.766922},
+	{"latitude": 23.634501, "longitude": -102.552784}
+]
+
 // Test stories
 const stories = [ {header: "Initial Story", 
 					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjdsf kjdsf dskjfdsfjk kdoapadf",
 					field: "a_radio-1",
 					scenario: "b_radio-1",
-					toggleState: false},
+					toggleState: false,
+					lat: 22,
+					lon: 88},
 				{header: "The year was 2050", 
 					text: "klsd jkdsf jkd fkjds fkjds fkdsjfd fkjdsf kjdsf dskjfdsfjk kdoapadf",
 					field: "a_radio-2",
 					scenario: "b_radio-3",
-					toggleState: true},
+					toggleState: true,
+					lat: 12.61315,
+					lon: 38.37723},
 				{header: "YEEAH", 
 					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjds skjfdsfjk kdoapadf",
 					field: "a_radio-3",
 					scenario: "b_radio-1",
-					toggleState: true},
+					toggleState: true,
+					lat: -30,
+					lon: -58},
+				{header: "___4", 
+					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjds skjfdsfjk kdoapadf",
+					field: "a_radio-3",
+					scenario: "b_radio-1",
+					toggleState: true,
+					lat: -14.270972,
+					lon: -170.132217},
+				{header: "___5", 
+					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjds skjfdsfjk kdoapadf",
+					field: "a_radio-3",
+					scenario: "b_radio-1",
+					toggleState: true,
+					lat: 28.033886,
+					lon: 1.659626},
 				];
 
 
@@ -316,7 +368,6 @@ function plusStory(n) {
 }
 
 function showStory(n) {
-	console.log(n + " mm")
 	if (n > stories.length-1) {slideIndex = 0 }; 
 	if (n < 0) {slideIndex = stories.length-1}
 
