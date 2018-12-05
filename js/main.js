@@ -23,16 +23,20 @@ class MapPlot {
 			return country_features;
 		})
 
+		const ndr_promise = d3.csv("data/preprocessed_data/ndr_table_preprocessed.csv").then(data => data)
+
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
-		Promise.all([map_promise_110, map_promise_50, country_label_promise]).then((results) => {
+		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise]).then((results) => {
 			// 110map
 			const map_data = results[0];
 			// 50map
 			const map_data_50 = results[1]
-			console.log
 			// country label names
 			const country_label_data = results[2];
+
+			const ndr_data = results[3];
+
 			
 			// add country name labels to map_data objects
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
@@ -48,6 +52,20 @@ class MapPlot {
 			let clickedRotate; 
 			let clickedScale;
 
+			const render = () => {
+				// Update country borders
+				svg.selectAll("path").attr('d', path)
+
+				// Update data points
+				svg.selectAll("circle")
+					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
+					// make the data dots disappear when they are on the other side of the globe.
+					.style("display", (d) => {  
+						var globeDistance = d3.geoDistance([d.lng, d.lat], projection.invert([svgWidth/2, svgHeight/2]));
+						return (globeDistance > 1.57) ? 'none' : 'inline';
+					})
+			};
+
 			let projection = d3.geoOrthographic()
 				.rotate([0, 0])
 				.scale(scale)
@@ -56,11 +74,6 @@ class MapPlot {
 			let path = d3.geoPath(projection)
 
 			let countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip")
-
-			const render = () => {
-				// Update paths
-				svg.selectAll("path").attr('d', path);
-			};
 
 			// the main globe object
 			 svg.selectAll("path")
@@ -82,7 +95,9 @@ class MapPlot {
 						.style("display", "none");
 					d3.select(this).classed("selected", false)	
 				})
+				.on("click", clicked)
 				
+			initWorldMapData(worldDataSelection());
 			initializeZoom();
 			render();
 
@@ -93,6 +108,20 @@ class MapPlot {
 			// 		.attr('r', scale+10)
 			// 		.attr("fill", "yellow")
 
+			function worldDataSelection() {
+				return svg.selectAll("circle")
+					.data(ndr_data.filter((d) => d.UN_cur > 30000000), (d) => d);
+			}
+
+			function initWorldMapData(worldDataSelection) {
+				worldDataSelection.enter().append("circle")
+					.attr("r", 2)
+					.style("fill", (d) => {
+						if (d.UN_cur > 30000000) return "red";
+						else return "blue"; 
+					})
+
+			}
 
 			var v0, r0, q0;
 
@@ -145,38 +174,75 @@ class MapPlot {
 				clickedScale = currentScale * 1.5 / Math.max((b[1][0] - b[0][0]) / (svgWidth/2), (b[1][1] - b[0][1]) / (svgHeight/2));
 				clickedRotate = projection.rotate();
 
-				let already_triggered = false
+				// Filter out data for just the country that is focused
+				// This might need to be done in the preprocessing step instead,
+				// right now it is a bit slow when clicking...
+				let focusedCountryData = ndr_data.filter((pointData) => d3.polygonContains(d.geometry.coordinates[0], [pointData.lng, pointData.lat]))
+				let focusedDataSelection = svg.selectAll("circle")
+					.data(focusedCountryData, (d) => d)
+				
+				let end_callback_triggered = false
+				
+				// color scale for the data points in the focused mode
+				// TODO: VERY IMPORTANT; we need a scale for the zoomed 
+				// in mode to be able to compare the colors to the extreme values of the whole 
+				// world, to see if they are bad or not, (in addition to the comparison within
+				// a country)
+				let color_scale = d3.scaleLinear()
+					.domain(d3.extent(focusedCountryData, x => parseInt(x.UN_cur)))
+					.range(["green", "red"])
+					.interpolate(d3.interpolateHcl);
+				
 				// Update the map:
 				d3.selectAll("path")
 					.transition()
 					.attrTween("d", zoomRotateFactory(currentRotate, currentScale, clickedRotate, clickedScale))
 					.duration(1000)
-					.on("end", function() {
-						if (!already_triggered) {
-							console.log(d.name)
+					.on("end", () => {
+						if (!end_callback_triggered) {
 							init_50map(d)
-							already_triggered = true
 							d3.select(this).classed("selected", false)
-						}
-					})
-			}
 
+							// Add focused country data
+							focusedDataSelection.enter().append("circle")
+								.attr("r", "3")
+								.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
+								.style("fill", (d) => color_scale(d.UN_cur))
+								.style("display", "inline")
+
+							end_callback_triggered = true;
+							}
+						});
+						
+				// Remove the world map data
+				focusedDataSelection.exit().remove()
+			}
+				
+				
 			function resetClick() {
 				activeClick.classed("active", false);
 				activeClick = d3.select(null);
+
 				init_110map()
 				showStory(0)
-				let already_triggered = false
+
+				let dataSelection = worldDataSelection();
+				dataSelection.exit().remove();
+				
+				let end_callback_triggered = false;
+
 				d3.selectAll("path")
 					.transition()
 					.attrTween("d", zoomRotateFactory(clickedRotate, clickedScale, resetRotate, resetScale))
 					.duration(1000)
-					.on("end", function() {
-						if (!already_triggered) {
-							initializeZoom()
-							already_triggered = true
+					.on("end", () => {
+						if (!end_callback_triggered) {
+							initWorldMapData(dataSelection);
+							initializeZoom();
+							render();
+							end_callback_triggered = true;
 						}
-					})
+					});
 			}
 
 			function zoomRotateFactory(currRot, currScale, nexRot, nexScale) {
