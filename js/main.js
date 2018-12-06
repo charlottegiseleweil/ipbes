@@ -23,19 +23,32 @@ class MapPlot {
 			return country_features;
 		})
 
-		const country_mapping_promise = d3.json("data/preprocessed_data/ndr_countries.json")
+		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/ndr_countries.json")
+		const country_mapping_poll_promise = d3.json("data/preprocessed_data/poll_countries.json")
+		//const country_mapping_cv_promise = d3.json("data/preprocessed_data/cv_countries.json")
 
 		const ndr_promise = d3.csv("data/preprocessed_data/ndr_table_preprocessed.csv").then(data => data)
+		const poll_promise = d3.csv("data/preprocessed_data/poll_table_preprocessed.csv").then(data => data)
+		//const cv_promise = d3.csv("data/preprocessed_data/cv_table_preprocessed.csv").then(data => data)
 
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
-		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise, country_mapping_promise]).then((results) => {
-			const map_data = results[0];  // 110m map
-			const map_data_50 = results[1]  // 50m map
-			const country_label_data = results[2];  // country label names
-			const ndr_data = results[3];  // data
-			const country_mapping = results[4]  // mapping between country name and data points
+		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise, 
+					poll_promise, country_mapping_ndr_promise, country_mapping_poll_promise]).then((results) => {
 
+			const map_data = results[0];  // 110m map
+			const map_data_50 = results[1];  // 50m map
+			const country_label_data = results[2];  // country label names
+
+			const ndr_data = results[3];  // data
+			const poll_data = results[4];
+
+			const ndr_country_mapping = results[5];  // mapping between country name and data points
+			const poll_country_mapping = results[6];  
+			const cv_country_mapping = ""; 
+			
+			let currentData = ndr_data;
+			let currentCountryMapping = ndr_country_mapping
 			
 			// add country name labels to map_data objects  TODO: add this to preprocessing instead
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
@@ -50,6 +63,17 @@ class MapPlot {
 			let activeClick = d3.select(null)
 			let clickedRotate; 
 			let clickedScale;
+			let focused = false;
+			let focusedCountry = "";
+			let currentDatasetName = "ndr";
+			// color scale for the data points in the focused mode
+			// TODO: VERY IMPORTANT; we need a scale for the zoomed 
+			// in mode to be able to compare the colors to the extreme values of the whole 
+			// world, to see if they are bad or not, (in addition to the comparison within
+			// a country)
+			let focused_color_scale = d3.scaleLinear()
+				.range(["green", "red"])
+				.interpolate(d3.interpolateHcl);
 
 			const render = () => {
 				// Update country borders
@@ -107,19 +131,74 @@ class MapPlot {
 			// 		.attr('r', scale+10)
 			// 		.attr("fill", "yellow")
 
+			this.setDataset = function(dataset) {  //TODO: disable switches during transition
+				currentDatasetName = dataset;
+				switch (currentDatasetName) {
+					case 'ndr': 
+						currentData = ndr_data;
+						currentCountryMapping = ndr_country_mapping;
+						break;
+					case 'poll':
+						currentData = poll_data;
+						currentCountryMapping = poll_country_mapping;
+						break;
+					// Not implemented yet:
+					// case 'cv':  
+					// 	currentData = cv_data;
+					// 	currentCountryMapping = cv_country_mapping;
+					//  break; 
+					
+				}
+				if (focused) {
+					let dataSelection = focusedDataSelection();
+					dataSelection.exit().remove();
+					initFocusedMapData(dataSelection);
+				} else {
+					let dataSelection = worldDataSelection();
+					dataSelection.exit().remove();
+					initWorldMapData(dataSelection);
+					render();
+				}
+			}
+
 			function worldDataSelection() {
+				let threshold;
+				switch(currentDatasetName) {
+					case 'ndr':
+						threshold = 30000000;
+						break;
+					case 'poll':
+						threshold = 30000;
+				}
 				return svg.selectAll("circle")
-					.data(ndr_data.filter((d) => d.UN_cur > 30000000), (d) => d);
+					.data(currentData.filter((d) => d.UN_cur > threshold), (d) => d);
 			}
 
 			function initWorldMapData(worldDataSelection) {
 				worldDataSelection.enter().append("circle")
 					.attr("r", 2)
-					.style("fill", (d) => {
-						if (d.UN_cur > 30000000) return "red";
-						else return "blue"; 
-					})
+					.style("fill", "red")
+			}
 
+			function focusedDataSelection() {
+				// Get data for just the country that is focused (all data available)
+				let focusedCountryData = currentCountryMapping[`${focusedCountry}`].reduce((acc, cur) => {
+					acc.push(currentData[cur]);
+					return acc;
+				}, []);
+
+				focused_color_scale.domain(d3.extent(focusedCountryData, x => parseInt(x.UN_cur)));
+				return svg.selectAll("circle").data(focusedCountryData, (d) => d);
+				
+			}
+
+			function initFocusedMapData(focusedDataSelection) {
+				// Add focused country data
+				focusedDataSelection.enter().append("circle")
+					.attr("r", "3")
+					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
+					.style("fill", (d) => focused_color_scale(d.UN_cur))
+					.style("display", "inline")
 			}
 
 			var v0, r0, q0;
@@ -156,6 +235,7 @@ class MapPlot {
 				activeClick.classed("active", false);
 				activeClick = d3.select(this).classed("active", true);
 				
+				focusedCountry = d.name;
 				svg.on('.zoom', null).on('.start', null);  // disable zoom and drag while focused on a country
 
 				let currentRotate = projection.rotate();
@@ -172,27 +252,10 @@ class MapPlot {
 				var b = path.bounds(d);
 				clickedScale = currentScale * 1.5 / Math.max((b[1][0] - b[0][0]) / (svgWidth/2), (b[1][1] - b[0][1]) / (svgHeight/2));
 				clickedRotate = projection.rotate();
-
-				// Get data for just the country that is focused (all data available)
-				let focusedCountryData = country_mapping[`${d.name}`].reduce((acc, cur) => {
-					acc.push(ndr_data[cur]);
-					return acc;
-				}, []);
 				
-				let focusedDataSelection = svg.selectAll("circle")
-					.data(focusedCountryData, (d) => d)
+				let end_callback_triggered = false;
 				
-				let end_callback_triggered = false
-				
-				// color scale for the data points in the focused mode
-				// TODO: VERY IMPORTANT; we need a scale for the zoomed 
-				// in mode to be able to compare the colors to the extreme values of the whole 
-				// world, to see if they are bad or not, (in addition to the comparison within
-				// a country)
-				let color_scale = d3.scaleLinear()
-					.domain(d3.extent(focusedCountryData, x => parseInt(x.UN_cur)))
-					.range(["green", "red"])
-					.interpolate(d3.interpolateHcl);
+				let dataSelection = focusedDataSelection();
 				
 				// Update the map:
 				d3.selectAll("path")
@@ -203,20 +266,15 @@ class MapPlot {
 						if (!end_callback_triggered) {
 							init_50map(d)
 							d3.select(this).classed("selected", false)
-
-							// Add focused country data
-							focusedDataSelection.enter().append("circle")
-								.attr("r", "3")
-								.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
-								.style("fill", (d) => color_scale(d.UN_cur))
-								.style("display", "inline")
+							initFocusedMapData(dataSelection);
 
 							end_callback_triggered = true;
 							}
 						});
 						
 				// Remove the world map data
-				focusedDataSelection.exit().remove()
+				focused = true;
+				dataSelection.exit().remove()
 			}
 				
 				
@@ -228,6 +286,7 @@ class MapPlot {
 				showStory(0)
 
 				let dataSelection = worldDataSelection();
+				focused = false;
 				dataSelection.exit().remove();
 				
 				let end_callback_triggered = false;
@@ -306,7 +365,6 @@ class MapPlot {
 						countryTooltip.style("opacity", 0)
 							.style("display", "none");
 						d3.select(this).classed("selected", false)
-						
 					})
 			}
 		});
@@ -331,6 +389,11 @@ whenDocumentLoaded(() => {
 	is2050 = false;
 	slideIndex = 0;
 	showStory(slideIndex);
+
+	// When the dataset radio buttons are changed: change the dataset
+	d3.selectAll(("input[name='radio1']")).on("change", function(){
+		plot_object.setDataset(this.value)
+	});
 });
 
 
@@ -391,6 +454,7 @@ function showStory(n) {
 	document.getElementById("story-header").innerHTML = story.header;
 	document.getElementById("story-text").innerHTML = story.text;
 	document.getElementById(story.field).checked = true;
+	document.getElementById(story.field).dispatchEvent(new Event('change'))  // Trigger the change event on the radio button to make sure that the dataset shifts accordingly
 	document.getElementById(story.scenario).checked = true;
 	switchYear(story.toggleState);
 }
