@@ -277,7 +277,7 @@ class MapPlot {
 								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy \
 									eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."}
 							showStory_for_country_without_data(story)
-							return "yellow"
+							return "dimgray"
 						}
 						return "grey";
 					})
