@@ -23,22 +23,21 @@ class MapPlot {
 			return country_features;
 		})
 
+		const country_mapping_promise = d3.json("data/preprocessed_data/ndr_countries.json")
+
 		const ndr_promise = d3.csv("data/preprocessed_data/ndr_table_preprocessed.csv").then(data => data)
 
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
-		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise]).then((results) => {
-			// 110map
-			const map_data = results[0];
-			// 50map
-			const map_data_50 = results[1]
-			// country label names
-			const country_label_data = results[2];
-
-			const ndr_data = results[3];
+		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise, country_mapping_promise]).then((results) => {
+			const map_data = results[0];  // 110m map
+			const map_data_50 = results[1]  // 50m map
+			const country_label_data = results[2];  // country label names
+			const ndr_data = results[3];  // data
+			const country_mapping = results[4]  // mapping between country name and data points
 
 			
-			// add country name labels to map_data objects
+			// add country name labels to map_data objects  TODO: add this to preprocessing instead
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 			map_data_50.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 
@@ -174,10 +173,12 @@ class MapPlot {
 				clickedScale = currentScale * 1.5 / Math.max((b[1][0] - b[0][0]) / (svgWidth/2), (b[1][1] - b[0][1]) / (svgHeight/2));
 				clickedRotate = projection.rotate();
 
-				// Filter out data for just the country that is focused
-				// This might need to be done in the preprocessing step instead,
-				// right now it is a bit slow when clicking...
-				let focusedCountryData = ndr_data.filter((pointData) => d3.polygonContains(d.geometry.coordinates[0], [pointData.lng, pointData.lat]))
+				// Get data for just the country that is focused (all data available)
+				let focusedCountryData = country_mapping[`${d.name}`].reduce((acc, cur) => {
+					acc.push(ndr_data[cur]);
+					return acc;
+				}, []);
+				
 				let focusedDataSelection = svg.selectAll("circle")
 					.data(focusedCountryData, (d) => d)
 				
