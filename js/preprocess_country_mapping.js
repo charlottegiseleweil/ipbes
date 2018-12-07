@@ -23,7 +23,7 @@ const map_promise = d3.json("data/map_data/50m.json").then(topojson_raw => {
 const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data);
 
 // TODO: add cv here and get the output as well. (Right now it probably takes too long time)
-["ndr", "poll"].forEach((dataset) => {
+["poll", "ndr", "cv"].forEach((dataset) => {
     const data_promise = d3.csv(`data/preprocessed_data/${dataset}_table_preprocessed.csv`).then(data => data)
     
     

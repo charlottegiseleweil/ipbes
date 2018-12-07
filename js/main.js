@@ -25,16 +25,16 @@ class MapPlot {
 
 		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/ndr_countries.json")
 		const country_mapping_poll_promise = d3.json("data/preprocessed_data/poll_countries.json")
-		//const country_mapping_cv_promise = d3.json("data/preprocessed_data/cv_countries.json")
+		const country_mapping_cv_promise = d3.json("data/preprocessed_data/cv_countries.json")
 
 		const ndr_promise = d3.csv("data/preprocessed_data/ndr_table_preprocessed.csv").then(data => data)
 		const poll_promise = d3.csv("data/preprocessed_data/poll_table_preprocessed.csv").then(data => data)
-		//const cv_promise = d3.csv("data/preprocessed_data/cv_table_preprocessed.csv").then(data => data)
+		const cv_promise = d3.csv("data/preprocessed_data/cv_table_preprocessed.csv").then(data => data)
 
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
 		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise, 
-					poll_promise, country_mapping_ndr_promise, country_mapping_poll_promise]).then((results) => {
+					poll_promise, cv_promise, country_mapping_ndr_promise, country_mapping_poll_promise, country_mapping_cv_promise]).then((results) => {
 
 			const map_data = results[0];  // 110m map
 			const map_data_50 = results[1];  // 50m map
@@ -42,10 +42,11 @@ class MapPlot {
 
 			const ndr_data = results[3];  // data
 			const poll_data = results[4];
+			const cv_data = results[5];
 
-			const ndr_country_mapping = results[5];  // mapping between country name and data points
-			const poll_country_mapping = results[6];  
-			const cv_country_mapping = ""; 
+			const ndr_country_mapping = results[6];  // mapping between country name and data points
+			const poll_country_mapping = results[7];  
+			const cv_country_mapping = results[8]; 
 			
 			let currentData = ndr_data;
 			let currentCountryMapping = ndr_country_mapping
@@ -142,11 +143,10 @@ class MapPlot {
 						currentData = poll_data;
 						currentCountryMapping = poll_country_mapping;
 						break;
-					// Not implemented yet:
-					// case 'cv':  
-					// 	currentData = cv_data;
-					// 	currentCountryMapping = cv_country_mapping;
-					//  break; 
+					case 'cv':  
+						currentData = cv_data;
+						currentCountryMapping = cv_country_mapping;
+					 	break; 
 					
 				}
 				if (focused) {
@@ -169,6 +169,10 @@ class MapPlot {
 						break;
 					case 'poll':
 						threshold = 30000;
+						break;
+					case 'cv':
+						threshold = 3.4;
+						break;
 				}
 				return svg.selectAll("circle")
 					.data(currentData.filter((d) => d.UN_cur > threshold), (d) => d);
