@@ -232,10 +232,13 @@ class MapPlot {
 			function clicked(d){
 				if (activeClick.node() === this) return resetClick();  // zoom out again if click on the same country
 				else if (activeClick.node() != null) return null;  // else if we are already zoomed in, do nothing
+
+				focusedCountry = d.name;
+				if (focusedCountry == undefined) return null;
+
 				activeClick.classed("active", false);
 				activeClick = d3.select(this).classed("active", true);
 				
-				focusedCountry = d.name;
 				svg.on('.zoom', null).on('.start', null);  // disable zoom and drag while focused on a country
 
 				let currentRotate = projection.rotate();
