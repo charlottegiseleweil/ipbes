@@ -78,9 +78,12 @@
 						<p id = "story-text"></p>
 				</div>
 		</div>
-		<!-- Next/prev buttons -->
-		<a class="prev" onclick="plusStory(-1)">&#10094;</a>
-		<a class="next" onclick="plusStory(1)">&#10095;</a>
+		<div id="story-btn-section">
+			<!-- Next/prev buttons -->
+			<a class="prev" onclick="plusStory(-1)">&#10094;</a>
+			<!--<button name="btn" id="escape_story_mode">esc</button>-->
+			<a class="next" onclick="plusStory(1)">&#10095;</a>
+		</div>
 	</div>
 	
 	<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%">
@@ -96,6 +99,7 @@
 <script>
     if (!window.d3) document.write('<script src="lib/d3.min.js"><\/script>');
 </script>
+<script src="data/stories.js"></script>
 <script src="lib/topojson.min.js"></script>
 <script src="js/main.js"></script>
 </body>

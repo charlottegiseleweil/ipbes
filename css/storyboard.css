@@ -56,3 +56,12 @@
     font-size: 0.9rem;
 }
   
+
+#story-btn-section {
+}
+
+#escape_story_mode {
+    position: absolute;
+    bottom: 1rem;
+    left: 40%;
+}

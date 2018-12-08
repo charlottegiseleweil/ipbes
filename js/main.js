@@ -1,12 +1,11 @@
 class MapPlot {
 	constructor(svg_element_id) {
 		let svg = d3.select('#' + svg_element_id);
-
+		this.svg = svg
 		// may be useful for calculating scales
 		const svg_viewbox = svg.node().viewBox.animVal;
 		let svgWidth = svg_viewbox.width;
 		let svgHeight = svg_viewbox.height;
-
 
 		// FIXME: better load function for both maps
 		const map_promise_110 = d3.json("data/map_data/110m.json").then(topojson_raw => {
@@ -30,7 +29,6 @@ class MapPlot {
 			const map_data = results[0];
 			// 50map
 			const map_data_50 = results[1]
-			console.log
 			// country label names
 			const country_label_data = results[2];
 			// add country name labels to map_data objects
@@ -39,7 +37,7 @@ class MapPlot {
 
 			let center_x = svgWidth/2;
 			let center_y = svgHeight/2;	
-			let scale = 380;
+			let scale = 395;
 			let scaleExtent = [0.8, 5];
 			let resetScale = scale;
 			let resetRotate = [0, 0];
@@ -85,6 +83,7 @@ class MapPlot {
 				
 			initializeZoom();
 			render();
+			showStory(0, true)
 
 			var v0, r0, q0;
 
@@ -114,9 +113,40 @@ class MapPlot {
 				render()
 			}
 
-			function clicked(d) {
-				// hide story points
+			// find country object in json
+			function getCountryByCode(code) {
+				return map_data.filter(
+					function(map_data){ return map_data.name == code }
+				);
+			}
+			
+			// save the latest zoom before story - after reset set this value again to 0 - kin of a story mode variable
+			let scaleBeforeStory = 0;
+			// after user clicked any story arrow find country object and navigate to country from story
+			function clicked_Story(country){
+				if(scaleBeforeStory == 0) {
+					scaleBeforeStory=projection.scale()
+				}
+
+				// low res map before transition
+				init_110map()
+
+				// find country element
+				let found = getCountryByCode(country)[0];
+
+				let p_center = d3.geoCentroid(found)
+				console.log(country + "  " + p_center)
+
+				// transition
+				clicked(found)
+			}
+			this.clicked_Story = clicked_Story
+
+			function clicked(d, fromStory=false) {
+				// hide story points before transition
 				svg.selectAll("circle").remove()
+				// hide story btns if discovery mode
+				if (fromStory) {document.getElementById("story-btn-section").style.display = "none";}
 
 				if (activeClick.node() === this) return resetClick();  // zoom out again if click on the same country
 				else if (activeClick.node() != null) return null;  // else if we are already zoomed in, do nothing
@@ -131,7 +161,6 @@ class MapPlot {
 				resetScale = currentScale
 
 				let p_center = d3.geoCentroid(d)
-				
 				projection.rotate([-p_center[0], -p_center[1]]);
 				path.projection(projection);
 				
@@ -148,20 +177,28 @@ class MapPlot {
 					.duration(1000)
 					.on("end", function() {
 						if (!already_triggered) {
-							init_50map(d)
+							if (fromStory) {
+								init_50map(d)
+							} else {
+								init_50map(d, true)
+							}							
 							already_triggered = true
 							d3.select(this).classed("selected", false)
 						}
 					})
 			}
 
-			function resetClick() {
+			function resetClick(fromStory=false) {
 				activeClick.classed("active", false);
 				activeClick = d3.select(null);
+				svg.selectAll("circle").remove()
 				init_110map()
-				showStory(0)
+				showStory(1, true)
 				let already_triggered = false
-				d3.selectAll("path")
+
+				// if reset comes explore mode
+				if (!fromStory) {
+					d3.selectAll("path")
 					.transition()
 					.attrTween("d", zoomRotateFactory(clickedRotate, clickedScale, resetRotate, resetScale))
 					.duration(1000)
@@ -169,9 +206,25 @@ class MapPlot {
 						if (!already_triggered) {
 							initializeZoom()
 							already_triggered = true
+							document.getElementById("story-btn-section").style.display = "block";
 							render()	
 						}
 					})
+				} else {
+				// if reset comes from story
+					d3.selectAll("path")
+					.transition()
+					.attrTween("d", zoomRotateFactory(clickedRotate, clickedScale, clickedRotate, scaleBeforeStory))
+					.duration(1000)
+					.on("end", function() {
+						if (!already_triggered) {
+							initializeZoom()
+							already_triggered = true
+							render()	
+							scaleBeforeStory = 0
+						}
+					})
+				}	
 			}
 
 			function zoomRotateFactory(currRot, currScale, nexRot, nexScale) {
@@ -189,31 +242,51 @@ class MapPlot {
 			}
 
 			// initializing HD map after zooming in
-			function init_50map(country_sel) {
+			function init_50map(country_sel, fromStory=false) {
 				// hide tooltip
 				countryTooltip.style("opacity", 0)
 						.style("display", "none");
 
-				svg.selectAll("path").remove().enter()
+				// if zoom comes from story mode or explore mode
+				if (!fromStory) {
+					svg.selectAll("path").remove().enter()
 					.data(map_data_50)
 					.enter().append("path")
 					.attr("fill", function (d){
-						if (d.name == country_sel.name) {
+						if (d.name == country_sel.name) { 
 							let story = { 
 								header: d.name, 
 								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy \
-									eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."}
+									eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+							}
 							showStory_for_country_without_data(story)
 							return "yellow"
 						}
 						return "grey";
 					})
 					.attr("d", path)
-					.on("click", resetClick)
-					.attr()
+					.on("click", function() {
+						resetClick(false)
+					})
+				} else {
+					svg.selectAll("path").remove().enter()
+					.data(map_data_50)
+					.enter().append("path")
+					.attr("fill", function (d){
+						if (d.name == country_sel.name) { 
+							return "yellow"
+						}
+						return "grey";
+					})
+					.attr("d", path)
+					.on("click", function() {
+						resetClick(true)
+					})
+				}
+				render()
 			}
 
-			// initializing LOW RES map after zooming in
+			// initializing LOW RES map
 			function init_110map() {
 				svg.selectAll("path").remove().enter()
 					.data(map_data)
@@ -260,14 +333,18 @@ class MapPlot {
                 markers.each(function () {
                     this.parentNode.appendChild(this);
 				});
-            }
-
+			}
 
 		});
 
 	}
+
+	move_story_line(country) {
+		this.clicked_Story(country)
+	}
+
 }
-			
+
 function whenDocumentLoaded(action) {
 	if (document.readyState === "loading") {
 		document.addEventListener("DOMContentLoaded", action);
@@ -312,54 +389,6 @@ function switchYear(toggle) {
 };
 
 
-let locationData = [
-	{"latitude": 22, "longitude": 88},
-	{"latitude": 12.61315, "longitude": 38.37723},
-	{"latitude": -30, "longitude": -58},
-	{"latitude": -14.270972, "longitude": -170.132217},
-	{"latitude": 28.033886, "longitude": 1.659626},
-	{"latitude": 40.463667, "longitude": -3.74922},
-	{"latitude": 35.907757, "longitude": 127.766922},
-	{"latitude": 23.634501, "longitude": -102.552784}
-]
-
-// Test stories
-const stories = [ {header: "Initial Story", 
-					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjdsf kjdsf dskjfdsfjk kdoapadf",
-					field: "a_radio-1",
-					scenario: "b_radio-1",
-					toggleState: false,
-					lat: 22,
-					lon: 88},
-				{header: "The year was 2050", 
-					text: "klsd jkdsf jkd fkjds fkjds fkdsjfd fkjdsf kjdsf dskjfdsfjk kdoapadf",
-					field: "a_radio-2",
-					scenario: "b_radio-3",
-					toggleState: true,
-					lat: 12.61315,
-					lon: 38.37723},
-				{header: "YEEAH", 
-					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjds skjfdsfjk kdoapadf",
-					field: "a_radio-3",
-					scenario: "b_radio-1",
-					toggleState: true,
-					lat: -30,
-					lon: -58},
-				{header: "___4", 
-					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjds skjfdsfjk kdoapadf",
-					field: "a_radio-3",
-					scenario: "b_radio-1",
-					toggleState: true,
-					lat: -14.270972,
-					lon: -170.132217},
-				{header: "___5", 
-					text: "klsd jkdsf jkd fkjds fkjds kjeewwedsjfsdkfdjskfkdsjfd fkjds skjfdsfjk kdoapadf",
-					field: "a_radio-3",
-					scenario: "b_radio-1",
-					toggleState: true,
-					lat: 28.033886,
-					lon: 1.659626},
-				];
 
 
 // Functions to display stories
@@ -367,11 +396,14 @@ function plusStory(n) {
   showStory(slideIndex += n);
 }
 
-function showStory(n) {
+function showStory(n, reset=false) {
 	if (n > stories.length-1) {slideIndex = 0 }; 
 	if (n < 0) {slideIndex = stories.length-1}
 
 	const story = stories[slideIndex];
+	if(!reset) {plot_object.move_story_line(story.country)};
+	
+
 	document.getElementById("story-header").innerHTML = story.header;
 	document.getElementById("story-text").innerHTML = story.text;
 	document.getElementById(story.field).checked = true;
