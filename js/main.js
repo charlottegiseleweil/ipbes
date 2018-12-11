@@ -332,7 +332,7 @@ class MapPlot {
 			function resetClick(fromStory=false) {
 				activeClick.classed("active", false);
 				activeClick = d3.select(null);
-				svg.selectAll("circle").remove()
+				svg.selectAll("circle.story-markers").remove()
 
 				init_110map()
 				showStory(1, true)
