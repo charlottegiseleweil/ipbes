@@ -64,3 +64,10 @@ body {
 	background-color: white;
 }
 
+circle.story-markers {
+	fill: mediumseagreen;
+}
+
+circle.goo {
+	fill: yellow;
+}
