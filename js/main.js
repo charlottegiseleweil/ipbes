@@ -80,7 +80,6 @@ class MapPlot {
 				// Update country borders
 				svg.selectAll("path").attr('d', path)
 
-				drawMarkers()
 
 				// Update data points
 				svg.selectAll("circle")
@@ -130,7 +129,6 @@ class MapPlot {
 			render();
 			
 			
-
 			// TODO: CIRCLE AROUND WORLD 
 			// svg.selectAll("path").enter()
 			// 	.append("circle")
@@ -461,7 +459,8 @@ class MapPlot {
 							.style("display", "none");
 						d3.select(this).classed("selected", false)
 					})
-				
+				drawMarkers()
+
 			}
 
 			// Story Markers
