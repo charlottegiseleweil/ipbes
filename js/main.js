@@ -180,13 +180,14 @@ class MapPlot {
 						threshold = 3.4;
 						break;
 				}
-				return svg.selectAll("circle")
+				return svg.selectAll("circle.datapoints")
 					.data(currentData.filter((d) => d.UN_cur > threshold), (d) => d);
 			}
 
 			function initWorldMapData(worldDataSelection) {
 				worldDataSelection.enter().append("circle")
 					.attr("r", 2)
+					.attr("class", "datapoints")
 					.style("fill", "red")
 			}
 
@@ -198,7 +199,7 @@ class MapPlot {
 				}, []);
 
 				focused_color_scale.domain(d3.extent(focusedCountryData, x => parseInt(x.UN_cur)));
-				return svg.selectAll("circle").data(focusedCountryData, (d) => d);
+				return svg.selectAll("circle.datapoints").data(focusedCountryData, (d) => d);
 				
 			}
 
@@ -206,6 +207,7 @@ class MapPlot {
 				// Add focused country data
 				focusedDataSelection.enter().append("circle")
 					.attr("r", "3")
+					.attr("class", "datapoints")
 					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
 					.style("fill", (d) => focused_color_scale(d.UN_cur))
 					.style("display", "inline")
