@@ -67,6 +67,11 @@ class MapPlot {
 			let focused = false;
 			let focusedCountry = "";
 			let currentDatasetName = "ndr";
+			// the current scenario, either 'cur', 'ssp1', 'ssp3' or 'ssp5'
+			this.currentScenario = "cur";
+			this.update_all = update_all;
+			this.setDataset = setDataset;
+
 			// color scale for the data points in the focused mode
 			// TODO: VERY IMPORTANT; we need a scale for the zoomed 
 			// in mode to be able to compare the colors to the extreme values of the whole 
@@ -127,6 +132,7 @@ class MapPlot {
 			initializeZoom();
 			drawMarkers();
 			render();
+			showStory(0, true);
 			
 			
 			// TODO: CIRCLE AROUND WORLD 
@@ -136,7 +142,7 @@ class MapPlot {
 			// 		.attr('r', scale+10)
 			// 		.attr("fill", "yellow")
 
-			this.setDataset = function(dataset) {  //TODO: disable switches during transition
+			function setDataset(dataset) {  //TODO: disable switches during transition
 				currentDatasetName = dataset;
 				switch (currentDatasetName) {
 					case 'ndr': 
@@ -153,6 +159,10 @@ class MapPlot {
 					 	break; 
 					
 				}
+				update_all();
+			}
+
+			function update_all() {
 				if (focused) {
 					let dataSelection = focusedDataSelection();
 					dataSelection.exit().remove();
@@ -179,7 +189,7 @@ class MapPlot {
 						break;
 				}
 				return svg.selectAll("circle.datapoints")
-					.data(currentData.filter((d) => d.UN_cur > threshold), (d) => d);
+					.data(currentData.filter((d) => d[`UN_${plot_object.currentScenario}`] > threshold), (d) => d);
 			}
 
 			function initWorldMapData(worldDataSelection) {
@@ -196,7 +206,7 @@ class MapPlot {
 					return acc;
 				}, []);
 
-				focused_color_scale.domain(d3.extent(focusedCountryData, x => parseInt(x.UN_cur)));
+				focused_color_scale.domain(d3.extent(focusedCountryData, x => parseInt(x[`UN_${plot_object.currentScenario}`])));
 				return svg.selectAll("circle.datapoints").data(focusedCountryData, (d) => d);
 				
 			}
@@ -207,7 +217,7 @@ class MapPlot {
 					.attr("r", "3")
 					.attr("class", "datapoints")
 					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
-					.style("fill", (d) => focused_color_scale(d.UN_cur))
+					.style("fill", (d) => focused_color_scale(d[`UN_${plot_object.currentScenario}`]))
 					.style("display", "inline")
 			}
 
@@ -492,6 +502,10 @@ class MapPlot {
 		});
 
 	}
+	setScenario(scenario) {
+		this.currentScenario = scenario;
+		this.update_all();
+	}
 	switchStory(story) {
 		let c = story.country
 		this.clicked_Story(story.country)
@@ -511,16 +525,20 @@ function whenDocumentLoaded(action) {
 whenDocumentLoaded(() => {
 	plot_object = new MapPlot('globe-plot');
 	// plot object is global, you can inspect it in the dev-console
-
-	// Initialize dashboard
-	is2050 = false;
-	slideIndex = 0;
-	showStory(slideIndex, true);
-
+	
 	// When the dataset radio buttons are changed: change the dataset
 	d3.selectAll(("input[name='radio1']")).on("change", function(){
 		plot_object.setDataset(this.value)
 	});
+	
+	d3.selectAll(("input[name='radio2']")).on("change", function(){
+		plot_object.setScenario(this.value)
+	});
+
+	// Initialize dashboard
+	is2050 = false;
+	slideIndex = 0;
+
 });
 
 
@@ -538,12 +556,15 @@ function switchYear(toggle) {
 		scenarioRow.style.opacity = '1';
 		scenarioRow.style.transition = 'opacity 0.5s linear';
 		scenarioRow.style.visibility = 'visible';
+		document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'))  // toggle change event on checked radio button
     } else {
 		toggleContainer.style.clipPath = 'inset(0 50% 0 0)';
 		scenarioRow.style.visibility = 'collapse';
 		scenarioRow.style.opacity = '0';
 		scenarioRow.style.transition = 'opacity 0.5s linear';
-		scenarioRow.style.transition = 'visibility 0.15s linear';	
+		scenarioRow.style.transition = 'visibility 0.15s linear';
+		plot_object.setScenario("cur");
+
     }
 };
 
@@ -565,10 +586,10 @@ function showStory(n, reset=false) {
 	document.getElementById("story-header").innerHTML = story.header;
 	document.getElementById("story-text").innerHTML = story.text;
 	document.getElementById(story.field).checked = true;
+	document.getElementById(story.field).dispatchEvent(new Event('change'))  // Trigger the change event on the radio button to make sure that the dataset shifts accordingly
 	document.getElementById(story.scenario).checked = true;
 	switchYear(story.toggleState);
 	
-	document.getElementById(story.field).dispatchEvent(new Event('change'))  // Trigger the change event on the radio button to make sure that the dataset shifts accordingly
 	
 	if(!reset) {
 		plot_object.switchStory(story)
