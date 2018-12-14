@@ -80,15 +80,25 @@ class MapPlot {
 			let focused_color_scale = d3.scaleLinear()
 				.range(["green", "red"])
 				.interpolate(d3.interpolateHcl);
+			let world_color_scale = d3.scaleLinear()
+				.range(["green", "red"])
+				.interpolate(d3.interpolateHcl);
 
 			const render = () => {
 				// Update country borders
 				svg.selectAll("path").attr('d', path)
 
+				if (!focused) {
+					let dataSelection = worldDataSelection();
+					dataSelection.exit().remove();
+					initWorldMapData(dataSelection);
+				}
 
-				// Update data points
+				// Update positions of circles (both data points and story markers)
 				svg.selectAll("circle")
 					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
+
+				svg.selectAll("circle.story-markers")
 					// make the data dots disappear when they are on the other side of the globe.
 					.style("display", (d) => {  
 						var globeDistance = d3.geoDistance([d.lng, d.lat], projection.invert([svgWidth/2, svgHeight/2]));
@@ -128,10 +138,11 @@ class MapPlot {
 				})
 				.on("click", clicked)
 				
-			initWorldMapData(worldDataSelection());
+			let quadtree = setupQuadtree();
+			updateNodes(quadtree);
+
 			initializeZoom();
 			drawMarkers();
-			render();
 			showStory(0, true);
 			
 			
@@ -141,6 +152,86 @@ class MapPlot {
 			// 		.attr("transform", "translate([400,400])")
 			// 		.attr('r', scale+10)
 			// 		.attr("fill", "yellow")
+
+			function setupQuadtree() {
+				let quadtree = d3.quadtree()
+					.x((d) => d.lng)
+					.y((d) => d.lat)
+					.addAll(currentData);
+				return quadtree;
+			}
+
+			function updateNodes(quadtree) {
+                quadtree.visit(function (node, x1, y1, x2, y2) {
+					node.width = x2 - x1;
+                });
+			}
+			
+
+			// Find the nodes within the specified rectangle.
+            function search(quadtree, x0, y0, x3, y3) {
+                let pts = [];
+                let subPixel = false;
+                let subPts = [];
+                let nodeScale = projection.scale() * 0.0009;  // måste ändras
+				let counter = 0;
+				let counter2 = 0; 
+				
+				let mapCenter = projection.invert([svgWidth/2, svgHeight/2]);
+
+                quadtree.visit(function (node, x1, y1, x2, y2) {
+					let p = node.data;
+                    let pwidth = node.width * nodeScale;
+
+                    // -- if this is too small rectangle only count the branch and set opacity
+                    if ((pwidth * pwidth) <= 1) {
+                        // start collecting sub Pixel points
+                        subPixel = true;
+                    }
+                        // -- jumped to super node large than 1 pixel
+                    else {
+                        // end collecting sub Pixel points
+                        if (subPixel && subPts && subPts.length > 0) {
+
+                            subPts[0].group = subPts.length;
+                            pts.push(subPts[0]); // add only one todo calculate intensity
+                            counter += subPts.length - 1;
+                            subPts = [];
+                        }
+                        subPixel = false;
+					}
+                    if ((p) && d3.geoDistance([p.lng, p.lat], mapCenter) < 1.57) {
+						counter2 += 1;
+                        if (subPixel) {
+                            subPts.push(p);
+                        }
+                        else {
+                            if (p.group) {
+                                delete (p.group);
+                            }
+                            pts.push(p);
+                        }
+					}
+
+					if (Math.abs(x2 - x1 < 180)) {
+						if (y2 < y3 - 10 || y1 > y0 + 10) return true;  // The added and subtracted 10s are to make sure points are rendered at top and bottom properly
+						if (x3 > x0 && x2 > x1)  // if none of the areas are over the longitude 180/-180
+							return x1 > x3 || x2 < x0;  // if true, don't search over this area (because it does not overlap)
+						else if (x3 > x0 || x2 > x1)  // if one of the areas are over the longitude 180/-180 
+							return x1 > x3 && x2 < x0;
+						else return true  // else both areas are over the longitude 180/-180 ==> they are overlapping ==> return true
+					} else return false;
+                });
+				console.log(" Number of removed  points: " + counter);
+				console.log(" Number of kept points: " + pts.length)
+				console.log(" currentScale: " + projection.scale());
+				console.log("counter2: " + counter2);
+				if (counter2 == 0) {
+					console.log("uasid")
+				}
+                return pts;
+
+            }
 
 			function setDataset(dataset) {  //TODO: disable switches during transition
 				currentDatasetName = dataset;
@@ -162,41 +253,50 @@ class MapPlot {
 				update_all();
 			}
 
+			// updates all data using the currentData variable
 			function update_all() {
 				if (focused) {
 					let dataSelection = focusedDataSelection();
 					dataSelection.exit().remove();
 					initFocusedMapData(dataSelection);
 				} else {
-					let dataSelection = worldDataSelection();
-					dataSelection.exit().remove();
-					initWorldMapData(dataSelection);
+					quadtree = setupQuadtree();
+					updateNodes(quadtree);
 					render();
 				}
 			}
 
 			function worldDataSelection() {
-				let threshold;
-				switch(currentDatasetName) {
-					case 'ndr':
-						threshold = 30000000;
-						break;
-					case 'poll':
-						threshold = 30000;
-						break;
-					case 'cv':
-						threshold = 3.4;
-						break;
-				}
+				// let threshold;
+				// switch(currentDatasetName) {
+				// 	case 'ndr':
+				// 		threshold = 30000000;
+				// 		break;
+				// 	case 'poll':
+				// 		threshold = 30000;
+				// 		break;
+				// 	case 'cv':
+				// 		threshold = 3.4;
+				// 		break;
+				// 
+				// return svg.selectAll("circle.datapoints")
+				// 	.data(currentData.filter((d) => d[`UN_${plot_object.currentScenario}`] > threshold), (d) => d);
+				let topLeft = projection.invert([0, 0]);
+				let top = projection.invert([svgWidth/2, 0])[1];
+				let bottom = projection.invert([svgWidth/2, svgHeight])[1];
+				let bottomRight = projection.invert([svgWidth, svgHeight]);
+				// Create a subset of the data to display using a quadtree. This is the data which can be seen. If we are zoomed out the data will be aggregated.
+				let dataSubset = search(quadtree, topLeft[0], top, bottomRight[0], bottom);
+				world_color_scale.domain(d3.extent(dataSubset, x => parseInt(x[`UN_${plot_object.currentScenario}`])));
 				return svg.selectAll("circle.datapoints")
-					.data(currentData.filter((d) => d[`UN_${plot_object.currentScenario}`] > threshold), (d) => d);
+					.data(search(quadtree, topLeft[0], top, bottomRight[0], bottom));
 			}
 
 			function initWorldMapData(worldDataSelection) {
 				worldDataSelection.enter().append("circle")
 					.attr("r", 2)
 					.attr("class", "datapoints")
-					.style("fill", "red")
+					.style("fill", (d) => world_color_scale(d[`UN_${plot_object.currentScenario}`]))
 			}
 
 			function focusedDataSelection() {
@@ -342,14 +442,13 @@ class MapPlot {
 			function resetClick(fromStory=false) {
 				activeClick.classed("active", false);
 				activeClick = d3.select(null);
-				svg.selectAll("circle.story-markers").remove()
-
+				
 				init_110map()
 				showStory(1, true)
+				svg.selectAll("circle").remove()
 
 				let dataSelection = worldDataSelection();
 				focused = false;
-				dataSelection.exit().remove();
 
 				let already_triggered = false
 
