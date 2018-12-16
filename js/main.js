@@ -215,14 +215,14 @@ class MapPlot {
                         }
 					}
 
-					// if (Math.abs(x2 - x1 < 180)) {
-						if (y2 < y3 - 10 || y1 > y0 + 10) return true;  // The added and subtracted 10s are to make sure points are rendered at top and bottom properly
-						if (x3 > x0 && x2 > x1)  // if none of the areas are over the longitude 180/-180
-							return x1 > x3 || x2 < x0;  // if true, don't search over this area (because it does not overlap)
-						else if (x3 > x0 || x2 > x1)  // if one of the areas are over the longitude 180/-180 
-							return x1 > x3 && x2 < x0;
-						else return true  // else both areas are over the longitude 180/-180 ==> they are overlapping ==> return true
-					// } else return false;
+					// if the quad tree visit rectangle is outside of the search rectangle then we don't want to visit the sub nodes
+					// the rather complex logic here is because of the -180/180 longitude border
+					if (y2 < y3 - 10 || y1 > y0 + 10) return true;  // The added and subtracted 10s are to make sure points are rendered at top and bottom properly
+					if (x3 > x0 && x2 > x1)  // if none of the areas are over the longitude 180/-180
+						return x1 > x3 || x2 < x0;  // if true, don't search over this area (because it does not overlap)
+					else if (x3 > x0 || x2 > x1)  // if one of the areas are over the longitude 180/-180 
+						return x1 > x3 && x2 < x0;
+					else return false  // else both areas are over the longitude 180/-180 ==> they are overlapping ==> return false
                 });
 				console.log(" Number of removed  points: " + counter);
 				console.log(" Number of kept points: " + pts.length)
@@ -285,13 +285,14 @@ class MapPlot {
 				// return svg.selectAll("circle.datapoints")
 				// 	.data(currentData.filter((d) => d[`UN_${plot_object.currentScenario}`] > threshold), (d) => d);
 				let topLeft = projection.invert([0, 0]);
+				let topRight = projection.invert([svgWidth, 0]);
 				let top = projection.invert([svgWidth/2, 0])[1];
 				let bottom = projection.invert([svgWidth/2, svgHeight])[1];
+				let bottomLeft = projection.invert([0, svgHeight]);
 				let bottomRight = projection.invert([svgWidth, svgHeight]);
-				// Create a subset of the data to display using a quadtree. This is the data which can be seen. If we are zoomed out the data will be aggregated.
-				// let dataSubset = search(quadtree, topLeft[0], top, bottomRight[0], bottom);
+
 				return svg.selectAll("circle.datapoints")
-					.data(search(quadtree, topLeft[0], top, bottomRight[0], bottom), (d) => d);
+					.data(search(quadtree, Math.min(bottomLeft[0], topLeft[0]), top, Math.max(bottomRight[0], topRight[0]), bottom), (d) => d);
 			}
 
 			function setWorldColorScale() {
