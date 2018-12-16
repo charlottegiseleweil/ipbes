@@ -323,7 +323,7 @@ class MapPlot {
 					.attr("r", "3")
 					.attr("class", "datapoints")
 					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
-					.style("fill", (d) => focused_color_scale(d[`UN_${plot_object.currentScenario}`]))
+					.style("fill", (d) => plot_object.world_color_scale(d[`UN_${plot_object.currentScenario}`]))
 					.style("display", "inline")
 			}
 
