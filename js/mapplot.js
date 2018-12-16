@@ -258,13 +258,13 @@ class MapPlot {
                 return x1 > x3 && x2 < x0;
             else return false  // else both areas are over the longitude 180/-180 ==> they are overlapping ==> return false
         });
-        console.log(" Number of removed  points: " + counter);
-        console.log(" Number of kept points: " + pts.length)
-        console.log(" currentScale: " + this.projection.scale());
-        console.log("counter2: " + counter2);
-        if (counter2 == 0) {
-            console.log("uasid")
-        }
+        // console.log(" Number of removed  points: " + counter);
+        // console.log(" Number of kept points: " + pts.length)
+        // console.log(" currentScale: " + this.projection.scale());
+        // console.log("counter2: " + counter2);
+        // if (counter2 == 0) {
+        //     console.log("uasid")
+        // }
         return pts;
 
     }
