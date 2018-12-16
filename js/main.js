@@ -98,11 +98,11 @@ class MapPlot {
 				svg.selectAll("circle")
 					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
 
-				svg.selectAll("circle.story-markers")
+				svg.selectAll("circle")
 					// make the data dots disappear when they are on the other side of the globe.
 					.style("display", (d) => {  
 						var globeDistance = d3.geoDistance([d.lng, d.lat], projection.invert([svgWidth/2, svgHeight/2]));
-						return (globeDistance > 1.57) ? 'none' : 'inline';
+						return (globeDistance > 1.42) ? 'none' : 'inline';
 					})
 				
 			};
