@@ -80,7 +80,7 @@ class MapPlot {
 			let focused_color_scale = d3.scaleLinear()
 				.range(["green", "red"])
 				.interpolate(d3.interpolateHcl);
-			let world_color_scale = d3.scaleLinear()
+			this.world_color_scale = d3.scaleLinear()
 				.range(["green", "red"])
 				.interpolate(d3.interpolateHcl);
 
@@ -173,7 +173,7 @@ class MapPlot {
                 let pts = [];
                 let subPixel = false;
                 let subPts = [];
-                let nodeScale = projection.scale() * 0.0009;  // måste ändras
+                let nodeScale = projection.scale() * 0.0005;  // måste ändras
 				let counter = 0;
 				let counter2 = 0; 
 				
@@ -193,14 +193,16 @@ class MapPlot {
                         // end collecting sub Pixel points
                         if (subPixel && subPts && subPts.length > 0) {
 
-                            subPts[0].group = subPts.length;
-                            pts.push(subPts[0]); // add only one todo calculate intensity
+							subPts[0].group = subPts.length;
+							let indexOfMax = d3.scan(subPts, (a, b) => parseInt(b[`UN_${plot_object.currentScenario}`])- parseInt(a[`UN_${plot_object.currentScenario}`]));
+                            pts.push(subPts[indexOfMax]); // add only the point with the highest data value
                             counter += subPts.length - 1;
-                            subPts = [];
+							subPts = [];
                         }
                         subPixel = false;
 					}
-                    if ((p) && d3.geoDistance([p.lng, p.lat], mapCenter) < 1.57) {
+
+                    if ((p) && d3.geoDistance([p.lng, p.lat], mapCenter) < 1.57) {  // kanske ändra denna för att se vinklingen mer
 						counter2 += 1;
                         if (subPixel) {
                             subPts.push(p);
@@ -213,14 +215,14 @@ class MapPlot {
                         }
 					}
 
-					if (Math.abs(x2 - x1 < 180)) {
+					// if (Math.abs(x2 - x1 < 180)) {
 						if (y2 < y3 - 10 || y1 > y0 + 10) return true;  // The added and subtracted 10s are to make sure points are rendered at top and bottom properly
 						if (x3 > x0 && x2 > x1)  // if none of the areas are over the longitude 180/-180
 							return x1 > x3 || x2 < x0;  // if true, don't search over this area (because it does not overlap)
 						else if (x3 > x0 || x2 > x1)  // if one of the areas are over the longitude 180/-180 
 							return x1 > x3 && x2 < x0;
 						else return true  // else both areas are over the longitude 180/-180 ==> they are overlapping ==> return true
-					} else return false;
+					// } else return false;
                 });
 				console.log(" Number of removed  points: " + counter);
 				console.log(" Number of kept points: " + pts.length)
@@ -262,6 +264,7 @@ class MapPlot {
 				} else {
 					quadtree = setupQuadtree();
 					updateNodes(quadtree);
+					setWorldColorScale();
 					render();
 				}
 			}
@@ -286,17 +289,21 @@ class MapPlot {
 				let bottom = projection.invert([svgWidth/2, svgHeight])[1];
 				let bottomRight = projection.invert([svgWidth, svgHeight]);
 				// Create a subset of the data to display using a quadtree. This is the data which can be seen. If we are zoomed out the data will be aggregated.
-				let dataSubset = search(quadtree, topLeft[0], top, bottomRight[0], bottom);
-				world_color_scale.domain(d3.extent(dataSubset, x => parseInt(x[`UN_${plot_object.currentScenario}`])));
+				// let dataSubset = search(quadtree, topLeft[0], top, bottomRight[0], bottom);
 				return svg.selectAll("circle.datapoints")
-					.data(search(quadtree, topLeft[0], top, bottomRight[0], bottom));
+					.data(search(quadtree, topLeft[0], top, bottomRight[0], bottom), (d) => d);
 			}
 
+			function setWorldColorScale() {
+				plot_object.world_color_scale.domain(d3.extent(currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`])));
+			}
+
+			// TODO: Högra sidan försvinner när man har zoomat in lite.
 			function initWorldMapData(worldDataSelection) {
 				worldDataSelection.enter().append("circle")
-					.attr("r", 2)
+					.attr("r", 3)
 					.attr("class", "datapoints")
-					.style("fill", (d) => world_color_scale(d[`UN_${plot_object.currentScenario}`]))
+					.style("fill", (d) => plot_object.world_color_scale(parseInt(d[`UN_${plot_object.currentScenario}`])))
 			}
 
 			function focusedDataSelection() {
@@ -308,7 +315,6 @@ class MapPlot {
 
 				focused_color_scale.domain(d3.extent(focusedCountryData, x => parseInt(x[`UN_${plot_object.currentScenario}`])));
 				return svg.selectAll("circle.datapoints").data(focusedCountryData, (d) => d);
-				
 			}
 
 			function initFocusedMapData(focusedDataSelection) {
