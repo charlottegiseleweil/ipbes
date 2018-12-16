@@ -1,6 +1,15 @@
 class MapPlot {
 	constructor(svg_element_id) {
+		this.dataExtent;
+		const pink = d3.hcl(15, 90, 60);
+		const yellow = d3.hcl(100, 90, 100);
+		this.currentColorScale = d3.scaleLinear()
+								.range([yellow, pink])
+								.interpolate(d3.interpolateHcl);
 		let svg = d3.select('#' + svg_element_id);
+
+		// Distrubution plot
+		let barChart = new BarChart();
 
 		// may be useful for calculating scales
 		const svg_viewbox = svg.node().viewBox.animVal;
@@ -51,6 +60,7 @@ class MapPlot {
 			let currentData = ndr_data;
 			let currentCountryMapping = ndr_country_mapping
 			
+			
 			// add country name labels to map_data objects  TODO: add this to preprocessing instead
 			map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 			map_data_50.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
@@ -72,6 +82,11 @@ class MapPlot {
 			this.update_all = update_all;
 			this.setDataset = setDataset;
 
+			// set current max and min for the data
+			this.dataExtent = d3.extent(currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`]));
+			// set current colorscale
+			this.currentColorScale.domain([0,this.dataExtent[1]]);
+
 			// color scale for the data points in the focused mode
 			// TODO: VERY IMPORTANT; we need a scale for the zoomed 
 			// in mode to be able to compare the colors to the extreme values of the whole 
@@ -82,8 +97,17 @@ class MapPlot {
 				.interpolate(d3.interpolateHcl);
 
 			const render = () => {
+				// Update data points
+				svg.selectAll("path.markers")
+					.attr("transform", (d) => `translate(${projection([d.lng, d.lat])})`)
+					// make the data dots disappear when they are on the other side of the globe.
+					.style("display", (d) => {  
+						var globeDistance = d3.geoDistance([d.lng, d.lat], projection.invert([svgWidth/2, svgHeight/2]));
+						return (globeDistance > 1.57) ? 'none' : 'inline';
+					});
+
 				// Update country borders
-				svg.selectAll("path").attr('d', path)
+				svg.selectAll("path.globe").attr('d', path);
 
 
 				// Update data points
@@ -94,6 +118,8 @@ class MapPlot {
 						var globeDistance = d3.geoDistance([d.lng, d.lat], projection.invert([svgWidth/2, svgHeight/2]));
 						return (globeDistance > 1.57) ? 'none' : 'inline';
 					})
+
+				
 				
 			};
 
@@ -109,7 +135,8 @@ class MapPlot {
 			// the main globe object
 			 svg.selectAll("path")
 			 	.data(map_data)
-			 	.enter().append("path")
+				.enter().append("path")
+				.attr("class","globe")
 				.attr("fill", "grey")
 				.attr("d", path)
 				.on("click", clicked)
@@ -167,6 +194,27 @@ class MapPlot {
 					let dataSelection = focusedDataSelection();
 					dataSelection.exit().remove();
 					initFocusedMapData(dataSelection);
+					//uptade min/ max and colors
+					plot_object.dataExtent = d3.extent(currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`]));
+					plot_object.currentColorScale
+											.domain([0,plot_object.dataExtent[1]]);
+					
+					// Update barchart
+					const distribution = calculateDistribution(focusedData(),plot_object.dataExtent[1]);
+					if(distribution){
+						showBarChart(barChart,distribution,plot_object.currentColorScale);
+					}
+					else{
+						hideBarChart();
+					}
+
+					// change story containter
+					const population = focusedData().map(x => ({pop_cur: parseFloat(x.pop_cur),
+																pop_ssp1: parseFloat(x.pop_ssp1), 
+																pop_ssp3: parseFloat(x.pop_ssp3), 
+																pop_ssp5: parseFloat(x.pop_ssp5), }));
+					showImpactedPop(population);
+
 				} else {
 					let dataSelection = worldDataSelection();
 					dataSelection.exit().remove();
@@ -201,15 +249,19 @@ class MapPlot {
 
 			function focusedDataSelection() {
 				// Get data for just the country that is focused (all data available)
-				let focusedCountryData = currentCountryMapping[`${focusedCountry}`].reduce((acc, cur) => {
-					acc.push(currentData[cur]);
-					return acc;
-				}, []);
+				let focusedCountryData = focusedData();
 
 				focused_color_scale.domain(d3.extent(focusedCountryData, x => parseInt(x[`UN_${plot_object.currentScenario}`])));
 				return svg.selectAll("circle.datapoints").data(focusedCountryData, (d) => d);
 				
 			}
+
+			function focusedData() {
+				// Get data for just the country that is focused (all data available)
+				return currentCountryMapping[`${focusedCountry}`].reduce((acc, cur) => {
+					acc.push(currentData[cur]);
+					return acc;
+				}, [])};
 
 			function initFocusedMapData(focusedDataSelection) {
 				// Add focused country data
@@ -281,6 +333,7 @@ class MapPlot {
 			function clicked(d, fromStory=false){
 				// hide story points before transition
 				svg.selectAll("circle").remove()
+				svg.selectAll("path.markers").remove()
 				// hide story btns if discovery mode
 				if (fromStory) {document.getElementById("story-btn-section").style.display = "none";}
 
@@ -315,7 +368,7 @@ class MapPlot {
 				let dataSelection = focusedDataSelection();
 				
 				// Update the map:
-				d3.selectAll("path")
+				d3.selectAll("path.globe")
 					.transition()
 					.attrTween("d", zoomRotateFactory(currentRotate, currentScale, clickedRotate, clickedScale))
 					.duration(1000)
@@ -335,27 +388,41 @@ class MapPlot {
 						
 				// Remove the world map data
 				focused = true;
-				dataSelection.exit().remove()
+				dataSelection.exit().remove();
+
+				// Create a bar chart
+				const distribution = calculateDistribution(focusedData(),plot_object.dataExtent[1]);
+				if(distribution){
+					showBarChart(barChart,distribution,plot_object.currentColorScale);
+				}
+				else{
+					hideBarChart();
+				}
+				// change story containter
+				showCountryName(d.name);
+				const population = focusedData().map(x => ({pop_cur: parseFloat(x.pop_cur),
+															 pop_ssp1: parseFloat(x.pop_ssp1), 
+															 pop_ssp3: parseFloat(x.pop_ssp3), 
+															 pop_ssp5: parseFloat(x.pop_ssp5), }));
+				showImpactedPop(population);
+
 			}
 				
 				
 			function resetClick(fromStory=false) {
 				activeClick.classed("active", false);
 				activeClick = d3.select(null);
-				svg.selectAll("circle.story-markers").remove()
-
-				init_110map()
-				showStory(1, true)
-
+				
+				init_110map();
 				let dataSelection = worldDataSelection();
 				focused = false;
 				dataSelection.exit().remove();
 
-				let already_triggered = false
+				let already_triggered = false;
 
 				// if reset comes explore mode
 				if (!fromStory) {
-					d3.selectAll("path")
+					d3.selectAll("path.globe")
 					.transition()
 					.attrTween("d", zoomRotateFactory(clickedRotate, clickedScale, resetRotate, resetScale))
 					.duration(1000)
@@ -371,7 +438,7 @@ class MapPlot {
 					})
 				} else {
 				// if reset comes from story
-					d3.selectAll("path")
+					d3.selectAll("path.globe")
 					.transition()
 					.attrTween("d", zoomRotateFactory(clickedRotate, clickedScale, clickedRotate, scaleBeforeStory))
 					.duration(1000)
@@ -386,6 +453,10 @@ class MapPlot {
 						}
 					})
 				}
+				hideBarChart();
+				showStory(1, true);
+				drawMarkers()
+
 			}
 
 			function zoomRotateFactory(currRot, currScale, nexRot, nexScale) {
@@ -410,17 +481,13 @@ class MapPlot {
 
 				// if zoom comes from story mode or explore mode
 				if (!fromStory) {
-					svg.selectAll("path").remove().enter()
+					svg.selectAll("path.globe").remove().enter()
 					.data(map_data_50)
 					.enter().append("path")
+					.attr("class","globe")
 					.attr("fill-opacity","0.5")
 					.attr("fill", function (d){
 						if (d.name == country_sel.name) {
-							let story = { 
-								header: d.name, 
-								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy \
-									eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."}
-							showStory_for_country_without_data(story)
 							return "grey"
 						}
 						return "white";
@@ -430,9 +497,10 @@ class MapPlot {
 						resetClick(false)
 					})
 				} else {
-					svg.selectAll("path").remove().enter()
+					svg.selectAll("path.globe").remove().enter()
 					.data(map_data_50)
 					.enter().append("path")
+					.attr("class","globe")
 					.attr("fill", function (d){
 						if (d.name == country_sel.name) { 
 							return "dimgray"
@@ -444,15 +512,15 @@ class MapPlot {
 						resetClick(true)
 					})
 				}
-				drawMarkers()
 				render()
 			}
 
 			// initializing LOW RES map after zooming out
 			function init_110map() {
-				svg.selectAll("path").remove().enter()
+				svg.selectAll("path.globe").remove().enter()
 					.data(map_data)
 					.enter().append("path")
+					.attr("class","globe")
 					.attr("fill", "grey")
 					.attr("d", path)
 					.on("click", clicked)
@@ -469,38 +537,30 @@ class MapPlot {
 							.style("display", "none");
 						d3.select(this).classed("selected", false)
 					})
-				drawMarkers()
-
 			}
 
 			// Story Markers
 			function drawMarkers() {
-				const center = [svgWidth/2, svgHeight/2];
 				let locations = stories;
-                var markers = svg.selectAll("circle.story-markers")
-                    .data(locations);
+                var markers = svg.selectAll("path.markers")
+					.data(locations);
 
 				markers.enter()
-					.append('circle')
-					.attr("class", "story-markers")
-                	.merge(markers)
-                    // .attr('cx', d => projection([d.lat, d.lng])[0])
-					// .attr('cy', d => projection([d.lat, d.lng])[1])
-					.attr('fill', d => {
-						const coordinate = [d.lat, d.lng];
-                        let gdistance = d3.geoDistance(coordinate, projection.invert(center));
-						return gdistance > 1.58 ? 'none' : 'Peru';
-                    })
-                    .attr('r', 9);
+					.append('path')
+					.attr("class","markers")
+					.merge(markers)
+					.attr('cx', d => projection([d.lat, d.lng])[0])
+					.attr('cy', d => projection([d.lat, d.lng])[1])
+					.attr("d", d3.symbol().type(d3.symbolStar).size(250))
+    				.style("fill", '#66344f')
+		
 
-					
 				// set them to the front layer
                 markers.each(function () {
                     this.parentNode.appendChild(this);
 				});
 			}
 		});
-
 	}
 	setScenario(scenario) {
 		this.currentScenario = scenario;
@@ -512,6 +572,35 @@ class MapPlot {
 	}
 	
 }
+
+function showBarChart(barChart,bins,color){
+	document.getElementById('distribution-chart').style.visibility = 'visible';
+	barChart.createBarchart(bins,color);
+}
+
+function hideBarChart(){
+	document.getElementById('distribution-chart').style.visibility = 'hidden';
+}
+
+function calculateDistribution(focusedData,max){
+	if(focusedData.length == 0){
+		return null;
+	}
+	const distri_data = focusedData.map(x => ({UN: parseFloat(x[`UN_${plot_object.currentScenario}`]),
+											   pop: parseFloat(x[`pop_${plot_object.currentScenario}`])}));
+
+	// Accessor function for the objects unmet need property.
+	const getUN = d => d.UN;
+
+	
+	// Generate a histogram using twenty uniformly-spaced bins.
+	return d3.histogram()
+		.domain([0,max])
+		.thresholds(7)
+		.value(getUN)      // Provide accessor function for histogram generation
+		(distri_data);
+}
+
 			
 function whenDocumentLoaded(action) {
 	if (document.readyState === "loading") {
@@ -523,8 +612,11 @@ function whenDocumentLoaded(action) {
 }
 
 whenDocumentLoaded(() => {
+	showledgend();
 	plot_object = new MapPlot('globe-plot');
 	// plot object is global, you can inspect it in the dev-console
+
+
 	
 	// When the dataset radio buttons are changed: change the dataset
 	d3.selectAll(("input[name='radio1']")).on("change", function(){
@@ -568,8 +660,41 @@ function switchYear(toggle) {
     }
 };
 
+function showledgend(){
+	const w = 150, h = 50;
+	const pink = d3.hcl(15, 90, 60);
+	const yellow = d3.hcl(100, 90, 100);
+
+	let key = d3.select("#legendBar")
+		.attr("width", w)
+		.attr("height", h);
+
+	let legend = key.append("defs")
+		.append("svg:linearGradient")
+		.attr("id", "gradient")
+		.attr("x1", "0%")
+		.attr("y1", "100%")
+		.attr("x2", "100%")
+		.attr("y2", "100%")
+		.attr("spreadMethod", "pad");
+
+	legend.append("stop")
+		.attr("offset", "0%")
+		.attr("stop-color", yellow)
+		.attr("stop-opacity", 1);
 
 
+	legend.append("stop")
+		.attr("offset", "100%")
+		.attr("stop-color", pink)
+		.attr("stop-opacity", 1);
+
+	key.append("rect")
+		.attr("width", w)
+		.attr("height", h - 30)
+		.style("fill", "url(#gradient)")
+		.attr("transform", "translate(0,10)");	
+}
 
 
 // Functions to display stories
@@ -599,8 +724,32 @@ function showStory(n, reset=false) {
 	}
 }
 
-function showStory_for_country_without_data(story) {
-	document.getElementById("story-header").innerHTML = story.header;
-	document.getElementById("story-text").innerHTML = story.text;
+function showCountryName(name) {
+	document.getElementById("story-header").innerHTML = name;
 }
+
+function showImpactedPop(population) {
+	let pop_cur = 0;
+	let pop_ssp1 = 0;
+	let pop_ssp3 = 0;
+	let pop_ssp5 = 0;
+
+	population.forEach( (d) => {
+		
+		pop_cur += d.pop_cur;
+		pop_ssp1 += d.pop_ssp1 ;
+		pop_ssp3 += d.pop_ssp3 ;
+		pop_ssp5 += d.pop_ssp5 ;
+	});
+
+	document.getElementById("story-text").innerHTML = "Total impacted population: <br> 2015: " 
+														+ (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "<br>"
+														+ "<br>2050<br>" 
+														+ "Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "<br>"
+														+ "Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "<br>"
+														+ "Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0");
+	
+	
+}
+
 
