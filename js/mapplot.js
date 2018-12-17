@@ -650,7 +650,6 @@ class MapPlot {
         this.update_all();
     }
     switchStory(story) {
-        let c = story.country
         this.clicked_Story(story.country)
     }
 
@@ -668,7 +667,9 @@ class MapPlot {
             .attr('cy', d => this.projection([d.lng, d.lat])[1])
             .attr("d", d3.symbol().type(d3.symbolStar).size(250))
             .style("fill", '#66344f')
-
+            .on("click" , (d,i) => showStory(i))
+            .on("mouseover", function(){d3.select(this).style("fill", "white");})
+            .on("mouseout", function(){d3.select(this).style("fill", '#66344f');})
             
         // set them to the front layer
         markers.each(function () {

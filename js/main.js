@@ -8,6 +8,10 @@ function whenDocumentLoaded(action) {
 }
 
 whenDocumentLoaded(() => {
+	// Initialize dashboard
+	is2050 = false;
+	slideIndex = 0;
+
 	showledgend();
 	plot_object = new MapPlot('globe-plot');
 	// plot object is global, you can inspect it in the dev-console
@@ -22,10 +26,6 @@ whenDocumentLoaded(() => {
 	d3.selectAll(("input[name='radio2']")).on("change", function(){
 		plot_object.setScenario(this.value)
 	});
-
-	// Initialize dashboard
-	is2050 = false;
-	slideIndex = 0;
 
 });
 
@@ -95,30 +95,33 @@ function showledgend(){
 
 // Functions to display stories
 function plusStory(n) {
-  showStory(slideIndex += n);
-}
-
-function showStory(n, reset=false) {
+	slideIndex += n;
 	if (n > stories.length-1) {slideIndex = 0 }; 
 	if (n < 0) {slideIndex = stories.length-1}
+  showStory(slideIndex);
+}
+
+function showStory(slideIndex, welcomeStory=false) {
+	
+	
 
 	const story = stories[slideIndex];
-
-	document.getElementById("story-header").innerHTML = story.header;
-	document.getElementById("story-text").innerHTML = story.text;
 	document.getElementById(story.field).checked = true;
 	document.getElementById(story.field).dispatchEvent(new Event('change'))  // Trigger the change event on the radio button to make sure that the dataset shifts accordingly
 	document.getElementById(story.scenario).checked = true;
 	switchYear(story.toggleState);
-	
-	
-	if(!reset) {
-		plot_object.switchStory(story)
-	}
-	else {
-		
+
+	if(welcomeStory){
+		showWelcomeStory();
+	}else{
+		plot_object.switchStory(story);
 	}
 }
+function showWelcomeStory(){
+    document.getElementById("story-header").innerHTML = "hej jag har";
+    document.getElementById("story-text").innerHTML = "väldigt skojigt <br> och emma är";
+}
+
 
 function showCountryName(name) {
 	document.getElementById("story-header").innerHTML = name;
