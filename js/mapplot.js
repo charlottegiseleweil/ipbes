@@ -52,7 +52,7 @@ class MapPlot {
             this.currentCountryMapping = this.cv_country_mapping
 
 			
-			// add country name labels to map_data objects  TODO: add this to preprocessing instead
+			// add country name labels to map_data objects
 			this.map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 			this.map_data_50.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 
@@ -83,12 +83,6 @@ class MapPlot {
             this.v0; 
             this.r0; 
             this.q0;
-
-			// color scale for the data points in the focused mode
-			// TODO: VERY IMPORTANT; we need a scale for the zoomed 
-			// in mode to be able to compare the colors to the extreme values of the whole 
-			// world, to see if they are bad or not, (in addition to the comparison within
-            // a country)
 
             // Distribution plot
             this.barChart = new BarChart();
@@ -390,6 +384,9 @@ class MapPlot {
 
             that.focusedCountry = d.name;
             if (that.focusedCountry == undefined) return null;
+            
+            // Don't allow clicks during transition
+            d3.select(".wrapper").style("pointer-events", "none")
 
             that.activeClick.classed("active", false);
             that.activeClick = d3.select(this).classed("active", true);
@@ -415,6 +412,7 @@ class MapPlot {
             
             let dataSelection = that.focusedDataSelection();
             
+
             // Update the map:
             d3.selectAll("path.globe")
                 .transition()
@@ -431,6 +429,8 @@ class MapPlot {
                         end_callback_triggered = true
                         d3.select(this).classed("selected", false)
                         that.initFocusedMapData(dataSelection);
+                        // Allow clicks after transition is done
+                        d3.select(".wrapper").style("pointer-events", "all")
                         }
                     });
                     
@@ -460,6 +460,9 @@ class MapPlot {
     resetClick(fromStory=false) {
         this.activeClick.classed("active", false);
         this.activeClick = d3.select(null);
+
+        // Don't allow clicks during transition
+        d3.select(".wrapper").style("pointer-events", "none")
         
         this.init_110map();
         
@@ -484,6 +487,8 @@ class MapPlot {
                     already_triggered = true
                     document.getElementById("story-btn-section").style.display = "block";
                     this.render()	
+                    // Allow clicks after transition is done
+                    d3.select(".wrapper").style("pointer-events", "all")
                 }
             })
         } else {
@@ -500,6 +505,8 @@ class MapPlot {
                     already_triggered = true
                     this.render()	
                     this.scaleBeforeStory = 0
+                    // Allow clicks after transition is done
+                    d3.select(".wrapper").style("pointer-events", "all")
                 }
             })
         }
