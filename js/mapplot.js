@@ -132,12 +132,10 @@ class MapPlot {
 				})
 				.on("click", this.clicked())
             
-            this.quadtree = this.setupQuadtree();
-			this.updateNodes(this.quadtree);
-
 			this.initializeZoom();
 			this.drawMarkers();
             showStory(0, true);
+            this.update_all();
 			
 			
 			// TODO: CIRCLE AROUND WORLD 
@@ -278,6 +276,8 @@ class MapPlot {
 
     // Updates all data using the currentData variable
     update_all(scenario_change=false) {
+        this.quadtree = this.setupQuadtree();
+        this.updateNodes(this.quadtree);
         if (this.focused) {
             let dataSelection = this.focusedDataSelection();
             dataSelection.exit().remove();
@@ -285,8 +285,6 @@ class MapPlot {
             this.initFocusedMapData(dataSelection);
             this.initBarchart()
         } else {
-            this.quadtree = this.setupQuadtree();
-            this.updateNodes(this.quadtree);
             if (!scenario_change) this.setCurrentColorScaleDomain();
             this.render();
         }
@@ -294,10 +292,6 @@ class MapPlot {
 
     initBarchart() {
         let focusedCountryData = this.focusedData();
-        //uptade min/ max and colors
-        // this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${this.currentScenario}`]));
-        // this.currentColorScale
-        //     .domain([this.dataExtent[0], this.dataExtent[1]]);
         
         // Update barchart
         let distribution = calculateDistribution(focusedCountryData, this.dataExtent[1]);
@@ -471,7 +465,6 @@ class MapPlot {
         
         
         hideBarChart();
-        let dataSelection = this.worldDataSelection();
         this.focused = false;
 
         let already_triggered = false;
@@ -485,7 +478,6 @@ class MapPlot {
             .duration(1000)
             .on("end", () => {
                 if (!already_triggered) {
-                    this.initWorldMapData(dataSelection);
                     this.initializeZoom();
                     this.drawMarkers();
                     
@@ -502,7 +494,6 @@ class MapPlot {
             .duration(1000)
             .on("end", () => {
                 if (!already_triggered) {
-                    this.initWorldMapData(dataSelection);
                     this.initializeZoom();
                     this.drawMarkers();
                     
