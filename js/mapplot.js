@@ -51,9 +51,6 @@ class MapPlot {
 			this.currentData = this.ndr_data;
             this.currentCountryMapping = this.ndr_country_mapping
 
-            // set current max and min for the data
-			this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`]));
-
 			
 			// add country name labels to map_data objects  TODO: add this to preprocessing instead
 			this.map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
@@ -73,8 +70,10 @@ class MapPlot {
 			this.currentDatasetName = "ndr";
 			// the current scenario, either 'cur', 'ssp1', 'ssp3' or 'ssp5'
             this.currentScenario = "cur";
-            
-                        
+
+            // set current max and min for the data
+			this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`]));
+               
             // save the latest zoom before story - after reset set this value again to 0 - kin of a story mode variable
 			this.scaleBeforeStory = 0;
 
@@ -468,15 +467,16 @@ class MapPlot {
         this.activeClick.classed("active", false);
         this.activeClick = d3.select(null);
         
-        this.init_110map()
-        showStory(1, true)
-        this.svg.selectAll("circle, path.markers").remove()
+        this.init_110map();
+        
+        
         hideBarChart();
         let dataSelection = this.worldDataSelection();
         this.focused = false;
 
-        let already_triggered = false
-
+        let already_triggered = false;
+        showStory(1, true);
+        this.svg.selectAll("circle, path.markers").remove();
         // if reset comes explore mode
         if (!fromStory) {
             d3.selectAll("path.globe")
@@ -512,6 +512,7 @@ class MapPlot {
                 }
             })
         }
+        
     }
 
     zoomRotateFactory(currRot, currScale, nexRot, nexScale, that=this) {
@@ -568,7 +569,6 @@ class MapPlot {
                     this.resetClick(true)
                 })
         }
-        this.drawMarkers()
         this.render()
     }
 
