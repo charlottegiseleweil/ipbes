@@ -67,7 +67,7 @@ class BarChart{
 			.attr("height", y.bandwidth())
 			.attr("y", function(d,i) { return y(labels[i]); })
 			.attr("width", function(d) { return x(d); })
-			.style("fill", (d,i) => color((bins[i].x0 + parseInt(bins[i].x1)) / 2))
+			.style("fill", (d,i) => color((bins[i].x0 + bins[i].x1) / 2))
 			.style("this.svg.defs.filter", "url(#glow)")	
 			.on("mousemove", function(d){
 				tooltip

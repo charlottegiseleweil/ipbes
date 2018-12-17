@@ -63,16 +63,17 @@ class MapPlot {
 			this.resetScale = scale;
 			this.resetRotate = [0, 0];
 			this.activeClick = d3.select(null)
-			this.clickedRotate; 
+			this.clickedRotate;
 			this.clickedScale;
 			this.focused = false;
 			this.focusedCountry = "";
 			this.currentDatasetName = "ndr";
 			// the current scenario, either 'cur', 'ssp1', 'ssp3' or 'ssp5'
+            this.scenarios = ["cur", "ssp1", "ssp3", "ssp5"];
             this.currentScenario = "cur";
 
             // set current max and min for the data
-			this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`]));
+			this.dataExtent;
                
             // save the latest zoom before story - after reset set this value again to 0 - kin of a story mode variable
 			this.scaleBeforeStory = 0;
@@ -96,13 +97,8 @@ class MapPlot {
                 // from yellow to pink
                 .range([d3.hcl(100, 90, 100), d3.hcl(15, 90, 60)])
                 .interpolate(d3.interpolateHcl)
-                .domain([0, this.dataExtent[1]]);
-			this.focused_color_scale = d3.scaleLinear()
-				.range(["green", "red"])
-				.interpolate(d3.interpolateHcl);
-			this.world_color_scale = d3.scaleLinear()
-				.range(["green", "red"])
-				.interpolate(d3.interpolateHcl);
+            
+            this.setCurrentColorScaleDomain();
 
 			this.projection = d3.geoOrthographic()
 				.rotate([0, 0])
@@ -281,17 +277,17 @@ class MapPlot {
     }
 
     // Updates all data using the currentData variable
-    update_all() {
+    update_all(scenario_change=false) {
         if (this.focused) {
             let dataSelection = this.focusedDataSelection();
             dataSelection.exit().remove();
-            this.setWorldColorScale();
+            if (!scenario_change) this.setCurrentColorScaleDomain();
             this.initFocusedMapData(dataSelection);
             this.initBarchart()
         } else {
             this.quadtree = this.setupQuadtree();
             this.updateNodes(this.quadtree);
-            this.setWorldColorScale();
+            if (!scenario_change) this.setCurrentColorScaleDomain();
             this.render();
         }
     }
@@ -299,9 +295,9 @@ class MapPlot {
     initBarchart() {
         let focusedCountryData = this.focusedData();
         //uptade min/ max and colors
-        this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${this.currentScenario}`]));
-        this.currentColorScale
-            .domain([0, this.dataExtent[1]]);
+        // this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${this.currentScenario}`]));
+        // this.currentColorScale
+        //     .domain([this.dataExtent[0], this.dataExtent[1]]);
         
         // Update barchart
         let distribution = calculateDistribution(focusedCountryData, this.dataExtent[1]);
@@ -346,15 +342,19 @@ class MapPlot {
             .data(this.search(this.quadtree, Math.min(bottomLeft[0], topLeft[0]), top, Math.max(bottomRight[0], topRight[0]), bottom), (d) => d);
     }
 
-    setWorldColorScale() {
-        this.world_color_scale.domain(d3.extent(this.currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`])));
+    setCurrentColorScaleDomain() {
+        // get the extents for the data of the 4 different scenarios
+        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseInt(x[`UN_${scenario}`])))
+        // set the domain to the extent (min and max) of the 4 extents
+        this.dataExtent = d3.extent(extents);
+        this.currentColorScale.domain(this.dataExtent);
     }
 
     initWorldMapData(worldDataSelection) {
         worldDataSelection.enter().append("circle")
             .attr("r", 3)
             .attr("class", "datapoints")
-            .style("fill", (d) => this.world_color_scale(parseInt(d[`UN_${this.currentScenario}`])))
+            .style("fill", (d) => this.currentColorScale(parseInt(d[`UN_${this.currentScenario}`])))
     }
 
     focusedDataSelection() {
@@ -379,7 +379,7 @@ class MapPlot {
             .attr("r", "3")
             .attr("class", "datapoints")
             .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
-            .style("fill", (d) => this.world_color_scale(d[`UN_${this.currentScenario}`]))
+            .style("fill", (d) => this.currentColorScale(d[`UN_${this.currentScenario}`]))
             .style("display", "inline")
     }
 
@@ -647,7 +647,7 @@ class MapPlot {
     
     setScenario(scenario) {
         this.currentScenario = scenario;
-        this.update_all();
+        this.update_all(true);
     }
     switchStory(story) {
         this.clicked_Story(story.country)
