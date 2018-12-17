@@ -96,15 +96,13 @@ function showledgend(){
 // Functions to display stories
 function plusStory(n) {
 	slideIndex += n;
-	if (n > stories.length-1) {slideIndex = 0 }; 
-	if (n < 0) {slideIndex = stories.length-1}
+	if (slideIndex > stories.length-1){slideIndex = 0;} 
+	if (slideIndex < 0) {slideIndex = stories.length-1;}
   showStory(slideIndex);
 }
 
 function showStory(slideIndex, welcomeStory=false) {
-	
-	
-
+	slideIndex
 	const story = stories[slideIndex];
 	document.getElementById(story.field).checked = true;
 	document.getElementById(story.field).dispatchEvent(new Event('change'))  // Trigger the change event on the radio button to make sure that the dataset shifts accordingly
@@ -117,6 +115,7 @@ function showStory(slideIndex, welcomeStory=false) {
 		plot_object.switchStory(story);
 	}
 }
+
 function showWelcomeStory(){
     document.getElementById("story-header").innerHTML = "hej jag har";
     document.getElementById("story-text").innerHTML = "väldigt skojigt <br> och emma är";
