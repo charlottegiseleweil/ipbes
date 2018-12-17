@@ -58,14 +58,9 @@ body {
 	font-family: sans-serif;
   }
 
-
 #country_name {
 	color: white;
 	background-color: white;
-}
-
-circle.story-markers {
-	fill: mediumseagreen;
 }
 
 circle.goo {

@@ -13,6 +13,9 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/radio.css">
 	<link rel="stylesheet" href="css/storyboard.css">
+	<link rel="stylesheet" href="css/distribution-chart.css">
+	<link rel="stylesheet" href="css/legend.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 </head>
 <body>
 
@@ -86,10 +89,19 @@
 		</div>
 	</div>
 	
-	<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%">
-		<style>
-		</style>
+	<svg id="globe-plot" viewBox="0 0 1200 800" width="99%" height="99%">
 	</svg>
+
+	<div id="distribution-chart">
+		<h2 id="distri-chart-head">How many are impacted?</h2>
+		<svg id="distribution"></svg>
+	</div> 
+	<div id ="legend">
+		<p class="legendText">Low <br>Unmet Need</p>
+		<svg id="legendBar"></svg>
+		<p class="legendText">High <br>Unmet Need</p>
+	</div>
+	
 
 </div>
 
@@ -101,6 +113,7 @@
 </script>
 <script src="data/stories.js"></script>
 <script src="lib/topojson.min.js"></script>
+<script src="js/BarChart.js"></script>
 <script src="js/mapplot.js"></script>
 <script src="js/main.js"></script>
 </body>

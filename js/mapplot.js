@@ -49,7 +49,11 @@ class MapPlot {
 			this.cv_country_mapping = results[8]; 
 			
 			this.currentData = this.ndr_data;
-			this.currentCountryMapping = this.ndr_country_mapping
+            this.currentCountryMapping = this.ndr_country_mapping
+
+            // set current max and min for the data
+			this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${plot_object.currentScenario}`]));
+
 			
 			// add country name labels to map_data objects  TODO: add this to preprocessing instead
 			this.map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
@@ -84,7 +88,16 @@ class MapPlot {
 			// TODO: VERY IMPORTANT; we need a scale for the zoomed 
 			// in mode to be able to compare the colors to the extreme values of the whole 
 			// world, to see if they are bad or not, (in addition to the comparison within
-			// a country)
+            // a country)
+
+            // Distribution plot
+            this.barChart = new BarChart();
+            
+            this.currentColorScale = d3.scaleLinear()
+                // from yellow to pink
+                .range([d3.hcl(100, 90, 100), d3.hcl(15, 90, 60)])
+                .interpolate(d3.interpolateHcl)
+                .domain([0, this.dataExtent[1]]);
 			this.focused_color_scale = d3.scaleLinear()
 				.range(["green", "red"])
 				.interpolate(d3.interpolateHcl);
@@ -105,7 +118,8 @@ class MapPlot {
             let that = this;
 			this.svg.selectAll("path")
 			 	.data(this.map_data)
-			 	.enter().append("path")
+                .enter().append("path")
+                .attr("class", "globe")
 				.attr("fill", "grey")
 				.attr("d", this.path)
 				.on("mouseover", function(d) {
@@ -128,7 +142,7 @@ class MapPlot {
 
 			this.initializeZoom();
 			this.drawMarkers();
-			showStory(0, true);
+            showStory(0, true);
 			
 			
 			// TODO: CIRCLE AROUND WORLD 
@@ -143,7 +157,7 @@ class MapPlot {
     
     render() {
         // Update country borders
-        this.svg.selectAll("path").attr('d', this.path)
+        this.svg.selectAll("path.globe").attr('d', this.path)
 
         if (!this.focused) {
             let dataSelection = this.worldDataSelection();
@@ -152,10 +166,8 @@ class MapPlot {
         }
 
         // Update positions of circles (both data points and story markers)
-        this.svg.selectAll("circle")
+        this.svg.selectAll("circle,path.markers")
             .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
-
-        this.svg.selectAll("circle")
             // make the data dots disappear when they are on the other side of the globe.
             .style("display", (d) => {  
                 var globeDistance = d3.geoDistance([d.lng, d.lat], this.projection.invert([this.svgWidth/2, this.svgHeight/2]));
@@ -276,12 +288,37 @@ class MapPlot {
             dataSelection.exit().remove();
             this.setWorldColorScale();
             this.initFocusedMapData(dataSelection);
+            this.initBarchart()
         } else {
             this.quadtree = this.setupQuadtree();
             this.updateNodes(this.quadtree);
             this.setWorldColorScale();
             this.render();
         }
+    }
+
+    initBarchart() {
+        let focusedCountryData = this.focusedData();
+        //uptade min/ max and colors
+        this.dataExtent = d3.extent(this.currentData, x => parseInt(x[`UN_${this.currentScenario}`]));
+        this.currentColorScale
+            .domain([0, this.dataExtent[1]]);
+        
+        // Update barchart
+        let distribution = calculateDistribution(focusedCountryData, this.dataExtent[1]);
+        if(distribution){
+            showBarChart(this.barChart, distribution, this.currentColorScale);
+        }
+        else{
+            hideBarChart();
+        }
+
+        // change story containter
+        let population = focusedCountryData.map(x => ({pop_cur: parseFloat(x.pop_cur),
+                                                    pop_ssp1: parseFloat(x.pop_ssp1), 
+                                                    pop_ssp3: parseFloat(x.pop_ssp3), 
+                                                    pop_ssp5: parseFloat(x.pop_ssp5), }));
+        showImpactedPop(population);
     }
 
     worldDataSelection() {
@@ -323,13 +360,19 @@ class MapPlot {
 
     focusedDataSelection() {
         // Get data for just the country that is focused (all data available)
-        let focusedCountryData = this.currentCountryMapping[`${this.focusedCountry}`].reduce((acc, cur) => {
-            acc.push(this.currentData[cur]);
-            return acc;
-        }, []);
+        let focusedCountryData = this.focusedData();
 
         return this.svg.selectAll("circle.datapoints").data(focusedCountryData, (d) => d);
     }
+
+    focusedData() {
+        // Get data for just the country that is focused (all data available)
+        return this.currentCountryMapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+            acc.push(this.currentData[cur]);
+            return acc;
+        }, [])
+    }
+
 
     initFocusedMapData(focusedDataSelection) {
         // Add focused country data
@@ -344,7 +387,8 @@ class MapPlot {
     clicked(that=this, fromStory=false) {
         return function(d) {
             // hide story points before transition
-            that.svg.selectAll("circle").remove()
+            that.svg.selectAll("circle").remove();
+            that.svg.selectAll("path.markers").remove();
             // hide story btns if discovery mode
             if (!fromStory) {document.getElementById("story-btn-section").style.display = "none";}
 
@@ -379,7 +423,7 @@ class MapPlot {
             let dataSelection = that.focusedDataSelection();
             
             // Update the map:
-            d3.selectAll("path")
+            d3.selectAll("path.globe")
                 .transition()
                 .attrTween("d", that.zoomRotateFactory(currentRotate, currentScale, that.clickedRotate, that.clickedScale))
                 .duration(1000)
@@ -400,6 +444,23 @@ class MapPlot {
             // Remove the world map data
             that.focused = true;
             dataSelection.exit().remove()
+
+            // Create a bar chart
+            let focusedCountryData = that.focusedData();
+            let distribution = calculateDistribution(focusedCountryData, that.dataExtent[1]);
+            if(distribution){
+                showBarChart(that.barChart, distribution, that.currentColorScale);
+            }
+            else{
+                hideBarChart();
+            }
+            // change story containter
+            showCountryName(d.name);
+            let population = focusedCountryData.map(x => ({pop_cur: parseFloat(x.pop_cur),
+                                                        pop_ssp1: parseFloat(x.pop_ssp1), 
+                                                        pop_ssp3: parseFloat(x.pop_ssp3), 
+                                                        pop_ssp5: parseFloat(x.pop_ssp5), }));
+            showImpactedPop(population);
         }
     }
 
@@ -409,8 +470,8 @@ class MapPlot {
         
         this.init_110map()
         showStory(1, true)
-        this.svg.selectAll("circle").remove()
-
+        this.svg.selectAll("circle, path.markers").remove()
+        hideBarChart();
         let dataSelection = this.worldDataSelection();
         this.focused = false;
 
@@ -418,14 +479,15 @@ class MapPlot {
 
         // if reset comes explore mode
         if (!fromStory) {
-            d3.selectAll("path")
+            d3.selectAll("path.globe")
             .transition()
             .attrTween("d", this.zoomRotateFactory(this.clickedRotate, this.clickedScale, this.resetRotate, this.resetScale))
             .duration(1000)
             .on("end", () => {
                 if (!already_triggered) {
                     this.initWorldMapData(dataSelection);
-                    this.initializeZoom()
+                    this.initializeZoom();
+                    this.drawMarkers();
                     
                     already_triggered = true
                     document.getElementById("story-btn-section").style.display = "block";
@@ -434,14 +496,15 @@ class MapPlot {
             })
         } else {
         // if reset comes from story
-            d3.selectAll("path")
+            d3.selectAll("path.globe")
             .transition()
             .attrTween("d", this.zoomRotateFactory(this.clickedRotate, this.clickedScale, this.clickedRotate, this.scaleBeforeStory))
             .duration(1000)
             .on("end", () => {
                 if (!already_triggered) {
                     this.initWorldMapData(dataSelection);
-                    this.initializeZoom()
+                    this.initializeZoom();
+                    this.drawMarkers();
                     
                     already_triggered = true
                     this.render()	
@@ -474,17 +537,13 @@ class MapPlot {
 
         // if zoom comes from story mode or explore mode
         if (!fromStory) {
-            this.svg.selectAll("path").remove().enter()
+            this.svg.selectAll("path.globe").remove().enter()
                 .data(this.map_data_50)
                 .enter().append("path")
+                .attr("class", "globe")
                 .attr("fill-opacity","0.5")
                 .attr("fill", function (d){
                     if (d.name == country_sel.name) {
-                        let story = { 
-                            header: d.name, 
-                            text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy \
-                                eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."}
-                        showStory_for_country_without_data(story)
                         return "grey"
                     }
                     return "white";
@@ -494,9 +553,10 @@ class MapPlot {
                     this.resetClick(false)
                 })
         } else {
-            this.svg.selectAll("path").remove().enter()
+            this.svg.selectAll("path.globe").remove().enter()
                 .data(this.map_data_50)
                 .enter().append("path")
+                .attr("class", "globe")
                 .attr("fill", function (d){
                     if (d.name == country_sel.name) { 
                         return "dimgray"
@@ -515,9 +575,10 @@ class MapPlot {
     // initializing LOW RES map after zooming out
     init_110map() {
         let that = this;
-        this.svg.selectAll("path").remove().enter()
+        this.svg.selectAll("path.globe").remove().enter()
             .data(this.map_data)
             .enter().append("path")
+            .attr("class", "globe")
             .attr("fill", "grey")
             .attr("d", this.path)
             .on("click", this.clicked())
@@ -595,23 +656,18 @@ class MapPlot {
 
     // Story markers
     drawMarkers() {
-        const center = [this.svgWidth/2, this.svgHeight/2];
         let locations = stories;
-        var markers = this.svg.selectAll("circle.story-markers")
+        let markers = this.svg.selectAll("path.markers")
             .data(locations);
 
         markers.enter()
-            .append('circle')
-            .attr("class", "story-markers")
+            .append('path')
+            .attr("class", "markers")
             .merge(markers)
-            // .attr('cx', d => projection([d.lat, d.lng])[0])
-            // .attr('cy', d => projection([d.lat, d.lng])[1])
-            .attr('fill', d => {
-                const coordinate = [d.lat, d.lng];
-                let gdistance = d3.geoDistance(coordinate, this.projection.invert(center));
-                return gdistance > 1.58 ? 'none' : 'Peru';
-            })
-            .attr('r', 9);
+            .attr('cx', d => this.projection([d.lng, d.lat])[0])
+            .attr('cy', d => this.projection([d.lng, d.lat])[1])
+            .attr("d", d3.symbol().type(d3.symbolStar).size(250))
+            .style("fill", '#66344f')
 
             
         // set them to the front layer
