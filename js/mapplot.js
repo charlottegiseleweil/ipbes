@@ -48,8 +48,8 @@ class MapPlot {
 			this.poll_country_mapping = results[7];  
 			this.cv_country_mapping = results[8]; 
 			
-			this.currentData = this.ndr_data;
-            this.currentCountryMapping = this.ndr_country_mapping
+			this.currentData = this.cv_data;
+            this.currentCountryMapping = this.cv_country_mapping
 
 			
 			// add country name labels to map_data objects  TODO: add this to preprocessing instead
@@ -67,7 +67,7 @@ class MapPlot {
 			this.clickedScale;
 			this.focused = false;
 			this.focusedCountry = "";
-			this.currentDatasetName = "ndr";
+			this.currentDatasetName = "cv";
 			// the current scenario, either 'cur', 'ssp1', 'ssp3' or 'ssp5'
             this.scenarios = ["cur", "ssp1", "ssp3", "ssp5"];
             this.currentScenario = "cur";
