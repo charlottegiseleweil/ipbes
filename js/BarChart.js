@@ -4,7 +4,7 @@ class BarChart{
 		// Initialize the barchart
 		const svgWidth = 230;
 		const svgHeight = 200;
-		this.margin = {top: 20, right:30, bottom: 20, left:20};
+		this.margin = {top: 10, right:30, bottom: 20, left:20};
 
 		this.width = svgWidth - this.margin.left - this.margin.right,
 		this.height = svgHeight - this.margin.top - this.margin.bottom;

@@ -12,53 +12,40 @@ let locationData = [
 
 // datastories
 const stories = [ {
-					field: "a_radio-1",
-					scenario: "b_radio-1",
-					toggleState: false,
-					lat: 22, lng: 88, country: "India"},
+					field: "a_radio-3",
+					scenario: "b_radio-3",
+					toggleState: true,
+					lat: 21.138210, lng: 79.274149, country: "India"},
 				{					
-					field: "a_radio-2",
-					scenario: "b_radio-3",
+					field: "a_radio-1",
+					scenario: "b_radio-2",
 					toggleState: true,
-					lat: 12.61315, lng: 38.37723, country: "Ethiopia"},
+					lat: 23.807556, lng: 90.387755, country: "Bangladesh"},
 				{				
-					field: "a_radio-3",
-					scenario: "b_radio-1",
+					field: "a_radio-1",
+					scenario: "b_radio-2",
 					toggleState: true,
-					lat: -30,lng: -58, country: "Argentina"},
-				{
-					field: "a_radio-3",
-					scenario: "b_radio-1",
-					toggleState: true,
-					lat: 35.039135506259974,lng: 32.90749088956677, country: "Cyprus"},
+					lat: 31.069875,lng: 114.175883, country: "China"},
+
 				{
 					field: "a_radio-2",
-					scenario: "b_radio-2",
+					scenario: "b_radio-3",
 					toggleState: true,
-					lat: 78.93178529323471,lng: 21.64727380332145, country: "Norway"},
+					lat: 36.056167,lng: 138.769023, country: "Japan"},
 				{
-					field: "a_radio-1",
-					scenario: "b_radio-1",
+					field: "a_radio-2",
+					scenario: "b_radio-3",
 					toggleState: true,
-					lat: 47.62095064753386,lng: 14.060187611715413, country: "Austria"},
+					lat: -22.51324,lng: 135.022121, country: "Australia"},
+				{
+					field: "a_radio-2",
+					scenario: "b_radio-3",
+					toggleState: true,
+					lat: -44.936654,lng: 169.492575, country: "New Zealand"},
 				{
 					field: "a_radio-3",
-					scenario: "b_radio-3",
-					toggleState: true,
-                    lat: -0.8366679709430054, lng: 15.136018192660263, country: "Congo"},
-                {
-					field: "a_radio-1",
-					scenario: "b_radio-1",
-					toggleState: false,
-                    lat: 35.536741005075115, lng: 137.71227776329258, country: "Japan"},
-                {
-					field: "a_radio-1",
-					scenario: "b_radio-3",
-					toggleState: false,
-                    lat: -0.2718744795703802, lng: 117.3646427813509, country: "Indonesia"},
-                {
-					field: "a_radio-1",
 					scenario: "b_radio-2",
-					toggleState: false,
-					lat: -8.852332345906516, lng: 160.95948185317948, country: "Solomon Islands"},
+					toggleState: true,
+					lat: 33.224009, lng: -6.134634, country: "Morocco"}
+
 				];

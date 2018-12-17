@@ -23,38 +23,21 @@
 
 	<div id="radio_container">
 		<table>
-			<tbody>
-				<tr>
-					<td>
-						<input type="radio" class="radio_btn" name="radio1" id="a_radio-1" value="ndr" checked="checked"/>
-						<label for="a_radio-1">Water Quality</label>
-					</td>
-					<td>
-						<input type="radio" class="radio_btn" name="radio1" id="a_radio-2" value="cv"/>
-						<label for="a_radio-2">Coastal Risk</label>
-					</td>
-					<td>
-						<input type="radio" class="radio_btn" name="radio1" id="a_radio-3" value="poll" />
-						<label for="a_radio-3">Pollination</label>
-					</td>
-				</tr>
-				<tr id="scenario">
-					<td>
-						<input type="radio" class="radio_btn" name="radio2" id="b_radio-1" value="ssp1"/>
-						<label for="b_radio-1">Green Growth</label>
-					</td>
-					<td>
-						<input type="radio" class="radio_btn" name="radio2" id="b_radio-2" value="ssp3" checked="checked"/>
-						<label for="b_radio-2">Regional Rivalry</label>
-					</td>
-					<td>
-						<input type="radio" class="radio_btn" name="radio2" id="b_radio-3" value="ssp5"/>
-						<label for="b_radio-3">Fossil Fuels</label>
-					</td>
-				</tr>
-			</tbody>
+			<tr>
+				<td>
+					<input type="radio" class="radio_btn" name="radio1" id="a_radio-1" value="ndr" checked="checked"/>
+					<label for="a_radio-1">Water Quality</label>
+				</td>
+				<td>
+					<input type="radio" class="radio_btn" name="radio1" id="a_radio-2" value="cv"/>
+					<label for="a_radio-2">Coastal Risk</label>
+				</td>
+				<td>
+					<input type="radio" class="radio_btn" name="radio1" id="a_radio-3" value="poll" />
+					<label for="a_radio-3">Pollination</label>
+				</td>
+			</tr>
 		</table>
-		
 		<div id="toggle">
 			<div class="inner-container">
 				<div class="toggle">
@@ -73,6 +56,24 @@
 				</div>
 			</div>
 		</div>
+		<table>	
+			<tr id="scenario">
+				<td>
+					<input type="radio" class="radio_btn" name="radio2" id="b_radio-1" value="ssp1"/>
+					<label for="b_radio-1">Green Growth</label>
+				</td>
+				<td>
+					<input type="radio" class="radio_btn" name="radio2" id="b_radio-2" value="ssp3" checked="checked"/>
+					<label for="b_radio-2">Regional Rivalry</label>
+				</td>
+				<td>
+					<input type="radio" class="radio_btn" name="radio2" id="b_radio-3" value="ssp5"/>
+					<label for="b_radio-3">Fossil Fuels</label>
+				</td>
+			</tr>
+		</table>
+		
+		
 	</div>
 	<div id = "story-board">
 		<div id="story-container">
@@ -93,7 +94,7 @@
 	</svg>
 
 	<div id="distribution-chart">
-		<h2 id="distri-chart-head">How many are impacted?</h2>
+		<h2 id="distri-chart-head">Distribution of impacted people <br> for the choosen scenario </h2>
 		<svg id="distribution"></svg>
 	</div> 
 	<div id ="legend">
