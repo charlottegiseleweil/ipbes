@@ -102,20 +102,7 @@ function plusStory(n) {
 }
 
 function showStory(slideIndex, welcomeStory=false) {
-<<<<<<< HEAD
-	slideIndex
-	const story = stories[slideIndex];
-	document.getElementById(story.field).checked = true;
-	document.getElementById(story.field).dispatchEvent(new Event('change'))  // Trigger the change event on the radio button to make sure that the dataset shifts accordingly
-	document.getElementById(story.scenario).checked = true;
-	switchYear(story.toggleState);
-
-=======
 	
-	
-	
-	
->>>>>>> fix so that reset click does not change dataset or scenario
 	if(welcomeStory){
 		showWelcomeStory();
 	}else{
