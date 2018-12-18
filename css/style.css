@@ -36,12 +36,12 @@ body {
 
 	/* default text */
 	font-size: 2rem;
-	font-family: 'Open Sans Condensed', sans-serif;
+	font-family: 'Muli', sans-serif;
 }
 
 
 .selected {
-	fill: white;
+	fill: dimgrey;
 	opacity: 1;
 }
 
@@ -49,14 +49,15 @@ body {
 	position: absolute;
 	display: none;
 	pointer-events: none;
-	background: #fff;
+	/*background: #fff;*/
 	padding: 5px;
 	text-align: left;
-	border: solid #ccc 1px;
-	color: #666;
-	font-size: 14px;
-	font-family: sans-serif;
-  }
+	/*border: solid #ccc 1px;*/
+	color:white;
+	font-size: 16px;
+
+
+}
 
 #country_name {
 	color: white;
