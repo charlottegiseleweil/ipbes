@@ -74,7 +74,7 @@ class BarChart{
 				  .style("left", d3.event.pageX + 10  + "px")
 				  .style("top", d3.event.pageY - 20 + "px")
 				  .style("display", "inline-block")
-				  .html(parseInt(d));
+				  .html(numeral(parseInt(d)).format('0,0'));
 			})
 			.on("mouseout",  d => tooltip.style("display", "none"));
     }

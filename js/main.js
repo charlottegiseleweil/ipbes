@@ -139,14 +139,17 @@ function showImpactedPop(population) {
 		pop_ssp5 += d.pop_ssp5 ;
 	});
 
-	document.getElementById("story-text").innerHTML = "Total impacted population: <br> 2015: " 
-														+ (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "<br>"
-														+ "<br>2050<br>" 
-														+ "Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "<br>"
-														+ "Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "<br>"
-														+ "Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0");
+	document.getElementById("story-text").innerHTML = "Total impacted population: <br> "+
+														"<p class=impactedPop id=ppop_cur>2015:" + (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "</p><br>"
+														+ "2050" 
+														+ "<p class=impactedPop id=ppop_ssp1>Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "</p>"
+														+ "<p class=impactedPop id=ppop_ssp3>Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "</p>"
+														+ "<p class=impactedPop id=ppop_ssp5>Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0") + "</p>";
 	
-	
+	let selected = document.getElementById(`ppop_${plot_object.currentScenario}`).style
+	selected.fontWeight = 'bold';
+	selected.fontSize = '15px';
+	selected.opacity = '1';
 }
 
 function showBarChart(barChart,bins,color){

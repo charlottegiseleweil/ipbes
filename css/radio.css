@@ -24,29 +24,31 @@ input[type="radio"] {
 }
 #radio_container input {
   border: 1px solid white;
-  opacity: 0.5;
+  /*opacity: 0.5;*/
   padding-bottom: 1px;
   text-align: center;
+  
 }
 #radio_container input:checked {
   border: 2px solid white;
   opacity: 1;
+  background-color: rgba(255, 129, 198, 0.3);
 }
 
 /* affect also the label on check */
 input[type="radio"]:checked + label {
   color: white;
-  font-style: bold;
+  font-weight: bold;
   opacity: 1;
 } 
 input[type="radio"]+ label {
   color: white;
-  opacity: 0.5;
+  /*opacity: 0.5;*/
 } 
 
 input[type="radio"]:hover + label {
   color: white;
-  font-style: bold;
+  font-weight: bold;
   opacity: 1;
 } 
 #radio_container input:hover {
