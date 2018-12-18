@@ -77,7 +77,7 @@ function switchYear(toggle) {
 };
 
 function showledgend(){
-	const w = 150, h = 50;
+	const w = 150, h = 55;
 	const pink = d3.hcl(15, 90, 60);
 	const yellow = d3.hcl(100, 90, 100);
 
@@ -136,8 +136,8 @@ function showStory(slideIndex, welcomeStory=false) {
 }
 
 function showWelcomeStory(){
-    document.getElementById("story-header").innerHTML = "hej jag har";
-    document.getElementById("story-text").innerHTML = "väldigt skojigt <br> och emma är";
+    document.getElementById("story-header").innerHTML = "The Earth Won't Scale";
+    document.getElementById("story-text").innerHTML = "Discover the map by your self or follow the &#x2605; to see interesting places and scenarios. You can also use the arrows bellow.";
 }
 
 
@@ -159,14 +159,23 @@ function showImpactedPop(population) {
 		pop_ssp5 += d.pop_ssp5 ;
 	});
 
-	document.getElementById("story-text").innerHTML = "Total impacted population: <br> 2015: " 
-														+ (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "<br>"
-														+ "<br>2050<br>" 
-														+ "Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "<br>"
-														+ "Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "<br>"
-														+ "Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0");
+	document.getElementById("story-text").innerHTML = "Total impacted population: <br> "+
+														"<p class=impactedPop id=pop_cur>2015:" + (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "</p><br>"
+														+ "<p class=impactedPop id=is2050>2050</p>" 
+														+ "<p class=impactedPop id=pop_ssp1>Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "</p>"
+														+ "<p class=impactedPop id=pop_ssp3>Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "</p>"
+														+ "<p class=impactedPop id=pop_ssp5>Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0") + "</p>";
 	
-	
+	let selected = document.getElementById(`pop_${plot_object.currentScenario}`).style
+	selected.fontWeight = 'bold';
+	selected.fontSize = '15px';
+	selected.opacity = '1';
+	if(`${plot_object.currentScenario}` != 'cur'){
+		let selected = document.getElementById('is2050').style
+		selected.fontWeight = 'bold';
+		selected.fontSize = '15px';
+		selected.opacity = '1';
+	}
 }
 
 function showBarChart(barChart,bins,color){
@@ -178,7 +187,7 @@ function hideBarChart(){
 	document.getElementById('distribution-chart').style.visibility = 'hidden';
 }
 
-function calculateDistribution(focusedData,max){
+function calculateDistribution(focusedData, thresholds){
 	if(focusedData.length == 0){
 		return null;
 	}
@@ -191,10 +200,19 @@ function calculateDistribution(focusedData,max){
 	
 	// Generate a histogram using twenty uniformly-spaced bins.
 	return d3.histogram()
-		.domain([0,max])
-		.thresholds(7)
+		.domain(plot_object.dataExtent)
+		.thresholds(thresholds)
 		.value(getUN)      // Provide accessor function for histogram generation
 		(distri_data);
+}
+
+function showInfo(){
+	document.getElementById('greyOut').style.visibility = 'visible';
+	document.getElementById('infoBox').style.visibility = 'visible';
+}
+function closeInfo(){
+	document.getElementById('greyOut').style.visibility = 'hidden';
+	document.getElementById('infoBox').style.visibility = 'hidden';
 }
 
 			

@@ -8,6 +8,7 @@
 
 	<title>TheEarthWontScale</title>
 	<meta name="author" content="David Malmström, Josef Weber, Anna Häägg">
+	<link href="https://fonts.googleapis.com/css?family=Muli:300" rel="stylesheet">
 
 	<link rel="shortcut icon" href="#" />
 	
@@ -18,17 +19,10 @@
 	<link rel="stylesheet" href="css/distribution-chart.css">
 	<link rel="stylesheet" href="css/legend.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
 </head>
 <body>
 
-
-
 <div id="landingpage">
-	<!--<h1> THE EARTH WON'T SCALE </h1>
-
-	<img src="img/burns.gif">-->
-	
 	<div class="glitch tews" data-text="Strobocops">
 			<span class="glitch__color glitch__color--red">THE EARTH WON'T SCALE</span>
 			<span class="glitch__color glitch__color--orange">THE EARTH WON'T SCALE</span>
@@ -45,16 +39,14 @@
 	<br>
 	<br>
 
-
 	<div class="glitch laoding" data-text="Strobocops">
 		<span>loading ...</span>
 	</div>
-
 </div>
-
 
 <div class="wrapper" id="map-content">
 	<div id="radio_container">
+		<p class="infoBtn" id="infoShow" onclick="showInfo()">&#x2139;</p>
 		<table>
 			<tr>
 				<td>
@@ -131,11 +123,31 @@
 		<svg id="distribution"></svg>
 	</div> 
 	<div id ="legend">
-		<p class="legendText">Low <br>Unmet Need</p>
+		<p class="legendText">Low <br>Impact</p>
 		<svg id="legendBar"></svg>
-		<p class="legendText">High <br>Unmet Need</p>
+		<p class="legendText">High <br>Impact</p>
 	</div>
 	
+
+</div>
+<div id="greyOut"></div>
+<div id="infoBox">
+	<p class="infoBtn" id="infoClose" onclick="closeInfo()">&#x2716;</p>
+	<h2 id="infoHeader">The Earth wont scale</h2>
+	<p id="infoText">Natural habitats purifies our water, protects us from floods, 
+		delivers pollinators to food crops to support nutritious diets, 
+		and provides countless other benefits to people. Use the map to 
+		investigate how nature’s contributions to people will change in 2050, 
+		under different scenarios. The colours show how the difference in unmet need 
+		depending on what scenario we choose for our future.</p>
+	<p>The different services are:</p>
+	<li>Coastal Risk</li>
+	<li>Water Quality</li>
+	<li>Pollination</li>
+	<p>The differnet scenarios are:</p>
+	<li>Green Growth - sustainable development</li>
+	<li>Regional Rivalry</li>
+	<li>Fossil-Fueled Development</li>
 
 </div>
 

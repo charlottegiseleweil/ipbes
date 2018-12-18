@@ -10,8 +10,8 @@
 }
 .legendText{
     display: inline-block;
-    font-size: 8px;
+    font-size: 0.6rem;
     vertical-align: top;
     text-align: center;
-    padding-top: 3px;
+    
 }

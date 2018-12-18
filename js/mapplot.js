@@ -54,7 +54,7 @@ class MapPlot {
             this.currentCountryMapping = this.cv_country_mapping
 
 			
-			// add country name labels to map_data objects  TODO: add this to preprocessing instead
+			// add country name labels to map_data objects
 			this.map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 			this.map_data_50.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 
@@ -86,19 +86,13 @@ class MapPlot {
             this.r0; 
             this.q0;
 
-			// color scale for the data points in the focused mode
-			// TODO: VERY IMPORTANT; we need a scale for the zoomed 
-			// in mode to be able to compare the colors to the extreme values of the whole 
-			// world, to see if they are bad or not, (in addition to the comparison within
-            // a country)
-
             // Distribution plot
             this.barChart = new BarChart();
+
+            let hcl = d3.interpolateHcl(d3.hcl(100, 90, 100), d3.hcl(15, 90, 60));
             
-            this.currentColorScale = d3.scaleLinear()
-                // from yellow to pink
-                .range([d3.hcl(100, 90, 100), d3.hcl(15, 90, 60)])
-                .interpolate(d3.interpolateHcl)
+            this.currentColorScale = d3.scaleQuantile()
+                .range(d3.quantize(hcl, 7));
             
             this.setCurrentColorScaleDomain();
 
@@ -217,7 +211,19 @@ class MapPlot {
         let pts = [];
         let subPixel = false;
         let subPts = [];
-        let nodeScale = this.projection.scale() * 0.0005;  // måste ändras
+        let scaleFactor;
+        switch (this.currentDatasetName) {
+            case 'ndr': 
+                scaleFactor = 0.0004;
+                break;
+            case 'poll':
+                scaleFactor = 0.0006;
+                break;
+            case 'cv':
+                scaleFactor = 0.0008;
+        }
+
+        let nodeScale = this.projection.scale() * scaleFactor;
         let counter = 0;
         let counter2 = 0; 
         
@@ -238,7 +244,7 @@ class MapPlot {
                 if (subPixel && subPts && subPts.length > 0) {
 
                     subPts[0].group = subPts.length;
-                    let indexOfMax = d3.scan(subPts, (a, b) => parseInt(b[`UN_${plot_object.currentScenario}`])- parseInt(a[`UN_${plot_object.currentScenario}`]));
+                    let indexOfMax = d3.scan(subPts, (a, b) => parseFloat(b[`UN_${plot_object.currentScenario}`])- parseFloat(a[`UN_${plot_object.currentScenario}`]));
                     pts.push(subPts[indexOfMax]); // add only the point with the highest data value
                     counter += subPts.length - 1;
                     subPts = [];
@@ -299,7 +305,7 @@ class MapPlot {
         let focusedCountryData = this.focusedData();
         
         // Update barchart
-        let distribution = calculateDistribution(focusedCountryData, this.dataExtent[1]);
+        let distribution = calculateDistribution(focusedCountryData, this.currentColorScale.quantiles());
         if(distribution){
             showBarChart(this.barChart, distribution, this.currentColorScale);
         }
@@ -343,17 +349,19 @@ class MapPlot {
 
     setCurrentColorScaleDomain() {
         // get the extents for the data of the 4 different scenarios
-        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseInt(x[`UN_${scenario}`])))
+        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseFloat(x[`UN_${scenario}`])))
         // set the domain to the extent (min and max) of the 4 extents
         this.dataExtent = d3.extent(extents);
-        this.currentColorScale.domain(this.dataExtent);
+        // Use the UN_cur scenario as the domain, but add the dataExtent points as well to include the outliers
+        this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`UN_cur`])).concat(this.dataExtent));
     }
 
     initWorldMapData(worldDataSelection) {
+        let that = this;
         worldDataSelection.enter().append("circle")
             .attr("r", 3)
             .attr("class", "datapoints")
-            .style("fill", (d) => this.currentColorScale(parseInt(d[`UN_${this.currentScenario}`])))
+            .style("fill", (d) => this.currentColorScale(parseFloat(d[`UN_${this.currentScenario}`])))
     }
 
     focusedDataSelection() {
@@ -373,6 +381,7 @@ class MapPlot {
 
 
     initFocusedMapData(focusedDataSelection) {
+        let that = this;
         // Add focused country data
         focusedDataSelection.enter().append("circle")
             .attr("r", "3")
@@ -395,6 +404,9 @@ class MapPlot {
 
             that.focusedCountry = d.name;
             if (that.focusedCountry == undefined) return null;
+            
+            // Don't allow clicks during transition
+            d3.select(".wrapper").style("pointer-events", "none")
 
             that.activeClick.classed("active", false);
             that.activeClick = d3.select(this).classed("active", true);
@@ -420,6 +432,7 @@ class MapPlot {
             
             let dataSelection = that.focusedDataSelection();
             
+
             // Update the map:
             d3.selectAll("path.globe")
                 .transition()
@@ -436,6 +449,8 @@ class MapPlot {
                         end_callback_triggered = true
                         d3.select(this).classed("selected", false)
                         that.initFocusedMapData(dataSelection);
+                        // Allow clicks after transition is done
+                        d3.select(".wrapper").style("pointer-events", "all")
                         }
                     });
                     
@@ -445,7 +460,7 @@ class MapPlot {
 
             // Create a bar chart
             let focusedCountryData = that.focusedData();
-            let distribution = calculateDistribution(focusedCountryData, that.dataExtent[1]);
+            let distribution = calculateDistribution(focusedCountryData, that.currentColorScale.quantiles());
             if(distribution){
                 showBarChart(that.barChart, distribution, that.currentColorScale);
             }
@@ -465,6 +480,9 @@ class MapPlot {
     resetClick(fromStory=false) {
         this.activeClick.classed("active", false);
         this.activeClick = d3.select(null);
+
+        // Don't allow clicks during transition
+        d3.select(".wrapper").style("pointer-events", "none")
         
         this.init_110map();
         
@@ -489,6 +507,8 @@ class MapPlot {
                     already_triggered = true
                     document.getElementById("story-btn-section").style.display = "block";
                     this.render()	
+                    // Allow clicks after transition is done
+                    d3.select(".wrapper").style("pointer-events", "all")
                 }
             })
         } else {
@@ -505,6 +525,8 @@ class MapPlot {
                     already_triggered = true
                     this.render()	
                     this.scaleBeforeStory = 0
+                    // Allow clicks after transition is done
+                    d3.select(".wrapper").style("pointer-events", "all")
                 }
             })
         }
@@ -621,7 +643,7 @@ class MapPlot {
         this.clicked(this, true)(found)
     }
 
-    setDataset(dataset) {  //TODO: disable switches during transition
+    setDataset(dataset) {
         this.currentDatasetName = dataset;
         switch (this.currentDatasetName) {
             case 'ndr': 
