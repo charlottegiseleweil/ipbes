@@ -161,7 +161,7 @@ function hideBarChart(){
 	document.getElementById('distribution-chart').style.visibility = 'hidden';
 }
 
-function calculateDistribution(focusedData,max){
+function calculateDistribution(focusedData, thresholds){
 	if(focusedData.length == 0){
 		return null;
 	}
@@ -174,8 +174,8 @@ function calculateDistribution(focusedData,max){
 	
 	// Generate a histogram using twenty uniformly-spaced bins.
 	return d3.histogram()
-		.domain([0,max])
-		.thresholds(7)
+		.domain(plot_object.dataExtent)
+		.thresholds(thresholds)
 		.value(getUN)      // Provide accessor function for histogram generation
 		(distri_data);
 }
