@@ -206,7 +206,19 @@ class MapPlot {
         let pts = [];
         let subPixel = false;
         let subPts = [];
-        let nodeScale = this.projection.scale() * 0.0005;  // måste ändras
+        let scaleFactor;
+        switch (this.currentDatasetName) {
+            case 'ndr': 
+                scaleFactor = 0.0004;
+                break;
+            case 'poll':
+                scaleFactor = 0.0006;
+                break;
+            case 'cv':
+                scaleFactor = 0.0008;
+        }
+
+        let nodeScale = this.projection.scale() * scaleFactor;
         let counter = 0;
         let counter2 = 0; 
         
@@ -626,7 +638,7 @@ class MapPlot {
         this.clicked(this, true)(found)
     }
 
-    setDataset(dataset) {  //TODO: disable switches during transition
+    setDataset(dataset) {
         this.currentDatasetName = dataset;
         switch (this.currentDatasetName) {
             case 'ndr': 
