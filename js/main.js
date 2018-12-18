@@ -215,6 +215,11 @@ function closeInfo(){
 	document.getElementById('infoBox').style.visibility = 'hidden';
 }
 
+function backToGlobe(){
+	plot_object.resetClick();
+	document.getElementById('resetText').style.visibility = 'hidden';
+}
+
 			
 function whenDocumentLoaded(action) {
 	if (document.readyState === "loading") {

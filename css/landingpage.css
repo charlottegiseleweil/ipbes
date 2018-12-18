@@ -1,4 +1,33 @@
 
+
+#landingpage {
+	z-index: 10;
+	background:black;
+	color:white;
+	
+	width: 100%;
+	padding: 10%;
+
+	/*Horizontal center*/
+	vertical-align: middle;
+	text-align: center;
+	margin: 0 auto;
+}
+
+/*Transition show hide with fade*/
+.visible {
+	visibility: visible;
+	opacity: 1;
+  transition: opacity 2s linear;
+  display: block;
+}
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+  /*display: none;*/
+}
+
 .tews {
 font-size: 4rem;
 
@@ -20,10 +49,6 @@ font-size: 4rem;
     text-transform: uppercase;
     transform-origin: center top;
 }
-
-
-
-
 
   .glitch__main {
     color: #FFF;

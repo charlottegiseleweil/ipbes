@@ -474,6 +474,9 @@ class MapPlot {
                                                         pop_ssp3: parseFloat(x.pop_ssp3), 
                                                         pop_ssp5: parseFloat(x.pop_ssp5), }));
             showImpactedPop(population);
+
+            // display reset button
+            document.getElementById('resetText').style.visibility = 'visible';
         }
     }
 
@@ -530,6 +533,7 @@ class MapPlot {
                 }
             })
         }
+        document.getElementById('resetText').style.visibility = 'hidden';
         
     }
 
@@ -684,10 +688,10 @@ class MapPlot {
             .attr('cx', d => this.projection([d.lng, d.lat])[0])
             .attr('cy', d => this.projection([d.lng, d.lat])[1])
             .attr("d", d3.symbol().type(d3.symbolStar).size(250))
-            .style("fill", '#66344f')
+            .style("fill", '#cfcfcf')
             .on("click" , (d,i) => showStory(i))
-            .on("mouseover", function(){d3.select(this).style("fill", "white");})
-            .on("mouseout", function(){d3.select(this).style("fill", '#66344f');})
+            .on("mouseover", function(){d3.select(this).style("fill", "dimgray");})
+            .on("mouseout", function(){d3.select(this).style("fill", '#cfcfcf');})
             
         // set them to the front layer
         markers.each(function () {

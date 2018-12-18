@@ -1,7 +1,7 @@
 /* CSS for user settings - radio button section */
 
 #radio_container {
-    background: rgba(255, 129, 198, 0.4);
+    background: rgba(0, 0, 0, 0.6);
     color: white;
     position: absolute;
     top: 0;
@@ -9,10 +9,6 @@
     padding: 0.5rem;
     margin: 1rem;
     font-size: 0.7rem;
-}
-
-.infoBtn:hover{
-  opacity: 0.8;
 }
 
 /* radio btn */
@@ -37,7 +33,7 @@ input[type="radio"] {
 #radio_container input:checked {
   border: 2px solid white;
   opacity: 1;
-  background-color: rgba(255, 129, 198, 0.3);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 /* affect also the label on check */
@@ -92,6 +88,7 @@ table {
 }
 
 #toggle {
+  box-sizing: border-box;
   width: 13rem;
   height: 2rem;
   margin: 0.5rem auto;
@@ -103,6 +100,7 @@ table {
 }
 
 .inner-container {
+  box-sizing: border-box;
   position: absolute;
   left: 0;
   top: 0;
@@ -115,7 +113,8 @@ table {
 }
 
 .inner-container:nth-child(2) {
-  background: rgba(255, 129, 198, 0.3);
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.3);
   color: rgba(255, 255, 255, 1);
   clip-path: inset(0 50% 0 0);
   transition: .3s cubic-bezier(0,0,0,1);
@@ -125,6 +124,7 @@ table {
 }
 
 .toggle {
+  box-sizing: border-box;
   width: 50%;
   position: absolute;
   height: inherit;
@@ -133,10 +133,12 @@ table {
 }
 
 .toggle p {
+  box-sizing: border-box;
   margin: auto;
 }
 
 .toggle:nth-child(1) {
+  box-sizing: border-box;
   right: 0;
 }
 
