@@ -580,11 +580,12 @@ class MapPlot {
                 .data(this.map_data_50)
                 .enter().append("path")
                 .attr("class", "globe")
-                .attr("fill", function (d){
+                .attr("fill","gray")
+                .attr("opacity", function (d){
                     if (d.name == country_sel.name) { 
-                        return "dimgray"
+                        return "0.5"
                     }
-                    return "grey";
+                    return "1";
                 })
                 .attr("d", this.path)
                 .on("click", () => {
