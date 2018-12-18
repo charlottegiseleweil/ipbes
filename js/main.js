@@ -57,7 +57,7 @@ function switchYear(toggle) {
 };
 
 function showledgend(){
-	const w = 150, h = 50;
+	const w = 150, h = 55;
 	const pink = d3.hcl(15, 90, 60);
 	const yellow = d3.hcl(100, 90, 100);
 
@@ -116,8 +116,8 @@ function showStory(slideIndex, welcomeStory=false) {
 }
 
 function showWelcomeStory(){
-    document.getElementById("story-header").innerHTML = "hej jag har";
-    document.getElementById("story-text").innerHTML = "väldigt skojigt <br> och emma är";
+    document.getElementById("story-header").innerHTML = "The Earth Won't Scale";
+    document.getElementById("story-text").innerHTML = "Discover the map by your self or follow the &#x2605; to see interesting places and scenarios. You can also use the arrows bellow.";
 }
 
 
@@ -140,16 +140,22 @@ function showImpactedPop(population) {
 	});
 
 	document.getElementById("story-text").innerHTML = "Total impacted population: <br> "+
-														"<p class=impactedPop id=ppop_cur>2015:" + (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "</p><br>"
-														+ "2050" 
-														+ "<p class=impactedPop id=ppop_ssp1>Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "</p>"
-														+ "<p class=impactedPop id=ppop_ssp3>Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "</p>"
-														+ "<p class=impactedPop id=ppop_ssp5>Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0") + "</p>";
+														"<p class=impactedPop id=pop_cur>2015:" + (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "</p><br>"
+														+ "<p class=impactedPop id=is2050>2050</p>" 
+														+ "<p class=impactedPop id=pop_ssp1>Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "</p>"
+														+ "<p class=impactedPop id=pop_ssp3>Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "</p>"
+														+ "<p class=impactedPop id=pop_ssp5>Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0") + "</p>";
 	
-	let selected = document.getElementById(`ppop_${plot_object.currentScenario}`).style
+	let selected = document.getElementById(`pop_${plot_object.currentScenario}`).style
 	selected.fontWeight = 'bold';
 	selected.fontSize = '15px';
 	selected.opacity = '1';
+	if(`${plot_object.currentScenario}` != 'cur'){
+		let selected = document.getElementById('is2050').style
+		selected.fontWeight = 'bold';
+		selected.fontSize = '15px';
+		selected.opacity = '1';
+	}
 }
 
 function showBarChart(barChart,bins,color){

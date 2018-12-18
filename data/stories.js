@@ -41,11 +41,6 @@ const stories = [ {
 					field: "a_radio-1",
 					scenario: "b_radio-3",
 					toggleState: true,
-					lat: -44.936654,lng: 169.492575, country: "New Zealand"},
-				{
-					field: "a_radio-3",
-					scenario: "b_radio-2",
-					toggleState: true,
-					lat: 33.224009, lng: -6.134634, country: "Morocco"}
+					lat: -44.936654,lng: 169.492575, country: "New Zealand"}
 
 				];
