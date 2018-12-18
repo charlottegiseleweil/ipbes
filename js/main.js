@@ -180,6 +180,15 @@ function calculateDistribution(focusedData,max){
 		(distri_data);
 }
 
+function showInfo(){
+	document.getElementById('greyOut').style.visibility = 'visible';
+	document.getElementById('infoBox').style.visibility = 'visible';
+}
+function closeInfo(){
+	document.getElementById('greyOut').style.visibility = 'hidden';
+	document.getElementById('infoBox').style.visibility = 'hidden';
+}
+
 			
 function whenDocumentLoaded(action) {
 	if (document.readyState === "loading") {

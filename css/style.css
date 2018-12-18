@@ -63,6 +63,51 @@ body {
 	background-color: white;
 }
 
-circle.goo {
-	fill: yellow;
+#greyOut{
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.6;
+	position: absolute;
+	visibility: hidden;
+	
+}
+#infoBox{
+	background: rgba(255, 129, 198, 0.5);
+    color: white;
+    position: absolute;
+	margin: auto;
+	top: 10%;
+    font-size: 0.7rem;
+    height: 70%;
+	width: 50%;
+	visibility: hidden;
+	padding: 3% 5%;
+	font-size: 13px;
+}
+.infoBtn{
+	position: absolute;
+	top: 0;
+	cursor: pointer;
+	font-size: 20px;
+	margin: 10px 16px;
+}
+#infoClose{
+	right:0;
+	font-size: 25px;
+}
+#infoShow{
+	left: 0;
+}
+
+#infoHeader{
+	text-align: center;
+	margin-top:0;
+}
+
+#infoText{
+	margin: auto;
+    font-size: 15px;
+    font-style: italic;
+    font-stretch: condensed;
 }

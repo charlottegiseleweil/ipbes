@@ -18,10 +18,11 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 </head>
 <body>
-
 <div class="wrapper">
+	
 
 	<div id="radio_container">
+		<p class="infoBtn" id="infoShow" onclick="showInfo()">&#x2139;</p>
 		<table>
 			<tr>
 				<td>
@@ -103,6 +104,26 @@
 		<p class="legendText">High <br>Unmet Need</p>
 	</div>
 	
+
+</div>
+<div id="greyOut"></div>
+<div id="infoBox">
+	<p class="infoBtn" id="infoClose" onclick="closeInfo()">&#x2716;</p>
+	<h2 id="infoHeader">The Earth wont scale</h2>
+	<p id="infoText">Natural habitats purifies our water, protects us from floods, 
+		delivers pollinators to food crops to support nutritious diets, 
+		and provides countless other benefits to people. Use the map to 
+		investigate how nature’s contributions to people will change in 2050, 
+		under different scenarios. The colours show how the difference in unmet need 
+		depending on what scenario we choose for our future.</p>
+	<p>The different services are:</p>
+	<li>Coastal Risk</li>
+	<li>Water Quality</li>
+	<li>Pollination</li>
+	<p>The differnet scenarios are:</p>
+	<li>Green Growth - sustainable development</li>
+	<li>Regional Rivalry</li>
+	<li>Fossil-Fueled Development</li>
 
 </div>
 

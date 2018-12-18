@@ -11,6 +11,10 @@
     font-size: 0.7rem;
 }
 
+.infoBtn:hover{
+  opacity: 0.8;
+}
+
 /* radio btn */
 input[type="radio"] {
   -webkit-appearance: none;
@@ -21,6 +25,7 @@ input[type="radio"] {
   /*center*/
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 #radio_container input {
   border: 1px solid white;
