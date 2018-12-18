@@ -1,3 +1,20 @@
+
+// loader settings
+var opts = {
+	lines: 5, // The number of lines to draw
+	length: 10, // The length of each line
+	width: 10, // The line thickness
+	radius: 14, // The radius of the inner circle
+	color: 'lime', // #rgb or #rrggbb or array of colors
+	speed: 1.9, // Rounds per second
+	trail: 40, // Afterglow percentage
+	className: 'spinner', // The CSS class to assign to the spinner
+  };
+
+//var target = document.getElementById("globe-plot")
+// var spinner = new Spinner(opts).spin()
+// spinner.stop()
+
 function whenDocumentLoaded(action) {
 	if (document.readyState === "loading") {
 		document.addEventListener("DOMContentLoaded", action);
@@ -12,11 +29,14 @@ whenDocumentLoaded(() => {
 	is2050 = false;
 	slideIndex = 0;
 
-	showledgend();
+	// HIDE
+	//document.getElementById("all").style.visibility = "hidden";
+
+	
 	plot_object = new MapPlot('globe-plot');
 	// plot object is global, you can inspect it in the dev-console
-
-
+	showledgend();
+	
 	
 	// When the dataset radio buttons are changed: change the dataset
 	d3.selectAll(("input[name='radio1']")).on("change", function(){

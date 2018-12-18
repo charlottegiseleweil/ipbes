@@ -1,5 +1,7 @@
 class MapPlot {
 	constructor(svg_element_id) {
+
+
 		this.svg = d3.select('#' + svg_element_id);
 
 		// may be useful for calculating scales
@@ -136,7 +138,10 @@ class MapPlot {
 			this.drawMarkers();
             showStory(0, true);
             this.update_all();
-			
+
+            console.log("Done loading")
+            d3.selectAll("#landingpage").attr("class", "hidden");           
+            d3.select("#map-content").style("display","block")
 			
 			// TODO: CIRCLE AROUND WORLD 
 			// svg.selectAll("path").enter()
