@@ -1,7 +1,5 @@
 class MapPlot {
 	constructor(svg_element_id) {
-
-
 		this.svg = d3.select('#' + svg_element_id);
 
 		// may be useful for calculating scales
@@ -9,8 +7,6 @@ class MapPlot {
 		this.svgWidth = svg_viewbox.width;
 		this.svgHeight = svg_viewbox.height;
 
-
-		// FIXME: better load function for both maps
 		const map_promise_110 = d3.json("data/map_data/110m.json").then(topojson_raw => {
 			const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
 			// remove leading zeros for the id:s
@@ -133,16 +129,8 @@ class MapPlot {
             showStory(0, true);
             this.update_all();
 
-            console.log("Done loading")
             d3.selectAll("#landingpage").attr("class", "hidden");           
             d3.select("#map-content").style("display","block")
-			
-			// TODO: CIRCLE AROUND WORLD 
-			// svg.selectAll("path").enter()
-			// 	.append("circle")
-			// 		.attr("transform", "translate([400,400])")
-			// 		.attr('r', scale+10)
-			// 		.attr("fill", "yellow")
 		});
 
     }
@@ -162,7 +150,7 @@ class MapPlot {
             .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
             // make the data dots disappear when they are on the other side of the globe.
             .style("display", (d) => {  
-                var globeDistance = d3.geoDistance([d.lng, d.lat], this.projection.invert([this.svgWidth/2, this.svgHeight/2]));
+                let globeDistance = d3.geoDistance([d.lng, d.lat], this.projection.invert([this.svgWidth/2, this.svgHeight/2]));
                 return (globeDistance > 1.42) ? 'none' : 'inline';
             })
     }
@@ -199,7 +187,6 @@ class MapPlot {
         return quadtree;
     }
 
-    // Precomputes the node width (TODO: _)
     updateNodes(quadtree) {
         quadtree.visit(function (node, x1, y1, x2, y2) {
             node.width = x2 - x1;
@@ -252,7 +239,7 @@ class MapPlot {
                 subPixel = false;
             }
 
-            if ((p) && d3.geoDistance([p.lng, p.lat], mapCenter) < 1.57) {  // kanske ändra denna för att se vinklingen mer
+            if ((p) && d3.geoDistance([p.lng, p.lat], mapCenter) < 1.57) {  
                 counter2 += 1;
                 if (subPixel) {
                     subPts.push(p);
@@ -274,13 +261,6 @@ class MapPlot {
                 return x1 > x3 && x2 < x0;
             else return false  // else both areas are over the longitude 180/-180 ==> they are overlapping ==> return false
         });
-        // console.log(" Number of removed  points: " + counter);
-        // console.log(" Number of kept points: " + pts.length)
-        // console.log(" currentScale: " + this.projection.scale());
-        // console.log("counter2: " + counter2);
-        // if (counter2 == 0) {
-        //     console.log("uasid")
-        // }
         return pts;
 
     }
@@ -322,20 +302,6 @@ class MapPlot {
     }
 
     worldDataSelection() {
-        // let threshold;
-        // switch(currentDatasetName) {
-        // 	case 'ndr':
-        // 		threshold = 30000000;
-        // 		break;
-        // 	case 'poll':
-        // 		threshold = 30000;
-        // 		break;
-        // 	case 'cv':
-        // 		threshold = 3.4;
-        // 		break;
-        // 
-        // return svg.selectAll("circle.datapoints")
-        // 	.data(currentData.filter((d) => d[`UN_${plot_object.currentScenario}`] > threshold), (d) => d);
         let topLeft = this.projection.invert([0, 0]);
         let topRight = this.projection.invert([this.svgWidth, 0]);
         let top = this.projection.invert([this.svgWidth/2, 0])[1];
@@ -424,7 +390,7 @@ class MapPlot {
             that.path.projection(that.projection);
             
             // calculate the scale and translate required:
-            var b = that.path.bounds(d);
+            let b = that.path.bounds(d);
             that.clickedScale = currentScale * 1.5 / Math.max((b[1][0] - b[0][0]) / (that.svgWidth/2), (b[1][1] - b[0][1]) / (that.svgHeight/2));
             that.clickedRotate = that.projection.rotate();
             
@@ -489,7 +455,6 @@ class MapPlot {
         
         this.init_110map();
         
-        
         hideBarChart();
         this.focused = false;
 
@@ -539,8 +504,8 @@ class MapPlot {
 
     zoomRotateFactory(currRot, currScale, nexRot, nexScale, that=this) {
         return (d) => {
-            var r = d3.interpolate(currRot, nexRot);
-            var s = d3.interpolate(currScale, nexScale);
+            let r = d3.interpolate(currRot, nexRot);
+            let s = d3.interpolate(currScale, nexScale);
                 return function(t) {
                     that.projection
                         .rotate(r(t))
@@ -550,7 +515,6 @@ class MapPlot {
                 }
             }
     }
-
     
     // initializing HD map after zooming in
     init_50map(country_sel, fromStory=false) {
@@ -622,7 +586,6 @@ class MapPlot {
 
     }
 
-    //FIXME:
     // find country object in json
     getCountryByCode(code) {
         return this.map_data.filter(

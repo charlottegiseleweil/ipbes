@@ -1,6 +1,5 @@
-
 // loader settings
-var opts = {
+let opts = {
 	lines: 5, // The number of lines to draw
 	length: 10, // The length of each line
 	width: 10, // The line thickness
@@ -11,9 +10,6 @@ var opts = {
 	className: 'spinner', // The CSS class to assign to the spinner
   };
 
-//var target = document.getElementById("globe-plot")
-// var spinner = new Spinner(opts).spin()
-// spinner.stop()
 
 function whenDocumentLoaded(action) {
 	if (document.readyState === "loading") {
@@ -28,15 +24,10 @@ whenDocumentLoaded(() => {
 	// Initialize dashboard
 	is2050 = false;
 	slideIndex = 0;
-
-	// HIDE
-	//document.getElementById("all").style.visibility = "hidden";
-
 	
 	plot_object = new MapPlot('globe-plot');
 	// plot object is global, you can inspect it in the dev-console
 	showledgend();
-	
 	
 	// When the dataset radio buttons are changed: change the dataset
 	d3.selectAll(("input[name='radio1']")).on("change", function(){

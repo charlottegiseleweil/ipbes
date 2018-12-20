@@ -1,3 +1,4 @@
+/*Styling for the distribution chart of impacted people*/
 #distribution-chart{
     color: white;
     position: absolute;
@@ -5,7 +6,6 @@
     right: 2rem;
     font-size: 0.7rem;
     visibility: hidden;
-
 }
 
 .axis path,
@@ -35,6 +35,7 @@
     margin-bottom: 0;
     font-weight: 300;
 }
+
 #distri-x-axis{
     text-align: center;
     margin-bottom: 0;
@@ -42,6 +43,7 @@
     margin-top: 0;
     font-size: 1rem;
 }
+
 #distri-y-axis{
     position: absolute;
     margin: 0;

@@ -9,7 +9,6 @@ class BarChart{
 		this.width = svgWidth - this.margin.left - this.margin.right,
 		this.height = svgHeight - this.margin.top - this.margin.bottom;
 
-
 		this.svg = d3.select('#distribution')
 			.attr("width", svgWidth)
 			.attr("height", svgHeight);
@@ -17,23 +16,8 @@ class BarChart{
 		this.g = this.svg.append("g")
 			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");	
 		
-
-		// Filter to make the bars glow
-		//Container for the gradients
-		let defs = this.svg.append("defs");
-
-		//Filter for the outside glow
-		this.filter = defs.append("filter")
-			.attr("id","glow");
-		this.filter.append("feGaussianBlur")
-			.attr("stdDeviation","1.5")
-			.attr("result","coloredBlur");
-		let feMerge = this.filter.append("feMerge");
-		feMerge.append("feMergeNode")
-			.attr("in","coloredBlur");
-		feMerge.append("feMergeNode")
-			.attr("in","SourceGraphic");
 	}
+	/*Function to update the bar chart*/
 	createBarchart(bins,color){
 		const labels = bins.map(x => (x.x0 + x.x1)/2);
 		const data = bins.map(x => (x.map(y => y.pop).reduce((a,b)=> a + b,0)));
@@ -67,8 +51,7 @@ class BarChart{
 			.attr("height", y.bandwidth())
 			.attr("y", function(d,i) { return y(labels[i]); })
 			.attr("width", function(d) { return x(d); })
-			.style("fill", (d,i) => color((bins[i].x0 + bins[i].x1) / 2))
-			.style("this.svg.defs.filter", "url(#glow)")	
+			.style("fill", (d,i) => color((bins[i].x0 + bins[i].x1) / 2))	
 			.on("mousemove", function(d){
 				tooltip
 				  .style("left", d3.event.pageX + 10  + "px")

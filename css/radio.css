@@ -18,14 +18,12 @@ input[type="radio"] {
   height:1.1rem;
   outline: none;
   border-radius:100%;
-  /*center*/
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
 }
 #radio_container input {
   border: 1px solid white;
-  /*opacity: 0.5;*/
   padding-bottom: 1px;
   text-align: center;
   
