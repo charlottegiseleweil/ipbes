@@ -128,7 +128,7 @@ function showStory(slideIndex, welcomeStory=false) {
 
 function showWelcomeStory(){
     document.getElementById("story-header").innerHTML = "The Earth Won't Scale";
-    document.getElementById("story-text").innerHTML = "Discover the map by your self or follow the &#x2605; to see interesting places and scenarios. You can also use the arrows bellow.";
+    document.getElementById("story-text").innerHTML = "Discover the map by yourself or follow the &#x2605; to see interesting places and scenarios. You can also use the arrows below.";
 }
 
 
@@ -150,7 +150,7 @@ function showImpactedPop(population) {
 		pop_ssp5 += d.pop_ssp5 ;
 	});
 
-	document.getElementById("story-text").innerHTML = "<b>Total impacted population: <b> <br> <br>"+
+	document.getElementById("story-text").innerHTML = "<b>Total amount of <br> negatively impacted population: <b> <br> <br>"+
 														"<p class=impactedPop id=pop_cur>2015 <br>Current: " + (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "</p><br>"
 														+ "<p class=impactedPop id=is2050>2050</p>" 
 														+ "<p class=impactedPop id=pop_ssp1>Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "</p>"
