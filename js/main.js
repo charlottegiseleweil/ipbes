@@ -10,23 +10,14 @@ let opts = {
 	className: 'spinner', // The CSS class to assign to the spinner
   };
 
-
-function whenDocumentLoaded(action) {
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", action);
-	} else {
-		// `DOMContentLoaded` already fired
-		action();
-	}
-}
-
 whenDocumentLoaded(() => {
 	// Initialize dashboard
 	is2050 = false;
 	slideIndex = 0;
 	
 	plot_object = new MapPlot('globe-plot');
-	// plot object is global, you can inspect it in the dev-console
+	charts = {distribution: new DistributionChart(), scenario: new ScenarioChart(), population: new PopulationChart()};
+	
 	showledgend();
 	
 	// When the dataset radio buttons are changed: change the dataset
@@ -56,13 +47,14 @@ function switchYear(toggle) {
 		scenarioRow.style.transition = 'opacity 0.5s linear';
 		scenarioRow.style.visibility = 'visible';
 		document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'))  // toggle change event on checked radio button
-    } else {
+	} else {
 		toggleContainer.style.clipPath = 'inset(0 50% 0 0)';
 		scenarioRow.style.visibility = 'collapse';
 		scenarioRow.style.opacity = '0';
 		scenarioRow.style.transition = 'opacity 0.5s linear';
 		scenarioRow.style.transition = 'visibility 0.15s linear';
 		plot_object.setScenario("cur");
+		document.getElementById('compare-scenarios').style.visibility = 'hidden';
 
     }
 };
@@ -103,98 +95,27 @@ function showledgend(){
 		.attr("transform", "translate(0,10)");	
 }
 
-
-// Functions to display stories
-function plusStory(n) {
-	slideIndex += n;
-	if (slideIndex > stories.length-1){slideIndex = 0;} 
-	if (slideIndex < 0) {slideIndex = stories.length-1;}
-  showStory(slideIndex);
+function updateCountryName(name) {
+	document.getElementById("countryLabel").innerHTML = name;
 }
 
-function showStory(slideIndex, welcomeStory=false) {
-	
-	if(welcomeStory){
-		showWelcomeStory();
-	}else{
-		const story = stories[slideIndex];
-		document.getElementById(story.field).checked = true;
-		document.getElementById(story.field).dispatchEvent(new Event('change'))  // Trigger the change event on the radio button to make sure that the dataset shifts accordingly
-		document.getElementById(story.scenario).checked = true;
-		switchYear(story.toggleState);
-		plot_object.switchStory(story);
+function updateCharts(focusedData,colorScale){
+	if(focusedData == 0){
+		hideCharts();
+	}
+	else{
+		charts.distribution.show(focusedData, colorScale);
+		if(is2050){
+			charts.scenario.update(focusedData);
+			charts.population.update(focusedData);
+			document.getElementById('compare-scenarios').style.visibility = 'visible';
+		}
 	}
 }
 
-function showWelcomeStory(){
-    document.getElementById("story-header").innerHTML = "The Earth Won't Scale";
-    document.getElementById("story-text").innerHTML = "Discover the map by yourself or follow the &#x2605; to see interesting places and scenarios. You can also use the arrows below.";
-}
-
-
-function showCountryName(name) {
-	document.getElementById("story-header").innerHTML = name;
-}
-
-function showImpactedPop(population) {
-	let pop_cur = 0;
-	let pop_ssp1 = 0;
-	let pop_ssp3 = 0;
-	let pop_ssp5 = 0;
-
-	population.forEach( (d) => {
-		
-		pop_cur += d.pop_cur;
-		pop_ssp1 += d.pop_ssp1 ;
-		pop_ssp3 += d.pop_ssp3 ;
-		pop_ssp5 += d.pop_ssp5 ;
-	});
-
-	document.getElementById("story-text").innerHTML = "<b>Total amount of <br> negatively impacted population: <b> <br> <br>"+
-														"<p class=impactedPop id=pop_cur>2015 <br>Current: " + (pop_cur ? numeral(parseInt(pop_cur)).format('0,0') : "0") + "</p><br>"
-														+ "<p class=impactedPop id=is2050>2050</p>" 
-														+ "<p class=impactedPop id=pop_ssp1>Green Growth: " + (pop_ssp1 ? numeral(parseInt(pop_ssp1)).format('0,0') : "0") + "</p>"
-														+ "<p class=impactedPop id=pop_ssp3>Regional Rivalry: " + (pop_ssp3 ? numeral(parseInt(pop_ssp3)).format('0,0') : "0") + "</p>"
-														+ "<p class=impactedPop id=pop_ssp5>Fossil Fuel: " + (pop_ssp5 ? numeral(parseInt(pop_ssp5)).format('0,0') : "0") + "</p>";
-	
-	let selected = document.getElementById(`pop_${plot_object.currentScenario}`).style
-	selected.fontWeight = 'bold';
-	selected.fontSize = '15px';
-	selected.opacity = '1';
-	if(`${plot_object.currentScenario}` != 'cur'){
-		let selected = document.getElementById('is2050').style
-		selected.fontWeight = 'bold';
-		selected.fontSize = '15px';
-		selected.opacity = '1';
-	}
-}
-
-function showBarChart(barChart,bins,color){
-	document.getElementById('distribution-chart').style.visibility = 'visible';
-	barChart.createBarchart(bins,color);
-}
-
-function hideBarChart(){
+function hideCharts(){
 	document.getElementById('distribution-chart').style.visibility = 'hidden';
-}
-
-function calculateDistribution(focusedData, thresholds){
-	if(focusedData.length == 0){
-		return null;
-	}
-	const distri_data = focusedData.map(x => ({UN: parseFloat(x[`UN_${plot_object.currentScenario}`]),
-											   pop: parseFloat(x[`pop_${plot_object.currentScenario}`])}));
-
-	// Accessor function for the objects unmet need property.
-	const getUN = d => d.UN;
-
-	
-	// Generate a histogram using twenty uniformly-spaced bins.
-	return d3.histogram()
-		.domain(plot_object.dataExtent)
-		.thresholds(thresholds)
-		.value(getUN)      // Provide accessor function for histogram generation
-		(distri_data);
+	document.getElementById('compare-scenarios').style.visibility = 'hidden';
 }
 
 function showInfo(){
@@ -209,6 +130,7 @@ function closeInfo(){
 function backToGlobe(){
 	plot_object.resetClick();
 	document.getElementById('resetText').style.visibility = 'hidden';
+	document.getElementById("countryLabel").style.visibility = 'hidden';
 }
 
 			

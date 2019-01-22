@@ -15,8 +15,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/landingpage.css">
 	<link rel="stylesheet" href="css/radio.css">
-	<link rel="stylesheet" href="css/storyboard.css">
-	<link rel="stylesheet" href="css/distribution-chart.css">
+	<link rel="stylesheet" href="css/charts.css">
 	<link rel="stylesheet" href="css/legend.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 </head>
@@ -44,6 +43,7 @@
 <div class="wrapper" id="map-content">
 	<svg id="globe-plot" viewBox="0 0 1200 800" width="99%" height="99%"></svg>
 	<div id="resetButton"><p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p></div>
+	<div id="countryLabel"></div>
 	<p class="infoBtn" id="infoShow" onclick="showInfo()">&#x2139;</p>
 	
 	<div id="radio_container">	
@@ -98,33 +98,53 @@
 			</tr>
 		</table>
 	</div>
-
-	<div id = "story-board">
-		<div id="story-container">
-				<div id="story">
-						<p id="story-header"></p>
-						<p id = "story-text"></p>
-				</div>
-		</div>
-		<div id="story-btn-section">
-			<!-- Next/prev buttons -->
-			<a class="prev" onclick="plusStory(-1)">&#10094;</a>
-			<!--<button name="btn" id="escape_story_mode">esc</button>-->
-			<a class="next" onclick="plusStory(1)">&#10095;</a>
-		</div>
-	</div>
 	
 	<div id="distribution-chart">
-		<h2 id="distri-chart-head">Distribution of negatively <br> impacted people for <br> the chosen scenario </h2>
-		<h3 id="distri-y-axis">Severeness</h3>
+		<h2 id="distri-chart-head">Distribution of impacted people <br> for the <p id ="distri-chart-choosen-scenario"></p> scenario </h2>
+		<h3 id="distri-y-axis">Servereness</h3>
 		<svg id="distribution"></svg>
 		<h3 id="distri-x-axis">Number of people</h3>
 	</div> 
 
+	<div id="compare-scenarios">
+		<h1 id="compare-scenario-header">Compare Scenarios</h1>
+		<div id="scenario-chart">
+			<h2 id="scenario-chart-head">Change in unmet need<br>compared to 2015</h2>
+			<svg id="scenario-comparison-svg"></svg>
+		</div> 
+		<div id="population-chart">
+			<h2 id= "population-chart-header">Impacted Population</h2>
+			<div class ="population-value-box">
+				<p class ="population-chart-scenario">Current 2015</p> 
+				<p class ="population-chart-value" id = "population-chart-value-cur"></p>
+				<p class ="population-chart-unit">people</p>
+			</div>
+
+			<div class ="population-value-box">
+				<p class ="population-chart-scenario">Green Growth</p>
+				<p class ="population-chart-value" id = "population-chart-value-ssp1"></p>
+				<p class ="population-chart-unit">people</p>
+			</div>
+
+			<div class ="population-value-box">
+				<p class ="population-chart-scenario">Regional Rivalry</p>
+				<p class ="population-chart-value" id = "population-chart-value-ssp3"></p>
+				<p class ="population-chart-unit">people</p>
+				
+			</div>
+
+			<div class ="population-value-box">
+				<p class ="population-chart-scenario">Fossil Fuels</p>
+				<p class ="population-chart-value" id = "population-chart-value-ssp5"></p>
+				<p class ="population-chart-unit">people</p>
+			</div>
+		</div> 
+	</div>
+
 	<div id ="legend">
-		<p class="legendText">Low Negative <br>Impact</p>
+		<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
 		<svg id="legendBar"></svg>
-		<p class="legendText">High Negative <br>Impact</p>
+		<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
 	</div>
 </div>
 
@@ -155,9 +175,8 @@
 <script>
     if (!window.d3) document.write('<script src="lib/d3.min.js"><\/script>');
 </script>
-<script src="data/stories.js"></script>
 <script src="lib/topojson.min.js"></script>
-<script src="js/BarChart.js"></script>
+<script src="js/charts.js"></script>
 <script src="js/mapplot.js"></script>
 <script src="js/main.js"></script>
 </body>

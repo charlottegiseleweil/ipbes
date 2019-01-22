@@ -72,18 +72,12 @@ class MapPlot {
 
             // set current max and min for the data
 			this.dataExtent;
-               
-            // save the latest zoom before story - after reset set this value again to 0 - kin of a story mode variable
-			this.scaleBeforeStory = 0;
 
             
             // initialize versor vectors
             this.v0; 
             this.r0; 
             this.q0;
-
-            // Distribution plot
-            this.barChart = new BarChart();
 
             let hcl = d3.interpolateHcl(d3.hcl(100, 90, 100), d3.hcl(15, 90, 60));
             
@@ -125,8 +119,6 @@ class MapPlot {
 				.on("click", this.clicked())
             
 			this.initializeZoom();
-			this.drawMarkers();
-            showStory(0, true);
             this.update_all();
 
             d3.selectAll("#landingpage").attr("class", "hidden");           
@@ -145,8 +137,8 @@ class MapPlot {
             this.initWorldMapData(dataSelection);
         }
 
-        // Update positions of circles (both data points and story markers)
-        this.svg.selectAll("circle,path.markers")
+        // Update positions of circles 
+        this.svg.selectAll("circle")
             .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
             // make the data dots disappear when they are on the other side of the globe.
             .style("display", (d) => {  
@@ -274,31 +266,12 @@ class MapPlot {
             dataSelection.exit().remove();
             if (!scenario_change) this.setCurrentColorScaleDomain();
             this.initFocusedMapData(dataSelection);
-            this.initBarchart()
+            updateCharts(this.focusedData(),this.currentColorScale)
+
         } else {
             if (!scenario_change) this.setCurrentColorScaleDomain();
             this.render();
         }
-    }
-
-    initBarchart() {
-        let focusedCountryData = this.focusedData();
-        
-        // Update barchart
-        let distribution = calculateDistribution(focusedCountryData, this.currentColorScale.quantiles());
-        if(distribution){
-            showBarChart(this.barChart, distribution, this.currentColorScale);
-        }
-        else{
-            hideBarChart();
-        }
-
-        // change story containter
-        let population = focusedCountryData.map(x => ({pop_cur: parseFloat(x.pop_cur),
-                                                    pop_ssp1: parseFloat(x.pop_ssp1), 
-                                                    pop_ssp3: parseFloat(x.pop_ssp3), 
-                                                    pop_ssp5: parseFloat(x.pop_ssp5), }));
-        showImpactedPop(population);
     }
 
     worldDataSelection() {
@@ -357,13 +330,10 @@ class MapPlot {
             .style("display", "inline")
     }
 
-    clicked(that=this, fromStory=false) {
+    clicked(that=this) {
         return function(d) {
-            // hide story points before transition
+            // hide points before transition
             that.svg.selectAll("circle").remove();
-            that.svg.selectAll("path.markers").remove();
-            // hide story btns if discovery mode
-            if (!fromStory) {document.getElementById("story-btn-section").style.display = "none";}
 
             if (that.activeClick.node() === this) return that.resetClick();  // zoom out again if click on the same country
             else if (that.activeClick.node() != null) return null;  // else if we are already zoomed in, do nothing
@@ -406,12 +376,7 @@ class MapPlot {
                 .duration(1000)
                 .on("end", () => {
                     if (!end_callback_triggered) {
-                        if (fromStory) {
-                            that.init_50map(d, true)
-                        } else {
-                            that.init_50map(d)
-                            
-                        }							
+                        that.init_50map(d)						
                         end_callback_triggered = true
                         d3.select(this).classed("selected", false)
                         that.initFocusedMapData(dataSelection);
@@ -424,29 +389,19 @@ class MapPlot {
             that.focused = true;
             dataSelection.exit().remove()
 
-            // Create a bar chart
-            let focusedCountryData = that.focusedData();
-            let distribution = calculateDistribution(focusedCountryData, that.currentColorScale.quantiles());
-            if(distribution){
-                showBarChart(that.barChart, distribution, that.currentColorScale);
-            }
-            else{
-                hideBarChart();
-            }
-            // change story containter
-            showCountryName(d.name);
-            let population = focusedCountryData.map(x => ({pop_cur: parseFloat(x.pop_cur),
-                                                        pop_ssp1: parseFloat(x.pop_ssp1), 
-                                                        pop_ssp3: parseFloat(x.pop_ssp3), 
-                                                        pop_ssp5: parseFloat(x.pop_ssp5), }));
-            showImpactedPop(population);
+            // update charts
+            updateCharts(that.focusedData(),that.currentColorScale)
+        
+            // change country name
+            updateCountryName(d.name);
 
-            // display reset button
+            // display reset button and country name
             document.getElementById('resetText').style.visibility = 'visible';
+            document.getElementById("countryLabel").style.visibility = 'visible';
         }
     }
 
-    resetClick(fromStory=false) {
+    resetClick() {
         this.activeClick.classed("active", false);
         this.activeClick = d3.select(null);
 
@@ -455,50 +410,30 @@ class MapPlot {
         
         this.init_110map();
         
-        hideBarChart();
+        hideCharts();
         this.focused = false;
 
         let already_triggered = false;
-        showStory(1, true);
-        this.svg.selectAll("circle, path.markers").remove();
-        // if reset comes explore mode
-        if (!fromStory) {
-            d3.selectAll("path.globe")
-            .transition()
-            .attrTween("d", this.zoomRotateFactory(this.clickedRotate, this.clickedScale, this.resetRotate, this.resetScale))
-            .duration(1000)
-            .on("end", () => {
-                if (!already_triggered) {
-                    this.initializeZoom();
-                    this.drawMarkers();
-                    
-                    already_triggered = true
-                    document.getElementById("story-btn-section").style.display = "block";
-                    this.render()	
-                    // Allow clicks after transition is done
-                    d3.select(".wrapper").style("pointer-events", "all")
-                }
-            })
-        } else {
-        // if reset comes from story
-            d3.selectAll("path.globe")
-            .transition()
-            .attrTween("d", this.zoomRotateFactory(this.clickedRotate, this.clickedScale, this.clickedRotate, this.scaleBeforeStory))
-            .duration(1000)
-            .on("end", () => {
-                if (!already_triggered) {
-                    this.initializeZoom();
-                    this.drawMarkers();
-                    
-                    already_triggered = true
-                    this.render()	
-                    this.scaleBeforeStory = 0
-                    // Allow clicks after transition is done
-                    d3.select(".wrapper").style("pointer-events", "all")
-                }
-            })
-        }
+        this.svg.selectAll("circle").remove();
+        
+        d3.selectAll("path.globe")
+        .transition()
+        .attrTween("d", this.zoomRotateFactory(this.clickedRotate, this.clickedScale, this.resetRotate, this.resetScale))
+        .duration(1000)
+        .on("end", () => {
+            if (!already_triggered) {
+                this.initializeZoom();
+                
+                already_triggered = true;
+                this.render()	
+                // Allow clicks after transition is done
+                d3.select(".wrapper").style("pointer-events", "all")
+            }
+        })
+        
+        // Remove reset button and country label
         document.getElementById('resetText').style.visibility = 'hidden';
+        document.getElementById("countryLabel").style.visibility = 'hidden';
         
     }
 
@@ -517,45 +452,28 @@ class MapPlot {
     }
     
     // initializing HD map after zooming in
-    init_50map(country_sel, fromStory=false) {
+    init_50map(country_sel) {
         // hide tooltip
         this.countryTooltip.style("opacity", 0)
                 .style("display", "none");
 
-        // if zoom comes from story mode or explore mode
-        if (!fromStory) {
-            this.svg.selectAll("path.globe").remove().enter()
-                .data(this.map_data_50)
-                .enter().append("path")
-                .attr("class", "globe")
-                .attr("fill-opacity","0.5")
-                .attr("fill", function (d){
-                    if (d.name == country_sel.name) {
-                        return "grey"
-                    }
-                    return "white";
-                })
-                .attr("d", this.path)
-                .on("click", () => {
-                    this.resetClick(false)
-                })
-        } else {
-            this.svg.selectAll("path.globe").remove().enter()
-                .data(this.map_data_50)
-                .enter().append("path")
-                .attr("class", "globe")
-                .attr("fill","gray")
-                .attr("opacity", function (d){
-                    if (d.name == country_sel.name) { 
-                        return "0.5"
-                    }
-                    return "1";
-                })
-                .attr("d", this.path)
-                .on("click", () => {
-                    this.resetClick(true)
-                })
-        }
+        
+        this.svg.selectAll("path.globe").remove().enter()
+            .data(this.map_data_50)
+            .enter().append("path")
+            .attr("class", "globe")
+            .attr("fill-opacity","0.5")
+            .attr("fill", function (d){
+                if (d.name == country_sel.name) {
+                    return "grey"
+                }
+                return "white";
+            })
+            .attr("d", this.path)
+            .on("click", () => {
+                this.resetClick(false)
+            })
+    
         this.render()
     }
 
@@ -582,8 +500,6 @@ class MapPlot {
                     .style("display", "none");
                 d3.select(this).classed("selected", false)
             })
-        this.drawMarkers()
-
     }
 
     // find country object in json
@@ -593,24 +509,6 @@ class MapPlot {
         );
     }
     
-    // after user clicked any story arrow find country object and navigate to country from story
-    clicked_Story(country){
-        if(this.scaleBeforeStory == 0) {
-            this.scaleBeforeStory = this.projection.scale()
-        }
-
-        // low res map before transition
-        this.init_110map()
-
-        // find country element
-        let found = this.getCountryByCode(country)[0];
-
-        //let p_center = d3.geoCentroid(found)
-
-        // transition
-        this.clicked(this, true)(found)
-    }
-
     setDataset(dataset) {
         this.currentDatasetName = dataset;
         switch (this.currentDatasetName) {
@@ -629,38 +527,15 @@ class MapPlot {
             
         }
         this.update_all();
+        const labels = {ndr: "Nitrogen Export", poll: "Lost crop <br> production", cv: "Coastal Hazard"};
+        // ändra text beroende på dataset
+        document.getElementById('legendText-low').innerHTML = "Low <br>" + labels[`${this.currentDatasetName}`];
+        document.getElementById('legendText-high').innerHTML = "High <br>" + labels[`${this.currentDatasetName}`];
     }
     
     setScenario(scenario) {
         this.currentScenario = scenario;
         this.update_all(true);
-    }
-    switchStory(story) {
-        this.clicked_Story(story.country)
-    }
-
-    // Story markers
-    drawMarkers() {
-        let locations = stories;
-        let markers = this.svg.selectAll("path.markers")
-            .data(locations);
-
-        markers.enter()
-            .append('path')
-            .attr("class", "markers")
-            .merge(markers)
-            .attr('cx', d => this.projection([d.lng, d.lat])[0])
-            .attr('cy', d => this.projection([d.lng, d.lat])[1])
-            .attr("d", d3.symbol().type(d3.symbolStar).size(250))
-            .style("fill", '#cfcfcf')
-            .on("click" , (d,i) => showStory(i))
-            .on("mouseover", function(){d3.select(this).style("fill", "dimgray");})
-            .on("mouseout", function(){d3.select(this).style("fill", '#cfcfcf');})
-            
-        // set them to the front layer
-        markers.each(function () {
-            this.parentNode.appendChild(this);
-        });
     }
     
 }

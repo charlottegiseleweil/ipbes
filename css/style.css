@@ -124,12 +124,12 @@ body {
 	width: 100%;
     margin: auto;
     position: absolute;
-    top: 1rem;
+    bottom: 2rem;
 }
 #resetText{
 	margin: auto;
 	width: fit-content;
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
     color: white;
 	cursor: pointer;
@@ -138,4 +138,14 @@ body {
 }
 #resetText:hover{
 	opacity: 0.8;
+}
+#countryLabel{
+	width: 100%;
+    margin: auto;
+    position: absolute;
+	top: 1rem;
+	color: white;
+	text-align: center;
+	font-size: 30px;
+	visibility: hidden;
 }
