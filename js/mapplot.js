@@ -65,7 +65,8 @@ class MapPlot {
 			this.clickedScale;
 			this.focused = false;
 			this.focusedCountry = "";
-			this.currentDatasetName = "cv";
+            this.currentDatasetName = "cv";
+            this.currentModeName = "UN";
 			// the current scenario, either 'cur', 'ssp1', 'ssp3' or 'ssp5'
             this.scenarios = ["cur", "ssp1", "ssp3", "ssp5"];
             this.currentScenario = "cur";
@@ -79,8 +80,7 @@ class MapPlot {
             this.r0; 
             this.q0;
 
-            let hcl = d3.interpolateHcl(d3.hcl(100, 90, 100), d3.hcl(15, 90, 60));
-            
+            let hcl = d3.interpolateHcl(colorSchema[this.currentModeName][0], colorSchema[this.currentModeName][1]);
             this.currentColorScale = d3.scaleQuantile()
                 .range(d3.quantize(hcl, 7));
             
@@ -527,10 +527,8 @@ class MapPlot {
             
         }
         this.update_all();
-        const labels = {ndr: "Nitrogen Export", poll: "Lost crop <br> production", cv: "Coastal Hazard"};
-        // ändra text beroende på dataset
-        document.getElementById('legendText-low').innerHTML = "Low <br>" + labels[`${this.currentDatasetName}`];
-        document.getElementById('legendText-high').innerHTML = "High <br>" + labels[`${this.currentDatasetName}`];
+        // change labels depending on dataset
+        updateLabels(`${this.currentDatasetName}`,`${this.currentModeName}`);
     }
     
     setScenario(scenario) {

@@ -62,10 +62,10 @@ body {
 	height: 100%;
 	background-color: black;
 	opacity: 0.8;
-	position: absolute;
+	position: absolute;	
 	visibility: hidden;
-	
 }
+
 #infoBox{
 	background: rgba(255, 23, 108, 0.644);
     color: white;
@@ -148,4 +148,41 @@ body {
 	text-align: center;
 	font-size: 30px;
 	visibility: hidden;
+}
+/*Landing page*/
+#landingpage {
+	z-index: 10;
+	background:black;
+	color:white;
+	
+	width: 100%;
+	padding: 10%;
+
+	/*Horizontal center*/
+	vertical-align: middle;
+	text-align: center;
+	margin: 0 auto;
+}
+
+/*Transition show hide with fade*/
+.visible {
+	visibility: visible;
+	opacity: 1;
+  	transition: opacity 2s linear;
+  	display: block;
+}
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+  	transition: visibility 0s 2s, opacity 2s linear;
+}
+
+#landing-page-header{
+	font-weight: 300;
+    font-size: 3rem;
+    margin-top: 5rem;
+
+}
+#landing-page-loader{
+	font-weight: 300;
 }

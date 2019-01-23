@@ -13,12 +13,9 @@ let opts = {
 whenDocumentLoaded(() => {
 	// Initialize dashboard
 	is2050 = false;
-	slideIndex = 0;
-	
+	colorSchema = {UN: [d3.hcl(100, 90, 100),d3.hcl(15, 90, 60)], pop: [d3.hcl(227,5,98),d3.hcl(254,45,23)], NC: [d3.hcl(119,22,93),d3.hcl(133,34,25)]};
 	plot_object = new MapPlot('globe-plot');
 	charts = {distribution: new DistributionChart(), scenario: new ScenarioChart(), population: new PopulationChart()};
-	
-	showledgend();
 	
 	// When the dataset radio buttons are changed: change the dataset
 	d3.selectAll(("input[name='radio1']")).on("change", function(){
@@ -29,40 +26,54 @@ whenDocumentLoaded(() => {
 		plot_object.setScenario(this.value)
 	});
 
+	showledgend(colorSchema['UN']);
 });
+
+
+function switchMode(mode){
+	plot_object.currentModeName = mode;
+	const elements = document.getElementsByClassName('mode-button');
+	for (let i = 0; i < elements.length; i++) {
+		elements[i].classList.remove('selected');
+	}
+	document.getElementById(mode + '-button').classList.add('selected');
+	
+	showledgend(colorSchema[mode]);
+	updateLabels(plot_object.currentDatasetName,mode);
+}
 
 
 // Year toggle
-document.getElementById('toggle').addEventListener('click', function() {
-	is2050 = !is2050;
-	switchYear(is2050); 
-});
-
 function switchYear(toggle) {
-	let toggleContainer = document.getElementById('toggle-container');
+	is2050 = toggle;
 	let scenarioRow = document.getElementById('scenario');
-	if (toggle) {
-		toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
+	if (is2050) {
 		scenarioRow.style.opacity = '1';
 		scenarioRow.style.transition = 'opacity 0.5s linear';
 		scenarioRow.style.visibility = 'visible';
-		document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'))  // toggle change event on checked radio button
+		document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'));
+		document.getElementById('year-button-2015').classList.remove('selected');
+		document.getElementById('year-button-2050').classList.add('selected');
 	} else {
-		toggleContainer.style.clipPath = 'inset(0 50% 0 0)';
 		scenarioRow.style.visibility = 'collapse';
 		scenarioRow.style.opacity = '0';
 		scenarioRow.style.transition = 'opacity 0.5s linear';
 		scenarioRow.style.transition = 'visibility 0.15s linear';
 		plot_object.setScenario("cur");
 		document.getElementById('compare-scenarios').style.visibility = 'hidden';
-
+		document.getElementById('year-button-2015').classList.add('selected');
+		document.getElementById('year-button-2050').classList.remove('selected');
     }
 };
 
-function showledgend(){
-	const w = 150, h = 55;
-	const pink = d3.hcl(15, 90, 60);
-	const yellow = d3.hcl(100, 90, 100);
+function showledgend(color){
+	const w = 150, h = 25;
+	d3.selectAll(".legend")
+		.remove()
+		.exit()
+	d3.selectAll("#gradient")
+		.remove()
+		.exit()
 
 	let key = d3.select("#legendBar")
 		.attr("width", w)
@@ -79,20 +90,28 @@ function showledgend(){
 
 	legend.append("stop")
 		.attr("offset", "0%")
-		.attr("stop-color", yellow)
+		.attr("stop-color", color[0])
 		.attr("stop-opacity", 1);
-
 
 	legend.append("stop")
 		.attr("offset", "100%")
-		.attr("stop-color", pink)
+		.attr("stop-color", color[1])
 		.attr("stop-opacity", 1);
 
 	key.append("rect")
+		.attr("class", "legend")
 		.attr("width", w)
-		.attr("height", h - 30)
-		.style("fill", "url(#gradient)")
-		.attr("transform", "translate(0,10)");	
+		.attr("height", h)
+		.style("fill", "url(#gradient)");	
+}
+function updateLabels(dataset,mode){
+	const labels = {UN: {ndr: "Nitrogen Export", poll: "Lost crop production", cv: "Coastal Hazard"},
+					pop: {ndr: "Rural Population", poll: "Pollination-dependant Population", cv: "Coastal Population"},
+					NC: {ndr: "Nitrogen Pollution Avoided", poll: "Pollination Need Met", cv: "Coastal Risk Reduction"}};
+	document.getElementById('legendText-low').innerHTML = "Low <br>" + labels[mode][dataset];
+	document.getElementById('legendText-high').innerHTML = "High <br>" + labels[mode][dataset];
+	document.getElementById('distri-y-axis').innerHTML = labels['UN'][dataset];
+
 }
 
 function updateCountryName(name) {

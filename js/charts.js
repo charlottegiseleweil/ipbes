@@ -2,9 +2,9 @@ class DistributionChart{
 	
 	constructor(){
 		// Initialize the barchart
-		const svgWidth = 200;
+		const svgWidth = 230;
 		const svgHeight = 170;
-		this.margin = {top: 10, right:60, bottom: 10, left:20};
+		this.margin = {top: 15, right:60, bottom: 10, left:20};
 
 		this.width = svgWidth - this.margin.left - this.margin.right,
 		this.height = svgHeight - this.margin.top - this.margin.bottom;
@@ -63,7 +63,7 @@ class DistributionChart{
 				.attr("class", "bar")
 				.attr("x", this.width - 10)
 				.attr("height", 10)
-				.attr("y", - 10)
+				.attr("y", - 13)
 				.attr("width", 15)
 				.attr("stroke-opacity","0.5")
 				.style("fill","none")
@@ -79,7 +79,7 @@ class DistributionChart{
 					.append("text")
 					.attr("class", "textlabel")
 					.attr("x", this.width + 7)
-					.attr("y", -10)
+					.attr("y", -18)
 					.text("- 2015");
 		}				
 		
@@ -139,7 +139,7 @@ class ScenarioChart{
 		// Initialize the barchart
 		const svgWidth = 245;
 		const svgHeight = 180;
-		this.margin = {top: 30, right:2, bottom: 10, left:2};
+		this.margin = {top: 20, right:2, bottom: 10, left:2};
 
 		this.width = svgWidth - this.margin.left - this.margin.right,
 		this.height = svgHeight - this.margin.top - this.margin.bottom;
@@ -187,14 +187,14 @@ class ScenarioChart{
 		// Append values 
 		this.g.append("g")
 			.attr("class", "labelText")
-			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+			.attr("transform", "translate(" + this.margin.left + ",0)")
 			.selectAll(".textlabel")
 			.data(data)
 			.enter()
 			.append("text")
 			.attr("class", "textlabel")
 			.attr("x", (d,i) => x(this.labels[i]) + x.bandwidth()/2)
-			.attr("y", d => d > 0 ? y(d) - 18 : y(d) - 35)
+			.attr("y", d => d > 0 ? y(d) + 13 : y(d) - 5)
 			.text(d => d.toFixed(0) + "%");
 		
 		// Append scenario labels

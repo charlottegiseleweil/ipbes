@@ -1,14 +1,15 @@
 /* CSS for user settings - radio button section */
 
 #radio_container {
-    background: rgba(0, 0, 0, 0.6);
+    background:rgba(255, 255, 255, 0.096);
     color: white;
     position: absolute;
     top: 0;
     left: 0;
-    padding: 0.5rem;
+    padding: 0.3rem 0.3rem 0.5rem 0.3rem;
     margin: 1rem;
     font-size: 0.7rem;
+    width: 15rem;
 }
 
 /* radio btn */
@@ -31,7 +32,7 @@ input[type="radio"] {
 #radio_container input:checked {
   border: 2px solid white;
   opacity: 1;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.205);
 }
 
 /* affect also the label on check */
@@ -40,9 +41,8 @@ input[type="radio"]:checked + label {
   font-weight: bold;
   opacity: 1;
 } 
-input[type="radio"]+ label {
+input[type="radio"] + label {
   color: white;
-  /*opacity: 0.5;*/
 } 
 
 input[type="radio"]:hover + label {
@@ -61,21 +61,25 @@ label {
 }
 
 tr {
-  text-align: left; 
+  padding: 0;
+  height: 4rem;
 }
-#scenario{
-  visibility: collapse;
-  opacity: 0;
-  border-top: 1px solid white;
+.row-label{
+    margin: 0;
+    color: gray;
+    position: relative;
+    top: 0;
 }
-td {
-  text-align: center; 
-  width: 60px;
-  vertical-align: top;
+td{
+    width: 100%;
+    padding: 0;
+    vertical-align: middle;
+    margin: auto;
 }
 
 table {
-  border-spacing: 1.5rem 0.5rem;
+  padding: 0;
+  width: 100%;
 }
 
 .low_opacity {
@@ -85,58 +89,70 @@ table {
   margin-bottom: 2px;
 }
 
-#toggle {
-  box-sizing: border-box;
-  width: 13rem;
-  height: 2rem;
-  margin: 0.5rem auto;
-  position: relative;
-  border-radius: 6px;
-  overflow: hidden;
-  user-select: none;
-  cursor: pointer;
+.input-radio{
+  display: block;
+  float: left;
+  width: 33%;
+  text-align: center;
+  height: 2.5rem;
 }
 
-.inner-container {
-  box-sizing: border-box;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: inherit;
-  height: inherit;
-  text-transform: uppercase;
-  letter-spacing: .2em;
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+.mode-button{
+    width: 31%;
+    height: 2.5rem;
+    float: left;
+    margin: 1%;
+    font-size: 0.7rem;
+    background: none;
+    color: white;
+    border-image-slice: 1;
+    border-width: 2px;
+    outline: none;
+}
+.mode-button:hover  {
+    border-width: 3px;
+    background:rgba(255, 255, 255, 0.205);
+}
+.mode-button.selected {
+    border-width: 3px;
+    background:rgba(255, 255, 255, 0.205);
+}
+.year-button{
+    width: 48%;
+    border: 1px solid white;
+    height: 2.5rem;
+    float: left;
+    margin: 1%;
+    font-size: 0.7rem;
+    background: none;
+    color: white;
+    border-image-slice: 1;
+    border-width: 1px;
+    outline: none;
+}
+.year-button:hover  {
+  border-width: 2px;
+  background:rgba(255, 255, 255, 0.205);
+}
+.year-button.selected {
+  border-width: 2px;
+  background:rgba(255, 255, 255, 0.205);
+}
+#UN-button{
+    border-image: linear-gradient(to right, #fffa35 0%,#ff126d 100%);
+}
+#pop-button{
+    border-image: linear-gradient(to right, #D5E8F3 0%,#273871 100%);
+}
+#NC-button{
+    border-image: linear-gradient(to right, #B4DCAB 0%,#004616 100%);
 }
 
-.inner-container:nth-child(2) {
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.3);
-  color: rgba(255, 255, 255, 1);
-  clip-path: inset(0 50% 0 0);
-  transition: .3s cubic-bezier(0,0,0,1);
-  font-weight: bold; 
-  border: 1px solid rgba(255, 255, 255, 1);
- 
+.input-wrapper{
+    text-align: center;
 }
 
-.toggle {
-  box-sizing: border-box;
-  width: 50%;
-  position: absolute;
-  height: inherit;
-  display: flex;
-  box-sizing: border-box;
+#scenario{
+    opacity: 0;
+    visibility: collapse;
 }
-
-.toggle p {
-  box-sizing: border-box;
-  margin: auto;
-}
-
-.toggle:nth-child(1) {
-  box-sizing: border-box;
-  right: 0;
-}
-

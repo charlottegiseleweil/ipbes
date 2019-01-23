@@ -13,7 +13,6 @@
 	<link rel="shortcut icon" href="#" />
 	
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/landingpage.css">
 	<link rel="stylesheet" href="css/radio.css">
 	<link rel="stylesheet" href="css/charts.css">
 	<link rel="stylesheet" href="css/legend.css">
@@ -22,23 +21,9 @@
 
 <body>
 <div id="landingpage">
-	<div class="glitch tews" data-text="Strobocops">
-			<span class="glitch__color glitch__color--red">THE EARTH WON'T SCALE</span>
-			<span class="glitch__color glitch__color--orange">THE EARTH WON'T SCALE</span>
-			<span class="glitch__color glitch__color--yellow">THE EARTH WON'T SCALE</span>
-
-			<span class="glitch__main">THE EARTH WON'T SCALE</span>
-			<span class="glitch__line glitch__line--first"></span>
-			<span class="glitch__line glitch__line--first"></span>
-			<span class="glitch__line glitch__line--second"></span>	
-	</div>
-	
-	<br><br><br><br>
-
-	<div class="glitch laoding" data-text="Strobocops">
-		<span>loading ...</span>
-	</div>
-</div>
+	<h1 id="landing-page-header">The Earth Won't Scale</h1>
+	<h3 id="landing-page-loader">loading ...</h3>
+</div>  
 
 <div class="wrapper" id="map-content">
 	<svg id="globe-plot" viewBox="0 0 1200 800" width="99%" height="99%"></svg>
@@ -47,63 +32,58 @@
 	<p class="infoBtn" id="infoShow" onclick="showInfo()">&#x2139;</p>
 	
 	<div id="radio_container">	
-		<table>
-			<tr>
-				<td>
-					<input type="radio" class="radio_btn" name="radio1" id="a_radio-1" value="cv" checked="checked"/>
-					<label for="a_radio-1">Coastal Risk</label>
-				</td>
-				<td>
-					<input type="radio" class="radio_btn" name="radio1" id="a_radio-2" value="ndr"/>
-					<label for="a_radio-2">Water Quality</label>
-				</td>
-				<td>
-					<input type="radio" class="radio_btn" name="radio1" id="a_radio-3" value="poll" />
-					<label for="a_radio-3">Pollination</label>
-				</td>
-			</tr>
-		</table>
-		<div id="toggle">
-			<div class="inner-container">
-				<div class="toggle">
-					<p>2050</p>
-				</div>
-				<div class="toggle">
-					<p>2015</p>
-				</div>
-			</div>
-			<div class="inner-container" id='toggle-container'>
-				<div class="toggle">
-					<p>2050</p>
-				</div>
-				<div class="toggle">
-					<p>2015</p>
-				</div>
-			</div>
+			<table>
+				<tr><td>
+					<p class="row-label">Mode</p>
+					<button type="button" class="mode-button selected" id="UN-button" onclick="switchMode('UN')">Unmet Need</button>
+					<button type="button" class="mode-button" id="pop-button" onclick="switchMode('pop')">Impacted Population</button>
+					<button type="button" class="mode-button"  id="NC-button" onclick="switchMode('NC')">Natures <br> contribution</button>
+				</td></tr>
+				<tr><td>
+					<br>
+					<p class="row-label">Service</p>
+					<div class ="input-radio">
+						<input type="radio" class="radio_btn" name="radio1" id="a_radio-1" value="cv" checked="checked"/>
+						<label for="a_radio-1">Coastal Risk</label>
+					</div>
+					<div class ="input-radio">
+						<input type="radio" class="radio_btn" name="radio1" id="a_radio-2" value="ndr"/>
+						<label for="a_radio-2">Water Quality</label>
+					</div>
+					<div class ="input-radio">
+						<input type="radio" class="radio_btn" name="radio1" id="a_radio-3" value="poll" />
+						<label for="a_radio-3">Pollination</label>
+					</div>	
+				</td></tr>
+				<tr><td>
+					<p class="row-label">Year</p>
+					<button type="button" class="year-button selected" id="year-button-2015" onclick="switchYear(false)">2015</button>
+					<button type="button"  class="year-button" id="year-button-2050" onclick="switchYear(true)">2050</button>
+				</td></tr>
+				<tr id="scenario"><td>
+					<p class="row-label">Scenario</p>
+					<div class ="input-radio">
+						<input type="radio" class="radio_btn" name="radio2" id="b_radio-1" value="ssp1"/>
+						<label for="b_radio-1">Green Growth</label>
+					</div>
+					<div class ="input-radio">
+						<input type="radio" class="radio_btn" name="radio2" id="b_radio-2" value="ssp3" checked="checked"/>
+						<label for="b_radio-2">Regional Rivalry</label>
+					</div>
+					<div class ="input-radio">
+						<input type="radio" class="radio_btn" name="radio2" id="b_radio-3" value="ssp5"/>
+						<label for="b_radio-3">Fossil Fuels</label>
+					</div>
+				</td></tr>
+			</table>
 		</div>
-		<table>	
-			<tr id="scenario">
-				<td>
-					<input type="radio" class="radio_btn" name="radio2" id="b_radio-1" value="ssp1"/>
-					<label for="b_radio-1">Green Growth</label>
-				</td>
-				<td>
-					<input type="radio" class="radio_btn" name="radio2" id="b_radio-2" value="ssp3" checked="checked"/>
-					<label for="b_radio-2">Regional Rivalry</label>
-				</td>
-				<td>
-					<input type="radio" class="radio_btn" name="radio2" id="b_radio-3" value="ssp5"/>
-					<label for="b_radio-3">Fossil Fuels</label>
-				</td>
-			</tr>
-		</table>
-	</div>
 	
+
 	<div id="distribution-chart">
 		<h2 id="distri-chart-head">Distribution of impacted people <br> for the <p id ="distri-chart-choosen-scenario"></p> scenario </h2>
-		<h3 id="distri-y-axis">Servereness</h3>
 		<svg id="distribution"></svg>
 		<h3 id="distri-x-axis">Number of people</h3>
+		<h3 id="distri-y-axis">Coastal Hazard</h3>
 	</div> 
 
 	<div id="compare-scenarios">
@@ -148,7 +128,7 @@
 	</div>
 </div>
 
-<div id="greyOut"></div>
+<div id="greyOut" class="visible"></div>
 <div id="infoBox">
 	<p class="infoBtn" id="infoClose" onclick="closeInfo()">&#x2716;</p>
 	<h2 id="infoHeader">The Earth wont scale</h2>

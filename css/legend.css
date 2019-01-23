@@ -6,12 +6,13 @@
 }
 #legendBar{
     display: inline-block;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .legendText{
     display: inline-block;
-    font-size: 0.6rem;
-    vertical-align: top;
+    font-size: 0.5rem;
+    vertical-align: middle;
     text-align: center;
+    width: 2.5rem;
     
 }

@@ -2,7 +2,7 @@
 #distribution-chart{
     color: white;
     position: absolute;
-    bottom: 2rem;
+    bottom: 1rem;
     left: 2rem;
     font-size: 0.7rem;
     visibility: hidden;
@@ -51,7 +51,7 @@
     position: relative;
     margin: 0;
     right: 8rem;
-    top: 2rem;
+    top: -10rem;
     font-weight: 300;
     font-size: 1rem;
     -webkit-transform: rotate(-90deg);
@@ -76,6 +76,7 @@
     margin-bottom: 0;
     font-size: 1.5rem;
     text-align: center;
+    font-weight: 300;
 }
 /*Scenario chart*/
 #scenario-chart{
@@ -89,15 +90,15 @@
     margin-bottom: 0;
     font-weight: 300;
     font-size: 1.1rem;
+    margin-top:0.5rem;
 }
 
 .bar.positive {
-    fill: rgb(209, 0, 0);
-    fill-opacity: 0.6;
+    fill: rgba(216, 28, 28, 0.733);
   }
 
 .bar.negative {
-    fill: rgba(57, 230, 57, 0.747);
+    fill: #42A644;
 }
 
 .labelText{
@@ -123,6 +124,7 @@
 }
 #population-chart-header{
     margin-bottom: 0;
+    margin-top:0.5rem;
     font-weight: 300;
     font-size: 1.1rem;
     padding-right: 0.6rem;
