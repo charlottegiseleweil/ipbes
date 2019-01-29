@@ -31,7 +31,7 @@ whenDocumentLoaded(() => {
 
 
 function switchMode(mode){
-	plot_object.currentModeName = mode;
+	plot_object.setMode(mode);
 	const elements = document.getElementsByClassName('mode-button');
 	for (let i = 0; i < elements.length; i++) {
 		elements[i].classList.remove('selected');
@@ -59,7 +59,7 @@ function switchYear(toggle) {
 		scenarioRow.style.opacity = '0';
 		scenarioRow.style.transition = 'opacity 0.5s linear';
 		scenarioRow.style.transition = 'visibility 0.15s linear';
-		plot_object.setScenario("cur");
+		plot_object.setScenario("c");
 		document.getElementById('compare-scenarios').style.visibility = 'hidden';
 		document.getElementById('year-button-2015').classList.add('selected');
 		document.getElementById('year-button-2050').classList.remove('selected');

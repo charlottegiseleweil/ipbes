@@ -22,9 +22,8 @@ const map_promise = d3.json("data/map_data/50m.json").then(topojson_raw => {
 })
 const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data);
 
-// TODO: add cv here and get the output as well. (Right now it probably takes too long time)
 ["poll", "ndr", "cv"].forEach((dataset) => {
-    const data_promise = d3.csv(`data/preprocessed_data/${dataset}_table_preprocessed.csv`).then(data => data)
+    const data_promise = d3.csv(`data/preprocessed_data/updated_data/${dataset}_table_preprocessed.csv`).then(data => data)
     
     
     Promise.all([map_promise, country_label_promise, data_promise]).then((results) => {
@@ -39,7 +38,9 @@ const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv
 
         // remove one australia, which exists twice, at place 7 (for the 50m.json map data only)
         no_undefined.splice(7, 1)
-    
+        
+        console.log("Constructing array...")
+
         // Creates an array of objects where each object has a country name and a list of indices for the data array for the data pointthat are within the boundaries of that country
         let countryMapping = no_undefined.map((x) => {return  {name:  x.name, dataPointList: data.map((d, i) => i).filter(index => {
                 if (x.geometry.type == "MultiPolygon") {  // This is if the country has several areas on the map (for example USA with Alaska and Hawaii)
@@ -51,7 +52,8 @@ const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv
                     return d3.polygonContains(x.geometry.coordinates[0], [data[index].lng, data[index].lat])
                 } else {Console.log("Error: not valid geometry type"); return false}
             })}})
-            
+
+        console.log("Converting array to object...")
         // We want to save the mapping as an object (dictionary) instead of an array for easier access
         let countryMappingObject = countryMapping.reduce((acc, cur) => {
             acc[cur.name] = cur.dataPointList;
@@ -59,6 +61,7 @@ const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv
         }, {});
             
         download(JSON.stringify(countryMappingObject), `${dataset}_countries.json`, 'text/plain');
+        console.log("Done!")
     
     })
 })

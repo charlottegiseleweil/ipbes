@@ -29,13 +29,13 @@ class MapPlot {
 			return country_features;
 		})
 
-		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/ndr_countries.json")
-		const country_mapping_poll_promise = d3.json("data/preprocessed_data/poll_countries.json")
-		const country_mapping_cv_promise = d3.json("data/preprocessed_data/cv_countries.json")
+		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/updated_data/ndr_countries.json")
+		const country_mapping_poll_promise = d3.json("data/preprocessed_data/updated_data/poll_countries.json")
+		const country_mapping_cv_promise = d3.json("data/preprocessed_data/updated_data/cv_countries.json")
 
-		const ndr_promise = d3.csv("data/preprocessed_data/ndr_table_preprocessed.csv").then(data => data)
-		const poll_promise = d3.csv("data/preprocessed_data/poll_table_preprocessed.csv").then(data => data)
-		const cv_promise = d3.csv("data/preprocessed_data/cv_table_preprocessed.csv").then(data => data)
+		const ndr_promise = d3.csv("data/preprocessed_data/updated_data/ndr_table_preprocessed.csv").then(data => data)
+		const poll_promise = d3.csv("data/preprocessed_data/updated_data/poll_table_preprocessed.csv").then(data => data)
+		const cv_promise = d3.csv("data/preprocessed_data/updated_data/cv_table_preprocessed.csv").then(data => data)
 
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
@@ -74,10 +74,11 @@ class MapPlot {
 			this.focused = false;
 			this.focusedCountry = "";
             this.currentDatasetName = "cv";
+            this.modes = ["UN", "NC", "pop"]
             this.currentModeName = "UN";
-			// the current scenario, either 'cur', 'ssp1', 'ssp3' or 'ssp5'
-            this.scenarios = ["cur", "ssp1", "ssp3", "ssp5"];
-            this.currentScenario = "cur";
+			// the current scenario, either 'c', '1', '3' or '5'
+            this.scenarios = ["c", "1", "3", "5"];
+            this.currentScenario = "c";
 
             // set current max and min for the data
 			this.dataExtent;
@@ -87,12 +88,8 @@ class MapPlot {
             this.v0; 
             this.r0; 
             this.q0;
-
-            let hcl = d3.interpolateHcl(colorSchema[this.currentModeName][0], colorSchema[this.currentModeName][1]);
-            this.currentColorScale = d3.scaleQuantile()
-                .range(d3.quantize(hcl, 7));
             
-            this.setCurrentColorScaleDomain();
+            this.setCurrentColorScale();
             
             // let r = this.currentColorScale.range();
             // this.heatGradientDict = {0: r}
@@ -157,7 +154,7 @@ class MapPlot {
                 this.svg.selectAll("circle.datapoints").remove()
 
                 this.heat.data(data.map(d => {let list = this.projection([d.lng, d.lat]);
-                    list.push(parseFloat(d[`UN_${this.currentScenario}`]));
+                    list.push(parseFloat(d[`${this.currentModeName}_${this.currentScenario}`]));
                     return list;
                 }))
 
@@ -258,7 +255,7 @@ class MapPlot {
                 if (subPixel && subPts && subPts.length > 0) {
 
                     subPts[0].group = subPts.length;
-                    let indexOfMax = d3.scan(subPts, (a, b) => parseFloat(b[`UN_${plot_object.currentScenario}`])- parseFloat(a[`UN_${plot_object.currentScenario}`]));
+                    let indexOfMax = d3.scan(subPts, (a, b) => parseFloat(b[`${plot_object.currentModeName}_${plot_object.currentScenario}`])- parseFloat(a[`${plot_object.currentModeName}_${plot_object.currentScenario}`]));
                     pts.push(subPts[indexOfMax]); // add only the point with the highest data value
                     counter += subPts.length - 1;
                     subPts = [];
@@ -299,12 +296,12 @@ class MapPlot {
         if (this.focused) {
             let dataSelection = this.focusedDataSelection();
             dataSelection.exit().remove();
-            if (!scenario_change) this.setCurrentColorScaleDomain();
+            if (!scenario_change) this.setCurrentColorScale();
             this.initFocusedMapData(dataSelection);
             updateCharts(this.focusedData(),this.currentColorScale)
 
         } else {
-            if (!scenario_change) this.setCurrentColorScaleDomain();
+            if (!scenario_change) this.setCurrentColorScale();
             this.render();
         }
     }
@@ -320,13 +317,17 @@ class MapPlot {
         return this.search(this.quadtree, Math.min(bottomLeft[0], topLeft[0]), top, Math.max(bottomRight[0], topRight[0]), bottom);
     }
 
-    setCurrentColorScaleDomain() {
+    setCurrentColorScale() {
+        let hcl = d3.interpolateHcl(colorSchema[this.currentModeName][0], colorSchema[this.currentModeName][1]);
+        this.currentColorScale = d3.scaleQuantile()
+            .range(d3.quantize(hcl, 7));
+
         // get the extents for the data of the 4 different scenarios
-        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseFloat(x[`UN_${scenario}`])))
+        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseFloat(x[`${this.currentModeName}_${scenario}`])))
         // set the domain to the extent (min and max) of the 4 extents
         this.dataExtent = d3.extent(extents);
-        // Use the UN_cur scenario as the domain, but add the dataExtent points as well to include the outliers
-        this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`UN_cur`])).concat(this.dataExtent));
+        // Use the ${this.currentModeName}_cur scenario as the domain, but add the dataExtent points as well to include the outliers
+        this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`${this.currentModeName}_cur`])).concat(this.dataExtent));
 
         // Adjust the colors for the heatmap gradient
         let r = this.currentColorScale.range();
@@ -347,7 +348,7 @@ class MapPlot {
         worldDataSelection.enter().append("circle")
             .attr("r", 3)
             .attr("class", "datapoints")
-            .style("fill", (d) => this.currentColorScale(parseFloat(d[`UN_${this.currentScenario}`])))
+            .style("fill", (d) => this.currentColorScale(parseFloat(d[`${this.currentModeName}_${this.currentScenario}`])))
     }
 
     focusedDataSelection() {
@@ -373,7 +374,7 @@ class MapPlot {
             .attr("r", "3")
             .attr("class", "datapoints")
             .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
-            .style("fill", (d) => this.currentColorScale(d[`UN_${this.currentScenario}`]))
+            .style("fill", (d) => this.currentColorScale(d[`${this.currentModeName}_${this.currentScenario}`]))
             .style("display", "inline")
     }
 
@@ -581,6 +582,11 @@ class MapPlot {
     setScenario(scenario) {
         this.currentScenario = scenario;
         this.update_all(true);
+    }
+
+    setMode(mode) {
+        this.currentModeName = mode;
+        this.update_all();
     }
     
 }
