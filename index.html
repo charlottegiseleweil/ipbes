@@ -27,6 +27,7 @@
 
 <div class="wrapper" id="map-content">
 	<svg id="globe-plot" viewBox="0 0 1200 800" width="99%" height="99%"></svg>
+	<!-- <canvas id="heatmap", viewBox="0 0 1200 800" width="1200" height="800"></canvas> -->
 	<div id="resetButton"><p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p></div>
 	<div id="countryLabel"></div>
 	<p class="infoBtn" id="infoShow" onclick="showInfo()">&#x2139;</p>
@@ -157,6 +158,7 @@
 </script>
 <script src="lib/topojson.min.js"></script>
 <script src="js/charts.js"></script>
+<script src="lib/simpleheat.js"></script>
 <script src="js/mapplot.js"></script>
 <script src="js/main.js"></script>
 </body>

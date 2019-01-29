@@ -1,12 +1,20 @@
 class MapPlot {
 	constructor(svg_element_id) {
-		this.svg = d3.select('#' + svg_element_id);
-
+        this.svg = d3.select('#' + svg_element_id);
+        
 		// may be useful for calculating scales
 		const svg_viewbox = this.svg.node().viewBox.animVal;
 		this.svgWidth = svg_viewbox.width;
-		this.svgHeight = svg_viewbox.height;
-
+        this.svgHeight = svg_viewbox.height;
+        
+        // initialize canvas layer and heatmap
+        this.canvasLayer = d3.select('#map-content').append('canvas').attr('id', 'heatmap')
+            .attr('width', this.svgWidth).attr('height', this.svgHeight);
+        this.canvas = this.canvasLayer.node();
+        this.context = this.canvas.getContext("2d");
+        this.heat = simpleheat(this.canvas);
+        this.heat.radius(5, 5);
+        
 		const map_promise_110 = d3.json("data/map_data/110m.json").then(topojson_raw => {
 			const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
 			// remove leading zeros for the id:s
@@ -85,6 +93,9 @@ class MapPlot {
                 .range(d3.quantize(hcl, 7));
             
             this.setCurrentColorScaleDomain();
+            
+            // let r = this.currentColorScale.range();
+            // this.heatGradientDict = {0: r}
 
 			this.projection = d3.geoOrthographic()
 				.rotate([0, 0])
@@ -132,9 +143,27 @@ class MapPlot {
         this.svg.selectAll("path.globe").attr('d', this.path)
 
         if (!this.focused) {
-            let dataSelection = this.worldDataSelection();
-            dataSelection.exit().remove();
-            this.initWorldMapData(dataSelection);
+            let data = this.worldDataSelection();
+
+            if (this.currentDatasetName === "cv") {  // render regular dots for cv data, removing (if existing) heatmap
+                // remove the heatmap (if it exists)
+                this.heat.clear();
+                this.heat.draw();
+
+                let dataSelection = this.svg.selectAll("circle.datapoints").data(data, (d) => d);
+                dataSelection.exit().remove();
+                this.initWorldMapData(dataSelection);
+            } else {  // render heatmap for ndr and poll, removing (if existing) cv dots
+                this.svg.selectAll("circle.datapoints").remove()
+
+                this.heat.data(data.map(d => {let list = this.projection([d.lng, d.lat]);
+                    list.push(parseFloat(d[`UN_${this.currentScenario}`]));
+                    return list;
+                }))
+
+                // draw into canvas, with minimum opacity threshold
+                this.heat.draw(0.05);
+            }            
         }
 
         // Update positions of circles 
@@ -158,7 +187,13 @@ class MapPlot {
                 that.q0 = versor(that.r0);
             })
             .on('zoom', function() {
-                that.projection.scale(d3.event.transform.k * (that.svgHeight - 10) / 2);
+                let scaleFactor = d3.event.transform.k * (that.svgHeight - 10) / 2;
+                that.projection.scale(scaleFactor);
+
+                // Adjust the scale of the blurred points
+                let heatScale = scaleFactor / 40;
+                //heatScale = 10;
+                that.heat.radius(heatScale - 5, heatScale - 5)
             
                 let v1 = versor.cartesian(that.projection.rotate(that.r0).invert(d3.mouse(this)));
                 let q1 = versor.multiply(that.q0, versor.delta(that.v0, v1));
@@ -193,10 +228,10 @@ class MapPlot {
         let scaleFactor;
         switch (this.currentDatasetName) {
             case 'ndr': 
-                scaleFactor = 0.0004;
+                scaleFactor = 1;  // let scalefactor be 1 in ndr and poll case, since we want to show every point here
                 break;
             case 'poll':
-                scaleFactor = 0.0006;
+                scaleFactor = 1;
                 break;
             case 'cv':
                 scaleFactor = 0.0008;
@@ -282,8 +317,7 @@ class MapPlot {
         let bottomLeft = this.projection.invert([0, this.svgHeight]);
         let bottomRight =this. projection.invert([this.svgWidth, this.svgHeight]);
 
-        return this.svg.selectAll("circle.datapoints")
-            .data(this.search(this.quadtree, Math.min(bottomLeft[0], topLeft[0]), top, Math.max(bottomRight[0], topRight[0]), bottom), (d) => d);
+        return this.search(this.quadtree, Math.min(bottomLeft[0], topLeft[0]), top, Math.max(bottomRight[0], topRight[0]), bottom);
     }
 
     setCurrentColorScaleDomain() {
@@ -293,6 +327,19 @@ class MapPlot {
         this.dataExtent = d3.extent(extents);
         // Use the UN_cur scenario as the domain, but add the dataExtent points as well to include the outliers
         this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`UN_cur`])).concat(this.dataExtent));
+
+        // Adjust the colors for the heatmap gradient
+        let r = this.currentColorScale.range();
+
+        // Use the last element in the quantiles as the heat max instead of the max of the whole data, to avoid
+        // letting outliers have to big influence
+        this.heat.max(this.currentColorScale.quantiles().slice(-1)[0]);
+
+        this.heatGradDict = {};
+        r.forEach((color, i) => this.heatGradDict[(i)/6] = color)
+        this.heat.gradient(this.heatGradDict)
+
+
     }
 
     initWorldMapData(worldDataSelection) {

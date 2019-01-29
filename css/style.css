@@ -65,7 +65,13 @@ body {
 	position: absolute;	
 	visibility: hidden;
 }
-
+#heatmap{
+	width: 99%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+}
 #infoBox{
 	background: rgba(255, 23, 108, 0.644);
     color: white;
