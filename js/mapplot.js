@@ -153,10 +153,7 @@ class MapPlot {
             } else {  // render heatmap for ndr and poll, removing (if existing) cv dots
                 this.svg.selectAll("circle.datapoints").remove()
 
-                this.heat.data(data.map(d => {let list = this.projection([d.lng, d.lat]);
-                    list.push(parseFloat(d[`${this.currentModeName}_${this.currentScenario}`]));
-                    return list;
-                }))
+                this.heat.data(this.formatDataIntoHeatList(data))
 
                 // draw into canvas, with minimum opacity threshold
                 this.heat.draw(0.05);
@@ -294,11 +291,13 @@ class MapPlot {
         this.quadtree = this.setupQuadtree();
         this.updateNodes(this.quadtree);
         if (this.focused) {
-            let dataSelection = this.focusedDataSelection();
-            dataSelection.exit().remove();
+            let focusedData = this.focusedData();
+            this.svg.selectAll("circle").remove();
+            this.heat.clear();
+            this.heat.draw();
             if (!scenario_change) this.setCurrentColorScale();
-            this.initFocusedMapData(dataSelection);
-            updateCharts(this.focusedData(),this.currentColorScale)
+            this.initFocusedMapData(focusedData);
+            updateCharts(focusedData,this.currentColorScale)
 
         } else {
             if (!scenario_change) this.setCurrentColorScale();
@@ -351,13 +350,6 @@ class MapPlot {
             .style("fill", (d) => this.currentColorScale(parseFloat(d[`${this.currentModeName}_${this.currentScenario}`])))
     }
 
-    focusedDataSelection() {
-        // Get data for just the country that is focused (all data available)
-        let focusedCountryData = this.focusedData();
-
-        return this.svg.selectAll("circle.datapoints").data(focusedCountryData, (d) => d);
-    }
-
     focusedData() {
         // Get data for just the country that is focused (all data available)
         return this.currentCountryMapping[`${this.focusedCountry}`].reduce((acc, cur) => {
@@ -367,21 +359,35 @@ class MapPlot {
     }
 
 
-    initFocusedMapData(focusedDataSelection) {
-        let that = this;
-        // Add focused country data
-        focusedDataSelection.enter().append("circle")
-            .attr("r", "3")
-            .attr("class", "datapoints")
-            .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
-            .style("fill", (d) => this.currentColorScale(d[`${this.currentModeName}_${this.currentScenario}`]))
-            .style("display", "inline")
+    initFocusedMapData(focusedData) {
+        if (this.currentDatasetName === "cv") {
+            // Add focused country data
+            let focusedDataSelection = this.svg.selectAll("circle.datapoints").data(focusedData, (d) => d);
+            focusedDataSelection.enter().append("circle")
+                .attr("r", "3")
+                .attr("class", "datapoints")
+                .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
+                .style("fill", (d) => this.currentColorScale(d[`${this.currentModeName}_${this.currentScenario}`]))
+                .style("display", "inline")
+        } else {
+            this.heat.data(this.formatDataIntoHeatList(focusedData));
+            this.heat.draw();
+        }
+    }
+
+    formatDataIntoHeatList(data) {
+        return data.map(d => {let list = this.projection([d.lng, d.lat]);
+            list.push(parseFloat(d[`${this.currentModeName}_${this.currentScenario}`]));
+            return list;
+        })
     }
 
     clicked(that=this) {
         return function(d) {
-            // hide points before transition
+            // hide points or heat map before transition
             that.svg.selectAll("circle").remove();
+            that.heat.clear();
+            that.heat.draw();
 
             if (that.activeClick.node() === this) return that.resetClick();  // zoom out again if click on the same country
             else if (that.activeClick.node() != null) return null;  // else if we are already zoomed in, do nothing
@@ -414,7 +420,7 @@ class MapPlot {
             
             let end_callback_triggered = false;
             
-            let dataSelection = that.focusedDataSelection();
+            let focusedData = that.focusedData();
             
 
             // Update the map:
@@ -424,10 +430,14 @@ class MapPlot {
                 .duration(1000)
                 .on("end", () => {
                     if (!end_callback_triggered) {
+                        // Adjust the scale of the blurred points
+                        let heatScale = that.clickedScale / 40;
+                        that.heat.radius(heatScale - 5, heatScale - 5)
+
                         that.init_50map(d)						
                         end_callback_triggered = true
                         d3.select(this).classed("selected", false)
-                        that.initFocusedMapData(dataSelection);
+                        that.initFocusedMapData(focusedData);
                         // Allow clicks after transition is done
                         d3.select(".wrapper").style("pointer-events", "all")
                         }
@@ -435,7 +445,7 @@ class MapPlot {
                     
             // Remove the world map data
             that.focused = true;
-            dataSelection.exit().remove()
+            // dataSelection.exit().remove()
 
             // update charts
             updateCharts(that.focusedData(),that.currentColorScale)
@@ -463,6 +473,8 @@ class MapPlot {
 
         let already_triggered = false;
         this.svg.selectAll("circle").remove();
+        this.heat.clear();
+        this.heat.draw();
         
         d3.selectAll("path.globe")
         .transition()
@@ -470,6 +482,9 @@ class MapPlot {
         .duration(1000)
         .on("end", () => {
             if (!already_triggered) {
+                // Adjust the scale of the blurred points
+                let heatScale = this.resetScale / 40;
+                this.heat.radius(heatScale - 5, heatScale - 5)
                 this.initializeZoom();
                 
                 already_triggered = true;
