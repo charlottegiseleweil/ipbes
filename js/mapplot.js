@@ -32,15 +32,17 @@ class MapPlot {
 		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/updated_data/ndr_countries.json")
 		const country_mapping_poll_promise = d3.json("data/preprocessed_data/updated_data/poll_countries.json")
 		const country_mapping_cv_promise = d3.json("data/preprocessed_data/updated_data/cv_countries.json")
-
+        
 		const ndr_promise = d3.csv("data/preprocessed_data/updated_data/ndr_table_preprocessed.csv").then(data => data)
 		const poll_promise = d3.csv("data/preprocessed_data/updated_data/poll_table_preprocessed.csv").then(data => data)
 		const cv_promise = d3.csv("data/preprocessed_data/updated_data/cv_table_preprocessed.csv").then(data => data)
 
+        const cities_promise = d3.csv("data/city_data/cities1000000.csv").then(data => data)
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
 		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise, 
-					poll_promise, cv_promise, country_mapping_ndr_promise, country_mapping_poll_promise, country_mapping_cv_promise]).then((results) => {
+                    poll_promise, cv_promise, country_mapping_ndr_promise, country_mapping_poll_promise, 
+                    country_mapping_cv_promise, cities_promise]).then((results) => {
 
 			this.map_data = results[0];  // 110m map
 			this.map_data_50 = results[1];  // 50m map
@@ -53,7 +55,9 @@ class MapPlot {
 			this.ndr_country_mapping = results[6];  // mapping between country name and data points
 			this.poll_country_mapping = results[7];  
 			this.cv_country_mapping = results[8]; 
-			
+            
+            this.cities_data = results[9];
+
 			this.currentData = this.cv_data;
             this.currentCountryMapping = this.cv_country_mapping
 
@@ -79,6 +83,8 @@ class MapPlot {
 			// the current scenario, either 'c', '1', '3' or '5'
             this.scenarios = ["c", "1", "3", "5"];
             this.currentScenario = "c";
+            // The population limit for a city to be displayed
+            this.pop_limit = 2000000; 
 
             // set current max and min for the data
 			this.dataExtent;
@@ -124,7 +130,15 @@ class MapPlot {
 						.style("display", "none");
 					d3.select(this).classed("selected", false)	
 				})
-				.on("click", this.clicked())
+                .on("click", this.clicked())
+            
+            // print city text
+            this.svg.selectAll("text")
+                .data(this.cities_data.filter((d) => d.population > this.pop_limit))
+                .enter()
+                .append("text")
+                .text((d) => d.name)
+                .style("fill", "white")
             
 			this.initializeZoom();
             this.update_all();
@@ -166,6 +180,24 @@ class MapPlot {
             // make the data dots disappear when they are on the other side of the globe.
             .style("display", (d) => {  
                 let globeDistance = d3.geoDistance([d.lng, d.lat], this.projection.invert([this.svgWidth/2, this.svgHeight/2]));
+                return (globeDistance > 1.42) ? 'none' : 'inline';
+            })
+
+        // print city text
+        this.pop_limit = 2000000000 / this.projection.scale();
+        let textSelection = this.svg.selectAll("text")
+            .data(this.cities_data.filter((d) => d.population > this.pop_limit), (d) => d);
+        
+        textSelection.exit().remove();
+        
+        textSelection
+            .enter()
+            .append("text")
+            .text((d) => d.name)
+            .style("fill", "white")
+            .attr("transform", (d) => `translate(${this.projection([d.longitude, d.latitude])})`)
+            .style("display", (d) => {  
+                let globeDistance = d3.geoDistance([d.longitude, d.latitude], this.projection.invert([this.svgWidth/2, this.svgHeight/2]));
                 return (globeDistance > 1.42) ? 'none' : 'inline';
             })
     }
@@ -386,6 +418,7 @@ class MapPlot {
         return function(d) {
             // hide points or heat map before transition
             that.svg.selectAll("circle").remove();
+            that.svg.selectAll("text").remove();
             that.heat.clear();
             that.heat.draw();
 
@@ -473,6 +506,7 @@ class MapPlot {
 
         let already_triggered = false;
         this.svg.selectAll("circle").remove();
+        this.svg.selectAll("text").remove();
         this.heat.clear();
         this.heat.draw();
         
