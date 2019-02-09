@@ -224,10 +224,10 @@ class ScenarioChart{
 	}
 
 	calculateChangeInUnmetNeed(focusedData){
-		const UN2015 = focusedData.map(x=> parseFloat(x['UN_cur'])).reduce((a, b) => a + b, 0);
-		const UNssp1 = focusedData.map(x=> parseFloat(x['UN_ssp1'])).reduce((a, b) => a + b, 0);
-		const UNssp3 = focusedData.map(x=> parseFloat(x['UN_ssp3'])).reduce((a, b) => a + b, 0);
-		const UNssp5 = focusedData.map(x=> parseFloat(x['UN_ssp5'])).reduce((a, b) => a + b, 0);
+		const UN2015 = focusedData.map(x=> parseFloat(x['UN_c'])).reduce((a, b) => a + b, 0);
+		const UNssp1 = focusedData.map(x=> parseFloat(x['UN_1'])).reduce((a, b) => a + b, 0);
+		const UNssp3 = focusedData.map(x=> parseFloat(x['UN_3'])).reduce((a, b) => a + b, 0);
+		const UNssp5 = focusedData.map(x=> parseFloat(x['UN_5'])).reduce((a, b) => a + b, 0);
 		return [(UNssp1/UN2015 - 1)*100, (UNssp3/UN2015 -1)*100, (UNssp5/UN2015 -1)*100];
 	}
 }
