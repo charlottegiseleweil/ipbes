@@ -15,7 +15,7 @@ class DistributionChart{
 
 		this.g = this.svg.append("g")
 			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-		this.labels = {ssp1: "Green Growth", ssp3: "Regional Rivalry", ssp5: "Fossil Fuels", cur: "2015"};	
+		this.labels = {1: "Green Growth", 3: "Regional Rivalry", 5: "Fossil Fuels", c: "2015"};	
 		
 	}
 	/*Function to update the bar chart*/
@@ -236,30 +236,33 @@ class PopulationChart{
 
 	}
 	update(data){
-		let population = data.map(x => ({pop_cur: parseFloat(x.pop_cur),
-			pop_ssp1: parseFloat(x.pop_ssp1), 
-			pop_ssp3: parseFloat(x.pop_ssp3), 
-			pop_ssp5: parseFloat(x.pop_ssp5), }));
+		let population = data.map(x => 
+			({pop_c: parseFloat(x.pop_c),
+			pop_1: parseFloat(x.pop_1), 
+			pop_3: parseFloat(x.pop_3), 
+			pop_5: parseFloat(x.pop_5), })
+		
+			);
 		this.show(population);
 	}
 	
 	show(population){
-		let pop_cur = 0, 
-			pop_ssp1 = 0, 
-			pop_ssp3 = 0, 
-			pop_ssp5 = 0;
+		let pop_c = 0, 
+			pop_1 = 0, 
+			pop_3 = 0, 
+			pop_5 = 0;
 
 		population.forEach( (d) => {
-			pop_cur += d.pop_cur;
-			pop_ssp1 += d.pop_ssp1 ;
-			pop_ssp3 += d.pop_ssp3 ;
-			pop_ssp5 += d.pop_ssp5 ;
+			pop_c += d.pop_c;
+			pop_1 += d.pop_1 ;
+			pop_3 += d.pop_3 ;
+			pop_5 += d.pop_5 ;
 		});
 
-		document.getElementById("population-chart-value-cur").innerHTML = pop_cur ? round(pop_cur) : "0";
-		document.getElementById("population-chart-value-ssp1").innerHTML = pop_ssp1 ? round(pop_ssp1) : "0";
-		document.getElementById("population-chart-value-ssp3").innerHTML = pop_ssp3 ? round(pop_ssp3) : "0";
-		document.getElementById("population-chart-value-ssp5").innerHTML = pop_ssp5 ? round(pop_ssp5): "0";
+		document.getElementById("population-chart-value-cur").innerHTML = pop_c ? round(pop_c) : "0";
+		document.getElementById("population-chart-value-ssp1").innerHTML = pop_1 ? round(pop_1) : "0";
+		document.getElementById("population-chart-value-ssp3").innerHTML = pop_3 ? round(pop_3) : "0";
+		document.getElementById("population-chart-value-ssp5").innerHTML = pop_5 ? round(pop_5): "0";
 
 	}
 }
