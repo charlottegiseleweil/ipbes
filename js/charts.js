@@ -114,8 +114,8 @@ class DistributionChart{
 	calculateDistribution(focusedData, thresholds){
 		const distri_data_selceted = focusedData.map(x => ({UN: parseFloat(x[`UN_${plot_object.currentScenario}`]),
 												   pop: parseFloat(x[`pop_${plot_object.currentScenario}`])}));
-		const distri_data_current = focusedData.map(x => ({UN: parseFloat(x[`UN_cur`]),
-												   pop: parseFloat(x[`pop_cur`])}));
+		const distri_data_current = focusedData.map(x => ({UN: parseFloat(x[`UN_c`]),
+												   pop: parseFloat(x[`pop_c`])}));
 	
 		// Accessor function for the objects unmet need property.
 		const getUN = d => d.UN;

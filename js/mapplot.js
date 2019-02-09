@@ -184,7 +184,7 @@ class MapPlot {
             })
 
         // print city text
-        this.pop_limit = 2000000000 / this.projection.scale();
+        this.pop_limit = 2000000000000 / this.projection.scale();
         let textSelection = this.svg.selectAll("text")
             .data(this.cities_data.filter((d) => d.population > this.pop_limit), (d) => d);
         
