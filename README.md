@@ -2,7 +2,7 @@
 
 ## Running the visualization
 
-The visualization can be seen in the following url: https://ahmedahres.github.io/templates/
+The visualization can be seen in the following url: https://ahmedahres.github.io/templates/index.html
 
 ## Description
 
