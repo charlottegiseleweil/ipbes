@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+  <script src="libraries/jquery.min.js"></script>
+
+  <script src="libraries/d3.js"></script>
+  <script src="libraries/topojson.v1.min.js"></script>
+  <script src="libraries/versor.min.js"></script>
+  <script src="libraries/d3-inertia.min.js"></script>
+  <script src="libraries/d3-simple-slider.js"></script>
+
+  <script src="libraries/d3-scale-chromatic.v1.min.js"></script>
+  <script src="libraries/d3-geo-projection.v2.min.js"></script>
+  <script src="libraries/d3-legend.js"></script>
+  <script src="libraries/d3-tip.js"></script>
+
+  <script src="libraries/noframework.waypoints.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <!-- StoryTelling form - 1st page for Title and other content, 2nd Page for the visualization  -->
+  <!-- If needed to add another page, just copy the title container and change the name of the classes -->
+  <!-- <div class="title-container">
+    <div class="topleft">
+      <img src="images/logo_polyscientist.png" alt="logo_polyscientist" style="height : 15%">
+    </div>
+    <img src="images/pollination.jpg" alt="Bee_pollination" style="width:100%; height:84%;" vspace=60 0>
+    <div class="centered">Pollination Contribution to Nutrition</div>
+  </div> -->
+
+  <!-- <div class="title-container2">
+    <div class="quote-container">
+      <h1 class="h1_page"> There is no plan Bee for when we run out of pollinators</h1> <br>
+      <p class="p_page1">Pollination is a vital process of nature that isn’t very well known,<br> but is extremely important in the food growing processes.<br> Pollen has to be transferred between two flowers of the same species,<br> which then fertilizes the flower and
+        allows the production of healthy seeds on the plant.
+      </p>
+    </div>
+    <div>
+      <div class="column" style="background-color:gb(207, 206, 201);">
+        <h2 class=h 2_page>Pollinators</h2>
+        <ul class="p_page2">
+          <li>Bees: The most recognized pollinators are the various species of bees, which are plainly adapted to pollination. Bees typically are fuzzy and carry an electrostatic charge. Both features help pollen grains adhere to their bodies.</li> <br>
+          <li>Other insects: Many insects other than bees, including butterflies or bumblebees, accomplish pollination by visiting flowers for nectar or pollen, or commonly both. This can even happen accidentally.</li>
+        </ul>
+      </div>
+      <div class="column" style="background-color:gb(227, 226, 221);">
+        <h2 class=h 2_page> Scenarios</h2>
+        <p class="p_page2">In order to visualize the predicted data in year 2050, an international team of climate scientists, economists and energy systems modellers have built a range of new “pathways” that examine how global society and demographics might change over
+          the next century. These pathways are collectively known as the “Shared Socioeconomic Pathways”: </p>
+        <ul class="p_page2">
+          <li>SSP1: Sustainability – Taking the Green Road.</li>
+          <li>SSP3: Regional Rivalry – A Rocky Road.</li>
+          <li>SSP5: Fossil-fueled Development – Taking the Highway.</li>
+        </ul>
+      </div>
+      <div class="column" style="background-color:rgb(247, 246, 241);">
+        <h2 class=h 2_page>Productions</h2>
+        <ul class="p_page2">
+          We analyze the production of three important elements that are heavily influenced by pollination: <br> <br>
+          <li>Folate (vitamin B-9) is important in red blood cell formation and for healthy cell growth and function.</li> <br>
+          <li>Food energy is chemical energy that animals (including humans) derive from food through the process of cellular respiration.</li> <br>
+          <li>Vitamin A is involved in immune function, vision, reproduction, and cellular communication.</li>
+        </ul>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- for the PopUpwindow -->
+  <!-- <div id="ac-wrapper" style='display:none' onClick="hideNow(event)">
+    <div id="popup" class="grad1">
+      <center>
+        <h2 class="h2_popup">How to use ?</h2>
+        <p>
+          <ul class="p_popup">
+            <li>On the Left:
+              <ul>
+                <li>The info button lets you call this popup again.</li>
+                <li>These buttons let you choose the whether you want to visualize a 3D globe or 2D map.</li>
+                <li>Choose the 2D map to compare future scenarios. </li>
+                <li>The legend shows the colors represented on the globe/map.</li>
+              </ul>
+            </li>
+            <li>In the center:
+              <ul>
+                <li>Here we have the visualization.</li>
+                <li>You can interact with it by rotating it (in 3D only) using the mouse or by clicking on a country to display the information we have about it.</li>
+              </ul>
+            </li>
+            <li>On the right:
+              <ul>
+                <li>All the information about the world or selected country is displayed.</li>
+                <li>You can choose what information to display by clicking on the buttons.</li>
+                <li>In 2D, you can hover over of the bar graph to compare different continents.</li>
+              </ul>
+            </li>
+            <li>On the bottom:
+              <ul>
+                <li>You can select the year you want to visualize using the slider.</li>
+              </ul>
+            </li>
+
+          </ul>
+        </p>
+        <input type="submit" name="submit" value="Got it !" onClick="PopUp('hide')" />
+      </center>
+    </div>
+  </div> -->
+  <!-- End of popup window -->
+
+  <div class="box-container" id='3rd_box'>
+    <div class="box box-1" style="visibility: collapse">
+      <button class="back-button" style="display:none;" name="answer" value="info" onclick="load_global()"><i class="fa fa-arrow-left fa-2x"></i></button>
+      <button class="info-button" style="display:none;" name="answer" value="info" onclick="showNow()"><i class="fa fa-info-circle fa-2x"></i></button>
+      <div class="switch-proj" id="projectionChangeChecked" style="display:none;">
+        <button class="globe-button" onclick="projection3D()" value="true" id="checked3D"><i class="fa fa-globe fa-2x"></i></button>
+        <button class="map-button" onclick="projection2D()" value="false" id="checked2D"><i class="fa fa-map fa-2x"></i></button>
+      </div>
+
+    </div>
+
+    <div class="box box-1-global" style="display:flex">
+      <p class="label2DLegendX">Nature's Contributions </p>
+      <span>&#8594;</span>
+      <p class="label2DLegendY">Demand </p>
+      <span2>&#8595;</span2> 
+      <a href="#" class="myButton" onclick="click_about()">About</a>
+    </div>
+    <div class="box box-2-global">
+      <h1 class="map-title"> Nature's Contributions to People
+      <div class="map-global"></div>
+    </div>
+
+    <div class="box box-2" style="display: none;">
+      <p id="map-name-1">Change map for SSP1</p>
+      <div class="map1"></div>
+      <hr class="map-diff-line">
+      <p id="map-name-2">Current</p>
+      <div class="map2"></div>
+      <div class="map-slider"></div>
+
+      <div id="radios">
+        <!-- Autocomplete off is to not the save previous entry, so for resetting -->
+        <input id="rad1" type="radio" name="radioBtn" title="Sustainability" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked>
+        <label class="labels" for="rad1">SSP1</label>
+        <input id="rad2" type="radio" name="radioBtn" title="Regional Rivalry" autocomplete="off" onclick="runSegmentedSSPs('SSP3')">
+        <label class="labels" for="rad2">SSP3</label>
+        <input id="rad3" type="radio" name="radioBtn" title="Fossil-fueled Development" autocomplete="off" onclick="runSegmentedSSPs('SSP5')">
+        <label class="labels" for="rad3">SSP5</label>
+        <div id="bckgrnd"></div>
+      </div>
+
+      <div id="radios2">
+        <input id="rad4" type="radio" name="radioBtn" checked>
+        <label class="labels" title="Pollination's contribution" autocomplete="off" for="rad4">P1</label>
+        <input id="rad5" type="radio" name="radioBtn">
+        <label class="labels" title="Population" autocomplete="off" for="rad5">P2</label>
+        <input id="rad6" type="radio" name="radioBtn">
+        <label class="labels" title="Unmet need" autocomplete="off" for="rad6">P3</label>
+        <div id="bckgrnd2"></div>
+      </div>
+
+    </div>
+
+    <div class="box box-3-global" style="display:flex;">
+      <h1 id="box-3-global-header">
+      <div> Ecosystem Services </div>
+      <div class="nav-bar-white"> </div>
+    </h1>
+
+    <h1 id="box-3-global-header">
+      <div class="wrapper">
+        <input id="pollination-box" name="pollination" type="checkbox" onclick="load_pollination_data()" value="pollination" checked>
+        <label for="pollination-box">Pollination</label>
+      </div>
+    <h2 id="box-3-global-text">
+      Pollination is the act of transferring pollen grains from the male anther of a flower to the female stigma.
+      The goal of every living organism, including plants, is to create offspring for the next generation.
+   <p id="box-3-global-text-link"> --> <a onClick="load_pollination();">To Pollination Modeling</a></p>
+
+
+  </h2>
+  <div class="nav-bar-white"> </div>
+  </h1>
+
+  <h1 id="box-3-global-header">
+    <div class="wrapper">
+    <input id="water-quality-box" name="water-quality" type="checkbox" onclick="load_waterquality_data()" value="waterquality">
+    <label for="water-quality-box">Water Quality Regulation</label>
+  </div>
+  <h2 id="box-3-global-text">
+    Pollination is the act of transferring pollen grains from the male anther of a flower to the female stigma.
+    The goal of every living organism, including plants, is to create offspring for the next generation.
+    <p id="box-3-global-text-link"> --> <a onClick="location.href='WaterQuality.html';return false;">To Water Quality Regulation Modeling</a></p>
+</h2>
+  <div class="nav-bar-white"> </div>
+</h1>
+
+<h1 id="box-3-global-header">
+  <div class="wrapper">
+  <input id="coastal-risk-box" name="coastal-risk" type="checkbox" onclick="load_coastalrisk_data()" value="coastal">
+  <label for="coastal-risk-box">Coastal Risk Mitigation</label>
+</div>
+<h2 id="box-3-global-text">
+  Pollination is the act of transferring pollen grains from the male anther of a flower to the female stigma.
+  The goal of every living organism, including plants, is to create offspring for the next generation.
+  <p id="box-3-global-text-link"> --> <a onClick="location.href='CoastalRisk.html';return false;">To Coastal Risk Mitigation Modeling</a></p>
+</h2>
+</h1>
+    </div>
+
+
+    <div class="box box-3" style="display:none;">
+      <h1 id="box-3-header">
+      <div> Pollination Contribution to People (Food Energy) in 1945 </div>
+      <div class="nav-bar"> </div>
+    </h1>
+      <h1 id="box-3-header-2">
+      <div> World </div>
+
+      <div class="nav-bar"> </div>
+    </h1>
+      <div class="switch_3_ways" style="display:none;">
+        <div id="ssp1" class="switch ssp1" onclick="change_period('ssp1')">SSP1</div>
+        <div id="ssp3" class="switch ssp3" onclick="change_period('ssp3')">SSP3</div>
+        <div id="ssp5" class="switch ssp5" onclick="change_period('ssp5')">SSP5</div>
+        <div id="selector" class="selector"></div>
+      </div>
+      <div class="nav-bar-hidden" style="display:none;"> </div>
+      <div class="box box-small">
+        <b> Pollination Contribution vs Unmet Need (in %) over the years </b>
+        <div class="graph"> </div>
+      </div>
+      <div class="box box-small2">
+        <div class="box_contribution">
+          <h4 class="small-title"> What is the percentage of pollination contribution to Food Energy in 1945? </h4>
+          <div class="docsChart"> </div>
+        </div>
+        <div class="ver-bar"> </div>
+        <div class="box_unmet">
+          <h4 class="title-unmet"> What is the percentage of pollination-dependent production loss? </h4>
+          <div class="docsChart2"> </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box box-3" style="display:none;">
+      <h1 id="box-3-header">
+      <div id="title_2d_change"> Pollination Contribution to Food Energy in 2015 (Bottom) vs SSP1 (Top) </div>
+      <div class="nav-bar"> </div>
+    </h1>
+      <h2 id="story"> Pollinators need good foraging resources, places that are rich in
+      pollen and nectar. They need to nest and to eat in a natural,
+      non-toxic environment.  </h2>
+      <img src="images/bee.jpg" class="img-story"> </img>
+      <h2 id="story"> However, the absence of an appropriate habitat
+    for bees could lead to a continuous decline in pollination, affecting millions of people. </h2>
+      <h2 id="bar_title"> People in millions impacted in 2050 </h2>
+      <div class="graph2d"> </div>
+      <h3 class="labelGraph"> Regions </h3>
+      <h3 class="labelGraphY"> People impacted (Logscale) </h3>
+      <h1 id="box-3-header">
+    </h1>
+    </div>
+
+    <!-- Add buttons for folate, vitamin, energy  -->
+    <div class="parent-button-div" style="display:none;">
+      <div class="folate-button">
+        <!-- Making the div as a function -->
+        <a class="data-link" href="javascript:void(0)" onclick="updateData('Folate')"><h1 class="button-title">Folate</h1></a>
+      </div>
+      <div class="vitamin-button">
+        <a class="data-link" href='javascript:void(0)' onclick="updateData('Vitamin')"><h1 class="button-title">Vitamin</h1></a>
+      </div>
+      <div class="energy-button">
+        <a class="data-link" href='javascript:void(0)' onclick="updateData('Energy')"><h1 class="button-title">Energy</h1></a>
+      </div>
+
+    </div>
+    <script src="scripts/lineGraph.js"></script>
+    <script src="scripts/barGraph.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/popup.js"></script>
+    <script src="scripts/zoom.js"></script>
+    <script src="scripts/projection.js"></script>
+    <script src="scripts/projection_3d.js"></script>
+    <script src="scripts/projection_2d.js"></script>
+    <script src="scripts/legend.js"></script>
+    <script src="scripts/arcs.js"></script>
+    <script src="scripts/storytelling_helper.js"></script>
+    <script src="scripts/projection_global.js"></script>
+    <script src="scripts/slider.js"></script>
+    <script src="scripts/viz.js"></script>
+</body>
+
+</html>
