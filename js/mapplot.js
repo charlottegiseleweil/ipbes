@@ -357,8 +357,8 @@ class MapPlot {
         let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseFloat(x[`${this.currentModeName}_${scenario}`])))
         // set the domain to the extent (min and max) of the 4 extents
         this.dataExtent = d3.extent(extents);
-        // Use the ${this.currentModeName}_cur scenario as the domain, but add the dataExtent points as well to include the outliers
-        this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`${this.currentModeName}_cur`])).concat(this.dataExtent));
+        // Use the ${this.currentModeName}_c scenario as the domain, but add the dataExtent points as well to include the outliers
+        this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`${this.currentModeName}_c`])).concat(this.dataExtent));
 
         // Adjust the colors for the heatmap gradient
         let r = this.currentColorScale.range();
