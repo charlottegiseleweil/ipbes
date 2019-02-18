@@ -13,7 +13,6 @@ class MapPlot {
         this.canvas = this.canvasLayer.node();
         this.context = this.canvas.getContext("2d");
         this.heat = simpleheat(this.canvas);
-        this.heat.radius(5, 5);
         
 		const map_promise_110 = d3.json("data/map_data/110m.json").then(topojson_raw => {
 			const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
@@ -68,7 +67,8 @@ class MapPlot {
 
 			const center_x = this.svgWidth/2;
 			const center_y = this.svgHeight/2;	
-			const scale = 380;
+            const scale = 380;
+            this.setHeatRadius(scale);
 			this.scaleExtent = [0.8, 5];
 			this.resetScale = scale;
 			this.resetRotate = [0, 0];
@@ -170,7 +170,7 @@ class MapPlot {
                 this.heat.data(this.formatDataIntoHeatList(data))
 
                 // draw into canvas, with minimum opacity threshold
-                this.heat.draw(0.05);
+                this.heat.draw();
             }            
         }
 
@@ -216,10 +216,7 @@ class MapPlot {
                 let scaleFactor = d3.event.transform.k * (that.svgHeight - 10) / 2;
                 that.projection.scale(scaleFactor);
 
-                // Adjust the scale of the blurred points
-                let heatScale = scaleFactor / 40;
-                //heatScale = 10;
-                that.heat.radius(heatScale - 5, heatScale - 5)
+                that.setHeatRadius(scaleFactor)
             
                 let v1 = versor.cartesian(that.projection.rotate(that.r0).invert(d3.mouse(this)));
                 let q1 = versor.multiply(that.q0, versor.delta(that.v0, v1));
@@ -463,9 +460,8 @@ class MapPlot {
                 .duration(1000)
                 .on("end", () => {
                     if (!end_callback_triggered) {
-                        // Adjust the scale of the blurred points
-                        let heatScale = that.clickedScale / 40;
-                        that.heat.radius(heatScale - 5, heatScale - 5)
+                        that.setHeatRadius(that.clickedScale);
+
 
                         that.init_50map(d)						
                         end_callback_triggered = true
@@ -516,11 +512,9 @@ class MapPlot {
         .duration(1000)
         .on("end", () => {
             if (!already_triggered) {
-                // Adjust the scale of the blurred points
-                let heatScale = this.resetScale / 40;
-                this.heat.radius(heatScale - 5, heatScale - 5)
+                this.setHeatRadius(this.resetScale)
                 this.initializeZoom();
-                
+  
                 already_triggered = true;
                 this.render()	
                 // Allow clicks after transition is done
@@ -604,6 +598,17 @@ class MapPlot {
         return this.map_data.filter(
             function(map_data){ return map_data.name == code }
         );
+    }
+
+    setHeatRadius(zoomScaleFactor) {
+        // Tweak the numbers in this function to make the heat map look different.
+
+        // Adjust the scale of the blurred points
+        let heatScale = zoomScaleFactor / 60;
+
+        // set point radius and blur radius (25 and 15 by default)
+        this.heat.radius(heatScale/2, heatScale/1.5)
+        //console.log("point radius: " + heatScale/2 + " b radi: " + heatScale/1.5)
     }
     
     setDataset(dataset) {
