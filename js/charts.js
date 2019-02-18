@@ -122,12 +122,12 @@ class DistributionChart{
 	
 		// Generate a histogram using twenty uniformly-spaced bins.
 		return {"selected":d3.histogram()
-				.domain(plot_object.dataExtent)
+				.domain(plot_object.UNdataExtent)
 				.thresholds(thresholds)
 				.value(getUN)      // Provide accessor function for histogram generation
 				(distri_data_selceted),
 				"current":d3.histogram()
-				.domain(plot_object.dataExtent)
+				.domain(plot_object.UNdataExtent)
 				.thresholds(thresholds)
 				.value(getUN)      // Provide accessor function for histogram generation
 				(distri_data_current) };

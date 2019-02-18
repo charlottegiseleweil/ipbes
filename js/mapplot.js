@@ -96,6 +96,7 @@ class MapPlot {
             this.q0;
             
             this.setCurrentColorScale();
+            this.setUNColorScale();
             
             // let r = this.currentColorScale.range();
             // this.heatGradientDict = {0: r}
@@ -326,7 +327,7 @@ class MapPlot {
             this.heat.draw();
             if (!scenario_change) this.setCurrentColorScale();
             this.initFocusedMapData(focusedData);
-            updateCharts(focusedData,this.currentColorScale)
+            updateCharts(focusedData, this.UNColorScale)
 
         } else {
             if (!scenario_change) this.setCurrentColorScale();
@@ -367,7 +368,25 @@ class MapPlot {
         this.heatGradDict = {};
         r.forEach((color, i) => this.heatGradDict[(i)/6] = color)
         this.heat.gradient(this.heatGradDict)
+    }
 
+    /* 
+    This function sets and saves the UNcolorScale for a particular dataset, so that 
+    this color scale is always available for the distribution chart in the focused
+    mode. (No other color scale should be used for the dist chart since it is 
+    based on UN)
+    */
+    setUNColorScale() {
+        let hcl = d3.interpolateHcl(colorSchema['UN'][0], colorSchema['UN'][1]);
+        this.UNColorScale = d3.scaleQuantile()
+            .range(d3.quantize(hcl, 7));
+
+        // get the extents for the data of the 4 different scenarios
+        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseFloat(x[`${this.currentModeName}_${scenario}`])))
+        this.UNdataExtent = d3.extent(extents);
+        
+        // Use the ${this.currentModeName}_c scenario as the domain, but add the dataExtent points as well to include the outliers
+        this.UNColorScale.domain(this.currentData.map(x => parseFloat(x[`${this.currentModeName}_c`])).concat(this.UNdataExtent));
 
     }
 
@@ -477,7 +496,7 @@ class MapPlot {
             // dataSelection.exit().remove()
 
             // update charts
-            updateCharts(that.focusedData(),that.currentColorScale)
+            updateCharts(that.focusedData(), that.UNColorScale)
         
             // change country name
             updateCountryName(d.name);
@@ -628,6 +647,7 @@ class MapPlot {
                 break; 
             
         }
+        this.setUNColorScale()
         this.update_all();
         // change labels depending on dataset
         updateLabels(`${this.currentDatasetName}`,`${this.currentModeName}`);
