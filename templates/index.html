@@ -128,16 +128,18 @@
       </div>
 
     </div>
-
     <div class="box box-1-global" style="display:flex">
+      <p class="title2DLegend"> Pollination Key Areas <p>
+      <img src="images/legend.png" class="img-legend"> </img>
       <p class="label2DLegendX">Nature's Contributions </p>
       <span>&#8594;</span>
       <p class="label2DLegendY">Demand </p>
-      <span2>&#8595;</span2> 
-      <a href="#" class="myButton" onclick="click_about()">About</a>
+      <span2>&#8593;</span2>
+      <a href="#" class="about-button" onclick="click_about()">About</a>
     </div>
-    <div class="box box-2-global">
-      <h1 class="map-title"> Nature's Contributions to People
+    <div class="box box-2-global" style="display:flex">
+      <h1 class="map-title"> Nature's Contributions to People </h1>
+      <!-- <a href="#" class="about-button" onclick="click_about()">About</a> -->
       <div class="map-global"></div>
     </div>
 
@@ -180,7 +182,7 @@
 
     <h1 id="box-3-global-header">
       <div class="wrapper">
-        <input id="pollination-box" name="pollination" type="checkbox" onclick="load_pollination_data()" value="pollination" checked>
+        <input id="pollination-box" name="pollination" type="checkbox" onclick="load_pollination_data()" value="pollination" autocomplete="off" checked>
         <label for="pollination-box">Pollination</label>
       </div>
     <h2 id="box-3-global-text">
@@ -195,7 +197,7 @@
 
   <h1 id="box-3-global-header">
     <div class="wrapper">
-    <input id="water-quality-box" name="water-quality" type="checkbox" onclick="load_waterquality_data()" value="waterquality">
+    <input id="water-quality-box" name="water-quality" type="checkbox" onclick="load_waterquality_data()" value="waterquality" autocomplete="off">
     <label for="water-quality-box">Water Quality Regulation</label>
   </div>
   <h2 id="box-3-global-text">
@@ -208,7 +210,7 @@
 
 <h1 id="box-3-global-header">
   <div class="wrapper">
-  <input id="coastal-risk-box" name="coastal-risk" type="checkbox" onclick="load_coastalrisk_data()" value="coastal">
+  <input id="coastal-risk-box" name="coastal-risk" type="checkbox" onclick="load_coastalrisk_data()" value="coastal" autocomplete="off">
   <label for="coastal-risk-box">Coastal Risk Mitigation</label>
 </div>
 <h2 id="box-3-global-text">

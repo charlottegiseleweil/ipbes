@@ -2,6 +2,7 @@ let dataset_global = 'dataset/pixel_energy.csv';
 let dataset_2D_folate = 'dataset/pixel_folate.csv';
 let colorSchemeX1 = [255,205,155,105,55];
 let colorSchemeY1 = [255,205,155,105,55];
+let legendTitle = document.getElementsByClassName("title2DLegend")[0];
 let colorSchemeX = ["#FFFFFF", "#C6F4BC", "#74DE4C"];
 let colorSchemeY = ["#FFFFFF", "#F4C8FF", "#C615F2"];
 let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
@@ -123,19 +124,29 @@ let coastal_box = document.getElementById("coastal-risk-box");
 
 function load_pollination_data() {
   if (pollination_box.checked == true) {
-    console.log("pollination checked")
+    if (water_box.checked == false && coastal_box.checked == false) {
+    legendTitle.innerHTML = "Pollination Key Areas"
+  }
   }
 }
 
 function load_waterquality_data() {
   if (water_box.checked == true) {
-    console.log("waterquality checked")
+    if (pollination_box.checked == false && coastal_box.checked == false) {
+    legendTitle.innerHTML = "WQ Key Areas";
+  } else {
+    legendTitle.innerHTML = "Hotspots";
+  }
   }
 }
 
 function load_coastalrisk_data() {
   if (coastal_box.checked == true) {
-    console.log("coastal risk checked")
+    if (pollination_box.checked == false && water_box.checked == false) {
+    legendTitle.innerHTML = "CR Key Areas";
+  } else {
+    legendTitle.innerHTML = "Hotspots";
+  }
   }
 }
 
@@ -149,7 +160,7 @@ function ready_global(g, path) {
       .data(features)
       .enter().append("path")
       .attr("d", path)
-      .attr("fill", "#D3D3D3")
+      .attr("fill", "#FFFFFF")
       .attr("class", "feature");
     // Creates a mesh around the border
     g.append("path")

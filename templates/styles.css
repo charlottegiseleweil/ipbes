@@ -156,14 +156,6 @@ line {
   overflow: hidden;
 }
 
-.box-3-global {
-  background-color: rgb(58, 96, 178);
-  width: 30%;
-  font-size: 1vh;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
 .description_text {
   font-family: ourFont, sans-serif;
   font-size: 2vh;
@@ -633,21 +625,21 @@ img {
 }
 
 #box-3-global-header {
-  font-size: 3.2vh;
+  font-size: 3vh;
   color: white;
   font-family: ourFont;
   font-weight: bold;
 }
 
 #box-3-global-text {
-  font-size: 1.8vh;
+  font-size: 1.7vh;
   font-family: ourFont;
   color: white;
   font-weight: bold;
 }
 
 #box-3-global-text-link {
-  font-size: 1.8vh;
+  font-size: 1.7vh;
   font-family: ourFont;
   color: white;
   font-weight: bold;
@@ -664,49 +656,53 @@ img {
 }
 
 .box-2-global {
-  width: 62%;
+  width: 76%;
   padding: 0;
   margin: 0;
   overflow: hidden;
 }
 
 .map-title {
-  margin-top: 11.3vh;
+  margin-bottom: -8vh;
   font-size: 1.2em;
   font-family: ourFont;
-  color: rgb(58, 96, 178);
+  color: rgb(0, 0, 0);
 }
 
 .box-1-global {
-  width: 10%;
+  width: 9%;
   box-sizing: border-box;
 }
 
 .box-3-global {
-  background-color: rgb(58, 96, 178);
-  width: 28%;
-  font-size: 1vh;
+  background-color: rgb(0, 0, 0);
+  width: 30%;
+  font-size: 0.9vh;
   box-sizing: border-box;
   overflow: hidden;
 }
 
 .label2DLegendX {
-  font-size: 0.35em;
-  margin-left: 1.3vw;
-  margin-bottom: -1.8vh;
+  font-size: 0.33em;
+  transform: translate(0.5vw, 15vh);
+}
+
+.title2DLegend {
+  font-family: ourFont;
+  font-size: 0.5em;
+  transform: translate(0.6vw, 25vh);
 }
 
 .label2DLegendY {
-  font-size: 0.35em;
-  margin-left: -7.8vw;
+  font-size: 0.33em;
+  margin-left: -6vw;
   margin-bottom: -12vh;
-  transform: rotate(-90deg);
+  transform: translateY(-1vh) rotate(-90deg);
 }
 
 span {
   content: "\2192";
-  margin-bottom: 0vh;
-  margin-left: 1vw;
+  transform: translate(0.5vw, 7vh);
 }
 
 
@@ -768,21 +764,21 @@ span {
 	opacity: 1;
 }
 
-.myButton {
-	background-color:rgb(58, 96, 178);
+.about-button {
+	background-color:rgb(0, 0, 0);
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
 	cursor:pointer;
 	color:#ffffff;
 	font-family:ourFont;
-	font-size:0.5em;
+	font-size:0.55em;
 	font-weight:bold;
 	padding:0.5vh 0.5vh;
 	text-decoration:none;
-  transform: translateY(50vh);
+  transform: translate(0vw, 25vh);
   margin-left: 1vw;
 }
-.myButton:hover {
+.about-button:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
 	background:-moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
 	background:-webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
@@ -792,15 +788,15 @@ span {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef',GradientType=0);
 	background-color:#019ad2;
 }
-.myButton:active {
+.about-button:active {
 	position:relative;
 	top:0.2vh;
 }
 
 span2 {
-  content: "\2193";
-  margin-left: -7.5vw;
-  transform: translateY(13vh);
+  content: "\2191";
+  margin-left: -6vw;
+  transform: translateY(2.7vh);
 }
 
 /* THIS CSS PART IS FOR REPLACING THE SLIDER IN 2D */
@@ -891,4 +887,10 @@ input {
 #rad6:checked ~ #bckgrnd2 {
   transform: translateX(6.5vw);
   transition: transform 0.5s ease-in-out;
+}
+
+.img-legend {
+  transform:translate(0.5vw, 20vh);
+  width: 100%;
+  height: 80%;
 }

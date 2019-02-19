@@ -96,11 +96,11 @@ function create2DLegend() {
 
   let X_2D = d3.scaleLinear()
   .domain([0, size])
-  .range(['white', 'rgb(0,200,0)']);
+  .range(['rgb(211,211,211)', 'rgb(0,200,0)']);
 
   let Y_2D = d3.scaleLinear()
   .domain([0, size])
-  .range(['white', 'rgb(234,55,247)']);
+  .range(['rgb(211,211,211)', 'rgb(234,55,247)']);
 
   let canvas = d3.select(".box.box-1-global").append('canvas')
   .attr('width', size*step)
@@ -116,14 +116,14 @@ function create2DLegend() {
       .range([X_2D(x), Y_2D(y)])
       .interpolate(d3.interpolateRgb);
 
-    let strength = (y - x) / (size-1);
+    let strength = (y - x) / (size-2);
 
     context.fillStyle = color(strength);
     context.beginPath();
-    context.rect((x+0.6/2)*step,(y/2)*step,step-15,25);
+    context.rect((x+0.001/3)*step,(y/2)*step,step-15,25);
     context.fill();
   });
   });
 }
 
-create2DLegend();
+//create2DLegend();
