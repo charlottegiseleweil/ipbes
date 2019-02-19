@@ -49,7 +49,6 @@ function projection3D() {
   svg_map2.call(zoom_2D.transform, d3.zoomIdentity);
   document.getElementsByClassName("map-slider")[0].style.display = "block";
   document.getElementById("radios").style.display = "none";
-  document.getElementById("radios2").style.display = "none";
 
   if (checked3D === 'true') {
     zoom_2D = null; // Set zoom 2D is null
@@ -58,7 +57,9 @@ function projection3D() {
     svg.selectAll('.plot-point').remove();
     document.getElementsByClassName('box box-3')[0].style.display = "flex";
     document.getElementsByClassName('box box-3')[1].style.display = "none";
+    document.getElementsByClassName("overlay")[0].style.display = "none";
     document.getElementById("svg_map2").style.overflow = "";
+    document.getElementById("container").style.display = "none";
 
     changeProjection(false);
 

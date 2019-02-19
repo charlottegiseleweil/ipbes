@@ -213,3 +213,24 @@ function runSegmentedSSPs(period) {
   change_pollination_contribution(period);
   update_percentages(period);
 }
+
+function changeActiveState(button_number) {
+  // Add active class to the current button (highlight it)
+  var header = document.getElementById("container");
+  var btns = header.getElementsByClassName("container-column");
+  for (var i = 0; i < btns.length; i++) {
+      btns[i].className = btns[i].className.replace(" active-btn", "");
+  }
+  btns[button_number].className += " active-btn";
+}
+
+function loadDifferentScenario(scenario) {
+  // TODO: Load data for scenarios
+  if (scenario == "NC") {
+    console.log(scenario);
+  } else if (scenario == "POP") {
+    console.log(scenario);
+  } else {
+    console.log(scenario);
+  }
+}

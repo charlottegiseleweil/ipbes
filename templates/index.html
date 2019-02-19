@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link href="https://goo.gl/mTc43h" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -137,41 +138,64 @@
       <span2>&#8593;</span2>
       <a href="#" class="about-button" onclick="click_about()">About</a>
     </div>
+
     <div class="box box-2-global" style="display:flex">
-      <h1 class="map-title"> Nature's Contributions to People </h1>
+
+      <div style="display:flex; justify-content: center;">
+      <div style="position:absolute;"><h1 class="map-title"> Nature's Contributions to People </h1></div>
       <!-- <a href="#" class="about-button" onclick="click_about()">About</a> -->
+
+      <div id="container-2D" style="position:absolute;margin-top:5%">
+        <button class="container-column-2D active-btn" onclick="changeActiveState(0)">Where nature helps us the most today?</button>
+        <button class="container-column-2D" onclick="changeActiveState(1)" disabled>Where people are at more risk in the future?</button>
+      </div>
+      </div>
+      <br>
       <div class="map-global"></div>
     </div>
 
     <div class="box box-2" style="display: none;">
+      <div id="container">
+        <button class="container-column active-btn" onclick="changeActiveState(0)">Future maps</button>
+        <button class="container-column" onclick="changeActiveState(1)" disabled>Impact distributions</button>
+        <button class="container-column" onclick="changeActiveState(2)" disabled>Historical</button>
+        <button class="container-column" onclick="changeActiveState(3)" disabled>Pollination Modelling Method</button>
+      </div>
       <p id="map-name-1">Change map for SSP1</p>
       <div class="map1"></div>
       <hr class="map-diff-line">
       <p id="map-name-2">Current</p>
-      <div class="map2"></div>
+      <div class="map2">
+        <div class="overlay">
+          
+          <div id="radios">
+            <input id="rad1" type="radio" name="radioBtn" title="Sustainability" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked>
+            <label class="labels" for="rad1">SSP1</label>
+            <input id="rad2" type="radio" name="radioBtn" title="Regional Rivalry" autocomplete="off" onclick="runSegmentedSSPs('SSP3')">
+            <label class="labels" for="rad2">SSP3</label>
+            <input id="rad3" type="radio" name="radioBtn" title="Fossil-fueled Development" autocomplete="off" onclick="runSegmentedSSPs('SSP5')">
+            <label class="labels" for="rad3">SSP5</label>
+            <div id="bckgrnd"></div>
+          </div>
+
+          <div id="options-radios">
+            <label>
+              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('NC')" checked />
+              Natures Contribution
+            </label>
+            <label>
+              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('POP')" />
+              Population
+            </label>
+            <label>
+              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('UN')" />
+              Unmet need
+            </label>
+          </div>
+
+        </div>
+      </div>
       <div class="map-slider"></div>
-
-      <div id="radios">
-        <!-- Autocomplete off is to not the save previous entry, so for resetting -->
-        <input id="rad1" type="radio" name="radioBtn" title="Sustainability" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked>
-        <label class="labels" for="rad1">SSP1</label>
-        <input id="rad2" type="radio" name="radioBtn" title="Regional Rivalry" autocomplete="off" onclick="runSegmentedSSPs('SSP3')">
-        <label class="labels" for="rad2">SSP3</label>
-        <input id="rad3" type="radio" name="radioBtn" title="Fossil-fueled Development" autocomplete="off" onclick="runSegmentedSSPs('SSP5')">
-        <label class="labels" for="rad3">SSP5</label>
-        <div id="bckgrnd"></div>
-      </div>
-
-      <div id="radios2">
-        <input id="rad4" type="radio" name="radioBtn" checked>
-        <label class="labels" title="Pollination's contribution" autocomplete="off" for="rad4">P1</label>
-        <input id="rad5" type="radio" name="radioBtn">
-        <label class="labels" title="Population" autocomplete="off" for="rad5">P2</label>
-        <input id="rad6" type="radio" name="radioBtn">
-        <label class="labels" title="Unmet need" autocomplete="off" for="rad6">P3</label>
-        <div id="bckgrnd2"></div>
-      </div>
-
     </div>
 
     <div class="box box-3-global" style="display:flex;">

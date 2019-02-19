@@ -806,17 +806,8 @@ span2 {
   width: 17%;
   height: 5%;
   display: none;
-  margin-left: 20%;
-}
-
-#radios2 {
-  position: relative;
-  z-index:5;
-  width: 22%;
-  height: 5%;
-  display: none;
-  margin-left: 60%;
-  margin-top: -4.3%;
+  /*margin-left: 20%;*/
+  justify-content: space-between;
 }
 
 input {
@@ -829,34 +820,33 @@ input {
   height: 2.77vh;
   font-family: ourFont;
   font-size: 2vh;
-  display: inline-block;
+  display: block;
   margin-right: -3px;
   cursor: pointer;
-  outline: 1px solid black;
+  /*outline: 1px solid black;*/
   z-index: 2;
 }
 
 #bckgrnd {
-  background-color: orange;
+  background-color: #40e0d0;
   position: absolute;
-  left: 0.9vh;
+  left: 0.87vh;
   top: 1.7vh;
   z-index: -1;
 }
 
-#bckgrnd2 {
-  width: 3vw;
-  height: 2.77vh;
-  background-color: yellow;
-  position: absolute;
-  font-family: ourFont;
-  font-size: 2vh;
-  display: inline-block;
-  left: 3.7vh;
-  outline: 1px solid black;
+.overlay {
+  position: fixed;
+  display: none;
+  width: 18%;
+  height: 18%;
+  top: 77%;
+  left: 10%;
+  right: 0;
+  bottom: 0;
+  /*background-color: rgba(0,0,0,0.5);*/
+  z-index: 2;
   cursor: pointer;
-  top: 1.8vh;
-  z-index: -1;
 }
 
 /* THIS IS FOR ANIMATION WHEN YOU CHANGE THE OPTION */
@@ -874,23 +864,132 @@ input {
   transition: transform 0.5s ease-in-out;
 }
 
-#rad4:checked ~ #bckgrnd2 {
-  transform: translateX(0vw);
-  transition: transform 0.5s ease-in-out;
-}
-
-#rad5:checked ~ #bckgrnd2 {
-  transform: translateX(3.2vw);
-  transition: transform 0.5s ease-in-out;
-}
-
-#rad6:checked ~ #bckgrnd2 {
-  transform: translateX(6.5vw);
-  transition: transform 0.5s ease-in-out;
-}
-
 .img-legend {
   transform:translate(0.5vw, 20vh);
   width: 100%;
   height: 80%;
 }
+
+@keyframes click-wave {
+  0% {
+    height: 6vh;
+    width: 6vh;
+    opacity: 0.35;
+    position: relative;
+  }
+  100% {
+    height: 30vh;
+    width: 15vw;
+    margin-left: -12vh;
+    margin-top: -6vw;
+    opacity: 0;
+  }
+}
+
+#options-radios {
+  font-size: 2vh;
+  display: grid;
+  text-align: initial;
+  margin-top: -4.8vh;
+}
+
+.option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  top: 1vh;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3.15vh;
+  width: 3.15vh;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+  font-size: 10px;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #40e0d0;
+}
+.option-input:checked::before {
+  height: 3.15vh;
+  width: 3.15vh;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 2.85vh;
+  text-align: center;
+  line-height: 3.15vh;
+}
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #40e0d0;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+#container {
+  display: flex;
+  width: 100%;
+  height: 10%;
+  background-color: black;
+  display: none;
+}
+
+/*#container-2D {
+  display: flex;
+  width: 100%;
+  height: 5%;
+  background-color: black;
+  display: none;
+}*/
+
+.container-column {
+  /*background-color: blue;*/
+  width: 25%;
+  z-index: 1000;
+  height: 100%;
+  float: left;
+  color: black;
+  font-size: 2vh;
+}
+
+/*.container-column-2D {
+  width: 25%;
+  z-index: 1000;
+  height: 100%;
+  float: left;
+  color: black;
+  font-size: 2vh;
+}
+
+*/
+.container-column:hover {
+    background-color: #40e0d0;
+}
+
+.active-btn {
+  background-color: #0070BB;
+}
+
