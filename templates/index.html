@@ -145,9 +145,11 @@
       <div style="position:absolute;"><h1 class="map-title"> Nature's Contributions to People </h1></div>
       <!-- <a href="#" class="about-button" onclick="click_about()">About</a> -->
 
-      <div id="container-2D" style="position:absolute;margin-top:5%">
-        <button class="container-column-2D active-btn" onclick="changeActiveState(0)">Where nature helps us the most today?</button>
-        <button class="container-column-2D" onclick="changeActiveState(1)" disabled>Where people are at more risk in the future?</button>
+      <div id="container-2D" style="position:absolute;margin-top:6%">
+        <a href="#" class="nature-help-button" onclick="activate_nature_button()">Where nature helps us most today?</a>
+        <a href="#" class="risk-button" onclick="activate_risk_button()">Where are people at risk in the future?</a>
+        <!-- <button class="container-column-2D active-btn" onclick="changeActiveState(0)">Where nature helps us the most today?</button>
+        <button class="container-column-2D" onclick="changeActiveState(1)" disabled>Where people are at more risk in the future?</button> -->
       </div>
       </div>
       <br>
@@ -167,7 +169,7 @@
       <p id="map-name-2">Current</p>
       <div class="map2">
         <div class="overlay">
-          
+
           <div id="radios">
             <input id="rad1" type="radio" name="radioBtn" title="Sustainability" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked>
             <label class="labels" for="rad1">SSP1</label>
@@ -181,7 +183,7 @@
           <div id="options-radios">
             <label>
               <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('NC')" checked />
-              Natures Contribution
+              Nature's Contribution
             </label>
             <label>
               <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('POP')" />

@@ -1,5 +1,7 @@
 let dataset_global = 'dataset/pixel_energy.csv';
 let dataset_2D_folate = 'dataset/pixel_folate.csv';
+let risk_button = document.getElementsByClassName("risk-button")[0];
+let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let colorSchemeX1 = [255,205,155,105,55];
 let colorSchemeY1 = [255,205,155,105,55];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
@@ -108,7 +110,7 @@ let svg_global = d3.select(".map-global").append("svg")
 
 let g_global = svg_global.append('g');
 
-let projection_global = d3.geoNaturalEarth().scale(d3.min([width_global / 2, height_global / 2]) * 0.49).translate([width_global / 2 - 52, height_global / 2]).precision(.1);
+let projection_global = d3.geoNaturalEarth().scale(d3.min([width_global / 2, height_global / 2]) * 0.49).translate([width_global / 2 - 52, (height_global + 100) / 2]).precision(.1);
 let path_global = d3.geoPath().projection(projection_global);
 let map_global = document.getElementsByClassName('map-global')[0];
 
@@ -229,4 +231,16 @@ function get_global_zoom() {
 // Changes both groups in 2D
 function zoomed_2D_global() {
   g_global.attr("transform", d3.event.transform);
+}
+
+function activate_nature_button() {
+  nature_button.style.backgroundColor = "#000000";
+  risk_button.style.backgroundColor = "#9c9c9c"
+  //Load our HTML file of the other group
+}
+
+function activate_risk_button() {
+  risk_button.style.backgroundColor = "#000000";
+  nature_button.style.backgroundColor = "#9c9c9c"
+  //Load HTML file of the other group
 }
