@@ -65,13 +65,32 @@ body {
 	position: absolute;	
 	visibility: hidden;
 }
-#heatmap{
-	width: 99%;
+#globe-background{
 	position: absolute;
 	top: 0;
+	bottom: 0;
 	left: 0;
-	pointer-events: none;
+	right: 0;
+	margin: auto;
+	border-radius: 50%;
+	width: 99%;
+	margin: 0;
+	background: radial-gradient(circle at 100px 100px, #5cabff, #000);
 }
+
+#heatmap {
+	width: 100%;
+	max-width: 860px;
+    position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+    pointer-events: none;
+}
+
+
 #infoBox{
 	background: rgba(255, 23, 108, 0.644);
     color: white;

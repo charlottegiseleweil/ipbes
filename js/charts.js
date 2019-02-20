@@ -45,6 +45,20 @@ class DistributionChart{
 		// Add the bars	
 		let bars = this.g.selectAll(".bar")
 						.data(data)
+						
+		
+        // Append bars for selected data             
+		bars.enter().append("rect")
+			.attr("class", "bar")
+			.attr("x", 0)
+			.attr("height", y.bandwidth())
+			.attr("y", function(d,i) { return y(labels[i]); })
+			.attr("width", function(d) { return x(d); })
+			.attr("fill-opacity","0.7")
+			.style("stroke-opacity","0.9")
+			.style("fill", (d,i) => color((bins.selected[i].x0 + bins.selected[i].x1) / 2))
+			.style("stroke",(d,i) => color((bins.selected[i].x0 + bins.selected[i].x1) / 2))
+			.style("stroke-width",1)
 		
 		// Append bars for 2015 data
 		if(is2050){
@@ -54,9 +68,9 @@ class DistributionChart{
 				.attr("height", y.bandwidth())
 				.attr("y", (d,i) => y(labels[i]))
 				.attr("width", (d,i) => x(data_current[i]))
-				.attr("stroke-opacity","0.7")
+				.attr("stroke-opacity","0.9")
 				.style("fill","none")
-				.style("stroke-width",2)
+				.style("stroke-width",1.5)
 				.style("stroke","white");
 
 			bars.enter().append("rect")
@@ -81,20 +95,7 @@ class DistributionChart{
 					.attr("x", this.width + 7)
 					.attr("y", -18)
 					.text("- 2015");
-		}				
-		
-        // Append bars for selected data             
-		bars.enter().append("rect")
-			.attr("class", "bar")
-			.attr("x", 0)
-			.attr("height", y.bandwidth())
-			.attr("y", function(d,i) { return y(labels[i]); })
-			.attr("width", function(d) { return x(d); })
-			.attr("fill-opacity","0.7")
-			.style("stroke-opacity","0.9")
-			.style("fill", (d,i) => color((bins.selected[i].x0 + bins.selected[i].x1) / 2))
-			.style("stroke",(d,i) => color((bins.selected[i].x0 + bins.selected[i].x1) / 2))
-			.style("stroke-width",1)
+		}
 
 	}
 	remove(){
@@ -274,5 +275,22 @@ function min(a,b){
 	return a > b? b:a;
 }
 function round(value){
-	return numeral(value > 10000 ? Math.round(value/1000)*1000 : Math.round(value/100)*100).format('0,0');
+	if(value > 2000000)
+	{
+		return numeral(Math.round(value/1000000)*1000000).format('0,0')
+	}
+	if(value > 1000000)
+	{
+		return numeral(Math.round(value/100000)*100000).format('0,0')
+	}
+	else if (value > 100000)
+	{
+		return numeral(Math.round(value/10000)*10000).format('0,0')
+	}
+	else if (value > 10000)
+	{
+		return numeral(Math.round(value/1000)*1000).format('0,0')
+	}
+	else
+		return numeral(Math.round(value/100)*100).format('0,0');
 }

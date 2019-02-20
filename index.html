@@ -26,8 +26,8 @@
 </div>  
 
 <div class="wrapper" id="map-content">
-	<svg id="globe-plot" viewBox="0 0 1200 800" width="99%" height="99%"></svg>
-	<!-- <canvas id="heatmap", viewBox="0 0 1200 800" width="1200" height="800"></canvas> -->
+	<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
+	<canvas id="heatmap"></canvas> 
 	<div id="resetButton"><p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p></div>
 	<div id="countryLabel"></div>
 	<p class="infoBtn" id="infoShow" onclick="showInfo()">&#x2139;</p>
@@ -81,7 +81,7 @@
 	
 
 	<div id="distribution-chart">
-		<h2 id="distri-chart-head">Distribution of impacted people <br> for the <p id ="distri-chart-choosen-scenario"></p> scenario </h2>
+		<h2 id="distri-chart-head">People impacted <br> (<p id ="distri-chart-choosen-scenario"></p>) </h2>
 		<svg id="distribution"></svg>
 		<h3 id="distri-x-axis">Number of people</h3>
 		<h3 id="distri-y-axis">Coastal Hazard</h3>
