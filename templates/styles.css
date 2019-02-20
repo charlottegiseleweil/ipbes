@@ -806,9 +806,9 @@ span2 {
   width: 17%;
   height: 5%;
   display: none;
-  /*margin-left: 20%;*/
-  transform: translateX(-20vw);
-  /* justify-content: space-between; */
+  margin-left: -50%;
+  /* transform: translateX(-20vw); */
+  justify-content: space-between;
 }
 
 input {

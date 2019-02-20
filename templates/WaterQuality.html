@@ -48,22 +48,47 @@
     </div>
 
     <div class="box box-2">
+      <div id="container">
+        <button class="container-column active-btn" onclick="changeActiveState(0)">Future maps</button>
+        <button class="container-column" onclick="changeActiveState(1)" disabled>Impact distributions</button>
+        <button class="container-column" onclick="changeActiveState(2)" disabled>Historical</button>
+        <button class="container-column" onclick="changeActiveState(3)" disabled>Pollination Modelling Method</button>
+      </div>
       <p id="map-name-1">Change map for SSP1</p>
       <div class="map1"></div>
       <hr class="map-diff-line">
       <p id="map-name-2">Current</p>
-      <div class="map2"></div>
-      <div class="map-slider"></div>
-      <div id="radios">
-        <!-- Autocomplete off is to not the save previous entry, so for resetting -->
-        <input id="rad1" type="radio" name="radioBtn" title="Sustainability" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked>
-        <label class="labels" for="rad1">SSP1</label>
-        <input id="rad2" type="radio" name="radioBtn" title="Regional Rivalry" autocomplete="off" onclick="runSegmentedSSPs('SSP3')">
-        <label class="labels" for="rad2">SSP3</label>
-        <input id="rad3" type="radio" name="radioBtn" title="Fossil-fueled Development" autocomplete="off" onclick="runSegmentedSSPs('SSP5')">
-        <label class="labels" for="rad3">SSP5</label>
-        <div id="bckgrnd"></div>
+      <div class="map2">
+        <div class="overlay">
+
+          <div id="radios">
+            <input id="rad1" type="radio" name="radioBtn" title="Sustainability" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked>
+            <label class="labels" for="rad1">SSP1</label>
+            <input id="rad2" type="radio" name="radioBtn" title="Regional Rivalry" autocomplete="off" onclick="runSegmentedSSPs('SSP3')">
+            <label class="labels" for="rad2">SSP3</label>
+            <input id="rad3" type="radio" name="radioBtn" title="Fossil-fueled Development" autocomplete="off" onclick="runSegmentedSSPs('SSP5')">
+            <label class="labels" for="rad3">SSP5</label>
+            <div id="bckgrnd"></div>
+          </div>
+
+          <div id="options-radios">
+            <label>
+              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('NC')" checked />
+              Nature's Contribution
+            </label>
+            <label>
+              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('POP')" />
+              Population
+            </label>
+            <label>
+              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('UN')" />
+              Unmet need
+            </label>
+          </div>
+
+        </div>
       </div>
+      <div class="map-slider"></div>
     </div>
 
 
