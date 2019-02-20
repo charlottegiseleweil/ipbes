@@ -656,7 +656,7 @@ img {
 }
 
 .box-2-global {
-  width: 77%;
+  width: 62%;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -690,19 +690,19 @@ img {
 .title2DLegend {
   font-family: ourFont;
   font-size: 0.5em;
-  transform: translate(0.6vw, 25vh);
+  transform: translate(0.3vw, 25vh);
 }
 
 .label2DLegendY {
   font-size: 0.33em;
   margin-left: -6vw;
   margin-bottom: -12vh;
-  transform: translateY(-1vh) rotate(-90deg);
+  transform: translate(-0.5vw, -2vh) rotate(-90deg);
 }
 
 span {
   content: "\2192";
-  transform: translate(0.5vw, 7vh);
+  transform: translate(0.5vw, 6.7vh);
 }
 
 
@@ -796,7 +796,7 @@ span {
 span2 {
   content: "\2191";
   margin-left: -6vw;
-  transform: translateY(2.7vh);
+  transform: translate(-0.5vw, 1.3vh);
 }
 
 /* THIS CSS PART IS FOR REPLACING THE SLIDER IN 2D */
@@ -955,8 +955,8 @@ input {
   display: flex;
   width: 100%;
   height: 10%;
-  background-color: black;
   display: none;
+  margin-bottom: -3.5vh;
 }
 
 /*#container-2D {
@@ -1003,12 +1003,12 @@ input {
 	color:#ffffff;
 	font-family:ourFont;
 	font-size:0.75em;
-	padding:0.3vh 1.5vw;
+	padding:0.3vh 1.3vw;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #090a09;
   width: 50%;
   margin-bottom: 2vh;
-  transform: translateX(-29vh);
+  transform: translateX(-27vh);
 }
 .nature-help-button:active {
   background-color:#000000;
@@ -1022,12 +1022,78 @@ input {
 	color:#ffffff;
 	font-family:ourFont;
 	font-size:0.75em;
-	padding:0.3vh 2.8vw;
+	padding:0.3vh 2vw;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #090a09;
-  transform: translate(16.7vw, -7.1vh);
+  transform: translate(15.2vw, -7.1vh);
 }
 .risk-button:active {
 	position:relative;
   background-color:#000000;
+}
+
+.future-button {
+	background-color:#000000;
+	border:1px solid #8c8c8c;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:ourFont;
+	font-size:0.55em;
+	padding:5px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #090a09;
+}
+.future-button:active {
+	position:relative;
+}
+
+.impact-button {
+	background-color:#9c9c9c;
+	border:1px solid #8c8c8c;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:ourFont;
+	font-size:0.55em;
+	padding:5px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #090a09;
+}
+.impact-button:active {
+	position:relative;
+}
+
+.historical-button {
+	background-color:#9c9c9c;
+	border:1px solid #8c8c8c;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:ourFont;
+	font-size:0.55em;
+	padding:5px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #090a09;
+}
+
+.historical-button:active {
+	position:relative;
+}
+
+.modeling-button {
+	background-color:#9c9c9c;
+	border:1px solid #8c8c8c;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:ourFont;
+	font-size:0.55em;
+	padding:5px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #090a09;
+}
+
+.modeling-button:active {
+	position:relative;
 }

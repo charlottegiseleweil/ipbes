@@ -108,9 +108,11 @@ let svg_global = d3.select(".map-global").append("svg")
   .attr("height", height_global)
   .on("click", stopped, true);
 
+// svg_global.attr("transform", "scale(1.1)");
+
 let g_global = svg_global.append('g');
 
-let projection_global = d3.geoNaturalEarth().scale(d3.min([width_global / 2, height_global / 2]) * 0.49).translate([width_global / 2 - 52, (height_global + 100) / 2]).precision(.1);
+let projection_global = d3.geoNaturalEarth().scale(d3.min([width_global / 2, height_global / 2]) * 0.49).translate([width_global / 2 - 52, (height_global + 150) / 2]).precision(.1);
 let path_global = d3.geoPath().projection(projection_global);
 let map_global = document.getElementsByClassName('map-global')[0];
 
@@ -215,7 +217,7 @@ function click_about() {
 
 function get_global_zoom() {
     return d3.zoom()
-      .scaleExtent([1, 15])
+      .scaleExtent([0.95, 15])
       .translateExtent([
         [0, 0],
         [$(".map-global").width(), $(".map-global").height()]
@@ -235,12 +237,12 @@ function zoomed_2D_global() {
 
 function activate_nature_button() {
   nature_button.style.backgroundColor = "#000000";
-  risk_button.style.backgroundColor = "#9c9c9c"
+  risk_button.style.backgroundColor = "#9c9c9c";
   //Load our HTML file of the other group
 }
 
 function activate_risk_button() {
   risk_button.style.backgroundColor = "#000000";
-  nature_button.style.backgroundColor = "#9c9c9c"
+  nature_button.style.backgroundColor = "#9c9c9c";
   //Load HTML file of the other group
 }

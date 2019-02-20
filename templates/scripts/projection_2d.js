@@ -67,3 +67,36 @@ function projection2D() {
     showData(g, coordstoplot);
   }
 }
+
+let impact_btn = document.getElementsByClassName("impact-button")[0];
+let hist_btn = document.getElementsByClassName("historical-button")[0];
+let modeling_btn = document.getElementsByClassName("modeling-button")[0];
+let future_btn = document.getElementsByClassName("future-button")[0];
+
+function future_button() {
+  future_btn.style.backgroundColor = "#000000";
+  impact_btn.style.backgroundColor = "#9c9c9c";
+  modeling_btn.style.backgroundColor = "#9c9c9c";
+  hist_btn.style.backgroundColor = "#9c9c9c";
+}
+
+function historical_button() {
+  hist_btn.style.backgroundColor = "#000000";
+  impact_btn.style.backgroundColor = "#9c9c9c";
+  modeling_btn.style.backgroundColor = "#9c9c9c";
+  future_btn.style.backgroundColor = "#9c9c9c";
+}
+
+function modeling_button() {
+  modeling_btn.style.backgroundColor = "#000000";
+  impact_btn.style.backgroundColor = "#9c9c9c";
+  future_btn.style.backgroundColor = "#9c9c9c";
+  hist_btn.style.backgroundColor = "#9c9c9c";
+}
+
+function impact_button() {
+  impact_btn.style.backgroundColor = "#000000";
+  future_btn.style.backgroundColor = "#9c9c9c";
+  modeling_btn.style.backgroundColor = "#9c9c9c";
+  hist_btn.style.backgroundColor = "#9c9c9c";
+}
