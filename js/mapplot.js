@@ -382,11 +382,11 @@ class MapPlot {
             .range(d3.quantize(hcl, 7));
 
         // get the extents for the data of the 4 different scenarios
-        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseFloat(x[`${this.currentModeName}_${scenario}`])))
+        let extents = this.scenarios.flatMap((scenario) => d3.extent(this.currentData, x => parseFloat(x[`UN_${scenario}`])))
         this.UNdataExtent = d3.extent(extents);
         
         // Use the ${this.currentModeName}_c scenario as the domain, but add the dataExtent points as well to include the outliers
-        this.UNColorScale.domain(this.currentData.map(x => parseFloat(x[`${this.currentModeName}_c`])).concat(this.UNdataExtent));
+        this.UNColorScale.domain(this.currentData.map(x => parseFloat(x[`UN_c`])).concat(this.UNdataExtent));
 
     }
 
@@ -627,7 +627,6 @@ class MapPlot {
 
         // set point radius and blur radius (25 and 15 by default)
         this.heat.radius(heatScale/2, heatScale/1.5)
-        //console.log("point radius: " + heatScale/2 + " b radi: " + heatScale/1.5)
     }
     
     setDataset(dataset) {
