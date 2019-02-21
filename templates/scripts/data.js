@@ -45,7 +45,7 @@ function showData(the_g, coordinates) {
       .attr("height", "3")
       .attr("fill", function(d) {
         color = d[2] || 0;
-        return colorScale(color);
+        return colorScaleDisplay(color);
       })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide);

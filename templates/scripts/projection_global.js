@@ -1,9 +1,8 @@
-let dataset_global = 'dataset/pixel_energy.csv';
-let dataset_2D_folate = 'dataset/pixel_folate.csv';
+let dataset_global = 'dataset/2d_global_poll.csv';
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
-let colorSchemeX1 = [255,205,155,105,55];
-let colorSchemeY1 = [255,205,155,105,55];
+let colorSchemeX1 = [245,205,155,105,55];
+let colorSchemeY1 = [245,205,155,105,55];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
 let colorSchemeX = ["#FFFFFF", "#C6F4BC", "#74DE4C"];
 let colorSchemeY = ["#FFFFFF", "#F4C8FF", "#C615F2"];
@@ -12,47 +11,13 @@ let gradient_white = 'radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb
 
 var zoom_2D_global = get_global_zoom();
 
-let colorScale2DGlobalX = d3.scaleLinear()
-  .domain([1, 50, 99])
-  .range(colorSchemeX);
-let colorScale2DGlobalY = d3.scaleLinear()
-  .domain([1, 50, 99])
-  .range(colorSchemeY);
-
-if (global_activated == true) {
-  document.getElementsByClassName("box-container")[0].style.background = gradient_white;
+function initialize_2D_global(data_) {
+  let coordstoplot = [];
+  for (let key in data_) {
+    coordstoplot.push([data_[key]['long'], data_[key]['lat'], data_[key]['UN_cur_perc'],data_[key]['NCP_cur']]);
+  }
+  return coordstoplot;
 }
-
-d3.scaleBivariate = function() {
-  function scaleBivariate(value) {
-    var r = colorScale2DGlobalX1(value[0]);
-    var b = colorScale2DGlobalY1(value[1]);
-    return "rgb("+((r+b)/1.7)+","+r+","+(b+50)+")";
-  }
-
-  let colorScale2DGlobalX1 = d3.scaleThreshold()
-    .domain([1, 25, 50, 75, 99])
-    .range(colorSchemeX1);
-  let colorScale2DGlobalY1 = d3.scaleThreshold()
-    .domain([1, 25, 50, 75, 99])
-    .range(colorSchemeY1);
-
-  var red = function(d) { return d[0]; }
-
-  var blue = function(d) { return d[1];}
-
-  // Accessors:
-  scaleBivariate.red = function(_) {
-    return arguments.length ? (red = _, scaleBivariate): red;
-  }
-
-  scaleBivariate.blue = function(_) {
-    return arguments.length ? (blue = _, scaleBivariate): blue;
-  }
-  return scaleBivariate;
-}
-
-var colorScaleBiv = d3.scaleBivariate();
 
 // Function to load the pollination visualization
 function load_pollination() {
@@ -97,6 +62,10 @@ function load_global() {
     location.href='index.html';
     return false;
   }
+}
+
+if (global_activated == true) {
+  document.getElementsByClassName("box-container")[0].style.background = gradient_white;
 }
 
 let width_global = $(".box.box-2-global").width(),
@@ -188,20 +157,27 @@ function ready_global(g, path) {
   });
 }
 
-let data_2D_global = load(dataset_2D);
-let data_2D_global_folate = load(dataset_2D_folate);
+function load_2d_global(dataset) {
+  let result = {};
+  d3.csv(dataset, function(error, data) {
+    data.forEach(function(d) {
+      result[d.fid] = d;
+    });
+  });
+  return result;
+}
+
+let data_2D_global = load_2d_global(dataset_global);
 let promise_global = new Promise(function(resolve, reject) {
   setTimeout(() => resolve(1), 100);
 });
 promise_global.then(() => {
-  let coordstoplot_global = initialize_2D("2015", data_2D_global);
-  let coordstoplot_global_folate = initialize_2D("2015", data_2D_global_folate);
-  showDataGlobal(g_global, coordstoplot_global, colorScaleBiv);
-  showDataGlobal(g_global, coordstoplot_global_folate, colorScaleBiv);
+  let coordstoplot_global = initialize_2D_global(data_2D_global);
+  showDataGlobal(g_global, coordstoplot_global);
 });
 
 // plot points on the map for 2D global map
-function showDataGlobal(the_g, coordinates, ColorScaleSelect) {
+function showDataGlobal(the_g, coordinates) {
     // This is just for 2D, we are creating a raster by creating a rectangle
     the_g.selectAll(".plot-point")
       .data(coordinates).enter()
@@ -216,11 +192,21 @@ function showDataGlobal(the_g, coordinates, ColorScaleSelect) {
       .attr("width", "3")
       .attr("height", "3")
       .attr("fill", function(d) {
-        color = d[2] || 0;
-        return ColorScaleSelect(color);
+        //d[2] is the demand (unmet need, y-axis)
+        let red = (1-Number(d[2]))*255;
+        //d[3] is the NCP (x-axis)
+        let green = (1-Number(d[3]))*255;
+        let blue = 0;
+        if (Number(d[2]) < 0.1 && Number(d[3]) < 0.1) {
+          blue = 240;
+        }
+        if (Number(d[2]) > 0.9 && Number(d[3]) > 0.9) {
+          blue = 0;
+        }
+        return "rgb("+red+","+green+","+blue+")"
       })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+      // .on('mouseover', tip.show)
+      // .on('mouseout', tip.hide);
 }
 
 function click_about() {
