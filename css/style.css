@@ -80,7 +80,7 @@ body {
 
 #heatmap {
 	width: 100%;
-	max-width: 1300px;
+	max-width: 150vh;
     position: absolute;
 	top: 0;
 	bottom: 0;
@@ -89,6 +89,8 @@ body {
 	margin: auto;
     pointer-events: none;
 }
+
+
 
 
 #infoBox{
