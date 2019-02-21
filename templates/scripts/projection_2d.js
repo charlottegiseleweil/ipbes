@@ -10,7 +10,6 @@ function projection2D() {
 
     zoom_3D = null;
     BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
-    title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs SSP1 (Top)";
     changeProjection(true);
     updateLegendPosition(true);
     document.getElementsByClassName('box box-3')[0].style.display = "none";

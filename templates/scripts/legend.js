@@ -1,16 +1,29 @@
 // Initializations
 let colorScheme = d3.schemeReds[6];
+let colorSchemeDisplay = d3.schemeReds[9];
 let changeColorScheme = d3.schemeRdYlGn[5];
+
+let changeColorSchemeDisplay = d3.schemeRdYlGn[9];
 
 //Data and color scale and legend
 let colorScale = d3.scaleThreshold()
   .domain([20, 40, 60, 80, 99, 100])
   .range(colorScheme);
 
+// The color scheme which displays more gradient
+let colorScaleDisplay = d3.scaleThreshold()
+  .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
+  .range(colorSchemeDisplay);
+
 // Color scale for changes for 2D Map
 let changeColorScale = d3.scaleThreshold()
   .domain([-99, -49, 1, 51, 101])
   .range(changeColorScheme);
+
+// Change color scale which has more gradient
+let changeColorScaleDisplay = d3.scaleThreshold()
+  .domain([-99, -74, -49, -24, 0, 24, 49, 74, 101])
+  .range(changeColorSchemeDisplay);
 
 // Getting the Legend and setting the color scale on the legend
 let svg_legend = d3.select(".box.box-1").append("svg");

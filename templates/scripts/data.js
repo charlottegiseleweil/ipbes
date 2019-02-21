@@ -63,7 +63,7 @@ function updateData(data_type) {
       contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
         current_viz + " in " + current_year + "?";
       colorScheme = d3.schemeGreens[6];
-      title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs " + current_SSP + " (Top)";
+      colorSchemeDisplay = d3.schemeGreens[9];
       dataset = 'dataset/country_va.csv';
       dataset_graph = 'dataset/plot_vitamin.csv';
       dataset_2D = 'dataset/pixel_vitamin.csv';
@@ -78,8 +78,8 @@ function updateData(data_type) {
       title.innerHTML = "Pollination Contribution to Nutrition (Food Energy) in " + current_year;
       contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
         current_viz + " in " + current_year + "?";
-      title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs " + current_SSP + " (Top)";
       colorScheme = d3.schemeReds[6];
+      colorSchemeDisplay = d3.schemeReds[9];
       dataset = 'dataset/country_en.csv';
       dataset_graph = 'dataset/plot_energy.csv';
       dataset_2D = 'dataset/pixel_energy.csv';
@@ -93,8 +93,8 @@ function updateData(data_type) {
       title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
       contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
         current_viz + " in " + current_year + "?";
-      title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs " + current_SSP + " (Top)";
       colorScheme = d3.schemePurples[6];
+      colorSchemeDisplay = d3.schemePurples[9];
       dataset = 'dataset/country_fo.csv';
       dataset_graph = 'dataset/plot_folate.csv';
       dataset_2D = 'dataset/pixel_folate.csv';
@@ -103,9 +103,15 @@ function updateData(data_type) {
       lineGraphObject.updateGraph(previousCountryClicked)
       break;
   }
-  colorScale = d3.scaleThreshold()
-    .domain([20, 40, 60, 80, 99, 100])
-    .range(colorScheme);
+colorScale = d3.scaleThreshold()
+  .domain([20, 40, 60, 80, 99, 100])
+  .range(colorScheme);
+
+// The color scheme which displays more gradient
+colorScaleDisplay = d3.scaleThreshold()
+  .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
+  .range(colorSchemeDisplay);
+
   updateLegend(colorScale);
   let promise = new Promise(function(resolve, reject) {
     loadGlobalData(dataset);
@@ -126,7 +132,7 @@ function accessData() {
       // Pull data for particular iso and set color - Not able to fill it
       if (checked3D == 'true') {
         d.total = data_c[d.properties.iso3] || 0;
-        return colorScale(d.total);
+        return colorScaleDisplay(d.total);
       } else {
         return '#D3D3D3';
       }

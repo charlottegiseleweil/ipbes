@@ -736,27 +736,27 @@ span {
 .wrapper input + label::before {
 	border: 2px solid;
 	content: "";
-	height: 40px;
+	height: 4.3vh;
 	left: 0;
 	position: absolute;
 	top: 0;
-	width: 40px;
+	width: 2.5vw;
 }
 
 /*create check symbol with pseudo element*/
 .wrapper input + label::after {
 	content: "";
-	border: 4px solid;
+	border: 0.5vh solid;
 	border-left: 0;
 	border-top: 0;
-	height: 20px;
-	left: 14px;
+	height: 2vh;
+	left: 0.9vw;
 	opacity: 0;
 	position: absolute;
-	top: 6px;
+	top: 0.5vh;
 	transform: rotate(45deg);
 	transition: opacity 0.2s ease-in-out;
-	width: 12px;
+	width: 0.7vw;
 }
 
 /*reveal check for 'on' state*/
@@ -1003,7 +1003,7 @@ input {
 	color:#ffffff;
 	font-family:ourFont;
 	font-size:0.75em;
-	padding:0.3vh 1.3vw;
+	padding:0.3vh 1vw;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #090a09;
   width: 50%;
@@ -1096,4 +1096,18 @@ input {
 
 .modeling-button:active {
 	position:relative;
+}
+
+.metric-button {
+	background-color:#000000;
+	border:1px solid #000000;
+	display:inline-block;
+  cursor: auto;
+	color:#fcfcfc;
+	font-family:ourFont;
+	font-size:0.75em;
+	padding:5px 20px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #000000;
+  transform: translateY(-13vh);
 }

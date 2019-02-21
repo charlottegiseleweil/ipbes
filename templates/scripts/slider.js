@@ -40,7 +40,7 @@ function change_pollination_contribution(period) {
         // Pull data for particular iso and set color - Not able to fill it
         if (d.type == 'Feature') {
           d.total = data_c[d.properties.iso3] || 0;
-          return colorScale(d.total);
+          return colorScaleDisplay(d.total);
 
         } else {}
       });
@@ -48,7 +48,7 @@ function change_pollination_contribution(period) {
       let coordstoplot = initialize_2D(period, country_data_2D);
       g.selectAll(".plot-point").data(coordstoplot).attr("fill", function(d) {
         color = d[2] || 0;
-        return colorScale(color);
+        return colorScaleDisplay(color);
       });
     });
   }
@@ -62,12 +62,12 @@ function change_pollination_contribution(period) {
         let coordstoplot = initialize_2D(period, change_data);
         g.selectAll(".plot-point").data(coordstoplot).attr("fill", function(d) {
           color = d[2] || 0;
-          return changeColorScale(color);
+          return changeColorScaleDisplay(color);
         });
         let coordstoplot_static = initialize_2D('2015', data_2D);
         g_map2.selectAll(".plot-point").data(coordstoplot_static).attr("fill", function(d) {
           color = d[2] || 0;
-          return colorScale(color);
+          return colorScaleDisplay(color);
         });
       });
     });
@@ -142,19 +142,16 @@ function createSlider() {
         if (val == 50) {
           runSlider("SSP1", false);
           BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
-          title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs SSP1 (Top)";
           current_SSP = "SSP1";
         }
         if (val == 100) {
           runSlider("SSP3", false);
           BarGraphObject.updateBarGraph('dataset/ssp3_impacted.csv');
-          title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs SSP3 (Top)";
           current_SSP = "SSP3";
         }
         if (val == 150) {
           runSlider("SSP5", false);
           BarGraphObject.updateBarGraph('dataset/ssp5_impacted.csv');
-          title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs SSP5 (Top)";
           current_SSP = "SSP5";
         }
       }
@@ -190,26 +187,27 @@ function runSlider(period, if_ssp) {
   }
 }
 
+let ssp_name = "Sustainability";
 function runSegmentedSSPs(period) {
   // OMG, oh lord, this code needs to be cleaned.
   // Python - concatentation - '{}'.format()
   current_year = period;
   if (period == "SSP1") {
     BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
-    title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs SSP1 (Top)";
     current_SSP = "SSP1";
+    ssp_name = "Sustainability";
   }
   if (period == "SSP3") {
     BarGraphObject.updateBarGraph('dataset/ssp3_impacted.csv');
-    title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs SSP3 (Top)";
     current_SSP = "SSP3";
+    ssp_name = "Rivalry";
   }
   if (period == "SSP5") {
     BarGraphObject.updateBarGraph('dataset/ssp5_impacted.csv');
-    title_map.innerHTML = "Pollination Contribution to " + current_viz + " in 2015 (Bottom) vs SSP5 (Top)";
     current_SSP = "SSP5";
+    ssp_name = "Fossil Fuels";
   }
-  change_map_title.innerHTML = "Change map for " + period;
+  change_map_title.innerHTML = "Average Micronutrient Pollination Dependance in 2050 - " + ssp_name;
   change_pollination_contribution(period);
   update_percentages(period);
 }

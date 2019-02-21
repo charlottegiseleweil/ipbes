@@ -163,10 +163,10 @@
         <a href="#" class="historical-button" onclick="historical_button()">Historical</a>
         <a href="#" class="modeling-button" onclick="modeling_button()">Pollination modeling method</a>
       </div>
-      <p id="map-name-1">Change map for SSP1</p>
+      <p id="map-name-1">Average Micronutrient Pollination Dependance in 2050 - Sustainability</p>
       <div class="map1"></div>
       <hr class="map-diff-line">
-      <p id="map-name-2">Current</p>
+      <p id="map-name-2">Current Average Micronutrient Pollination Dependance</p>
       <div class="map2">
         <div class="overlay">
 
@@ -208,7 +208,7 @@
 
     <h1 id="box-3-global-header">
       <div class="wrapper">
-        <input id="pollination-box" name="pollination" type="checkbox" onclick="load_pollination_data()" value="pollination" autocomplete="off" checked>
+        <input id="pollination-box" name="button-global" type="radio" onclick="load_pollination_data()" value="pollination" autocomplete="off" checked>
         <label for="pollination-box">Pollination</label>
       </div>
     <h2 id="box-3-global-text">
@@ -223,7 +223,7 @@
 
   <h1 id="box-3-global-header">
     <div class="wrapper">
-    <input id="water-quality-box" name="water-quality" type="checkbox" onclick="load_waterquality_data()" value="waterquality" autocomplete="off">
+    <input id="water-quality-box" name="button-global" type="radio" onclick="load_waterquality_data()" value="waterquality" autocomplete="off">
     <label for="water-quality-box">Water Quality Regulation</label>
   </div>
   <h2 id="box-3-global-text">
@@ -236,7 +236,7 @@
 
 <h1 id="box-3-global-header">
   <div class="wrapper">
-  <input id="coastal-risk-box" name="coastal-risk" type="checkbox" onclick="load_coastalrisk_data()" value="coastal" autocomplete="off">
+  <input id="coastal-risk-box" name="button-global" type="radio" onclick="load_coastalrisk_data()" value="coastal" autocomplete="off">
   <label for="coastal-risk-box">Coastal Risk Mitigation</label>
 </div>
 <h2 id="box-3-global-text">
@@ -284,8 +284,7 @@
 
     <div class="box box-3" style="display:none;">
       <h1 id="box-3-header">
-      <div id="title_2d_change"> Pollination Contribution to Food Energy in 2015 (Bottom) vs SSP1 (Top) </div>
-      <div class="nav-bar"> </div>
+      <a href="#" class="metric-button">Choose metric to visualize</a>
     </h1>
       <h2 id="story"> Pollinators need good foraging resources, places that are rich in
       pollen and nectar. They need to nest and to eat in a natural,

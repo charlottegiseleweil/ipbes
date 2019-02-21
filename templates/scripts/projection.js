@@ -71,7 +71,7 @@ function changeProjection(sliderChecked) {
       promise.then(function(result) {
         d.total = data_c[d.properties.iso3] || 0;
       });
-      return colorScale(d.total);
+      return colorScaleDisplay(d.total);
     }).attr("d", path).on("click", clicked);
   }
 

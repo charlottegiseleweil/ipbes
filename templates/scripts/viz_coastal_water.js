@@ -1,5 +1,3 @@
-let title_map = document.getElementById("title_2d_change");
-
 document.getElementById("checked3D").disabled = true;
 document.getElementById("checked2D").disabled = false;
 

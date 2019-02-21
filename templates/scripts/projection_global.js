@@ -241,7 +241,6 @@ function get_global_zoom() {
       .on("zoom", zoomed_2D_global);
 }
 
-
 // Changes both groups in 2D
 function zoomed_2D_global() {
   g_global.attr("transform", d3.event.transform);
