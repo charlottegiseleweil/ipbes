@@ -1,4 +1,4 @@
-let dataset_global = 'dataset/2d_global_poll.csv';
+let dataset_global = 'dataset/2d_poll_global.csv';
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let colorSchemeX1 = [245,205,155,105,55];
@@ -193,16 +193,10 @@ function showDataGlobal(the_g, coordinates) {
       .attr("height", "3")
       .attr("fill", function(d) {
         //d[2] is the demand (unmet need, y-axis)
-        let red = (1-Number(d[2]))*255;
+        let red = Number(d[2])*255;
         //d[3] is the NCP (x-axis)
-        let green = (1-Number(d[3]))*255;
+        let green = Number(d[3])*255;
         let blue = 0;
-        if (Number(d[2]) < 0.1 && Number(d[3]) < 0.1) {
-          blue = 240;
-        }
-        if (Number(d[2]) > 0.9 && Number(d[3]) > 0.9) {
-          blue = 0;
-        }
         return "rgb("+red+","+green+","+blue+")"
       })
       // .on('mouseover', tip.show)
