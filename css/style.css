@@ -80,7 +80,7 @@ body {
 
 #heatmap {
 	width: 100%;
-	max-width: 860px;
+	max-width: 950px;
     position: absolute;
 	top: 0;
 	bottom: 0;
@@ -92,7 +92,7 @@ body {
 
 
 #infoBox{
-	background: rgba(255, 23, 108, 0.644);
+	background: rgba(112, 112, 112, 0.644);
     color: white;
     position: absolute;
 	margin: auto;
