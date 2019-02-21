@@ -130,8 +130,14 @@ function load_pollination_data() {
   if (pollination_box.checked == true) {
     if (water_box.checked == false && coastal_box.checked == false) {
     legendTitle.innerHTML = "Pollination Key Areas"
+  } else {
+    legendTitle.innerHTML = "Hotspots";
   }
-  }
+} else {
+    if (water_box.checked == true) {
+      load_waterquality_data();
+    }
+}
 }
 
 function load_waterquality_data() {
@@ -141,6 +147,12 @@ function load_waterquality_data() {
   } else {
     legendTitle.innerHTML = "Hotspots";
   }
+
+
+} else {
+  if (pollination_box.checked == true) {
+    load_pollination_data();
+    }
   }
 }
 
