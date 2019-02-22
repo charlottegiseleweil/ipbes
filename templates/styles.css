@@ -1100,7 +1100,7 @@ input {
 
 .metric-button {
 	background-color:#000000;
-	border:1px solid #000000;
+	border:0.1vh solid #000000;
 	display:inline-block;
   cursor: auto;
 	color:#fcfcfc;
@@ -1108,6 +1108,71 @@ input {
 	font-size:0.75em;
 	padding:5px 20px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #000000;
   transform: translateY(-13vh);
+}
+
+.site-navigation {
+	display: block;
+	font-family: ourFont;
+	font-size: 0.60em;
+	font-weight: bold;
+	transform: translate(6vw, -10vh);
+}
+
+.site-navigation ul {
+  background: #000000;
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+.site-navigation li {
+	color: #fff;
+  background: #000000;
+	display: block;
+	float: left;
+	margin: 0 0.2vw 0 0;
+	padding: 0.8vw;
+	position: relative;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.site-navigation li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+.site-navigation li:hover {
+	@include transition(background, 0.1s);
+	background: #52a6df;
+	cursor: pointer;
+}
+
+.site-navigation ul li ul {
+	background: #52a6df;
+	visibility: hidden;
+	float: left;
+  min-width: 3vw;
+	position: absolute;
+  transition: visibility 0.65s ease-in;
+  margin-top:12px;
+	left: 0;
+	z-index: 999;
+}
+
+.site-navigation ul li:hover > ul,
+.site-navigation ul li ul:hover {
+   visibility: visible;
+}
+
+.site-navigation ul li ul li {
+	clear: both;
+	padding: 5px 0 5px 18px;
+  width: 93%;
+}
+
+.site-navigation ul li ul li:hover {
+	background: #74b7e4;
 }
