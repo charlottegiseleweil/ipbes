@@ -1,6 +1,7 @@
 class MapPlot {
 	constructor(svg_element_id) {
         this.svg = d3.select('#' + svg_element_id);
+        this.svg_borders = d3.select('#' + svg_element_id + "_borders");
         
 		// may be useful for calculating scales
 		const svg_viewbox = this.svg.node().viewBox.animVal;
@@ -8,7 +9,7 @@ class MapPlot {
         this.svgHeight = svg_viewbox.height;
         
         // initialize canvas layer and heatmap
-        this.canvasLayer = d3.select('#map-content').append('canvas').attr('id', 'heatmap')
+        this.canvasLayer = d3.select('#heatmap')
             .attr('width', this.svgWidth).attr('height', this.svgHeight);
         this.canvas = this.canvasLayer.node();
         this.context = this.canvas.getContext("2d");
@@ -69,7 +70,9 @@ class MapPlot {
 			const center_y = this.svgHeight/2;	
             const scale = 380;
             this.setHeatRadius(scale);
-			this.scaleExtent = [0.8, 5];
+            this.heatMinOpacity = 0.05;
+            this.scaleExtent = [0.8, 1.5];
+            this.countryBorderWidth = "0.3";
 			this.resetScale = scale;
 			this.resetRotate = [0, 0];
 			this.activeClick = d3.select(null)
@@ -116,7 +119,9 @@ class MapPlot {
 			 	.data(this.map_data)
                 .enter().append("path")
                 .attr("class", "globe")
-				.attr("fill", "grey")
+                .attr("fill", "grey")
+                // .style("stroke", "black")
+                // .style("stroke-width", "0.2")
 				.attr("d", this.path)
 				.on("mouseover", function(d) {
 					that.countryTooltip.text(d.name)
@@ -132,6 +137,17 @@ class MapPlot {
 					d3.select(this).classed("selected", false)	
 				})
                 .on("click", this.clicked())
+            
+            // add borders
+            this.svg_borders.selectAll("path")
+                .data(this.map_data)
+                .enter().append("path")
+                .attr("class", "globe")
+                .attr("fill", "grey")
+                .attr("fill-opacity", "0")
+                .style("stroke", "black")
+                .style("stroke-width", this.countryBorderWidth)
+                .attr("d", this.path)
             
             // print city text
             this.svg.selectAll("text")
@@ -151,8 +167,9 @@ class MapPlot {
     }
     
     render() {
-        // Update country borders
+        // Update countries and country borders
         this.svg.selectAll("path.globe").attr('d', this.path)
+        this.svg_borders.selectAll("path").attr('d', this.path)
 
         if (!this.focused) {
             let data = this.worldDataSelection();
@@ -160,7 +177,7 @@ class MapPlot {
             if (this.currentDatasetName === "cv") {  // render regular dots for cv data, removing (if existing) heatmap
                 // remove the heatmap (if it exists)
                 this.heat.clear();
-                this.heat.draw();
+                this.heat.draw(this.heatMinOpacity);
 
                 let dataSelection = this.svg.selectAll("circle.datapoints").data(data, (d) => d);
                 dataSelection.exit().remove();
@@ -171,7 +188,7 @@ class MapPlot {
                 this.heat.data(this.formatDataIntoHeatList(data))
 
                 // draw into canvas, with minimum opacity threshold
-                this.heat.draw();
+                this.heat.draw(this.heatMinOpacity);
             }            
         }
 
@@ -324,7 +341,7 @@ class MapPlot {
             let focusedData = this.focusedData();
             this.svg.selectAll("circle").remove();
             this.heat.clear();
-            this.heat.draw();
+            this.heat.draw(this.heatMinOpacity);
             if (!scenario_change) this.setCurrentColorScale();
             this.initFocusedMapData(focusedData);
             updateCharts(focusedData, this.UNColorScale)
@@ -366,10 +383,12 @@ class MapPlot {
         this.heat.max(this.currentColorScale.quantiles().slice(-1)[0]);
 
         this.heatGradDict = {};
-        r.forEach((color, i) => this.heatGradDict[(i)/6] = color)
+        r.forEach((color, i) => this.heatGradDict[14/20 + (i)/20] = color)
         this.heat.gradient(this.heatGradDict)
+        console.log("asd")
     }
 
+// TODO: testa att ha olika parameters zoomat och ine för blur  
     /* 
     This function sets and saves the UNcolorScale for a particular dataset, so that 
     this color scale is always available for the distribution chart in the focused
@@ -419,7 +438,7 @@ class MapPlot {
                 .style("display", "inline")
         } else {
             this.heat.data(this.formatDataIntoHeatList(focusedData));
-            this.heat.draw();
+            this.heat.draw(this.heatMinOpacity);
         }
     }
 
@@ -436,7 +455,7 @@ class MapPlot {
             that.svg.selectAll("circle").remove();
             that.svg.selectAll("text").remove();
             that.heat.clear();
-            that.heat.draw();
+            that.heat.draw(this.heatMinOpacity);
 
             if (that.activeClick.node() === this) return that.resetClick();  // zoom out again if click on the same country
             else if (that.activeClick.node() != null) return null;  // else if we are already zoomed in, do nothing
@@ -473,7 +492,7 @@ class MapPlot {
             
 
             // Update the map:
-            d3.selectAll("path.globe")
+            d3.selectAll("path")
                 .transition()
                 .attrTween("d", that.zoomRotateFactory(currentRotate, currentScale, that.clickedRotate, that.clickedScale))
                 .duration(1000)
@@ -486,10 +505,12 @@ class MapPlot {
                         end_callback_triggered = true
                         d3.select(this).classed("selected", false)
                         that.initFocusedMapData(focusedData);
+
                         // Allow clicks after transition is done
                         d3.select(".wrapper").style("pointer-events", "all")
                         }
                     });
+
                     
             // Remove the world map data
             that.focused = true;
@@ -523,9 +544,9 @@ class MapPlot {
         this.svg.selectAll("circle").remove();
         this.svg.selectAll("text").remove();
         this.heat.clear();
-        this.heat.draw();
-        
-        d3.selectAll("path.globe")
+        this.heat.draw(this.heatMinOpacity);
+
+        d3.selectAll("path")
         .transition()
         .attrTween("d", this.zoomRotateFactory(this.clickedRotate, this.clickedScale, this.resetRotate, this.resetScale))
         .duration(1000)
@@ -535,6 +556,7 @@ class MapPlot {
                 this.initializeZoom();
   
                 already_triggered = true;
+
                 this.render()	
                 // Allow clicks after transition is done
                 d3.select(".wrapper").style("pointer-events", "all")
@@ -583,6 +605,15 @@ class MapPlot {
             .on("click", () => {
                 this.resetClick(false)
             })
+        
+        this.svg_borders.selectAll("path").remove().enter()
+            .data(this.map_data_50)
+            .enter().append("path")
+            .attr("fill", "grey")
+            .attr("fill-opacity", "0")
+            .style("stroke", "black")
+            .style("stroke-width", this.countryBorderWidth)
+            .attr("d", this.path)
     
         this.render()
     }
@@ -610,6 +641,15 @@ class MapPlot {
                     .style("display", "none");
                 d3.select(this).classed("selected", false)
             })
+
+            this.svg_borders.selectAll("path").remove().enter()
+                .data(this.map_data)
+                .enter().append("path")
+                .attr("fill", "grey")
+                .attr("fill-opacity", "0")
+                .style("stroke", "black")
+                .style("stroke-width", this.countryBorderWidth)
+                .attr("d", this.path)
     }
 
     // find country object in json
@@ -626,7 +666,38 @@ class MapPlot {
         let heatScale = zoomScaleFactor / 60;
 
         // set point radius and blur radius (25 and 15 by default)
-        this.heat.radius(heatScale/2, heatScale/1.5)
+
+        // pointradius: 0.45654*heatscale + 8.6927...
+        // blurradius: 0.38173*heatscale + 3.65363...
+
+        // bäst just nu
+        // let pointRadius = heatScale/1;
+        // let blurRadius = heatScale/1.1;
+
+
+        // för indien: 1.15, 1.8
+        // för tjeckien: 2, 2.5
+        // för normal: 1.14, 1.2
+        // för tjeckien:
+        // let pointRadius = heatScale/1.14;
+        // let blurRadius = heatScale/1.2;
+
+        // let pointRadius = 0.45654*heatScale + 5.6927;
+        // let blurRadius = 0.38173*heatScale + 3.65363;
+        let pointRadius = -0.00213*heatScale*heatScale + 0.9272*heatScale - 0.2516;
+        let blurRadius = -0.0002467*heatScale*heatScale + 0.4363*heatScale + 2.617;
+
+        this.heat.radius(pointRadius, blurRadius);
+        console.log("point: " + pointRadius, "blur: " + blurRadius);
+
+        // 1.5 1 är ok typ
+        // let pointRadius = 380/60*2.9;
+        // let blurRadius = 380/60*1.8;
+
+        // heatscale = 200, pointradius = 100, blurradius = 80 
+        // heatscale = 21, pointradius = 18.28, blurradius = 11.67
+        // heatscale = 6.6, pointradius = 5.7748, blurradius = 5.486
+
     }
     
     setDataset(dataset) {

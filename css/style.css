@@ -76,6 +76,7 @@ body {
 	width: 99%;
 	margin: 0;
 	background: radial-gradient(circle at 100px 100px, #5cabff, #000);
+	z-index: 2;
 }
 
 #heatmap {
@@ -87,11 +88,25 @@ body {
 	left: 0;
 	right: 0;
 	margin: auto;
-    pointer-events: none;
+	pointer-events: none;
+	z-index: 2;
 }
 
+#globe-plot {
+	position: absolute;
+	z-index: 1;
+}
 
+#globe-plot_borders {
+	position: absolute;
+	z-index: 3;
+	pointer-events: none;
+}
 
+#radio_container {
+	position: absolute;
+	z-index: 3;
+}
 
 #infoBox{
 	background: rgba(112, 112, 112, 0.644);
