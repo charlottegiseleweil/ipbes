@@ -4,6 +4,9 @@ function projection2D() {
   checked3D = document.getElementById("checked3D").value;
   if (checked2D === 'false') {
     document.getElementsByTagName('li')[0].style.background = "black";
+    document.getElementsByTagName('li')[1].style.backgroundColor = "#9c9c9c";
+    document.getElementsByTagName('li')[2].style.backgroundColor = "#9c9c9c";
+    document.getElementsByTagName('li')[3].style.backgroundColor = "#9c9c9c";
     document.getElementsByClassName("map-slider")[0].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "block";
 
