@@ -11,6 +11,10 @@ function projection2D() {
     BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
     changeProjection(true);
     updateLegendPosition(true);
+
+    document.getElementsByClassName('box box-1')[0].style.display = "none";
+    document.getElementsByClassName('box box-2')[0].style.width = "77%";
+
     document.getElementsByClassName('box box-3')[0].style.display = "none";
     document.getElementsByClassName('box box-3')[1].style.display = "flex";
     document.getElementsByClassName('map-diff-line')[0].style.width = "85%";
@@ -25,15 +29,15 @@ function projection2D() {
     let coordstoplot = initialize_2D(current_year, data_2D);
 
     // Change the size of the maps
-    svg.attr("width", $(".map1").width())
+    svg.attr("width", $(".box.box-1").width())
       .attr("height", $(".map1").height())
-      .attr("transform", "translate(0, -200) scale(0.85)");
+      .attr("transform", "translate(-400, -200) scale(1)");
     map1.setAttribute("style", "width: 100%; height: 47%;");
 
     map2.setAttribute("style", "width: 100%; height: 47%;");
-    svg_map2.attr("width", $(".map1").width())
+    svg_map2.attr("width", $(".box.box-1").width())
       .attr("height", $(".map1").height())
-      .attr("transform", "translate(0, -170) scale(0.85)");
+      .attr("transform", "translate(-400, -170) scale(1)");
 
     map2.setAttribute(
       "style",

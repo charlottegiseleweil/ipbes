@@ -55,6 +55,9 @@ function projection3D() {
 
     // Remove the points and change the style depending upon the display
     svg.selectAll('.plot-point').remove();
+    document.getElementsByClassName('box box-1')[0].style.display = "flex";
+    document.getElementsByClassName('box box-2')[0].style.width = "62%";
+
     document.getElementsByClassName('box box-3')[0].style.display = "flex";
     document.getElementsByClassName('box box-3')[1].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "none";
