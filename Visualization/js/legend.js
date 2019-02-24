@@ -42,7 +42,7 @@ function makeChangeLegend(colorScale) {
     .attr("y", -4)
     .text("% change");
 
-  let labels_change = ['<= 100%', '-50%', '0%', '50%', '>= 100%'];
+  let labels_change = ['<= -100%', '-50%', '0%', '50%', '>= 100%'];
   let c_legend = d3.legendColor()
     .labels(function(d) {
       return labels_change[d.i];
