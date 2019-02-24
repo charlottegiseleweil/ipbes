@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />
   <link href="https://goo.gl/mTc43h" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -166,11 +166,10 @@
       <p id="map-name-1">Average Micronutrient Pollination Dependance in 2050 - Sustainability</p>
       <div class="map1"></div>
       <hr class="map-diff-line">
-      <p id="map-name-2">Current Average Micronutrient Pollination Dependance</p>
       <div class="map2">
         <div class="overlay">
 
-          <div id="radios">
+          <!-- <div id="radios">
             <input id="rad1" type="radio" name="radioBtn" title="Sustainability" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked>
             <label class="labels" for="rad1">SSP1</label>
             <input id="rad2" type="radio" name="radioBtn" title="Regional Rivalry" autocomplete="off" onclick="runSegmentedSSPs('SSP3')">
@@ -178,20 +177,20 @@
             <input id="rad3" type="radio" name="radioBtn" title="Fossil-fueled Development" autocomplete="off" onclick="runSegmentedSSPs('SSP5')">
             <label class="labels" for="rad3">SSP5</label>
             <div id="bckgrnd"></div>
-          </div>
+          </div> -->
 
           <div id="options-radios">
             <label>
-              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('NC')" checked />
-              Nature's Contribution
+              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked />
+              Sustainability
             </label>
             <label>
-              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('POP')" />
-              Population
+              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP3')" />
+              Rivalry
             </label>
             <label>
-              <input type="radio" class="option-input radio" name="example" onclick="loadDifferentScenario('UN')" />
-              Unmet need
+              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP5')" />
+              Fossil Fuels
             </label>
           </div>
 
@@ -284,7 +283,18 @@
 
     <div class="box box-3" style="display:none;">
       <h1 id="box-3-header">
-      <a href="#" class="metric-button">Choose metric to visualize</a>
+        <nav id="navigation" class="site-navigation" role="navigation">
+ <ul class="menu">
+   <li class="menu-item"><a href="#">Choose metric to visualize</a>
+     <ul class="dropdown">
+       <li class="menu-item sub-menu"><a href="#">Pollination-Dependent Population</a></li>
+       <li class="menu-item sub-menu"><a href="#">Crop Population Dependence</a></li>
+       <li class="menu-item sub-menu"><a href="#">Percent Pollination Need Met</a></li>
+       <li class="menu-item sub-menu"><a href="#">Lost Crop Production</a></li>
+     </ul>
+   </li>
+ </ul>
+</nav>
     </h1>
       <h2 id="story"> Pollinators need good foraging resources, places that are rich in
       pollen and nectar. They need to nest and to eat in a natural,
@@ -314,20 +324,20 @@
       </div>
 
     </div>
-    <script src="scripts/lineGraph.js"></script>
-    <script src="scripts/barGraph.js"></script>
-    <script src="scripts/data.js"></script>
-    <script src="scripts/popup.js"></script>
-    <script src="scripts/zoom.js"></script>
-    <script src="scripts/projection.js"></script>
-    <script src="scripts/projection_3d.js"></script>
-    <script src="scripts/projection_2d.js"></script>
-    <script src="scripts/legend.js"></script>
-    <script src="scripts/arcs.js"></script>
-    <script src="scripts/storytelling_helper.js"></script>
-    <script src="scripts/projection_global.js"></script>
-    <script src="scripts/slider.js"></script>
-    <script src="scripts/viz.js"></script>
+    <script src="js/lineGraph.js"></script>
+    <script src="js/barGraph.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/zoom.js"></script>
+    <script src="js/projection.js"></script>
+    <script src="js/projection_3d.js"></script>
+    <script src="js/projection_2d.js"></script>
+    <script src="js/legend.js"></script>
+    <script src="js/arcs.js"></script>
+    <script src="js/storytelling_helper.js"></script>
+    <script src="js/projection_global.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/viz.js"></script>
 </body>
 
 </html>

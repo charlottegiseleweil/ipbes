@@ -49,12 +49,12 @@
 
     <div class="box box-2">
       <div id="container">
-        <button class="container-column active-btn" onclick="changeActiveState(0)">Future maps</button>
-        <button class="container-column" onclick="changeActiveState(1)" disabled>Impact distributions</button>
-        <button class="container-column" onclick="changeActiveState(2)" disabled>Historical</button>
-        <button class="container-column" onclick="changeActiveState(3)" disabled>Pollination Modelling Method</button>
+        <a href="#" class="future-button">Future maps</a>
+        <a href="#" class="impact-button">Impact distribution</a>
+        <a href="#" class="historical-button">Historical</a>
+        <a href="#" class="modeling-button">Pollination modeling method</a>
       </div>
-      <p id="map-name-1">Change map for SSP1</p>
+      <p id="map-name-1">Average Micronutrient Pollination Dependance in 2050 - Sustainability</p>
       <div class="map1"></div>
       <hr class="map-diff-line">
       <p id="map-name-2">Current Average Micronutrient Pollination Dependance</p>
@@ -94,7 +94,7 @@
 
     <div class="box box-3" style="display:flex;">
       <h1 id="box-3-header">
-      <div> Coastal Risk Contribution to People in 1945 </div>
+      <div> Water Quality Contribution to People (Food Energy) in 1945 </div>
       <div class="nav-bar"> </div>
     </h1>
       <h1 id="box-3-header-2">
@@ -110,7 +110,7 @@
       </div>
       <div class="nav-bar-hidden" style="display:none;"> </div>
       <div class="box box-small">
-        <b> Coastal Risk Contribution vs Unmet Need (in %) over the years </b>
+        <b> Water Quality Contribution vs Unmet Need (in %) over the years </b>
         <div class="graph"> </div>
       </div>
       <div class="box box-small2">
@@ -128,6 +128,18 @@
 
     <div class="box box-3" style="display:none;">
       <h1 id="box-3-header">
+        <nav id="navigation" class="site-navigation" role="navigation">
+          <ul class="menu">
+   <li class="menu-item"><a href="#">Choose metric to visualize</a>
+     <ul class="dropdown">
+       <li class="menu-item sub-menu"><a href="#">Total Nitrogen Load (Biophysical Need)</a></li>
+       <li class="menu-item sub-menu"><a href="#">Nature's Contribution to Water Purification</a></li>
+       <li class="menu-item sub-menu"><a href="#">Nitrogen Export (Unmet Need)</a></li>
+       <li class="menu-item sub-menu"><a href="#">Rural Population</a></li>
+     </ul>
+   </li>
+ </ul>
+</nav>
     </h1>
       <h2 id="story"> Pollinators need good foraging resources, places that are rich in
       pollen and nectar. They need to nest and to eat in a natural,
@@ -142,6 +154,7 @@
       <h1 id="box-3-header">
     </h1>
     </div>
+
     <script src="scripts/lineGraph.js"></script>
     <script src="scripts/barGraph.js"></script>
     <script src="scripts/data.js"></script>

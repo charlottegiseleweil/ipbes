@@ -6,7 +6,6 @@ function projection2D() {
 
     document.getElementsByClassName("map-slider")[0].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "block";
-    document.getElementById("radios").style.display = "ruby-text";
 
     zoom_3D = null;
     BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
@@ -55,7 +54,6 @@ function projection2D() {
 
     // Making the name of the maps appear in 2D
     document.getElementById("map-name-1").style.display = "initial";
-    document.getElementById("map-name-2").style.display = "initial";
 
     document.getElementById("checked2D").disabled = true;
     document.getElementById("checked3D").disabled = false;

@@ -49,12 +49,12 @@
 
     <div class="box box-2">
       <div id="container">
-        <a href="#" class="future-button">Future maps</a>
-        <a href="#" class="impact-button">Impact distribution</a>
-        <a href="#" class="historical-button">Historical</a>
-        <a href="#" class="modeling-button">Pollination modeling method</a>
+        <button class="container-column active-btn" onclick="changeActiveState(0)">Future maps</button>
+        <button class="container-column" onclick="changeActiveState(1)" disabled>Impact distributions</button>
+        <button class="container-column" onclick="changeActiveState(2)" disabled>Historical</button>
+        <button class="container-column" onclick="changeActiveState(3)" disabled>Pollination Modelling Method</button>
       </div>
-      <p id="map-name-1">Average Micronutrient Pollination Dependance in 2050 - Sustainability</p>
+      <p id="map-name-1">Change map for SSP1</p>
       <div class="map1"></div>
       <hr class="map-diff-line">
       <p id="map-name-2">Current Average Micronutrient Pollination Dependance</p>
@@ -94,7 +94,7 @@
 
     <div class="box box-3" style="display:flex;">
       <h1 id="box-3-header">
-      <div> Water Quality Contribution to People (Food Energy) in 1945 </div>
+      <div> Coastal Risk Contribution to People in 1945 </div>
       <div class="nav-bar"> </div>
     </h1>
       <h1 id="box-3-header-2">
@@ -110,7 +110,7 @@
       </div>
       <div class="nav-bar-hidden" style="display:none;"> </div>
       <div class="box box-small">
-        <b> Water Quality Contribution vs Unmet Need (in %) over the years </b>
+        <b> Coastal Risk Contribution vs Unmet Need (in %) over the years </b>
         <div class="graph"> </div>
       </div>
       <div class="box box-small2">
@@ -128,7 +128,6 @@
 
     <div class="box box-3" style="display:none;">
       <h1 id="box-3-header">
-        <a href="#" class="metric-button">Choose metric to visualize</a>
     </h1>
       <h2 id="story"> Pollinators need good foraging resources, places that are rich in
       pollen and nectar. They need to nest and to eat in a natural,
@@ -143,21 +142,20 @@
       <h1 id="box-3-header">
     </h1>
     </div>
-
-    <script src="scripts/lineGraph.js"></script>
-    <script src="scripts/barGraph.js"></script>
-    <script src="scripts/data.js"></script>
-    <script src="scripts/popup.js"></script>
-    <script src="scripts/zoom.js"></script>
-    <script src="scripts/projection.js"></script>
-    <script src="scripts/projection_3d.js"></script>
-    <script src="scripts/projection_2d.js"></script>
-    <script src="scripts/legend.js"></script>
-    <script src="scripts/arcs.js"></script>
-    <script src="scripts/storytelling_helper.js"></script>
-    <script src="scripts/slider.js"></script>
-    <script src="scripts/viz_coastal_water.js"></script>
-    <script src="scripts/projection_global.js"></script>
+    <script src="js/lineGraph.js"></script>
+    <script src="js/barGraph.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/zoom.js"></script>
+    <script src="js/projection.js"></script>
+    <script src="js/projection_3d.js"></script>
+    <script src="js/projection_2d.js"></script>
+    <script src="js/legend.js"></script>
+    <script src="js/arcs.js"></script>
+    <script src="js/storytelling_helper.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/viz_coastal_water.js"></script>
+    <script src="js/projection_global.js"></script>
 </body>
 
 </html>
