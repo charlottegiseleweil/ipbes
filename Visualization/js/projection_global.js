@@ -29,7 +29,8 @@ function load_pollination() {
   if (checked2D == "true") {
     document.getElementsByClassName("box-container")[0].style.background = gradient_white;
     document.getElementsByClassName("box box-3")[1].style.display = "flex";
-  }
+  // projection2D();
+}
   document.getElementsByClassName("info-button")[0].style.display = "block";
   document.getElementsByClassName("back-button")[0].style.display = "block";
   document.getElementsByClassName("switch-proj")[0].style.display = "flex";
