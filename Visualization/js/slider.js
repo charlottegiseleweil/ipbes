@@ -13,10 +13,6 @@ let formatToData = function(d) {
   else if (d == 2000) return 1945;
   else if (d == 2050) return 1980;
   else if (d == 2100) return 2015;
-  else if (d == 2150) return 2050;
-  else if (d == 50) return "SSP1";
-  else if (d == 100) return "SSP3";
-  else return "SSP5";
 }
 
 
@@ -109,7 +105,7 @@ function createSlider() {
   let min_year, max_year, width, default_, tickvalues;
   if (checked2D == "false") {
     min_year = 1850;
-    max_year = 2150;
+    max_year = 2100;
     width = 400;
     default_ = "2000";
     tickvalues = years;
@@ -168,7 +164,7 @@ function createSlider() {
 // Update the data according to the projection (2D or 3D)
 function runSlider(period, if_ssp) {
   if (!if_ssp) {
-    title.innerHTML = "Pollination Contribution to Nutrition (" + current_viz + ") in " + period;
+    title.innerHTML = "Pollination Contribution to Nutrition (Historical) in " + period;
     contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       current_viz + " in " + period + "?";
     current_year = period;
@@ -178,7 +174,7 @@ function runSlider(period, if_ssp) {
   } else {
     if (checked3D == "true") showSSPs();
     if (checked2D == "true") change_period(period);
-    title.innerHTML = "Pollination Contribution to Nutrition (" + current_viz + ") in 2050 - " + current_SSP;
+    title.innerHTML = "Pollination Contribution to Nutrition (Historical) in 2050 - " + current_SSP;
     contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       current_viz + " in " + current_SSP + "?";
     change_pollination_contribution(current_SSP);

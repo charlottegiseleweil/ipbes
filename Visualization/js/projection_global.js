@@ -1,11 +1,7 @@
 let dataset_global = 'dataset/2d_poll_global.csv';
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
-let colorSchemeX1 = [245,205,155,105,55];
-let colorSchemeY1 = [245,205,155,105,55];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
-let colorSchemeX = ["#FFFFFF", "#C6F4BC", "#74DE4C"];
-let colorSchemeY = ["#FFFFFF", "#F4C8FF", "#C615F2"];
 let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
 let gradient_white = 'radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
 
@@ -37,7 +33,7 @@ function load_pollination() {
   document.getElementsByClassName("info-button")[0].style.display = "block";
   document.getElementsByClassName("back-button")[0].style.display = "block";
   document.getElementsByClassName("switch-proj")[0].style.display = "flex";
-  document.getElementsByClassName("parent-button-div")[0].style.display = "block";
+  // document.getElementsByClassName("parent-button-div")[0].style.display = "block";
   document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
   document.getElementsByClassName("box box-2")[0].style.display = "flex";
 }
@@ -55,7 +51,7 @@ function load_global() {
   document.getElementsByClassName("box box-3")[1].style.display = "none";
   document.getElementsByClassName("info-button")[0].style.display = "none";
   document.getElementsByClassName("switch-proj")[0].style.display = "none";
-  document.getElementsByClassName("parent-button-div")[0].style.display = "none";
+  // document.getElementsByClassName("parent-button-div")[0].style.display = "none";
   document.getElementsByClassName("box box-1")[0].style.visibility = "collapse";
   document.getElementsByClassName("box box-2")[0].style.display = "none";
   } else {
