@@ -92,7 +92,7 @@ function projection3D() {
     document.getElementById("map-name-1").style.display = "none";
 
     // Make the svg map2
-    svg.attr("transform", "translate(-425, 0)");
+    svg.attr("transform", "translate(-435, 10)");
     svg_map2.attr("width", 0).attr("height", 0);
 
     // change variables and remove the horizontal line
