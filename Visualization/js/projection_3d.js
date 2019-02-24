@@ -48,7 +48,6 @@ function projection3D() {
 
   svg_map2.call(zoom_2D.transform, d3.zoomIdentity);
   document.getElementsByClassName("map-slider")[0].style.display = "block";
-  document.getElementById("radios").style.display = "none";
 
   if (checked3D === 'true') {
     zoom_2D = null; // Set zoom 2D is null
@@ -84,7 +83,6 @@ function projection3D() {
 
     // Removing the name of the maps from 3D which were present in 2D
     document.getElementById("map-name-1").style.display = "none";
-    document.getElementById("map-name-2").style.display = "none";
 
     // Make the svg map2
     svg.attr("transform", "translate(0, 0)");
