@@ -59,6 +59,8 @@ function projection3D() {
     document.getElementsByClassName("overlay")[0].style.display = "none";
     document.getElementById("svg_map2").style.overflow = "";
     document.getElementById("container").style.display = "none";
+    document.getElementsByClassName('menu-box-1')[0].style.display = "none";
+
 
     changeProjection(false);
 

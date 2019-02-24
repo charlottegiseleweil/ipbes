@@ -4,6 +4,7 @@ function projection2D() {
   checked3D = document.getElementById("checked3D").value;
   if (checked2D === 'false') {
 
+  	document.getElementsByClassName('menu-box-1')[0].style.display = "inline-block";
     document.getElementsByClassName("map-slider")[0].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "block";
 
