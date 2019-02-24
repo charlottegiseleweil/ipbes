@@ -49,6 +49,7 @@ function projection3D() {
   document.getElementsByClassName("map-slider")[0].style.display = "block";
   if (checked3D === 'true') {
     document.getElementsByClassName('menu-box-1')[0].style.display = "inline-block";
+    document.getElementsByTagName('li')[0].style.background = "#9c9c9c";
     document.getElementsByTagName('li')[2].style.background = "black";
     zoom_2D = null; // Set zoom 2D is null
 

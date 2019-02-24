@@ -2,9 +2,9 @@
 // and also the initializations
 let firstTime = true;
 let dataset = 'dataset/country_en.csv';
-let dataset_2D = 'dataset/pixel_energy.csv';
+let dataset_2D = 'dataset/ncp_2d_cur.csv';
 let current_viz = "Food Energy";
-let change_dataset = 'dataset/change_en.csv';
+let change_dataset = 'dataset/ncp_2d_change.csv';
 let country_data_2D;
 
 // plot points on the map for 2D and 3D map
