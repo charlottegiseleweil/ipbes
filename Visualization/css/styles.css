@@ -1178,13 +1178,41 @@ input {
 	background: #74b7e4;
 }
 
-.menu-box-1 {
-  background-color: #cfc;
-  padding: 10px;
-  border: 1px solid green;
-  display: none;
-  position: absolute;
+/* This class is applied to the containing div <div class="nav"> and is used to set the background color and height of the navbar */
+.nav {
+  font-family: ourFont;
+  background-color:#9c9c9c;
+  height: 4vh; /* set same as height & line-height below */
   width: 100%;
+}
+
+/* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
+.nav li {
+  display: inline-block;
+  list-style: none;
+  height: 4vh; /* should be the same as line-height */
+  line-height: 4vh; /* should be the same as height */
+  padding: 0 4vw; /* "0" sets top and bottom padding to none */
+}
+
+/* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
+.nav li:hover {
+  background: black;
+  transition: background .2s;
+}
+
+/* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu-box-1 {
+  padding: 5vw 0vh;
+  display: none;
+  transform: translate(-2.4vw, -11vh);
+  position: absolute;
+  width: 110vw;
   z-index: 10000;
   /*float:left;*/
 }

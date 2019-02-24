@@ -119,7 +119,17 @@
   </div> -->
   <!-- End of popup window -->
   <div class="box-container" id='3rd_box'>
-    <div class="menu-box-1"></div>
+    <div class="menu-box-1">
+      <div class="nav">
+  <ul>
+    <li><a href="#" class="nav-link" onclick="projection2D()">FUTURE MAPS</a></li>
+    <li><a href="#" class="nav-link">IMPACT DISTRIBUTION</a></li>
+    <li><a href="#" class="nav-link" onclick="projection3D()">HISTORICAL</a></li>
+    <li><a href="#" class="nav-link">POLLINATION MODELING METHOD</a></li>
+    <li><a href="#" class="nav-link" onclick="showNow()">ABOUT</a></li>
+  </ul>
+</div>
+    </div>
     <div class="box box-1" style="visibility: collapse">
       <button class="back-button" style="display:none;" name="answer" value="info" onclick="load_global()"><i class="fa fa-arrow-left fa-2x"></i></button>
       <button class="info-button" style="display:none;" name="answer" value="info" onclick="showNow()"><i class="fa fa-info-circle fa-2x"></i></button>
@@ -156,10 +166,10 @@
 
     <div class="box box-2" style="display: none;">
       <div id="container">
-        <a href="#" class="future-button" onclick="future_button()">Future maps</a>
+        <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>
         <a href="#" class="impact-button" onclick="impact_button()">Impact distribution</a>
         <a href="#" class="historical-button" onclick="projection3D()">Historical</a>
-        <a href="#" class="modeling-button" onclick="modeling_button()">Pollination modeling method</a>
+        <a href="#" class="modeling-button" onclick="modeling_button()">Pollination modeling method</a> -->
       </div>
       <p id="map-name-1">Average Micronutrient Pollination Dependance in 2050 - Sustainability</p>
       <div class="map1"></div>

@@ -19,6 +19,7 @@ function initialize_2D_global(data_) {
 function load_pollination() {
   global_activated = false;
   zoom_2D_global = null;
+  document.getElementsByClassName("menu-box-1")[0].style.display = "inline-block";
   document.getElementsByClassName("box box-3-global")[0].style.display = "none";
   document.getElementsByClassName("box box-2-global")[0].style.display = "none"
   document.getElementsByClassName("box box-1-global")[0].style.display = "none";
@@ -31,9 +32,7 @@ function load_pollination() {
     document.getElementsByClassName("box box-3")[1].style.display = "flex";
   // projection2D();
 }
-  document.getElementsByClassName("info-button")[0].style.display = "block";
   document.getElementsByClassName("back-button")[0].style.display = "block";
-  document.getElementsByClassName("switch-proj")[0].style.display = "flex";
   // document.getElementsByClassName("parent-button-div")[0].style.display = "block";
   document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
   document.getElementsByClassName("box box-2")[0].style.display = "flex";
@@ -44,6 +43,7 @@ function load_global() {
   global_activated = true;
   zoom_2D_global = get_global_zoom();
   if (current_html == "index.html") {
+    document.getElementsByClassName("menu-box-1")[0].style.display = "none";
   document.getElementsByClassName("box-container")[0].style.background = gradient_white;
   document.getElementsByClassName("box box-3-global")[0].style.display = "flex";
   document.getElementsByClassName("box box-2-global")[0].style.display = "flex"

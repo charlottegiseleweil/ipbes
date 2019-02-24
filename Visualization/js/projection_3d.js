@@ -45,11 +45,11 @@ function update(eulerAngles) {
 function projection3D() {
   checked3D = document.getElementById("checked3D").value;
   checked2D = document.getElementById("checked2D").value;
-
   svg_map2.call(zoom_2D.transform, d3.zoomIdentity);
   document.getElementsByClassName("map-slider")[0].style.display = "block";
-
   if (checked3D === 'true') {
+    document.getElementsByClassName('menu-box-1')[0].style.display = "inline-block";
+    document.getElementsByTagName('li')[2].style.background = "black";
     zoom_2D = null; // Set zoom 2D is null
 
     // Remove the points and change the style depending upon the display
@@ -59,7 +59,6 @@ function projection3D() {
     document.getElementsByClassName("overlay")[0].style.display = "none";
     document.getElementById("svg_map2").style.overflow = "";
     document.getElementById("container").style.display = "none";
-    document.getElementsByClassName('menu-box-1')[0].style.display = "none";
 
 
     changeProjection(false);
