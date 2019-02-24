@@ -1117,7 +1117,7 @@ input {
 	font-family: ourFont;
 	font-size: 0.60em;
 	font-weight: bold;
-	transform: translate(6vw, -10vh);
+	transform: translate(6vw, -8.5vh);
 }
 
 .site-navigation ul {
@@ -1208,9 +1208,9 @@ input {
 }
 
 .menu-box-1 {
-  padding: 5vw 0vh;
+  padding: 1vw 0vh;
   display: none;
-  transform: translate(-2.4vw, -11vh);
+  transform: translate(-2.4vw, -3.5vh);
   position: absolute;
   width: 110vw;
   z-index: 10000;
