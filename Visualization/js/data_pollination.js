@@ -56,36 +56,35 @@ function showData(the_g, coordinates) {
 // and changes the storytelling
 function updateData(data_type) {
   switch (data_type) {
-    case "Vitamin":
-      current_viz = "Vitamin A";
-      region_text = "Pollination Contribution to Vitamin A";
-      title.innerHTML = "Pollination Contribution to Nutrition (Vitamin A) in " + current_year;
-      contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-        current_viz + " in " + current_year + "?";
-      colorScheme = d3.schemeGreens[6];
-      colorSchemeDisplay = d3.schemeGreens[9];
-      dataset = 'dataset/country_va.csv';
-      dataset_graph = 'dataset/plot_vitamin.csv';
-      dataset_2D = 'dataset/pixel_vitamin.csv';
-      change_dataset = 'dataset/change_va.csv';
-      color_graph = colorScale_vitamin;
-      lineGraphObject.updateGraph(previousCountryClicked);
+    case "Population":
+      region_text = "Crop Population Dependence";
+      // title.innerHTML = "Pollination Contribution to Nutrition (Vitamin A) in " + current_year;
+      // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
+      //   current_viz + " in " + current_year + "?";
+      // colorScheme = d3.schemeGreens[6];
+      // colorSchemeDisplay = d3.schemeGreens[9];
+      // dataset = 'dataset/country_va.csv';
+      // dataset_graph = 'dataset/plot_vitamin.csv';
+      dataset_2D = 'dataset/pop_2d_cur.csv';
+      change_dataset = 'dataset/pop_2d_change.csv';
+      // color_graph = colorScale_vitamin;
+      // lineGraphObject.updateGraph(previousCountryClicked);
 
       break;
-    case "Energy":
-      current_viz = "Food Energy";
-      region_text = "Pollination Contribution to Food Energy";
-      title.innerHTML = "Pollination Contribution to Nutrition (Food Energy) in " + current_year;
-      contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-        current_viz + " in " + current_year + "?";
-      colorScheme = d3.schemeReds[6];
-      colorSchemeDisplay = d3.schemeReds[9];
-      dataset = 'dataset/country_en.csv';
-      dataset_graph = 'dataset/plot_energy.csv';
-      dataset_2D = 'dataset/pixel_energy.csv';
-      color_graph = colorScale_energy;
-      change_dataset = 'dataset/change_en.csv';
-      lineGraphObject.updateGraph(previousCountryClicked);
+    case "NCP":
+      // current_viz = "Food Energy";
+      region_text = "Average Micronutrient Pollination Dependance";
+      // title.innerHTML = "Pollination Contribution to Nutrition (Food Energy) in " + current_year;
+      // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
+      //   current_viz + " in " + current_year + "?";
+      // colorScheme = d3.schemeReds[6];
+      // colorSchemeDisplay = d3.schemeReds[9];
+      // dataset = 'dataset/country_en.csv';
+      // dataset_graph = 'dataset/plot_energy.csv';
+      dataset_2D = 'dataset/ncp_2d_cur.csv';
+      // color_graph = colorScale_energy;
+      change_dataset = 'dataset/ncp_2d_change.csv';
+      // lineGraphObject.updateGraph(previousCountryClicked);
       break;
     case "Folate":
       current_viz = "Folate";
@@ -112,7 +111,7 @@ colorScaleDisplay = d3.scaleThreshold()
   .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
   .range(colorSchemeDisplay);
 
-  updateLegend(colorScale);
+  //updateLegend(colorScale);
   let promise = new Promise(function(resolve, reject) {
     loadGlobalData(dataset);
     data_2D = load(dataset_2D);

@@ -4,7 +4,7 @@ let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
 let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
 let gradient_white = 'radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
-
+let counter = 0;
 var zoom_2D_global = get_global_zoom();
 
 function initialize_2D_global(data_) {
@@ -23,15 +23,17 @@ function load_pollination() {
   document.getElementsByClassName("box box-3-global")[0].style.display = "none";
   document.getElementsByClassName("box box-2-global")[0].style.display = "none"
   document.getElementsByClassName("box box-1-global")[0].style.display = "none";
-  if (checked3D == "true") {
+  if (checked3D == "true" && counter != 0) {
     document.getElementsByClassName("box-container")[0].style.background = gradient_blue;
     document.getElementsByClassName("box box-3")[0].style.display = "flex";
   }
-  if (checked2D == "true") {
+  // The first switch should be directly to 2D, after that we keep track of where we were
+  if (checked2D == "true" || counter == 0) {
+    counter++;
     document.getElementsByClassName("box-container")[0].style.background = gradient_white;
     document.getElementsByClassName("box box-3")[1].style.display = "flex";
-  // projection2D();
-}
+    projection2D();
+  }
   document.getElementsByClassName("back-button")[0].style.display = "block";
   document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
   document.getElementsByClassName("box box-2")[0].style.display = "flex";

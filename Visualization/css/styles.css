@@ -1192,7 +1192,7 @@ input {
   list-style: none;
   height: 4vh; /* should be the same as line-height */
   line-height: 4vh; /* should be the same as height */
-  padding: 0 6vw; /* "0" sets top and bottom padding to none */
+  padding: 0 5.5vw; /* "0" sets top and bottom padding to none */
 }
 
 /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
@@ -1212,7 +1212,7 @@ input {
   display: none;
   transform: translate(-2.4vw, -3.5vh);
   position: absolute;
-  width: 110vw;
+  width: 102.4vw;
   z-index: 10000;
   /*float:left;*/
 }

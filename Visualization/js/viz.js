@@ -1,7 +1,7 @@
 document.getElementById("checked3D").disabled = true;
 document.getElementById("checked2D").disabled = false;
 
-let region_text = "Pollination Contribution to Food Energy";
+let region_text = "Average Micronutrient Pollination Dependance";
 
 // We instantiate the bar chart object for the 2D section
 let BarGraphObject = new BarGraph();
