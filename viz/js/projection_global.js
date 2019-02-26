@@ -36,7 +36,7 @@ function load_pollination() {
   // }
   // document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
   // document.getElementsByClassName("box box-2")[0].style.display = "flex";
-  location.href='viz/pollination.html';
+  location.href='viz/Pollination.html';
 }
 
 
