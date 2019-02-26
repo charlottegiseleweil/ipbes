@@ -98,8 +98,8 @@ function updateLegendPosition(twoLegends) {
     makeLegendInitializations(true);
     makeLegend(colorScale);
     makeChangeLegend(changeColorScale);
-    svg_legend.attr("style", "position:absolute; top:80vh; left:13vh");
-    svg_change_legend.attr("style", "position:absolute; top:35vh; left:15vh");
+    svg_change_legend.attr("style", "position:absolute; top:67vh; left:6vh");
+    svg_legend.attr("style", "position:absolute; top:35vh; left:6vh");
   } else {
     $('.box-1 svg').remove();
     $('.box-2 .legend_one').remove();
