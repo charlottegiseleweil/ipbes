@@ -51,10 +51,10 @@ function projection3D() {
   document.getElementsByClassName("map-slider")[0].style.display = "block";
   if (checked3D === 'true') {
     document.getElementsByClassName('menu-box-1')[0].style.display = "inline-block";
-    document.getElementsByTagName('li')[1].style.backgroundColor = "#c0c0c0";
-    document.getElementsByTagName('li')[2].style.background = "#c0c0c0";
-    document.getElementsByTagName('li')[3].style.backgroundColor = "black";
-    document.getElementsByTagName('li')[4].style.backgroundColor = "#c0c0c0";
+    document.getElementsByTagName('li')[1].style.backgroundColor = "black";
+    document.getElementsByTagName('li')[2].style.background = "black";
+    document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
+    document.getElementsByTagName('li')[4].style.backgroundColor = "black";
     zoom_2D = null; // Set zoom 2D is null
 
     // Remove the points and change the style depending upon the display

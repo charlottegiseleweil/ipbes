@@ -95,12 +95,7 @@ let colorScale_folate = d3.scaleOrdinal()
 let color_graph = colorScale_energy;
 
 function load_file(){
-  let promise_file = new Promise(function(resolve, reject) {
-    setTimeout(() => resolve(1), 0.01);
-  });
-  promise_file.then(() => {
-    projection2D();
-  });
+  document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
 }
 
 $(document).ready(function(){
