@@ -1180,7 +1180,7 @@ input {
   font-family: ourFont;
   background-color:#c0c0c0;
   height: 4vh; /* set same as height & line-height below */
-  width: 100%;
+  width: 102.4vw;
 }
 
 /* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */

@@ -97,17 +97,12 @@ let color_graph = colorScale_energy;
 
 // We define the function
 function load_file(){
-  let promise_file = new Promise(function(resolve, reject) {
-    setTimeout(() => resolve(1), 0.1);
-  });
-  promise_file.then(() => {
-    projection2D();
-  });
+  document.getElementsByTagName('li')[3].style.backgroundColor = "black";
 }
 
-// $(document).ready(function(){
-//   load_file();
-// });
+$(document).ready(function(){
+  load_file();
+});
 
 function load_global() {
   location.href='../index.html';
