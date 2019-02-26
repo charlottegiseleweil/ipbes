@@ -5,27 +5,27 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  <link rel="stylesheet" type="text/css" href="viz/css/styles.css" />
   <link href="https://goo.gl/mTc43h" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
-  <script src="libraries/jquery.min.js"></script>
+  <script src="viz/libraries/jquery.min.js"></script>
 
-  <script src="libraries/d3.js"></script>
-  <script src="libraries/topojson.v1.min.js"></script>
-  <script src="libraries/versor.min.js"></script>
-  <script src="libraries/d3-inertia.min.js"></script>
-  <script src="libraries/d3-simple-slider.js"></script>
+  <script src="viz/libraries/d3.js"></script>
+  <script src="viz/libraries/topojson.v1.min.js"></script>
+  <script src="viz/libraries/versor.min.js"></script>
+  <script src="viz/libraries/d3-inertia.min.js"></script>
+  <script src="viz/libraries/d3-simple-slider.js"></script>
 
-  <script src="libraries/d3-scale-chromatic.v1.min.js"></script>
-  <script src="libraries/d3-geo-projection.v2.min.js"></script>
-  <script src="libraries/d3-legend.js"></script>
-  <script src="libraries/d3-tip.js"></script>
+  <script src="viz/libraries/d3-scale-chromatic.v1.min.js"></script>
+  <script src="viz/libraries/d3-geo-projection.v2.min.js"></script>
+  <script src="viz/libraries/d3-legend.js"></script>
+  <script src="viz/libraries/d3-tip.js"></script>
 
-  <script src="libraries/noframework.waypoints.min.js"></script>
+  <script src="viz/libraries/noframework.waypoints.min.js"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -118,10 +118,21 @@
     </div>
   </div> -->
   <!-- End of popup window -->
-
   <div class="box-container" id='3rd_box'>
+    <!-- <div class="menu-box-1">
+    <div class="nav">
+  <ul>
+    <li><a href="#" class="nav-link" onclick="load_global()"> &larr; BACK TO ALL</a></li>
+    <li><a href="#" class="nav-link" onclick="projection2D()">NCP 2015 & 2050</a></li>
+    <li><a href="#" class="nav-link">PEOPLE IMPACTED</a></li>
+    <li><a href="#" class="nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a></li>
+    <li><a href="#" class="nav-link">MODELING METHOD</a></li>
+    <li><a href="#" class="nav-link" onclick="showNow()">ABOUT</a></li>
+    <li><a href="#" class="nav-link" onclick="showNow()">HOW TO USE</a></li>
+  </ul>
+</div>
+    </div> -->
     <div class="box box-1" style="visibility: collapse">
-      <button class="back-button" style="display:none;" name="answer" value="info" onclick="load_global()"><i class="fa fa-arrow-left fa-2x"></i></button>
       <button class="info-button" style="display:none;" name="answer" value="info" onclick="showNow()"><i class="fa fa-info-circle fa-2x"></i></button>
       <div class="switch-proj" id="projectionChangeChecked" style="display:none;">
         <button class="globe-button" onclick="projection3D()" value="true" id="checked3D"><i class="fa fa-globe fa-2x"></i></button>
@@ -131,7 +142,7 @@
     </div>
     <div class="box box-1-global" style="display:flex">
       <p class="title2DLegend"> Pollination Key Areas <p>
-      <img src="images/legend.png" class="img-legend"> </img>
+      <img src="viz/images/legend.png" class="img-legend"> </img>
       <p class="label2DLegendX">Nature's Contributions </p>
       <span>&#8594;</span>
       <p class="label2DLegendY">Demand </p>
@@ -148,8 +159,6 @@
       <div id="container-2D" style="position:absolute;margin-top:6%">
         <a href="#" class="nature-help-button" onclick="activate_nature_button()">Where nature helps us most today?</a>
         <a href="#" class="risk-button" onclick="activate_risk_button()">Where are people at risk in the future?</a>
-        <!-- <button class="container-column-2D active-btn" onclick="changeActiveState(0)">Where nature helps us the most today?</button>
-        <button class="container-column-2D" onclick="changeActiveState(1)" disabled>Where people are at more risk in the future?</button> -->
       </div>
       </div>
       <br>
@@ -158,13 +167,17 @@
 
     <div class="box box-2" style="display: none;">
       <div id="container">
-        <a href="#" class="future-button" onclick="future_button()">Future maps</a>
+        <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>
         <a href="#" class="impact-button" onclick="impact_button()">Impact distribution</a>
         <a href="#" class="historical-button" onclick="projection3D()">Historical</a>
-        <a href="#" class="modeling-button" onclick="modeling_button()">Pollination modeling method</a>
+        <a href="#" class="modeling-button" onclick="modeling_button()">Pollination modeling method</a> -->
       </div>
+      <p id="map-name-1">Average Micronutrient Pollination Dependance</p>
+      <div class="map1"></div>
+      <hr class="map-diff-line">
       <div class="map2">
         <div class="overlay">
+
           <div id="options-radios">
             <label>
               <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked />
@@ -182,9 +195,6 @@
 
         </div>
       </div>
-      <hr class="map-diff-line">
-      <p id="map-name-1">Average Micronutrient Pollination Dependance in 2050 - Sustainability</p>
-      <div class="map1"></div>
       <div class="map-slider"></div>
     </div>
 
@@ -200,7 +210,8 @@
         <label for="pollination-box">Pollination</label>
       </div>
     <h2 id="box-3-global-text">
-      Wild pollination of crops is critical to ensure people a healthy nutritious diet to humans. Habitat quality is important for insect pollinators, such as bees, pollen wasps, ants, flies or butterflies to thrive.
+      Pollination is the act of transferring pollen grains from the male anther of a flower to the female stigma.
+      The goal of every living organism, including plants, is to create offspring for the next generation.
    <p id="box-3-global-text-link"> --> <a onClick="load_pollination();">To Pollination Modeling</a></p>
 
 
@@ -214,8 +225,9 @@
     <label for="water-quality-box">Water Quality Regulation</label>
   </div>
   <h2 id="box-3-global-text">
-    When fertilizers are applied, some of it will percolate and transport to the stream, polluting the water and altering drinking water quality. However, some of it may be retained by healthy soil, this is an NCP (here, specifically: Nitrogen Retention)
-    <p id="box-3-global-text-link"> --> <a onClick="location.href='WaterQuality.html';return false;">To Water Quality Regulation Modeling</a></p>
+    Pollination is the act of transferring pollen grains from the male anther of a flower to the female stigma.
+    The goal of every living organism, including plants, is to create offspring for the next generation.
+    <p id="box-3-global-text-link"> --> <a onClick="location.href='viz/WaterQuality.html';return false;">To Water Quality Regulation Modeling</a></p>
 </h2>
   <div class="nav-bar-white"> </div>
 </h1>
@@ -226,8 +238,9 @@
   <label for="coastal-risk-box">Coastal Risk Mitigation</label>
 </div>
 <h2 id="box-3-global-text">
-  Coastal habitats such as coral reefs, mangroves or sea grass protect the shorelines from the impacts of storms, such as floods and erosion. 
-  <p id="box-3-global-text-link"> --> <a onClick="location.href='CoastalRisk.html';return false;">To Coastal Risk Mitigation Modeling</a></p>
+  Pollination is the act of transferring pollen grains from the male anther of a flower to the female stigma.
+  The goal of every living organism, including plants, is to create offspring for the next generation.
+  <p id="box-3-global-text-link"> --> <a onClick="location.href='viz/CoastalRisk.html';return false;">To Coastal Risk Mitigation Modeling</a></p>
 </h2>
 </h1>
     </div>
@@ -235,7 +248,7 @@
 
     <div class="box box-3" style="display:none;">
       <h1 id="box-3-header">
-      <div> Pollination Contribution to People (Food Energy) in 1945 </div>
+      <div> Pollination Contribution to Nutrition (Historical) in 1945 </div>
       <div class="nav-bar"> </div>
     </h1>
       <h1 id="box-3-header-2">
@@ -273,9 +286,9 @@
  <ul class="menu">
    <li class="menu-item"><a href="#">Choose metric to visualize</a>
      <ul class="dropdown">
-       <li class="menu-item sub-menu"><a href="#">Pollination-Dependent Population</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('Population')"><a href="#">Pollination-Dependent Population</a></li>
        <li class="menu-item sub-menu"><a href="#">Crop Population Dependence</a></li>
-       <li class="menu-item sub-menu"><a href="#">Percent Pollination Need Met</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('NCP')"><a href="#">Percent Pollination Need Met</a></li>
        <li class="menu-item sub-menu"><a href="#">Lost Crop Production</a></li>
      </ul>
    </li>
@@ -285,7 +298,7 @@
       <h2 id="story"> Pollinators need good foraging resources, places that are rich in
       pollen and nectar. They need to nest and to eat in a natural,
       non-toxic environment.  </h2>
-      <img src="images/bee.jpg" class="img-story"> </img>
+      <img src="viz/images/bee.jpg" class="img-story"> </img>
       <h2 id="story"> However, the absence of an appropriate habitat
     for bees could lead to a continuous decline in pollination, affecting millions of people. </h2>
       <h2 id="bar_title"> People in millions impacted in 2050 </h2>
@@ -297,10 +310,10 @@
     </div>
 
     <!-- Add buttons for folate, vitamin, energy  -->
-    <div class="parent-button-div" style="display:none;">
+    <!-- <div class="parent-button-div" style="display:none;">
       <div class="folate-button">
-        <!-- Making the div as a function -->
-        <a class="data-link" href="javascript:void(0)" onclick="updateData('Folate')"><h1 class="button-title">Folate</h1></a>
+        <! Making the div as a function -->
+        <!-- <a class="data-link" href="javascript:void(0)" onclick="updateData('Folate')"><h1 class="button-title">Folate</h1></a>
       </div>
       <div class="vitamin-button">
         <a class="data-link" href='javascript:void(0)' onclick="updateData('Vitamin')"><h1 class="button-title">Vitamin</h1></a>
@@ -309,22 +322,20 @@
         <a class="data-link" href='javascript:void(0)' onclick="updateData('Energy')"><h1 class="button-title">Energy</h1></a>
       </div>
 
-    </div>
-    <script src="js/statFunctions.js"></script>
-    <script src="js/lineGraph.js"></script>
-    <script src="js/barGraph.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/popup.js"></script>
-    <script src="js/zoom.js"></script>
-    <script src="js/projection.js"></script>
-    <script src="js/projection_3d.js"></script>
-    <script src="js/projection_2d.js"></script>
-    <script src="js/legend.js"></script>
-    <script src="js/arcs.js"></script>
-    <script src="js/storytelling_helper.js"></script>
-    <script src="js/projection_global.js"></script>
-    <script src="js/slider.js"></script>
-    <script src="js/viz.js"></script>
+    </div> -->
+    <script src="viz/js/lineGraph.js"></script>
+    <script src="viz/js/barGraph.js"></script>
+    <script src="viz/js/data_pollination.js"></script>
+    <script src="viz/js/popup.js"></script>
+    <script src="viz/js/zoom.js"></script>
+    <script src="viz/js/projection.js"></script>
+    <script src="viz/js/projection_3d.js"></script>
+    <script src="viz/js/projection_2d.js"></script>
+    <script src="viz/js/legend.js"></script>
+    <script src="viz/js/arcs.js"></script>
+    <script src="viz/js/storytelling_helper.js"></script>
+    <script src="viz/js/projection_global.js"></script>
+    <script src="viz/js/slider.js"></script>
 </body>
 
 </html>

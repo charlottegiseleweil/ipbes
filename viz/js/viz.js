@@ -1,7 +1,7 @@
 document.getElementById("checked3D").disabled = true;
 document.getElementById("checked2D").disabled = false;
 
-let region_text = "Pollination Contribution to Food Energy";
+let region_text = "Average Micronutrient Pollination Dependance";
 
 // We instantiate the bar chart object for the 2D section
 let BarGraphObject = new BarGraph();
@@ -13,8 +13,8 @@ lineGraphObject.updateGraph('WLD');
 let checked3D = "true";
 let checked2D = "false";
 
-let width = $(".box.box-2-global").width(),
-  height = $(".box.box-2-global").height(),
+let width = $(".box.box-2").width(),
+  height = $(".box.box-2").height(),
   active = d3.select(null);
 
 let previousCountryClicked = 'WLD';
@@ -55,7 +55,7 @@ let tip = d3.tip()
   .offset([50, 80])
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
-    return "<strong>" + region_text + ": <span>" + d[2] + "</span></strong>" + "%";
+    return "<strong>" + region_text + ": <span>" + Number(d[2]).toFixed(2) + "</span></strong>" + "%";
   })
 // Adding tip to the svg
 svg.call(tip);
@@ -93,3 +93,17 @@ let colorScale_folate = d3.scaleOrdinal()
 
 // set the colour scale
 let color_graph = colorScale_energy;
+
+// We define the function
+function load_file(){
+  let promise_file = new Promise(function(resolve, reject) {
+    setTimeout(() => resolve(1), 0.1);
+  });
+  promise_file.then(() => {
+    projection2D();
+  });
+}
+
+$(document).ready(function(){
+  load_file();
+});

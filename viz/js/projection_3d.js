@@ -45,20 +45,29 @@ function update(eulerAngles) {
 function projection3D() {
   checked3D = document.getElementById("checked3D").value;
   checked2D = document.getElementById("checked2D").value;
-
+  document.getElementsByClassName("year-text-2015")[0].style.display = "none";
+  document.getElementsByClassName("year-text-2050")[0].style.display = "none";
   svg_map2.call(zoom_2D.transform, d3.zoomIdentity);
   document.getElementsByClassName("map-slider")[0].style.display = "block";
-
   if (checked3D === 'true') {
+    document.getElementsByClassName('menu-box-1')[0].style.display = "inline-block";
+    document.getElementsByTagName('li')[1].style.backgroundColor = "#c0c0c0";
+    document.getElementsByTagName('li')[2].style.background = "#c0c0c0";
+    document.getElementsByTagName('li')[3].style.backgroundColor = "black";
+    document.getElementsByTagName('li')[4].style.backgroundColor = "#c0c0c0";
     zoom_2D = null; // Set zoom 2D is null
 
     // Remove the points and change the style depending upon the display
     svg.selectAll('.plot-point').remove();
+    document.getElementsByClassName('box box-1')[0].style.display = "flex";
+    document.getElementsByClassName('box box-2')[0].style.width = "62%";
+
     document.getElementsByClassName('box box-3')[0].style.display = "flex";
     document.getElementsByClassName('box box-3')[1].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "none";
     document.getElementById("svg_map2").style.overflow = "";
     document.getElementById("container").style.display = "none";
+
 
     changeProjection(false);
 
@@ -85,7 +94,7 @@ function projection3D() {
     document.getElementById("map-name-1").style.display = "none";
 
     // Make the svg map2
-    svg.attr("transform", "translate(0, 0)");
+    svg.attr("transform", "translate(-435, 10)");
     svg_map2.attr("width", 0).attr("height", 0);
 
     // change variables and remove the horizontal line

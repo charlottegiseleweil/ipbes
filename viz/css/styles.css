@@ -621,7 +621,7 @@ img {
 .labelGraphY {
   transform: rotate(-90deg);
   margin-top: -16.3vh;
-  margin-left: -26vw;
+  margin-left: -26.5vw;
 }
 
 #box-3-global-header {
@@ -1117,7 +1117,7 @@ input {
 	font-family: ourFont;
 	font-size: 0.60em;
 	font-weight: bold;
-	transform: translate(6vw, -10vh);
+	transform: translate(6vw, -8.5vh);
 }
 
 .site-navigation ul {
@@ -1176,4 +1176,56 @@ input {
 
 .site-navigation ul li ul li:hover {
 	background: #74b7e4;
+}
+
+/* This class is applied to the containing div <div class="nav"> and is used to set the background color and height of the navbar */
+.nav {
+  font-family: ourFont;
+  background-color:#c0c0c0;
+  height: 4vh; /* set same as height & line-height below */
+  width: 100%;
+}
+
+/* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
+.nav li {
+  display: inline-block;
+  list-style: none;
+  height: 4vh; /* should be the same as line-height */
+  line-height: 4vh; /* should be the same as height */
+  padding: 0 3.2vw; /* "0" sets top and bottom padding to none */
+}
+
+/* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
+.nav li:hover {
+  /* background: black; */
+  transition: background .2s;
+}
+
+/* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu-box-1 {
+  padding: 1vw 0vh;
+  transform: translate(-2.4vw, -3.5vh);
+  position: absolute;
+  width: 102.4vw;
+  z-index: 10000;
+  /*float:left;*/
+}
+
+.year-text-2015 {
+  font-family: ourFont;
+  position: absolute;
+  font-size: 1.7em;
+  transform: translate(2vw, -38vh);
+}
+
+.year-text-2050 {
+  font-family: ourFont;
+  position: absolute;
+  font-size: 1.7em;
+  transform: translate(2vw, 15vh);
 }

@@ -13,7 +13,7 @@ let formatToYears = function(d) {
 }
 
 // We start with the food energy data
-let dataset_graph = "dataset/plot_energy.csv";
+let dataset_graph = "../Data/plot_energy.csv";
 
 // Set the dimensions of the canvas / graph
 let margin = {

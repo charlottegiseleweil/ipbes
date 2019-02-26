@@ -1,67 +1,63 @@
-let dataset_global = 'dataset/2d_poll_global.csv';
+let dataset_global = 'Data/2d_poll_global.csv';
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
-let colorSchemeX1 = [245, 205, 155, 105, 55];
-let colorSchemeY1 = [245, 205, 155, 105, 55];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
-let colorSchemeX = ["#FFFFFF", "#C6F4BC", "#74DE4C"];
-let colorSchemeY = ["#FFFFFF", "#F4C8FF", "#C615F2"];
 let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
 let gradient_white = 'radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
-
+let counter = 0;
 var zoom_2D_global = get_global_zoom();
 
 function initialize_2D_global(data_) {
   let coordstoplot = [];
   for (let key in data_) {
-    coordstoplot.push([data_[key]['long'], data_[key]['lat'], data_[key]['UN_cur'], data_[key]['NCP_cur'], data_[key]['population']]);
+    coordstoplot.push([data_[key]['long'], data_[key]['lat'], data_[key]['UN_cur_perc'],data_[key]['NCP_cur']]);
   }
   return coordstoplot;
 }
 
 // Function to load the pollination visualization
 function load_pollination() {
-  global_activated = false;
-  zoom_2D_global = null;
-  document.getElementsByClassName("box box-3-global")[0].style.display = "none";
-  document.getElementsByClassName("box box-2-global")[0].style.display = "none"
-  document.getElementsByClassName("box box-1-global")[0].style.display = "none";
-  if (checked3D == "true") {
-    document.getElementsByClassName("box-container")[0].style.background = gradient_blue;
-    document.getElementsByClassName("box box-3")[0].style.display = "flex";
-  }
-  if (checked2D == "true") {
-    document.getElementsByClassName("box-container")[0].style.background = gradient_white;
-    document.getElementsByClassName("box box-3")[1].style.display = "flex";
-  }
-  document.getElementsByClassName("info-button")[0].style.display = "block";
-  document.getElementsByClassName("back-button")[0].style.display = "block";
-  document.getElementsByClassName("switch-proj")[0].style.display = "flex";
-  document.getElementsByClassName("parent-button-div")[0].style.display = "block";
-  document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
-  document.getElementsByClassName("box box-2")[0].style.display = "flex";
+  // global_activated = false;
+  // zoom_2D_global = null;
+  // document.getElementsByClassName("menu-box-1")[0].style.display = "inline-block";
+  // document.getElementsByClassName("box box-3-global")[0].style.display = "none";
+  // document.getElementsByClassName("box box-2-global")[0].style.display = "none"
+  // document.getElementsByClassName("box box-1-global")[0].style.display = "none";
+  // if (checked3D == "true" && counter != 0) {
+  //   document.getElementsByClassName("box-container")[0].style.background = gradient_blue;
+  //   document.getElementsByClassName("box box-3")[0].style.display = "flex";
+  // }
+  // // The first switch should be directly to 2D, after that we keep track of where we were
+  // if (checked2D == "true" || counter == 0) {
+  //   counter++;
+  //   document.getElementsByClassName("box-container")[0].style.background = gradient_white;
+  //   document.getElementsByClassName("box box-3")[1].style.display = "flex";
+  //   projection2D();
+  // }
+  // document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
+  // document.getElementsByClassName("box box-2")[0].style.display = "flex";
+  location.href='viz/Pollination.html';
 }
 
 // Function for the back button in pollination
 function load_global() {
-  global_activated = true;
-  zoom_2D_global = get_global_zoom();
-  if (current_html == "index.html") {
-    document.getElementsByClassName("box-container")[0].style.background = gradient_white;
-    document.getElementsByClassName("box box-3-global")[0].style.display = "flex";
-    document.getElementsByClassName("box box-2-global")[0].style.display = "flex"
-    document.getElementsByClassName("box box-1-global")[0].style.display = "flex";
-    document.getElementsByClassName("box box-3")[0].style.display = "none";
-    document.getElementsByClassName("box box-3")[1].style.display = "none";
-    document.getElementsByClassName("info-button")[0].style.display = "none";
-    document.getElementsByClassName("switch-proj")[0].style.display = "none";
-    document.getElementsByClassName("parent-button-div")[0].style.display = "none";
-    document.getElementsByClassName("box box-1")[0].style.visibility = "collapse";
-    document.getElementsByClassName("box box-2")[0].style.display = "none";
-  } else {
-    location.href = 'index.html';
-    return false;
-  }
+  // global_activated = true;
+  // zoom_2D_global = get_global_zoom();
+  // if (current_html == "index.html") {
+  //   document.getElementsByClassName("menu-box-1")[0].style.display = "none";
+  // document.getElementsByClassName("box-container")[0].style.background = gradient_white;
+  // document.getElementsByClassName("box box-3-global")[0].style.display = "flex";
+  // document.getElementsByClassName("box box-2-global")[0].style.display = "flex"
+  // document.getElementsByClassName("box box-1-global")[0].style.display = "flex";
+  // document.getElementsByClassName("box box-3")[0].style.display = "none";
+  // document.getElementsByClassName("box box-3")[1].style.display = "none";
+  // document.getElementsByClassName("box box-1")[0].style.visibility = "collapse";
+  // document.getElementsByClassName("box box-2")[0].style.display = "none";
+  // } else {
+  //   location.href='index.html';
+  //   return false;
+  // }
+  location.href='../index.html';
 }
 
 if (global_activated == true) {
@@ -98,29 +94,29 @@ let coastal_box = document.getElementById("coastal-risk-box");
 function load_pollination_data() {
   if (pollination_box.checked == true) {
     if (water_box.checked == false && coastal_box.checked == false) {
-      legendTitle.innerHTML = "Pollination Key Areas"
-    } else {
-      legendTitle.innerHTML = "Hotspots";
-    }
+    legendTitle.innerHTML = "Pollination Key Areas"
   } else {
+    legendTitle.innerHTML = "Hotspots";
+  }
+} else {
     if (water_box.checked == true) {
       load_waterquality_data();
     }
-  }
+}
 }
 
 function load_waterquality_data() {
   if (water_box.checked == true) {
     if (pollination_box.checked == false && coastal_box.checked == false) {
-      legendTitle.innerHTML = "WQ Key Areas";
-    } else {
-      legendTitle.innerHTML = "Hotspots";
-    }
-
-
+    legendTitle.innerHTML = "WQ Key Areas";
   } else {
-    if (pollination_box.checked == true) {
-      load_pollination_data();
+    legendTitle.innerHTML = "Hotspots";
+  }
+
+
+} else {
+  if (pollination_box.checked == true) {
+    load_pollination_data();
     }
   }
 }
@@ -128,16 +124,16 @@ function load_waterquality_data() {
 function load_coastalrisk_data() {
   if (coastal_box.checked == true) {
     if (pollination_box.checked == false && water_box.checked == false) {
-      legendTitle.innerHTML = "CR Key Areas";
-    } else {
-      legendTitle.innerHTML = "Hotspots";
-    }
+    legendTitle.innerHTML = "CR Key Areas";
+  } else {
+    legendTitle.innerHTML = "Hotspots";
+  }
   }
 }
 
 // Load pollination data 2D
 function ready_global(g, path) {
-  d3.json("world/countries.json", function(error, data) {
+  d3.json("viz/world/countries.json", function(error, data) {
     if (error) throw error;
 
     let features = topojson.feature(data, data.objects.units).features;
@@ -173,63 +169,34 @@ let promise_global = new Promise(function(resolve, reject) {
 });
 promise_global.then(() => {
   let coordstoplot_global = initialize_2D_global(data_2D_global);
-  array_UN_cur = [];
-  array_NCP_cur = [];
-  array_pop_cur = [];
-  for (i = 0; i < coordstoplot_global.length; i++) {
-    array_UN_cur[i] = Number(coordstoplot_global[i][2]);
-    array_NCP_cur[i] = Number(coordstoplot_global[i][3]);
-    array_pop_cur[i] = Number(coordstoplot_global[i][4]);
-  }
-  showDataGlobal(g_global, coordstoplot_global, Quartile_50(array_UN_cur),
-    Quartile_50(array_pop_cur), Quartile_33(array_NCP_cur), Quartile_66(array_NCP_cur));
+  showDataGlobal(g_global, coordstoplot_global);
 });
 
-function getColor(UN_value, pop_value, NCP_value, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
-  let colors = [
-    ["rgb(232,232,244)", "rgb(211,244,215)", "rgb(89,202,93)"],
-    ["rgb(248,226,252)", "rgb(137,143,143)", "rgb(33,112,55)"],
-    ["rgb(249,95,250)", "rgb(174,38,168)", "rgb(33,38,38)"]
-  ];
-  var un = 0;
-  var pop = 0;
-  var ncp = 0;
-  if (UN_value > UN_mid_q) {
-    un = 1;
-  }
-  if (pop_value > pop_mid_q) {
-    pop = 1;
-  }
-  if (NCP_value > NCP_third_q && NCP_value < NCP_2_third_q) {
-    ncp = 1;
-  } else if (NCP_value >= NCP_2_third_q) {
-    ncp = 2;
-  }
-
-  return colors[un + pop][ncp];
-}
-
 // plot points on the map for 2D global map
-function showDataGlobal(the_g, coordinates, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
-  // This is just for 2D, we are creating a raster by creating a rectangle
-  the_g.selectAll(".plot-point")
-    .data(coordinates).enter()
-    .append("rect")
-    .classed('plot-point', true)
-    .attr("x", function(d) {
-      return projection_global(d)[0];
-    })
-    .attr("y", function(d) {
-      return projection_global(d)[1];
-    })
-    .attr("width", "3")
-    .attr("height", "3")
-    .attr("fill", function(d) {
-
-      return getColor(d[2], d[3], d[4], UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q)
-    })
-  // .on('mouseover', tip.show)
-  // .on('mouseout', tip.hide);
+function showDataGlobal(the_g, coordinates) {
+    // This is just for 2D, we are creating a raster by creating a rectangle
+    the_g.selectAll(".plot-point")
+      .data(coordinates).enter()
+      .append("rect")
+      .classed('plot-point', true)
+      .attr("x", function(d) {
+        return projection_global(d)[0];
+      })
+      .attr("y", function(d) {
+        return projection_global(d)[1];
+      })
+      .attr("width", "3")
+      .attr("height", "3")
+      .attr("fill", function(d) {
+        //d[2] is the demand (unmet need, y-axis)
+        let red = Number(d[2])*255;
+        //d[3] is the NCP (x-axis)
+        let green = Number(d[3])*255;
+        let blue = 0;
+        return "rgb("+red+","+green+","+blue+")"
+      })
+      // .on('mouseover', tip.show)
+      // .on('mouseout', tip.hide);
 }
 
 function click_about() {
@@ -237,17 +204,17 @@ function click_about() {
 }
 
 function get_global_zoom() {
-  return d3.zoom()
-    .scaleExtent([0.95, 15])
-    .translateExtent([
-      [0, 0],
-      [$(".map-global").width(), $(".map-global").height()]
-    ])
-    .extent([
-      [0, 0],
-      [$(".map-global").width(), $(".map-global").height()]
-    ])
-    .on("zoom", zoomed_2D_global);
+    return d3.zoom()
+      .scaleExtent([0.95, 15])
+      .translateExtent([
+        [0, 0],
+        [$(".map-global").width(), $(".map-global").height()]
+      ])
+      .extent([
+        [0, 0],
+        [$(".map-global").width(), $(".map-global").height()]
+      ])
+      .on("zoom", zoomed_2D_global);
 }
 
 // Changes both groups in 2D
@@ -258,7 +225,7 @@ function zoomed_2D_global() {
 function activate_nature_button() {
   nature_button.style.backgroundColor = "#000000";
   risk_button.style.backgroundColor = "#9c9c9c";
-  //Load our HTML file of the other group
+  //Load our HTML file
 }
 
 function activate_risk_button() {

@@ -42,7 +42,7 @@ function makeChangeLegend(colorScale) {
     .attr("y", -4)
     .text("% change");
 
-  let labels_change = ['<= 100%', '-50%', '0%', '50%', '>= 100%'];
+  let labels_change = ['<= -100%', '-50%', '0%', '50%', '>= 100%'];
   let c_legend = d3.legendColor()
     .labels(function(d) {
       return labels_change[d.i];
@@ -89,7 +89,7 @@ function updateLegendPosition(twoLegends) {
   document.getElementsByClassName('info-button')[0].style.position = "relative";
   if (twoLegends) {
     makeChangeLegend(changeColorScheme);
-    svg_change_legend.attr("transform", "translate(0, -430)");
+    svg_change_legend.attr("transform", "translate(0, -300)");
     svg_legend.attr("transform", "translate(0, 250)");
     svg_change_legend.attr("width", 100).attr("height", 170);
     document.getElementsByClassName('info-button')[0].style.top = "15%";
