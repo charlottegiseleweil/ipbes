@@ -203,7 +203,7 @@ function runSegmentedSSPs(period) {
     current_SSP = "SSP5";
     ssp_name = "Fossil Fuels";
   }
-  change_map_title.innerHTML = "Average Micronutrient Pollination Dependance in 2050 - " + ssp_name;
+  //change_map_title.innerHTML = "Average Micronutrient Pollination Dependance in 2050 - " + ssp_name;
   change_pollination_contribution(period);
   update_percentages(period);
 }

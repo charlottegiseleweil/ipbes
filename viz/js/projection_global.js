@@ -36,29 +36,9 @@ function load_pollination() {
   // }
   // document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
   // document.getElementsByClassName("box box-2")[0].style.display = "flex";
-  location.href='viz/Pollination.html';
+  location.href='viz/pollination.html';
 }
 
-// Function for the back button in pollination
-function load_global() {
-  // global_activated = true;
-  // zoom_2D_global = get_global_zoom();
-  // if (current_html == "index.html") {
-  //   document.getElementsByClassName("menu-box-1")[0].style.display = "none";
-  // document.getElementsByClassName("box-container")[0].style.background = gradient_white;
-  // document.getElementsByClassName("box box-3-global")[0].style.display = "flex";
-  // document.getElementsByClassName("box box-2-global")[0].style.display = "flex"
-  // document.getElementsByClassName("box box-1-global")[0].style.display = "flex";
-  // document.getElementsByClassName("box box-3")[0].style.display = "none";
-  // document.getElementsByClassName("box box-3")[1].style.display = "none";
-  // document.getElementsByClassName("box box-1")[0].style.visibility = "collapse";
-  // document.getElementsByClassName("box box-2")[0].style.display = "none";
-  // } else {
-  //   location.href='index.html';
-  //   return false;
-  // }
-  location.href='../index.html';
-}
 
 if (global_activated == true) {
   document.getElementsByClassName("box-container")[0].style.background = gradient_white;

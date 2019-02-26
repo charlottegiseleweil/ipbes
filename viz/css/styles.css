@@ -33,17 +33,14 @@ html, body {
 #map-name-1 {
   display: none;
   font-family: ourFont;
-  font-size: 2vh;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2em;
+  transform: translate(5vw, -1vh);
   margin: 0;
   padding: 0;
-}
-
-#map-name-2 {
-  display: none;
-  font-family: ourFont;
-  font-size: 2vh;
-  margin: 0;
-  padding: 0;
+  z-index: 100000;
+  margin-bottom: -1vh;
 }
 
 .box {
@@ -1220,7 +1217,9 @@ input {
   font-family: ourFont;
   position: absolute;
   font-size: 1.7em;
-  transform: translate(2vw, -38vh);
+  transform: translate(2vw, -35vh);
+  z-index: 1000000;
+  color: black;
 }
 
 .year-text-2050 {
@@ -1228,4 +1227,6 @@ input {
   position: absolute;
   font-size: 1.7em;
   transform: translate(2vw, 15vh);
+  z-index: 1000000;
+  color: black;
 }

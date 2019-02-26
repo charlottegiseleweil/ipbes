@@ -106,3 +106,7 @@ function load_file(){
 $(document).ready(function(){
   load_file();
 });
+
+function load_global() {
+  location.href='../index.html';
+}
