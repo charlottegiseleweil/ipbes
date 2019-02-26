@@ -186,14 +186,6 @@ function click_about() {
 function get_global_zoom() {
     return d3.zoom()
       .scaleExtent([0.95, 15])
-      // .translateExtent([
-      //   [0, 0],
-      //   [$(".map-global").width(), $(".map-global").height()]
-      // ])
-      // .extent([
-      //   [0, 0],
-      //   [$(".map-global").width(), $(".map-global").height()]
-      // ])
       .on("zoom", zoomed_2D_global);
 }
 
