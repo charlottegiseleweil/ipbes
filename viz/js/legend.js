@@ -25,9 +25,17 @@ let changeColorScaleDisplay = d3.scaleThreshold()
   .domain([-99, -74, -49, -24, 0, 24, 49, 74, 101])
   .range(changeColorSchemeDisplay);
 
-// Getting the Legend and setting the color scale on the legend
-let svg_legend = d3.select(".box.box-1").append("svg");
-let svg_change_legend = d3.select(".box.box-1").append("svg");
+let svg_legend, svg_change_legend;
+
+function makeLegendInitializations(twoLegends) {
+    if(twoLegends) {
+        svg_legend = d3.select(".box.box-2").append("svg").attr("class", "legend_one");
+        svg_change_legend = d3.select(".box.box-2").append("svg").attr("class", "legend_two");
+    } else {
+        svg_legend = d3.select(".box.box-1").append("svg").attr("class", "legend_one");
+        svg_change_legend = d3.select(".box.box-1").append("svg").attr("class", "legend_two");
+    }
+}
 
 function makeChangeLegend(colorScale) {
   // This is for 2D Maps
@@ -86,20 +94,18 @@ function updateLegend(colorScale) {
 // Function to update the legend position when switching to 2D/3D
 // since 2D has 2 legends (one for change map and one for normal map)
 function updateLegendPosition(twoLegends) {
-  document.getElementsByClassName('info-button')[0].style.position = "relative";
   if (twoLegends) {
-    makeChangeLegend(changeColorScheme);
-    svg_change_legend.attr("transform", "translate(0, -300)");
-    svg_legend.attr("transform", "translate(0, 250)");
-    svg_change_legend.attr("width", 100).attr("height", 170);
-    document.getElementsByClassName('info-button')[0].style.top = "15%";
-    document.getElementsByClassName('switch-proj')[0].style.top = "15%";
+    makeLegendInitializations(true);
+    makeLegend(colorScale);
+    makeChangeLegend(changeColorScale);
+    svg_legend.attr("style", "position:absolute; top:80vh; left:13vh");
+    svg_change_legend.attr("style", "position:absolute; top:35vh; left:15vh");
   } else {
-    document.getElementsByClassName('info-button')[0].style.position = "relative";
-    document.getElementsByClassName('info-button')[0].style.top = "0%";
-    document.getElementsByClassName('switch-proj')[0].style.top = "0%";
-    svg_legend.attr("transform", "translate(0, 20)");
-    svg_change_legend.attr("width", 0);
+    $('.box-1 svg').remove();
+    $('.box-2 .legend_one').remove();
+    $('.box-2 .legend_two').remove();
+    makeLegendInitializations(false);
+    makeLegend(colorScale);
   }
 }
 

@@ -61,6 +61,7 @@ let tip = d3.tip()
 svg.call(tip);
 
 // Makes the legend
+makeLegendInitializations(false);
 makeLegend(colorScale);
 
 
