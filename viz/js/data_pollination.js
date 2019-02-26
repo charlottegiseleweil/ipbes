@@ -57,7 +57,7 @@ function showData(the_g, coordinates) {
 function updateData(data_type) {
   switch (data_type) {
     case "Population":
-      region_text = "Crop Population Dependence";
+      region_text = "Pollination-Dependent Population";
       // title.innerHTML = "Pollination Contribution to Nutrition (Vitamin A) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       //   current_viz + " in " + current_year + "?";
