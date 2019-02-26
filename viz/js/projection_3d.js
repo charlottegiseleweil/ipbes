@@ -45,14 +45,16 @@ function update(eulerAngles) {
 function projection3D() {
   checked3D = document.getElementById("checked3D").value;
   checked2D = document.getElementById("checked2D").value;
+  document.getElementsByClassName("year-text-2015")[0].style.display = "none";
+  document.getElementsByClassName("year-text-2050")[0].style.display = "none";
   svg_map2.call(zoom_2D.transform, d3.zoomIdentity);
   document.getElementsByClassName("map-slider")[0].style.display = "block";
   if (checked3D === 'true') {
     document.getElementsByClassName('menu-box-1')[0].style.display = "inline-block";
-    document.getElementsByTagName('li')[0].style.backgroundColor = "#9c9c9c";
-    document.getElementsByTagName('li')[1].style.backgroundColor = "#9c9c9c";
-    document.getElementsByTagName('li')[2].style.background = "black";
-    document.getElementsByTagName('li')[3].style.backgroundColor = "#9c9c9c";
+    document.getElementsByTagName('li')[1].style.backgroundColor = "#c0c0c0";
+    document.getElementsByTagName('li')[2].style.background = "#c0c0c0";
+    document.getElementsByTagName('li')[3].style.backgroundColor = "black";
+    document.getElementsByTagName('li')[4].style.backgroundColor = "#c0c0c0";
     zoom_2D = null; // Set zoom 2D is null
 
     // Remove the points and change the style depending upon the display

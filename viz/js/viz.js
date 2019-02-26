@@ -13,8 +13,8 @@ lineGraphObject.updateGraph('WLD');
 let checked3D = "true";
 let checked2D = "false";
 
-let width = $(".box.box-2-global").width(),
-  height = $(".box.box-2-global").height(),
+let width = $(".box.box-2").width(),
+  height = $(".box.box-2").height(),
   active = d3.select(null);
 
 let previousCountryClicked = 'WLD';
@@ -93,3 +93,17 @@ let colorScale_folate = d3.scaleOrdinal()
 
 // set the colour scale
 let color_graph = colorScale_energy;
+
+// We define the function
+function load_file(){
+  let promise_file = new Promise(function(resolve, reject) {
+    setTimeout(() => resolve(1), 0.01);
+  });
+  promise_file.then(() => {
+    projection2D();
+  });
+}
+
+$(document).ready(function(){
+  load_file();
+});

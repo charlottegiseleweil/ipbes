@@ -1,4 +1,4 @@
-let dataset_global = 'dataset/2d_poll_global.csv';
+let dataset_global = 'Data/2d_poll_global.csv';
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
@@ -17,46 +17,47 @@ function initialize_2D_global(data_) {
 
 // Function to load the pollination visualization
 function load_pollination() {
-  global_activated = false;
-  zoom_2D_global = null;
-  document.getElementsByClassName("menu-box-1")[0].style.display = "inline-block";
-  document.getElementsByClassName("box box-3-global")[0].style.display = "none";
-  document.getElementsByClassName("box box-2-global")[0].style.display = "none"
-  document.getElementsByClassName("box box-1-global")[0].style.display = "none";
-  if (checked3D == "true" && counter != 0) {
-    document.getElementsByClassName("box-container")[0].style.background = gradient_blue;
-    document.getElementsByClassName("box box-3")[0].style.display = "flex";
-  }
-  // The first switch should be directly to 2D, after that we keep track of where we were
-  if (checked2D == "true" || counter == 0) {
-    counter++;
-    document.getElementsByClassName("box-container")[0].style.background = gradient_white;
-    document.getElementsByClassName("box box-3")[1].style.display = "flex";
-    projection2D();
-  }
-  document.getElementsByClassName("back-button")[0].style.display = "block";
-  document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
-  document.getElementsByClassName("box box-2")[0].style.display = "flex";
+  // global_activated = false;
+  // zoom_2D_global = null;
+  // document.getElementsByClassName("menu-box-1")[0].style.display = "inline-block";
+  // document.getElementsByClassName("box box-3-global")[0].style.display = "none";
+  // document.getElementsByClassName("box box-2-global")[0].style.display = "none"
+  // document.getElementsByClassName("box box-1-global")[0].style.display = "none";
+  // if (checked3D == "true" && counter != 0) {
+  //   document.getElementsByClassName("box-container")[0].style.background = gradient_blue;
+  //   document.getElementsByClassName("box box-3")[0].style.display = "flex";
+  // }
+  // // The first switch should be directly to 2D, after that we keep track of where we were
+  // if (checked2D == "true" || counter == 0) {
+  //   counter++;
+  //   document.getElementsByClassName("box-container")[0].style.background = gradient_white;
+  //   document.getElementsByClassName("box box-3")[1].style.display = "flex";
+  //   projection2D();
+  // }
+  // document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
+  // document.getElementsByClassName("box box-2")[0].style.display = "flex";
+  location.href='viz/Pollination.html';
 }
 
 // Function for the back button in pollination
 function load_global() {
-  global_activated = true;
-  zoom_2D_global = get_global_zoom();
-  if (current_html == "index.html") {
-    document.getElementsByClassName("menu-box-1")[0].style.display = "none";
-  document.getElementsByClassName("box-container")[0].style.background = gradient_white;
-  document.getElementsByClassName("box box-3-global")[0].style.display = "flex";
-  document.getElementsByClassName("box box-2-global")[0].style.display = "flex"
-  document.getElementsByClassName("box box-1-global")[0].style.display = "flex";
-  document.getElementsByClassName("box box-3")[0].style.display = "none";
-  document.getElementsByClassName("box box-3")[1].style.display = "none";
-  document.getElementsByClassName("box box-1")[0].style.visibility = "collapse";
-  document.getElementsByClassName("box box-2")[0].style.display = "none";
-  } else {
-    location.href='index.html';
-    return false;
-  }
+  // global_activated = true;
+  // zoom_2D_global = get_global_zoom();
+  // if (current_html == "index.html") {
+  //   document.getElementsByClassName("menu-box-1")[0].style.display = "none";
+  // document.getElementsByClassName("box-container")[0].style.background = gradient_white;
+  // document.getElementsByClassName("box box-3-global")[0].style.display = "flex";
+  // document.getElementsByClassName("box box-2-global")[0].style.display = "flex"
+  // document.getElementsByClassName("box box-1-global")[0].style.display = "flex";
+  // document.getElementsByClassName("box box-3")[0].style.display = "none";
+  // document.getElementsByClassName("box box-3")[1].style.display = "none";
+  // document.getElementsByClassName("box box-1")[0].style.visibility = "collapse";
+  // document.getElementsByClassName("box box-2")[0].style.display = "none";
+  // } else {
+  //   location.href='index.html';
+  //   return false;
+  // }
+  location.href='../index.html';
 }
 
 if (global_activated == true) {
@@ -132,7 +133,7 @@ function load_coastalrisk_data() {
 
 // Load pollination data 2D
 function ready_global(g, path) {
-  d3.json("world/countries.json", function(error, data) {
+  d3.json("viz/world/countries.json", function(error, data) {
     if (error) throw error;
 
     let features = topojson.feature(data, data.objects.units).features;
@@ -224,7 +225,7 @@ function zoomed_2D_global() {
 function activate_nature_button() {
   nature_button.style.backgroundColor = "#000000";
   risk_button.style.backgroundColor = "#9c9c9c";
-  //Load our HTML file of the other group
+  //Load our HTML file
 }
 
 function activate_risk_button() {

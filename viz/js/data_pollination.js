@@ -1,10 +1,10 @@
 // Current dataset depending on what we visualize
 // and also the initializations
 let firstTime = true;
-let dataset = 'dataset/country_en.csv';
-let dataset_2D = 'dataset/ncp_2d_cur.csv';
+let dataset = '../Data/country_en.csv';
+let dataset_2D = '../Data/ncp_2d_cur.csv';
 let current_viz = "Food Energy";
-let change_dataset = 'dataset/ncp_2d_change.csv';
+let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
 
 // plot points on the map for 2D and 3D map
@@ -65,8 +65,8 @@ function updateData(data_type) {
       // colorSchemeDisplay = d3.schemeGreens[9];
       // dataset = 'dataset/country_va.csv';
       // dataset_graph = 'dataset/plot_vitamin.csv';
-      dataset_2D = 'dataset/pop_2d_cur.csv';
-      change_dataset = 'dataset/pop_2d_change.csv';
+      dataset_2D = '../Data/pop_2d_cur.csv';
+      change_dataset = '../Data/pop_2d_change.csv';
       // color_graph = colorScale_vitamin;
       // lineGraphObject.updateGraph(previousCountryClicked);
 
@@ -81,25 +81,25 @@ function updateData(data_type) {
       // colorSchemeDisplay = d3.schemeReds[9];
       // dataset = 'dataset/country_en.csv';
       // dataset_graph = 'dataset/plot_energy.csv';
-      dataset_2D = 'dataset/ncp_2d_cur.csv';
+      dataset_2D = '../Data/ncp_2d_cur.csv';
       // color_graph = colorScale_energy;
-      change_dataset = 'dataset/ncp_2d_change.csv';
+      change_dataset = '../Data/ncp_2d_change.csv';
       // lineGraphObject.updateGraph(previousCountryClicked);
       break;
     case "Folate":
-      current_viz = "Folate";
-      region_text = "Pollination Contribution to Folate";
-      title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
-      contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-        current_viz + " in " + current_year + "?";
-      colorScheme = d3.schemePurples[6];
-      colorSchemeDisplay = d3.schemePurples[9];
-      dataset = 'dataset/country_fo.csv';
-      dataset_graph = 'dataset/plot_folate.csv';
-      dataset_2D = 'dataset/pixel_folate.csv';
-      color_graph = colorScale_folate;
-      change_dataset = 'dataset/change_fo.csv';
-      lineGraphObject.updateGraph(previousCountryClicked)
+      // current_viz = "Folate";
+      // region_text = "Pollination Contribution to Folate";
+      // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
+      // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
+      //   current_viz + " in " + current_year + "?";
+      // colorScheme = d3.schemePurples[6];
+      // colorSchemeDisplay = d3.schemePurples[9];
+      // dataset = 'dataset/country_fo.csv';
+      // dataset_graph = 'dataset/plot_folate.csv';
+      // dataset_2D = 'dataset/pixel_folate.csv';
+      // color_graph = colorScale_folate;
+      // change_dataset = 'dataset/change_fo.csv';
+      // lineGraphObject.updateGraph(previousCountryClicked)
       break;
   }
 colorScale = d3.scaleThreshold()

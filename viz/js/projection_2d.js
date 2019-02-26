@@ -3,15 +3,16 @@ function projection2D() {
   checked2D = document.getElementById("checked2D").value;
   checked3D = document.getElementById("checked3D").value;
   if (checked2D === 'false') {
-    document.getElementsByTagName('li')[0].style.background = "black";
-    document.getElementsByTagName('li')[1].style.backgroundColor = "#9c9c9c";
-    document.getElementsByTagName('li')[2].style.backgroundColor = "#9c9c9c";
-    document.getElementsByTagName('li')[3].style.backgroundColor = "#9c9c9c";
+    document.getElementsByTagName('li')[0].style.backgroundColor = "#c0c0c0";
+    document.getElementsByTagName('li')[1].style.background = "black";
+    document.getElementsByTagName('li')[2].style.backgroundColor = "#c0c0c0";
+    document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
+    document.getElementsByTagName('li')[4].style.backgroundColor = "#c0c0c0";
     document.getElementsByClassName("map-slider")[0].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "block";
 
     zoom_3D = null;
-    BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
+    BarGraphObject.updateBarGraph('../Data/ssp1_impacted.csv');
     changeProjection(true);
     updateLegendPosition(true);
 
@@ -22,6 +23,8 @@ function projection2D() {
     document.getElementsByClassName('box box-3')[1].style.display = "flex";
     document.getElementsByClassName('map-diff-line')[0].style.width = "85%";
     document.getElementById("container").style.display = "block";
+    document.getElementsByClassName("year-text-2015")[0].style.display = "block";
+    document.getElementsByClassName("year-text-2050")[0].style.display = "block";
 
     checked2D = "true";
     checked3D = "false";

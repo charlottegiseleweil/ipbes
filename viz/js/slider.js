@@ -137,17 +137,17 @@ function createSlider() {
       } else {
         if (val == 50) {
           runSlider("SSP1", false);
-          BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
+          BarGraphObject.updateBarGraph('../Data/ssp1_impacted.csv');
           current_SSP = "SSP1";
         }
         if (val == 100) {
           runSlider("SSP3", false);
-          BarGraphObject.updateBarGraph('dataset/ssp3_impacted.csv');
+          BarGraphObject.updateBarGraph('../Data/ssp3_impacted.csv');
           current_SSP = "SSP3";
         }
         if (val == 150) {
           runSlider("SSP5", false);
-          BarGraphObject.updateBarGraph('dataset/ssp5_impacted.csv');
+          BarGraphObject.updateBarGraph('../Data/ssp5_impacted.csv');
           current_SSP = "SSP5";
         }
       }
@@ -189,17 +189,17 @@ function runSegmentedSSPs(period) {
   // Python - concatentation - '{}'.format()
   current_year = period;
   if (period == "SSP1") {
-    BarGraphObject.updateBarGraph('dataset/ssp1_impacted.csv');
+    BarGraphObject.updateBarGraph('../Data/ssp1_impacted.csv');
     current_SSP = "SSP1";
     ssp_name = "Sustainability";
   }
   if (period == "SSP3") {
-    BarGraphObject.updateBarGraph('dataset/ssp3_impacted.csv');
+    BarGraphObject.updateBarGraph('../Data/ssp3_impacted.csv');
     current_SSP = "SSP3";
     ssp_name = "Rivalry";
   }
   if (period == "SSP5") {
-    BarGraphObject.updateBarGraph('dataset/ssp5_impacted.csv');
+    BarGraphObject.updateBarGraph('../Data/ssp5_impacted.csv');
     current_SSP = "SSP5";
     ssp_name = "Fossil Fuels";
   }
