@@ -161,7 +161,7 @@ function showDataGlobal(the_g, coordinates) {
 }
 
 function click_about() {
-  console.log("About button clicked");
+  //console.log("About button clicked");
 }
 
 function get_global_zoom() {

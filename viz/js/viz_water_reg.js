@@ -1,7 +1,7 @@
 document.getElementById("checked3D").disabled = true;
 document.getElementById("checked2D").disabled = false;
 
-let region_text = "Average Micronutrient Pollination Dependance";
+let region_text = "Percent Nitrogen Pollution Avoided";
 
 // We instantiate the bar chart object for the 2D section
 let BarGraphObject = new BarGraph();
@@ -45,6 +45,8 @@ let map2 = document.getElementsByClassName('map2')[0];
 map1.setAttribute("style", "width: 100%; height: 94%;");
 map2.setAttribute("style", "width: 0; height: 0;");
 
+// let data_2D_water;
+
 // Add projection to the viz
 changeProjection(false);
 
@@ -55,7 +57,7 @@ let tip = d3.tip()
   .offset([50, 80])
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
-    return "<strong>" + region_text + ": <span>" + Number(d[2]).toFixed(2) + "</span></strong>" + "%";
+    return "<strong>" + region_text + ": <span>" + Number(d['2015']).toFixed(2) + "</span></strong>" + "%";
   })
 // Adding tip to the svg
 svg.call(tip);

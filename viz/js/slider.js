@@ -94,7 +94,7 @@ function change_ssp_period(period) {
   }
   change_pollination_contribution(current_SSP);
   title.innerHTML = "Pollination Contribution to Nutrition (" + current_viz + ") in 2050 - " + current_SSP;
-  update_percentages(current_SSP);
+  //update_percentages(current_SSP);
   contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
     current_viz + " in " + current_SSP + "?";
 
@@ -170,7 +170,7 @@ function runSlider(period, if_ssp) {
     current_year = period;
     removeSSPs();
     change_pollination_contribution(period);
-    update_percentages(period);
+    //update_percentages(period);
   } else {
     if (checked3D == "true") showSSPs();
     if (checked2D == "true") change_period(period);
@@ -178,12 +178,11 @@ function runSlider(period, if_ssp) {
     contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       current_viz + " in " + current_SSP + "?";
     change_pollination_contribution(current_SSP);
-    update_percentages(current_SSP);
+    //update_percentages(current_SSP);
     current_year = current_SSP;
   }
 }
 
-let ssp_name = "Sustainability";
 function runSegmentedSSPs(period) {
   // OMG, oh lord, this code needs to be cleaned.
   // Python - concatentation - '{}'.format()
@@ -191,21 +190,18 @@ function runSegmentedSSPs(period) {
   if (period == "SSP1") {
     BarGraphObject.updateBarGraph('../Data/ssp1_impacted.csv');
     current_SSP = "SSP1";
-    ssp_name = "Sustainability";
   }
   if (period == "SSP3") {
     BarGraphObject.updateBarGraph('../Data/ssp3_impacted.csv');
     current_SSP = "SSP3";
-    ssp_name = "Rivalry";
   }
   if (period == "SSP5") {
     BarGraphObject.updateBarGraph('../Data/ssp5_impacted.csv');
     current_SSP = "SSP5";
-    ssp_name = "Fossil Fuels";
   }
-  //change_map_title.innerHTML = "Average Micronutrient Pollination Dependance in 2050 - " + ssp_name;
+  parseData("../Data/ncwp.csv", doStuff, false);
   change_pollination_contribution(period);
-  update_percentages(period);
+  //update_percentages(period);
 }
 
 function changeActiveState(button_number) {
@@ -216,15 +212,4 @@ function changeActiveState(button_number) {
       btns[i].className = btns[i].className.replace(" active-btn", "");
   }
   btns[button_number].className += " active-btn";
-}
-
-function loadDifferentScenario(scenario) {
-  // TODO: Load data for scenarios
-  if (scenario == "NC") {
-    console.log(scenario);
-  } else if (scenario == "POP") {
-    console.log(scenario);
-  } else {
-    console.log(scenario);
-  }
 }

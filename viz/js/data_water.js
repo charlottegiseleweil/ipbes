@@ -9,33 +9,40 @@ let country_data_2D;
 let map_title = document.getElementById('map-name-1');
 
 // plot points on the map for 2D and 3D map
-function showData(the_g, coordinates) {
+function showData(the_g, data, period, colorScaleSelect) {
   // Add circles to the country which has been selected
   // Removing part is within
+
   if (checked2D == 'true') {
-    console.log("harshd");
     // This is just for 2D, we are creating a raster by creating a rectangle
     the_g.selectAll(".plot-point")
-      .data(coordinates.slice(1,3)).enter()
+      .data(data).enter()
       .append("polygon")
       .classed('plot-point', true)
       .attr("points",function(d) {
-            let x_1, y_1 = projection([d['lat1'], d['long1']]);
-            let x_2, y_2 = projection([d['lat2'], d['long2']]);
-            let x_3, y_3 = projection([d['lat3'], d['long3']]);
-            let x_4, y_4 = projection([d['lat4'], d['long4']]);
-            let x_5, y_5 = projection([d['lat5'], d['long5']]);
-            console.log(x_1, y_1, x_2, y_2);
-            // console.log(projection(d['lat1']) + ',' + projection(d['long1']) + ' ' +
-            //     projection(d['lat2']) + ',' + projection(d['long2']) + ' ' +
-            //     projection(d['lat3']) + ',' + projection(d['long3']) + ' ' +
-            //     projection(d['lat4']) + ',' + projection(d['long4']) + ' ' +
-            //     projection(d['lat5']) + ',' + projection(d['long5'])
-            // )
+            let x_1 = projection([d['lat1'], d['long1']])[0];
+            let y_1 = projection([d['lat1'], d['long1']])[1];
+            let x_2 = projection([d['lat2'], d['long2']])[0];
+            let y_2 = projection([d['lat2'], d['long2']])[1];
+            let x_3 = projection([d['lat3'], d['long3']])[0];
+            let y_3 = projection([d['lat3'], d['long3']])[1];
+            let x_4 = projection([d['lat4'], d['long4']])[0];
+            let y_4 = projection([d['lat4'], d['long4']])[1];
+            let x_5 = projection([d['lat5'], d['long5']])[0];
+            let y_5 = projection([d['lat5'], d['long5']])[1];
+
+            return (x_1 + ',' + y_1 + ' ' +
+                x_2 + ',' + y_2 + ' ' +
+                x_3 + ',' + y_3 + ' ' +
+                x_4 + ',' + y_4 + ' ' +
+                x_5 + ',' + y_5);
         })
       .attr("fill", function(d) {
-        color = d['2015'] || 0;
-        return colorScaleDisplay(color);
+        color = d[period] || 0;
+        if(d[period] == 0) {
+          return "#ffffff00";
+        }
+          return colorScaleSelect(color);
       })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide);
@@ -121,7 +128,7 @@ colorScaleDisplay = d3.scaleThreshold()
     setTimeout(() => resolve(1), 10);
   });
   promise.then(function(result) {
-    update_percentages(current_year);
+    //update_percentages(current_year);
     change_pollination_contribution(current_year);
     accessData();
   });
@@ -141,64 +148,24 @@ function accessData() {
     .attr("d", path);
 }
 
-// Construct the static Map for 2D visualization by showData and initializing
-// the 2D coordsplot
-function make2015staticMap() {
-  if (firstTime) {
-    let coordstoplot = initialize_2D("2015", data_2D);
-    showData(g_map2, coordstoplot);
-    firstTime = false;
-  }
-}
-
-// Loading the global data depending upon the dataset you give
-// and make a data structure as a dictionary depending upon iso3 - this is more for 3D
-// function loadGlobalData(dataset) {
-//   global_data_c = load(dataset);
-//   data_c = {};
-//   d3.csv(dataset, function(error, data) {
-//     data.forEach(function(d) {
-//       data_c[d.iso3] = global_data_c[d.iso3][current_year];
-//     });
-
-//   });
-// }
-
-// Load the data from the dataset but construction a different kind of dictionary
-// and does not take into account the current year into account - and is for 2D since
-// the data is not aggregated
-function load(dataset) {
-  let result = {};
-  d3.csv(dataset, function(error, data) {
-    data.forEach(function(d) {
-      result[d.iso3] = d;
-    });
-  });
-  return result;
-}
-
-// Initialize the data for 2D by making a list
-function initialize_2D(period, data_) {
-  let coordstoplot = [];
-  for (let key in data_) {
-    coordstoplot.push([data_[key]['lat'], data_[key]['long'], data_[key][period]]);
-  }
-  return coordstoplot;
-}
-
-function doStuff(data) {
+function doStuff(data, firstTime) {
   //Data is usable here
-  // console.log(data);
-  showData(g_map2, data);
+  if(firstTime) {
+    showData(g_map2, data, '2015', colorScaleDisplay);
+    showData(g, data, 'SSP1', changeColorScaleDisplay);
+  } else {
+    svg.selectAll('.plot-point').remove();
+    showData(g, data, current_SSP, changeColorScaleDisplay);
+  }
 }
 
-function parseData(url, callBack) {
+function parseData(url, callBack, firstTime) {
   Papa.parse(url, {
     download: true,
     dynamicTyping: false, // Parse values as their true type (not as strings)
     header: true, // to parse the data as a dictionary
     complete: function(results) {
-      callBack(results.data);
+      callBack(results.data, firstTime);
     }
   });
 }

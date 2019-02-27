@@ -32,7 +32,7 @@ function change_period(period) {
   // Load the data for SSP1, SSP3, and SSP5
   change_pollination_contribution(current_SSP);
   title.innerHTML = "Pollination Contribution to Nutrition (" + current_viz + ") in 2050 - " + current_SSP;
-  update_percentages(current_SSP);
+  //update_percentages(current_SSP);
   contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
     current_viz + " in " + current_SSP + "?";
 }

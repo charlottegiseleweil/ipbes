@@ -6,7 +6,15 @@ function projection2D() {
 
 
 
-  	data_2D, change_data = parseData("../Data/ncwp.csv", doStuff);
+  	parseData("../Data/ncwp.csv", doStuff, true);
+
+    // let promise = new Promise(function(resolve, reject) {
+    //   // loadGlobalData(dataset);
+    //   setTimeout(() => resolve(1), 100);
+    // });
+    // promise.then(function(result) {
+    //   parseData("../Data/ncwp.csv", doStuff);
+    // });
 
     document.getElementsByTagName('li')[0].style.backgroundColor = "black";
     document.getElementsByTagName('li')[1].style.background = "#c0c0c0";
@@ -37,7 +45,7 @@ function projection2D() {
     svg.call(zoom_2D);
     svg_map2.call(zoom_2D);
 
-    let coordstoplot = initialize_2D(current_year, data_2D);
+    //let coordstoplot = initialize_2D(current_year, data_2D);
 
     // Change the size of the maps
     svg.attr("width", $(".box.box-1").width())
@@ -64,7 +72,6 @@ function projection2D() {
     document.getElementById('svg_map1').style.overflow = "initial";
 
     // TODO: Need to change it
-    make2015staticMap();
     // loadDifferentScenario("NC");
 
     // Making the name of the maps appear in 2D
@@ -76,6 +83,6 @@ function projection2D() {
 
     // Plot points on the map
     runSegmentedSSPs("SSP1");
-    showData(g, coordstoplot);
+    // showData(g_map2, '2015', colorScaleDisplay);
   }
 }
