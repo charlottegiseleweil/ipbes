@@ -205,3 +205,6 @@ function activate_risk_button() {
   nature_button.style.backgroundColor = "#9c9c9c";
   //Load HTML file of the other group
 }
+
+document.getElementsByTagName('li')[0].style.backgroundColor = "#c0c0c0";
+document.getElementsByTagName('li')[1].style.background = "black";

@@ -660,8 +660,8 @@ img {
 }
 
 .map-title {
-  margin-bottom: -8vh;
-  font-size: 1.2em;
+  transform: translateY(5vh);
+  font-size: 1.5em;
   font-family: ourFont;
   color: rgb(0, 0, 0);
 }
@@ -1194,6 +1194,34 @@ input {
 
 /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
 .nav li:hover {
+  /* background: black; */
+  transition: background .2s;
+}
+
+/* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-global {
+  font-family: ourFont;
+  background-color:black;
+  height: 4vh; /* set same as height & line-height below */
+  width: 102.4vw;
+}
+
+/* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
+.nav-global li {
+  display: inline-block;
+  list-style: none;
+  height: 4vh; /* should be the same as line-height */
+  line-height: 4vh; /* should be the same as height */
+  padding: 0 3.2vw; /* "0" sets top and bottom padding to none */
+}
+
+/* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
+.nav-global li:hover {
   /* background: black; */
   transition: background .2s;
 }
