@@ -658,7 +658,7 @@ img {
 .map-title {
   /*transform: translateY(5vh);*/
   font-size: 1.5em;
-  font-family: ourFont; 
+  font-family: ourFont;
   color: rgb(0, 0, 0);
 }
 
@@ -765,7 +765,7 @@ span {
 	font-family:ourFont;
 	font-size:0.55em;
 	font-weight:bold;
-	padding:0.5vh 0.5vh;
+	padding:0.5vh 2vh;
 	text-decoration:none;
   display: inline-block;
   margin-top:7vh;
@@ -862,6 +862,7 @@ input {
   /*transform:translate(0.5vw, 20vh);*/
   width: 29%;
   height: 80%;
+  opacity: 2
 }
 
 @keyframes click-wave {
