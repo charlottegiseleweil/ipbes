@@ -53,7 +53,7 @@ let svg_global = d3.select(".map-global").append("svg")
   .attr("height", height_global)
   .on("click", stopped, true);
 
-// svg_global.attr("transform", "scale(1.1)");
+svg_global.attr('transform', 'translate(0,-135) scale(1.25)');
 
 let g_global = svg_global.append('g');
 
@@ -61,7 +61,7 @@ let projection_global = d3.geoNaturalEarth().scale(d3.min([width_global / 2, hei
 let path_global = d3.geoPath().projection(projection_global);
 let map_global = document.getElementsByClassName('map-global')[0];
 
-map_global.setAttribute("style", "width: 95%; height: 100%;");
+map_global.setAttribute("style", "height: 80%;");
 
 svg_global.call(zoom_2D_global);
 
