@@ -12,40 +12,29 @@ let map_title = document.getElementById('map-name-1');
 function showData(the_g, coordinates) {
   // Add circles to the country which has been selected
   // Removing part is within
-  if (checked3D == 'true') {
-    the_g.selectAll(".plot-point")
-      .data(coordinates).enter()
-      .append("circle")
-      .classed('plot-point', true)
-      .attr("cx", function(d) {
-        return projection(d)[0];
-      })
-      .attr("cy", function(d) {
-        return projection(d)[1];
-      })
-      .attr("r", "1px")
-      .attr("fill", function(d) {
-        color = d[2] || 0;
-        return colorScale(color);
-      })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
-  } else {
+  if (checked2D == 'true') {
+    console.log("harshd");
     // This is just for 2D, we are creating a raster by creating a rectangle
     the_g.selectAll(".plot-point")
-      .data(coordinates).enter()
-      .append("rect")
+      .data(coordinates.slice(1,3)).enter()
+      .append("polygon")
       .classed('plot-point', true)
-      .attr("x", function(d) {
-        return projection(d)[0];
-      })
-      .attr("y", function(d) {
-        return projection(d)[1];
-      })
-      .attr("width", "3")
-      .attr("height", "3")
+      .attr("points",function(d) {
+            let x_1, y_1 = projection([d['lat1'], d['long1']]);
+            let x_2, y_2 = projection([d['lat2'], d['long2']]);
+            let x_3, y_3 = projection([d['lat3'], d['long3']]);
+            let x_4, y_4 = projection([d['lat4'], d['long4']]);
+            let x_5, y_5 = projection([d['lat5'], d['long5']]);
+            console.log(x_1, y_1, x_2, y_2);
+            // console.log(projection(d['lat1']) + ',' + projection(d['long1']) + ' ' +
+            //     projection(d['lat2']) + ',' + projection(d['long2']) + ' ' +
+            //     projection(d['lat3']) + ',' + projection(d['long3']) + ' ' +
+            //     projection(d['lat4']) + ',' + projection(d['long4']) + ' ' +
+            //     projection(d['lat5']) + ',' + projection(d['long5'])
+            // )
+        })
       .attr("fill", function(d) {
-        color = d[2] || 0;
+        color = d['2015'] || 0;
         return colorScaleDisplay(color);
       })
       .on('mouseover', tip.show)
@@ -126,7 +115,7 @@ colorScaleDisplay = d3.scaleThreshold()
 
   //updateLegend(colorScale);
   let promise = new Promise(function(resolve, reject) {
-    loadGlobalData(dataset);
+    // loadGlobalData(dataset);
     data_2D = load(dataset_2D);
     change_data = load(change_dataset)
     setTimeout(() => resolve(1), 10);
@@ -164,16 +153,16 @@ function make2015staticMap() {
 
 // Loading the global data depending upon the dataset you give
 // and make a data structure as a dictionary depending upon iso3 - this is more for 3D
-function loadGlobalData(dataset) {
-  global_data_c = load(dataset);
-  data_c = {};
-  d3.csv(dataset, function(error, data) {
-    data.forEach(function(d) {
-      data_c[d.iso3] = global_data_c[d.iso3][current_year];
-    });
+// function loadGlobalData(dataset) {
+//   global_data_c = load(dataset);
+//   data_c = {};
+//   d3.csv(dataset, function(error, data) {
+//     data.forEach(function(d) {
+//       data_c[d.iso3] = global_data_c[d.iso3][current_year];
+//     });
 
-  });
-}
+//   });
+// }
 
 // Load the data from the dataset but construction a different kind of dictionary
 // and does not take into account the current year into account - and is for 2D since
@@ -195,4 +184,21 @@ function initialize_2D(period, data_) {
     coordstoplot.push([data_[key]['lat'], data_[key]['long'], data_[key][period]]);
   }
   return coordstoplot;
+}
+
+function doStuff(data) {
+  //Data is usable here
+  // console.log(data);
+  showData(g_map2, data);
+}
+
+function parseData(url, callBack) {
+  Papa.parse(url, {
+    download: true,
+    dynamicTyping: false, // Parse values as their true type (not as strings)
+    header: true, // to parse the data as a dictionary
+    complete: function(results) {
+      callBack(results.data);
+    }
+  });
 }

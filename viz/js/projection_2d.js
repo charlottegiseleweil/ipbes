@@ -3,6 +3,11 @@ function projection2D() {
   checked2D = document.getElementById("checked2D").value;
   checked3D = document.getElementById("checked3D").value;
   if (checked2D === 'false') {
+
+
+
+  	data_2D, change_data = parseData("../Data/ncwp.csv", doStuff);
+
     document.getElementsByTagName('li')[0].style.backgroundColor = "black";
     document.getElementsByTagName('li')[1].style.background = "#c0c0c0";
     document.getElementsByTagName('li')[2].style.backgroundColor = "black";
