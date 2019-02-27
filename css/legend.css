@@ -3,6 +3,7 @@
     position: absolute;
     right: 4rem;
     top: 0.6rem;
+    z-index: 100;
 }
 #legendBar{
     display: inline-block;

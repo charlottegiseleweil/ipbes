@@ -232,6 +232,150 @@ class ScenarioChart{
 		return [(UNssp1/UN2015 - 1)*100, (UNssp3/UN2015 -1)*100, (UNssp5/UN2015 -1)*100];
 	}
 }
+
+class SuperScenarioChart{
+	
+	constructor(){
+		// Initialize the barchart
+		const svgWidth = 255;
+		const svgHeight = 180;
+		this.margin = {top: 20, right:2, bottom: 10, left:30};
+
+		this.width = svgWidth - this.margin.left - this.margin.right,
+		this.height = svgHeight - this.margin.top - this.margin.bottom;
+
+		this.svg = d3.select('#scenario-comparison-svg')
+			.attr("width", svgWidth)
+			.attr("height", svgHeight);
+
+		this.g = this.svg.append("g")
+			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+		
+		this.serviceLabels = ["Coastal Risk","Water Quality","Pollination"];
+		this.scenarioLabels = ["Green Growth","Regional Rivalry","Fossil Fuels"];
+
+		// Define the div for the tooltip
+		this.tooltip = d3.select('body').append("div").attr("class", "tooltip").style("opacity", 0);
+		
+	}
+	/*Function to update the bar chart*/
+	update(focusedData){
+		// Remove old data
+		this.remove();
+
+		// transform index
+		let getServiceIndex = (i) => (i-i%3)/3;
+		let getScenarioIndex = (i) => i%3;
+
+		// calculate changes
+		let data = this.calculateChangeInUnmetNeed(focusedData)
+		data = [100,50,-30,150,130,120,-20,-50,40];
+		// Scale axis
+		const y = d3.scaleLinear()
+			.range([this.height, 0])
+			.domain([min(d3.min(data, d => d ),0), max(0,d3.max(data, d => d ))]);
+		const x = d3.scaleBand().range([0,this.width]);
+			x.domain(data.map((d,i) => this.serviceLabels[getServiceIndex(i)])).padding(0.2);
+		
+		
+		// Add new bars
+		this.g.selectAll(".bar")
+			.data(data)
+			.enter().append("rect")
+				.attr("class", (d,i) => {
+					switch(getScenarioIndex(i)) {
+						case 0:
+							return 'bar greenGrowth';
+						case 1:
+							return 'bar regionalRivalry';
+						case 2:
+							return 'bar fossilFuels';
+					  }	
+				})
+				.attr("y", d => d < 0 ? y(0) : y(d))
+				.attr("x", (d,i) => {
+					switch(getScenarioIndex(i)) {
+						case 0:
+							return x(this.serviceLabels[getServiceIndex(i)]) ;
+						case 1:
+							return x(this.serviceLabels[getServiceIndex(i)]) + 15;
+						case 2:
+							return x(this.serviceLabels[getServiceIndex(i)]) + 30;
+					  }	
+				})
+				.attr("width", d => x.bandwidth() - 30)
+				.attr("height", d => Math.abs(y(d) - y(0)))
+				.on("mouseover", (d,i,nodes) => {	
+					const tooltipClass = d > 0 ?'<p class="tooltip_positive">':'<p class="tooltip_negative">';	
+					this.tooltip.transition()		
+						.duration(200)		
+						.style("opacity", .9);		
+					this.tooltip.html('<p class="tooltip_scenario">'+ this.scenarioLabels[getScenarioIndex(i)] + '</p>' +
+						tooltipClass + d.toFixed(0) + '%</p>')
+						.style("left", (d3.event.pageX - 40 ) + "px")
+						.style("top", (d3.event.pageY - 50) + "px")
+						.style("font-size",'0.8rem');		
+					
+					d3.select(nodes[i]).attr("stroke-opacity","0.5")
+										.style("stroke-width",1)
+										.style("stroke","white");
+				})					
+				.on("mouseout", (d,i,nodes) => {		
+					this.tooltip.transition()		
+						.duration(500)		
+						.style("opacity", 0);
+					d3.select(nodes[i]).attr("stroke-opacity","0")
+						.style("stroke-width",0);
+				});
+
+		const paddingTop = Math.abs(y(max(0,d3.max(data, d => d ))) - y(0))
+		const xAxis = d3.axisBottom(d3.scaleLinear().range([0, this.width-1])).ticks(0)
+		this.g.append("g")
+			.attr("transform", "translate(" + "0"+ "," + paddingTop + ")")
+			.attr("class", "X axis")
+			.call(xAxis);
+		
+		this.g.append("g")
+
+			.attr("class", "axis")
+			.call(d3.axisLeft(y)
+				.ticks(5, "s"));
+		
+		// Append Service labels
+		this.g.append("g")
+			.attr("class", "labelText")
+			.selectAll(".textlabel")
+			.data(this.serviceLabels)
+			.enter()
+			.append("text")
+			.attr("class", "textlabel")
+			.attr("x", (d,i) => x(d) + x.bandwidth()/2)
+			.attr("y", -5)
+			.style("width",x.bandwidth())
+			.style("height",20)
+			.text((d,i) => d);
+	}
+	remove(){
+		this.g.selectAll(".bar.positive")
+						.remove()
+						.exit()
+		this.g.selectAll(".bar.negative")
+						.remove()
+						.exit()
+		this.g.selectAll("g")
+						.remove()
+						.exit()
+	}
+
+	calculateChangeInUnmetNeed(focusedData){
+		const UN2015 = focusedData.map(x=> parseFloat(x['UN_c'])).reduce((a, b) => a + b, 0);
+		const UNssp1 = focusedData.map(x=> parseFloat(x['UN_1'])).reduce((a, b) => a + b, 0);
+		const UNssp3 = focusedData.map(x=> parseFloat(x['UN_3'])).reduce((a, b) => a + b, 0);
+		const UNssp5 = focusedData.map(x=> parseFloat(x['UN_5'])).reduce((a, b) => a + b, 0);
+		return [(UNssp1/UN2015 - 1)*100, (UNssp3/UN2015 -1)*100, (UNssp5/UN2015 -1)*100];
+	}
+}
+
 class PopulationChart{
 	constructor(){
 
@@ -267,6 +411,152 @@ class PopulationChart{
 
 	}
 }
+class SuperPopulationChart{
+	
+	constructor(){
+		// Initialize the barchart
+		const svgWidth = 255;
+		const svgHeight = 180;
+		this.margin = {top: 20, right:2, bottom: 10, left:35};
+
+		this.width = svgWidth - this.margin.left - this.margin.right,
+		this.height = svgHeight - this.margin.top - this.margin.bottom;
+
+		this.svg = d3.select('#population-comparison-svg')
+			.attr("width", svgWidth)
+			.attr("height", svgHeight);
+
+		this.g = this.svg.append("g")
+			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+		
+		this.serviceLabels = ["Coastal Risk","Water Quality","Pollination"];
+		this.scenarioLabels = ["Green Growth","Regional Rivalry","Fossil Fuels"];
+
+		// Define the div for the tooltip
+		this.tooltip = d3.select('body').append("div").attr("class", "tooltip").style("opacity", 0);
+		
+	}
+	/*Function to update the bar chart*/
+	update(focusedData){
+		// Remove old data
+		this.remove();
+
+		// transform index
+		let getServiceIndex = (i) => (i-i%3)/3;
+		let getScenarioIndex = (i) => i%3;
+
+		// calculate changes
+		let data = this.calculateChangeInUnmetNeed(focusedData)
+		data = [1000000,5000,30000,100050,130000,120,20000,500000,400000];
+		const current_data = [1000000, 30000,10000];
+		// Scale axis
+		const y = d3.scaleLinear()
+			.range([this.height, 0])
+			.domain([min(d3.min(data, d => d ),0), max(0,d3.max(data, d => d ))]);
+		const x = d3.scaleBand().range([0,this.width]);
+			x.domain(data.map((d,i) => this.serviceLabels[getServiceIndex(i)])).padding(0.2);
+		
+		
+		// Add new bars
+		this.g.selectAll(".bar")
+			.data(data)
+			.enter().append("rect")
+				.attr("class", (d,i) => {
+					switch(getScenarioIndex(i)) {
+						case 0:
+							return 'bar greenGrowth';
+						case 1:
+							return 'bar regionalRivalry';
+						case 2:
+							return 'bar fossilFuels';
+					  }	
+				})
+				.attr("y", d => d < 0 ? y(0) : y(d))
+				.attr("x", (d,i) => {
+					switch(getScenarioIndex(i)) {
+						case 0:
+							return x(this.serviceLabels[getServiceIndex(i)]) ;
+						case 1:
+							return x(this.serviceLabels[getServiceIndex(i)]) + 15;
+						case 2:
+							return x(this.serviceLabels[getServiceIndex(i)]) + 30;
+					  }	
+				})
+				.attr("width", d => x.bandwidth() - 30)
+				.attr("height", d => Math.abs(y(d) - y(0)))
+				.on("mouseover", (d,i,nodes) => {	
+					const tooltipClass = (d - current_data[getScenarioIndex(i)]) > 0 ?'<p class="tooltip_positive"> +':'<p class="tooltip_negative"> ';	
+					this.tooltip.transition()		
+						.duration(200)		
+						.style("opacity", .9);	
+						
+					this.tooltip.html('<p class="tooltip_scenario">'+ this.scenarioLabels[getScenarioIndex(i)] + '</p>' +
+						tooltipClass + round(d - current_data[getScenarioIndex(i)]) + '</p>' +
+						'<p class="tooltip_scenario">since 2015</p>');
+					this.tooltip
+						.style("left", (d3.event.pageX - 40 ) + "px")
+						.style("top", (d3.event.pageY - 60) + "px")
+						.style("font-size",'0.8rem');	
+					
+					d3.select(nodes[i]).attr("stroke-opacity","0.5")
+										.style("stroke-width",1)
+										.style("stroke","white");
+				})					
+				.on("mouseout", (d,i,nodes) => {		
+					this.tooltip.transition()		
+						.duration(500)		
+						.style("opacity", 0);
+					d3.select(nodes[i]).attr("stroke-opacity","0")
+						.style("stroke-width",0);
+				});
+
+		const paddingTop = Math.abs(y(max(0,d3.max(data, d => d ))) - y(0))
+		const xAxis = d3.axisBottom(d3.scaleLinear().range([0, this.width-1])).ticks(0)
+		this.g.append("g")
+			.attr("transform", "translate(" + "0"+ "," + paddingTop + ")")
+			.attr("class", "X axis")
+			.call(xAxis);
+		
+		this.g.append("g")
+
+			.attr("class", "axis")
+			.call(d3.axisLeft(y)
+				.ticks(5, "s"));
+		
+		// Append Service labels
+		this.g.append("g")
+			.attr("class", "labelText")
+			.selectAll(".textlabel")
+			.data(this.serviceLabels)
+			.enter()
+			.append("text")
+			.attr("class", "textlabel")
+			.attr("x", (d,i) => x(d) + x.bandwidth()/2)
+			.attr("y", -5)
+			.style("width",x.bandwidth())
+			.style("height",20)
+			.text((d,i) => d);
+	}
+	remove(){
+		this.g.selectAll(".bar.positive")
+						.remove()
+						.exit()
+		this.g.selectAll(".bar.negative")
+						.remove()
+						.exit()
+		this.g.selectAll("g")
+						.remove()
+						.exit()
+	}
+
+	calculateChangeInUnmetNeed(focusedData){
+		const UN2015 = focusedData.map(x=> parseFloat(x['UN_c'])).reduce((a, b) => a + b, 0);
+		const UNssp1 = focusedData.map(x=> parseFloat(x['UN_1'])).reduce((a, b) => a + b, 0);
+		const UNssp3 = focusedData.map(x=> parseFloat(x['UN_3'])).reduce((a, b) => a + b, 0);
+		const UNssp5 = focusedData.map(x=> parseFloat(x['UN_5'])).reduce((a, b) => a + b, 0);
+		return [(UNssp1/UN2015 - 1)*100, (UNssp3/UN2015 -1)*100, (UNssp5/UN2015 -1)*100];
+	}
+}
 
 function max(a,b){
 	return a > b? a:b;
@@ -275,22 +565,15 @@ function min(a,b){
 	return a > b? b:a;
 }
 function round(value){
-	if(value > 2000000)
+	if(Math.abs(value) > 1000000)
 	{
-		return numeral(Math.round(value/1000000)*1000000).format('0,0')
+		return (value/1000000).toFixed(1) + 'Milj';
 	}
-	if(value > 1000000)
+	else if (Math.abs(value) > 1000)
 	{
-		return numeral(Math.round(value/100000)*100000).format('0,0')
-	}
-	else if (value > 100000)
-	{
-		return numeral(Math.round(value/10000)*10000).format('0,0')
-	}
-	else if (value > 10000)
-	{
-		return numeral(Math.round(value/1000)*1000).format('0,0')
+		return (value/1000).toFixed(0) + 'K';
 	}
 	else
-		return numeral(Math.round(value/100)*100).format('0,0');
+		return value.toFixed(0);
 }
+

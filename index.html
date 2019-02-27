@@ -31,7 +31,6 @@
 	<svg id="globe-plot_borders" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
 	<div id="resetButton"><p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p></div>
 	<div id="countryLabel"></div>
-	<p class="infoBtn" id="infoShow" onclick="showInfo()">&#x2139;</p>
 	
 	<div id="radio_container">	
 			<table>
@@ -96,30 +95,7 @@
 		</div> 
 		<div id="population-chart">
 			<h2 id= "population-chart-header">Impacted Population</h2>
-			<div class ="population-value-box">
-				<p class ="population-chart-scenario">Current 2015</p> 
-				<p class ="population-chart-value" id = "population-chart-value-cur"></p>
-				<p class ="population-chart-unit">people</p>
-			</div>
-
-			<div class ="population-value-box">
-				<p class ="population-chart-scenario">Green Growth</p>
-				<p class ="population-chart-value" id = "population-chart-value-ssp1"></p>
-				<p class ="population-chart-unit">people</p>
-			</div>
-
-			<div class ="population-value-box">
-				<p class ="population-chart-scenario">Regional Rivalry</p>
-				<p class ="population-chart-value" id = "population-chart-value-ssp3"></p>
-				<p class ="population-chart-unit">people</p>
-				
-			</div>
-
-			<div class ="population-value-box">
-				<p class ="population-chart-scenario">Fossil Fuels</p>
-				<p class ="population-chart-value" id = "population-chart-value-ssp5"></p>
-				<p class ="population-chart-unit">people</p>
-			</div>
+			<svg id="population-comparison-svg"></svg>
 		</div> 
 	</div>
 
@@ -131,25 +107,7 @@
 </div>
 
 <div id="greyOut" class="visible"></div>
-<div id="infoBox">
-	<p class="infoBtn" id="infoClose" onclick="closeInfo()">&#x2716;</p>
-	<h2 id="infoHeader">The Earth wont scale</h2>
-	<p id="infoText">Natural habitats purifies our water, protects us from floods, 
-		delivers pollinators to food crops to support nutritious diets, 
-		and provides countless other benefits to people. Use the map to 
-		explore what the unmet need for nature’s contributions was at 2015, and what they 
-		will look like in 2050 for three different future scenarios.
-		The colours show the unmet need 
-		depending on what scenario you choose for our future.</p>
-	<p>The different services are:</p>
-	<li>Coastal Risk</li>
-	<li>Water Quality</li>
-	<li>Pollination</li>
-	<p>The different future scenarios are:</p>
-	<li>Green Growth - sustainable development</li>
-	<li>Regional Rivalry</li>
-	<li>Fossil-Fueled Development</li>
-</div>
+
 
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://d3js.org/d3-geo.v1.min.js"></script>

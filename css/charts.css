@@ -6,6 +6,8 @@
     left: 2rem;
     font-size: 0.7rem;
     visibility: hidden;
+    z-index:100;
+    background: rgba(255, 255, 255, 0.137);
 }
 
 .axis path,
@@ -64,13 +66,15 @@
 #compare-scenarios{
     height: fit-content;
     position: absolute;
-    right: 1.5rem;
-    bottom: 1rem;
+    right: 2rem;
+    bottom: 2rem;
     color: white;
     width: 16rem;
     padding: 0;
     margin: 0;
     visibility: hidden;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.137);
 }
 #compare-scenario-header{
     margin-bottom: 0;
@@ -80,7 +84,7 @@
 }
 /*Scenario chart*/
 #scenario-chart{
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: white;
     margin: auto;
 }
@@ -101,6 +105,18 @@
     fill: #42A644;
 }
 
+.bar.greenGrowth {
+    fill: rgb(29, 150, 31);
+  }
+
+.bar.regionalRivalry{
+    fill: rgb(184, 152, 13);
+}
+
+.bar.fossilFuels{
+    fill: rgb(112, 12, 151);
+}
+
 .labelText{
     fill: white;
     text-anchor: middle;
@@ -112,6 +128,7 @@
     width: 16rem;
     text-align: right; 
     margin: auto;
+    font-size: 0.7rem;
 }
 
 .population-value-box{
@@ -145,4 +162,30 @@
     margin:0;
     font-size: 0.6rem;
     color: grey;
+}
+
+div.tooltip {	
+    position: absolute;			
+    text-align: center;								
+    padding: 2px;					
+    color: white;	
+    pointer-events: none;			
+}
+.tooltip_positive{
+    color:red;
+    padding:0;
+    margin:0;
+    font-weight: 800;
+    font-size: 1rem;
+}
+.tooltip_negative{
+    color: rgb(1, 56, 2);
+    padding:0;
+    margin:0;
+    font-weight: 800;
+    font-size: 1rem;
+}
+.tooltip_scenario{
+    padding: 0;
+    margin:0;
 }

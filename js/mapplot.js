@@ -120,8 +120,8 @@ class MapPlot {
                 .enter().append("path")
                 .attr("class", "globe")
                 .attr("fill", "grey")
-                // .style("stroke", "black")
-                // .style("stroke-width", "0.2")
+                //.style("stroke", "lightgrey")
+                //.style("stroke-width", "2")
 				.attr("d", this.path)
 				.on("mouseover", function(d) {
 					that.countryTooltip.text(d.name)
@@ -145,7 +145,8 @@ class MapPlot {
                 .attr("class", "globe")
                 .attr("fill", "grey")
                 .attr("fill-opacity", "0")
-                .style("stroke", "black")
+                .attr("stroke-opacity","0.5")
+                .style("stroke", "dimgrey")
                 .style("stroke-width", this.countryBorderWidth)
                 .attr("d", this.path)
             
@@ -385,7 +386,6 @@ class MapPlot {
         this.heatGradDict = {};
         r.forEach((color, i) => this.heatGradDict[14/20 + (i)/20] = color)
         this.heat.gradient(this.heatGradDict)
-        console.log("asd")
     }
 
 // TODO: testa att ha olika parameters zoomat och ine för blur  
@@ -611,7 +611,8 @@ class MapPlot {
             .enter().append("path")
             .attr("fill", "grey")
             .attr("fill-opacity", "0")
-            .style("stroke", "black")
+            .style("stroke", "dimgrey")
+            .attr("stroke-opacity","0.5")
             .style("stroke-width", this.countryBorderWidth)
             .attr("d", this.path)
     
@@ -647,7 +648,8 @@ class MapPlot {
                 .enter().append("path")
                 .attr("fill", "grey")
                 .attr("fill-opacity", "0")
-                .style("stroke", "black")
+                .attr("stroke-opacity","0.5")
+                .style("stroke", "dimgrey")
                 .style("stroke-width", this.countryBorderWidth)
                 .attr("d", this.path)
     }
@@ -688,7 +690,7 @@ class MapPlot {
         let blurRadius = -0.0002467*heatScale*heatScale + 0.4363*heatScale + 2.617;
 
         this.heat.radius(pointRadius, blurRadius);
-        console.log("point: " + pointRadius, "blur: " + blurRadius);
+        //console.log("point: " + pointRadius, "blur: " + blurRadius);
 
         // 1.5 1 är ok typ
         // let pointRadius = 380/60*2.9;

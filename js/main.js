@@ -15,7 +15,7 @@ whenDocumentLoaded(() => {
 	is2050 = false;
 	colorSchema = {UN: [d3.hcl(100, 90, 100),d3.hcl(15, 90, 60)], pop: [d3.hcl(227,5,98),d3.hcl(254,45,23)], NC: [d3.hcl(119,22,93),d3.hcl(133,34,25)]};
 	plot_object = new MapPlot('globe-plot');
-	charts = {distribution: new DistributionChart(), scenario: new ScenarioChart(), population: new PopulationChart()};
+	charts = {distribution: new DistributionChart(), scenario: new SuperScenarioChart(), population: new SuperPopulationChart()};
 	
 	// When the dataset radio buttons are changed: change the dataset
 	d3.selectAll(("input[name='radio1']")).on("change", function(){
@@ -137,14 +137,6 @@ function hideCharts(){
 	document.getElementById('compare-scenarios').style.visibility = 'hidden';
 }
 
-function showInfo(){
-	document.getElementById('greyOut').style.visibility = 'visible';
-	document.getElementById('infoBox').style.visibility = 'visible';
-}
-function closeInfo(){
-	document.getElementById('greyOut').style.visibility = 'hidden';
-	document.getElementById('infoBox').style.visibility = 'hidden';
-}
 
 function backToGlobe(){
 	plot_object.resetClick();
