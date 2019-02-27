@@ -1110,7 +1110,9 @@ span2 {
 	font-family: ourFont;
 	font-size: 0.60em;
 	font-weight: bold;
-	transform: translate(6vw, -8.5vh);
+  margin-left: 5.5vw;
+  margin-top: -12vh;
+	/* transform: translate(6vw, -8.5vh); */
 }
 
 .site-navigation ul {
@@ -1229,13 +1231,22 @@ span2 {
   text-decoration: none;
 }
 
-.menu-box-1 {
+.menu-box-1-global {
   padding: 0.7vw 0vh;
-  transform: translate(-2.4vw, -3.5vh);
+  margin-left: -2.41vw;
+  margin-top: -3.6vh;
   position: absolute;
   width: 102.4vw;
   z-index: 10000;
-  /*float:left;*/
+}
+
+.menu-box-1 {
+  padding: 0.7vw 0vh;
+  margin-left: -2.41vw;
+  margin-top: -3.2vh;
+  position: absolute;
+  width: 102.4vw;
+  z-index: 10000;
 }
 
 .year-text-2015 {
