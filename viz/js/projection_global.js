@@ -176,14 +176,14 @@ function zoomed_2D_global() {
 }
 
 function activate_nature_button() {
-  document.getElementsByTagName('li')[0].style.background = "#c0c0c0";
-  document.getElementsByTagName('li')[1].style.background = "black";
+  document.getElementsByTagName('li')[3].style.background = "#c0c0c0";
+  document.getElementsByTagName('li')[4].style.background = "black";
   //Load our HTML file
 }
 
 function activate_risk_button() {
-  document.getElementsByTagName('li')[0].style.background = "black";
-  document.getElementsByTagName('li')[1].style.background = "#c0c0c0";
+  document.getElementsByTagName('li')[3].style.background = "black";
+  document.getElementsByTagName('li')[4].style.background = "#c0c0c0";
   //Load HTML file of the other group
 }
 

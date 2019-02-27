@@ -368,11 +368,10 @@ img {
 
 .p_popup {
   color: rgb(247, 246, 241);
-  font-family: 'ourFont', sans-serif;
+  font-family: ourFont;
   font-weight: 400;
-  font-size: 2vh;
+  font-size: 1.2em;
   line-height: 110%;
-  text-shadow: 0vh 0.1vh 0vh #999, 0vh 0.2vh 0vh #888;
   text-align: left;
 }
 
@@ -804,9 +803,9 @@ span2 {
   justify-content: space-between;
 }
 
-input {
-  display: none;
-}
+/* input {
+  transform: translateY(8vh);
+} */
 
 #bckgrnd,
 .labels {
@@ -1206,6 +1205,7 @@ input {
   background-color:black;
   height: 4vh; /* set same as height & line-height below */
   width: 102.4vw;
+  font-size: 1.315em;
 }
 
 /* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
