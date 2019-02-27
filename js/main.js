@@ -118,15 +118,15 @@ function updateCountryName(name) {
 	document.getElementById("countryLabel").innerHTML = name;
 }
 
-function updateCharts(focusedData,colorScale){
+function updateCharts(focusedData, colorScale, allfocusedCountryData){
 	if(focusedData == 0){
 		hideCharts();
 	}
 	else{
 		charts.distribution.show(focusedData, colorScale);
 		if(is2050){
-			charts.scenario.update(focusedData);
-			charts.population.update(focusedData);
+			charts.scenario.update(allfocusedCountryData);
+			charts.population.update(allfocusedCountryData);
 			document.getElementById('compare-scenarios').style.visibility = 'visible';
 		}
 	}

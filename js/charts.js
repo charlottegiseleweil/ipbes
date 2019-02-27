@@ -268,14 +268,13 @@ class SuperScenarioChart{
 		let getScenarioIndex = (i) => i%3;
 
 		// calculate changes
-		let data = this.calculateChangeInUnmetNeed(focusedData)
-		data = [100,50,-30,150,130,120,-20,-50,40];
+		let data = this.refineData(focusedData);
 		// Scale axis
 		const y = d3.scaleLinear()
 			.range([this.height, 0])
 			.domain([min(d3.min(data, d => d ),0), max(0,d3.max(data, d => d ))]);
 		const x = d3.scaleBand().range([0,this.width]);
-			x.domain(data.map((d,i) => this.serviceLabels[getServiceIndex(i)])).padding(0.2);
+			x.domain(data.map((d,i) => this.serviceLabels[getServiceIndex(i)])).padding(0.1);
 		
 		
 		// Add new bars
@@ -298,12 +297,12 @@ class SuperScenarioChart{
 						case 0:
 							return x(this.serviceLabels[getServiceIndex(i)]) ;
 						case 1:
-							return x(this.serviceLabels[getServiceIndex(i)]) + 15;
+							return x(this.serviceLabels[getServiceIndex(i)]) + 18;
 						case 2:
-							return x(this.serviceLabels[getServiceIndex(i)]) + 30;
+							return x(this.serviceLabels[getServiceIndex(i)]) + 36;
 					  }	
 				})
-				.attr("width", d => x.bandwidth() - 30)
+				.attr("width", d => x.bandwidth() - 36)
 				.attr("height", d => Math.abs(y(d) - y(0)))
 				.on("mouseover", (d,i,nodes) => {	
 					const tooltipClass = d > 0 ?'<p class="tooltip_positive">':'<p class="tooltip_negative">';	
@@ -356,10 +355,13 @@ class SuperScenarioChart{
 			.text((d,i) => d);
 	}
 	remove(){
-		this.g.selectAll(".bar.positive")
+		this.g.selectAll(".bar.greenGrowth")
 						.remove()
 						.exit()
-		this.g.selectAll(".bar.negative")
+		this.g.selectAll(".bar.regionalRivalry")
+						.remove()
+						.exit()
+		this.g.selectAll(".bar.fossilFuels")
 						.remove()
 						.exit()
 		this.g.selectAll("g")
@@ -367,13 +369,34 @@ class SuperScenarioChart{
 						.exit()
 	}
 
-	calculateChangeInUnmetNeed(focusedData){
-		const UN2015 = focusedData.map(x=> parseFloat(x['UN_c'])).reduce((a, b) => a + b, 0);
-		const UNssp1 = focusedData.map(x=> parseFloat(x['UN_1'])).reduce((a, b) => a + b, 0);
-		const UNssp3 = focusedData.map(x=> parseFloat(x['UN_3'])).reduce((a, b) => a + b, 0);
-		const UNssp5 = focusedData.map(x=> parseFloat(x['UN_5'])).reduce((a, b) => a + b, 0);
-		return [(UNssp1/UN2015 - 1)*100, (UNssp3/UN2015 -1)*100, (UNssp5/UN2015 -1)*100];
+	refineData(allData){
+		return this.calculateChangeInUnmetNeed(allData.cv)
+			.concat(this.calculateChangeInUnmetNeed(allData.ndr))
+			.concat(this.calculateChangeInUnmetNeed(allData.poll))
 	}
+
+	calculateChangeInUnmetNeed(focusedData){
+		if(focusedData==0)
+		{
+			return[0,0,0];
+		}
+		let UN_c = 0, 
+			UN_1 = 0, 
+			UN_3 = 0, 
+			UN_5 = 0;
+
+		focusedData.forEach( (d) => {
+			if(d){
+				UN_c += parseFloat(d.UN_c);
+				UN_1 += parseFloat(d.UN_1);
+				UN_3 += parseFloat(d.UN_3);
+				UN_5 += parseFloat(d.UN_5);
+			}	
+		});
+
+		return [(UN_1/UN_c - 1)*100, (UN_3/UN_c -1)*100, (UN_5/UN_c -1)*100];
+	}
+
 }
 
 class PopulationChart{
@@ -429,7 +452,7 @@ class SuperPopulationChart{
 		this.g = this.svg.append("g")
 			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 		
-		this.serviceLabels = ["Coastal Risk","Water Quality","Pollination"];
+		this.serviceLabels = ["Coastal Risk ","Water Quality","Pollination"];
 		this.scenarioLabels = ["Green Growth","Regional Rivalry","Fossil Fuels"];
 
 		// Define the div for the tooltip
@@ -446,15 +469,14 @@ class SuperPopulationChart{
 		let getScenarioIndex = (i) => i%3;
 
 		// calculate changes
-		let data = this.calculateChangeInUnmetNeed(focusedData)
-		data = [1000000,5000,30000,100050,130000,120,20000,500000,400000];
+		let data = this.getTotalPopulation(focusedData);
 		const current_data = [1000000, 30000,10000];
 		// Scale axis
 		const y = d3.scaleLinear()
 			.range([this.height, 0])
 			.domain([min(d3.min(data, d => d ),0), max(0,d3.max(data, d => d ))]);
 		const x = d3.scaleBand().range([0,this.width]);
-			x.domain(data.map((d,i) => this.serviceLabels[getServiceIndex(i)])).padding(0.2);
+			x.domain(data.map((d,i) => this.serviceLabels[getServiceIndex(i)])).padding(0.1);
 		
 		
 		// Add new bars
@@ -477,12 +499,12 @@ class SuperPopulationChart{
 						case 0:
 							return x(this.serviceLabels[getServiceIndex(i)]) ;
 						case 1:
-							return x(this.serviceLabels[getServiceIndex(i)]) + 15;
+							return x(this.serviceLabels[getServiceIndex(i)]) + 18;
 						case 2:
-							return x(this.serviceLabels[getServiceIndex(i)]) + 30;
+							return x(this.serviceLabels[getServiceIndex(i)]) + 36;
 					  }	
 				})
-				.attr("width", d => x.bandwidth() - 30)
+				.attr("width", d => x.bandwidth() - 36)
 				.attr("height", d => Math.abs(y(d) - y(0)))
 				.on("mouseover", (d,i,nodes) => {	
 					const tooltipClass = (d - current_data[getScenarioIndex(i)]) > 0 ?'<p class="tooltip_positive"> +':'<p class="tooltip_negative"> ';	
@@ -538,10 +560,13 @@ class SuperPopulationChart{
 			.text((d,i) => d);
 	}
 	remove(){
-		this.g.selectAll(".bar.positive")
+		this.g.selectAll(".bar.greenGrowth")
 						.remove()
 						.exit()
-		this.g.selectAll(".bar.negative")
+		this.g.selectAll(".bar.regionalRivalry")
+						.remove()
+						.exit()
+		this.g.selectAll(".bar.fossilFuels")
 						.remove()
 						.exit()
 		this.g.selectAll("g")
@@ -549,13 +574,34 @@ class SuperPopulationChart{
 						.exit()
 	}
 
-	calculateChangeInUnmetNeed(focusedData){
-		const UN2015 = focusedData.map(x=> parseFloat(x['UN_c'])).reduce((a, b) => a + b, 0);
-		const UNssp1 = focusedData.map(x=> parseFloat(x['UN_1'])).reduce((a, b) => a + b, 0);
-		const UNssp3 = focusedData.map(x=> parseFloat(x['UN_3'])).reduce((a, b) => a + b, 0);
-		const UNssp5 = focusedData.map(x=> parseFloat(x['UN_5'])).reduce((a, b) => a + b, 0);
-		return [(UNssp1/UN2015 - 1)*100, (UNssp3/UN2015 -1)*100, (UNssp5/UN2015 -1)*100];
+	getTotalPopulation(allData){
+		return this.getPopulation(allData.cv)
+				.concat(this.getPopulation(allData.ndr))
+				.concat(this.getPopulation(allData.poll))
+
 	}
+
+	getPopulation(focusedData){
+		if(focusedData == 0)
+		{
+			return[0,0,0];
+		}
+		let pop_c = 0, 
+			pop_1 = 0, 
+			pop_3 = 0, 
+			pop_5 = 0;
+
+		focusedData.forEach( (d) => {
+			if(d){
+				pop_c += parseFloat(d.pop_c);
+				d.UN_c < d.UN_1 ? pop_1 += parseFloat(d.pop_1) : pop_1 += 0;
+				d.UN_c < d.UN_3 ? pop_3 += parseFloat(d.pop_3) : pop_3 += 0;
+				d.UN_c < d.UN_5 ? pop_5 += parseFloat(d.pop_5) : pop_5 += 0;
+			}
+		});
+		return[pop_1,pop_3,pop_5];
+	}
+	
 }
 
 function max(a,b){

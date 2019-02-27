@@ -77,7 +77,7 @@ class MapPlot {
 			this.resetRotate = [0, 0];
 			this.activeClick = d3.select(null)
 			this.clickedRotate;
-			this.clickedScale;
+            this.clickedScale;
 			this.focused = false;
 			this.focusedCountry = "";
             this.currentDatasetName = "cv";
@@ -345,7 +345,7 @@ class MapPlot {
             this.heat.draw(this.heatMinOpacity);
             if (!scenario_change) this.setCurrentColorScale();
             this.initFocusedMapData(focusedData);
-            updateCharts(focusedData, this.UNColorScale)
+            updateCharts(focusedData, this.UNColorScale, this.allfocusedCountryData())
 
         } else {
             if (!scenario_change) this.setCurrentColorScale();
@@ -425,6 +425,25 @@ class MapPlot {
         }, [])
     }
 
+    allfocusedCountryData(){
+        const ndr = this.ndr_country_mapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+            acc.push(this.ndr_data[cur]);
+            return acc;
+        }, []);
+                
+        const poll = this.poll_country_mapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+            acc.push(this.poll_data[cur]);
+            return acc;
+        }, []);
+
+        const cv = this.cv_country_mapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+            acc.push(this.cv_data[cur]);
+            return acc;
+        }, [])
+
+        return{"ndr":ndr, "poll":poll, "cv":cv};
+    }
+
 
     initFocusedMapData(focusedData) {
         if (this.currentDatasetName === "cv") {
@@ -490,7 +509,6 @@ class MapPlot {
             
             let focusedData = that.focusedData();
             
-
             // Update the map:
             d3.selectAll("path")
                 .transition()
@@ -517,7 +535,7 @@ class MapPlot {
             // dataSelection.exit().remove()
 
             // update charts
-            updateCharts(that.focusedData(), that.UNColorScale)
+            updateCharts(focusedData, that.UNColorScale, that.allfocusedCountryData())
         
             // change country name
             updateCountryName(d.name);
