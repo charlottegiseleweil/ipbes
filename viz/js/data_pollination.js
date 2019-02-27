@@ -6,6 +6,7 @@ let dataset_2D = '../Data/ncp_2d_cur.csv';
 let current_viz = "Food Energy";
 let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
+let map_title = document.getElementById('map-name-1');
 
 // plot points on the map for 2D and 3D map
 function showData(the_g, coordinates) {
@@ -106,6 +107,7 @@ function updateData(data_type) {
       region_text = "Lost Crop Production";
       break;
   }
+map_title.innerHTML = region_text;
 colorScale = d3.scaleThreshold()
   .domain([20, 40, 60, 80, 99, 100])
   .range(colorScheme);

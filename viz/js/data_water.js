@@ -6,6 +6,7 @@ let dataset_2D = '../Data/ncp_2d_cur.csv';
 let current_viz = "Food Energy";
 let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
+let map_title = document.getElementById('map-name-1');
 
 // plot points on the map for 2D and 3D map
 function showData(the_g, coordinates) {
@@ -89,10 +90,7 @@ function updateData(data_type) {
     case "Pollution":
       region_text = "Percent Nitrogen Pollution Avoided";
       // current_viz = "Folate";
-      // region_text = "Pollination Contribution to Folate";
       // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
-      // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-      //   current_viz + " in " + current_year + "?";
       // colorScheme = d3.schemePurples[6];
       // colorSchemeDisplay = d3.schemePurples[9];
       // dataset = 'dataset/country_fo.csv';
@@ -105,10 +103,7 @@ function updateData(data_type) {
     case "Export":
       region_text = "Nitrogen Export";
         // current_viz = "Folate";
-        // region_text = "Pollination Contribution to Folate";
         // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
-        // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-        //   current_viz + " in " + current_year + "?";
         // colorScheme = d3.schemePurples[6];
         // colorSchemeDisplay = d3.schemePurples[9];
         // dataset = 'dataset/country_fo.csv';
@@ -119,6 +114,7 @@ function updateData(data_type) {
         // lineGraphObject.updateGraph(previousCountryClicked)
       break;
   }
+map_title.innerHTML = region_text;
 colorScale = d3.scaleThreshold()
   .domain([20, 40, 60, 80, 99, 100])
   .range(colorScheme);

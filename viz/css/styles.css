@@ -367,7 +367,7 @@ img {
 }
 
 .p_popup {
-  color: rgb(247, 246, 241);
+  color: white;
   font-family: ourFont;
   font-weight: 400;
   font-size: 1.2em;
@@ -1231,9 +1231,18 @@ span2 {
   text-decoration: none;
 }
 
-.menu-box-1 {
+.menu-box-1-global {
   padding: 0.7vw 0vh;
   transform: translate(-2.4vw, -3.5vh);
+  position: absolute;
+  width: 102.4vw;
+  z-index: 10000;
+  /*float:left;*/
+}
+
+.menu-box-1 {
+  padding: 0.7vw 0vh;
+  transform: translate(-2.4vw, -3.2vh);
   position: absolute;
   width: 102.4vw;
   z-index: 10000;
