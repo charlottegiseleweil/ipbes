@@ -17,25 +17,6 @@ function initialize_2D_global(data_) {
 
 // Function to load the pollination visualization
 function load_pollination() {
-  // global_activated = false;
-  // zoom_2D_global = null;
-  // document.getElementsByClassName("menu-box-1")[0].style.display = "inline-block";
-  // document.getElementsByClassName("box box-3-global")[0].style.display = "none";
-  // document.getElementsByClassName("box box-2-global")[0].style.display = "none"
-  // document.getElementsByClassName("box box-1-global")[0].style.display = "none";
-  // if (checked3D == "true" && counter != 0) {
-  //   document.getElementsByClassName("box-container")[0].style.background = gradient_blue;
-  //   document.getElementsByClassName("box box-3")[0].style.display = "flex";
-  // }
-  // // The first switch should be directly to 2D, after that we keep track of where we were
-  // if (checked2D == "true" || counter == 0) {
-  //   counter++;
-  //   document.getElementsByClassName("box-container")[0].style.background = gradient_white;
-  //   document.getElementsByClassName("box box-3")[1].style.display = "flex";
-  //   projection2D();
-  // }
-  // document.getElementsByClassName("box box-1")[0].style.visibility = "visible";
-  // document.getElementsByClassName("box box-2")[0].style.display = "flex";
   location.href='viz/Pollination.html';
 }
 
