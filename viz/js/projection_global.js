@@ -195,16 +195,15 @@ function zoomed_2D_global() {
 }
 
 function activate_nature_button() {
-  nature_button.style.backgroundColor = "#000000";
-  risk_button.style.backgroundColor = "#9c9c9c";
+  document.getElementsByTagName('li')[0].style.background = "#c0c0c0";
+  document.getElementsByTagName('li')[1].style.background = "black";
   //Load our HTML file
 }
 
 function activate_risk_button() {
-  risk_button.style.backgroundColor = "#000000";
-  nature_button.style.backgroundColor = "#9c9c9c";
+  document.getElementsByTagName('li')[0].style.background = "black";
+  document.getElementsByTagName('li')[1].style.background = "#c0c0c0";
   //Load HTML file of the other group
 }
 
-document.getElementsByTagName('li')[0].style.backgroundColor = "#c0c0c0";
-document.getElementsByTagName('li')[1].style.background = "black";
+activate_nature_button();
