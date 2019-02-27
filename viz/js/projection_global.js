@@ -130,34 +130,63 @@ let promise_global = new Promise(function(resolve, reject) {
 });
 promise_global.then(() => {
   let coordstoplot_global = initialize_2D_global(data_2D_global);
-  showDataGlobal(g_global, coordstoplot_global);
+  array_UN_cur = [];
+  array_NCP_cur = [];
+  array_pop_cur = [];
+  for (i = 0; i < coordstoplot_global.length; i++) {
+    array_UN_cur[i] = Number(coordstoplot_global[i][2]);
+    array_NCP_cur[i] = Number(coordstoplot_global[i][3]);
+    array_pop_cur[i] = Number(coordstoplot_global[i][4]);
+  }
+  showDataGlobal(g_global, coordstoplot_global, Quartile_50(array_UN_cur),
+    Quartile_50(array_pop_cur), Quartile_33(array_NCP_cur), Quartile_66(array_NCP_cur));
 });
 
+function getColor(UN_value, pop_value, NCP_value, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
+  let colors = [
+    ["rgb(232,232,244)", "rgb(211,244,215)", "rgb(89,202,93)"],
+    ["rgb(248,226,252)", "rgb(137,143,143)", "rgb(33,112,55)"],
+    ["rgb(249,95,250)", "rgb(174,38,168)", "rgb(33,38,38)"]
+  ];
+  var un = 0;
+  var pop = 0;
+  var ncp = 0;
+  if (UN_value > UN_mid_q) {
+    un = 1;
+  }
+  if (pop_value > pop_mid_q) {
+    pop = 1;
+  }
+  if (NCP_value > NCP_third_q && NCP_value < NCP_2_third_q) {
+    ncp = 1;
+  } else if (NCP_value >= NCP_2_third_q) {
+    ncp = 2;
+  }
+
+  return colors[un + pop][ncp];
+}
+
 // plot points on the map for 2D global map
-function showDataGlobal(the_g, coordinates) {
-    // This is just for 2D, we are creating a raster by creating a rectangle
-    the_g.selectAll(".plot-point")
-      .data(coordinates).enter()
-      .append("rect")
-      .classed('plot-point', true)
-      .attr("x", function(d) {
-        return projection_global(d)[0];
-      })
-      .attr("y", function(d) {
-        return projection_global(d)[1];
-      })
-      .attr("width", "3")
-      .attr("height", "3")
-      .attr("fill", function(d) {
-        //d[2] is the demand (unmet need, y-axis)
-        let red = Number(d[2])*255;
-        //d[3] is the NCP (x-axis)
-        let green = Number(d[3])*255;
-        let blue = 0;
-        return "rgb("+red+","+green+","+blue+")"
-      })
-      // .on('mouseover', tip.show)
-      // .on('mouseout', tip.hide);
+function showDataGlobal(the_g, coordinates, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
+  // This is just for 2D, we are creating a raster by creating a rectangle
+  the_g.selectAll(".plot-point")
+    .data(coordinates).enter()
+    .append("rect")
+    .classed('plot-point', true)
+    .attr("x", function(d) {
+      return projection_global(d)[0];
+    })
+    .attr("y", function(d) {
+      return projection_global(d)[1];
+    })
+    .attr("width", "3")
+    .attr("height", "3")
+    .attr("fill", function(d) {
+
+      return getColor(d[2], d[3], d[4], UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q)
+    })
+  // .on('mouseover', tip.show)
+  // .on('mouseout', tip.hide);
 }
 
 function click_about() {
