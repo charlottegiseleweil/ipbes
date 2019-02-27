@@ -86,8 +86,9 @@ function updateData(data_type) {
       change_dataset = '../Data/ncp_2d_change.csv';
       // lineGraphObject.updateGraph(previousCountryClicked);
       break;
-    case "Folate":
+    case "Crop":
       // current_viz = "Folate";
+      region_text = "Crop Population Dependence";
       // region_text = "Pollination Contribution to Folate";
       // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
@@ -100,6 +101,9 @@ function updateData(data_type) {
       // color_graph = colorScale_folate;
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
+      break;
+    case "Lost":
+      region_text = "Lost Crop Production";
       break;
   }
 colorScale = d3.scaleThreshold()

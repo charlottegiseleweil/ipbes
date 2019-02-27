@@ -57,7 +57,7 @@ function showData(the_g, coordinates) {
 function updateData(data_type) {
   switch (data_type) {
     case "Population":
-      region_text = "Crop Population Dependence";
+      region_text = "Rural Population";
       // title.innerHTML = "Pollination Contribution to Nutrition (Vitamin A) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       //   current_viz + " in " + current_year + "?";
@@ -71,9 +71,9 @@ function updateData(data_type) {
       // lineGraphObject.updateGraph(previousCountryClicked);
 
       break;
-    case "NCP":
+    case "Nitrogen":
       // current_viz = "Food Energy";
-      region_text = "Average Micronutrient Pollination Dependance";
+      region_text = "Nitrogen Pollution Potential";
       // title.innerHTML = "Pollination Contribution to Nutrition (Food Energy) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       //   current_viz + " in " + current_year + "?";
@@ -86,7 +86,8 @@ function updateData(data_type) {
       change_dataset = '../Data/ncp_2d_change.csv';
       // lineGraphObject.updateGraph(previousCountryClicked);
       break;
-    case "Folate":
+    case "Pollution":
+      region_text = "Percent Nitrogen Pollution Avoided";
       // current_viz = "Folate";
       // region_text = "Pollination Contribution to Folate";
       // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
@@ -100,6 +101,22 @@ function updateData(data_type) {
       // color_graph = colorScale_folate;
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
+      break;
+    case "Export":
+      region_text = "Nitrogen Export";
+        // current_viz = "Folate";
+        // region_text = "Pollination Contribution to Folate";
+        // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
+        // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
+        //   current_viz + " in " + current_year + "?";
+        // colorScheme = d3.schemePurples[6];
+        // colorSchemeDisplay = d3.schemePurples[9];
+        // dataset = 'dataset/country_fo.csv';
+        // dataset_graph = 'dataset/plot_folate.csv';
+        // dataset_2D = 'dataset/pixel_folate.csv';
+        // color_graph = colorScale_folate;
+        // change_dataset = 'dataset/change_fo.csv';
+        // lineGraphObject.updateGraph(previousCountryClicked)
       break;
   }
 colorScale = d3.scaleThreshold()
