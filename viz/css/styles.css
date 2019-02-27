@@ -1231,22 +1231,13 @@ span2 {
   text-decoration: none;
 }
 
-.menu-box-1-global {
-  padding: 0.7vw 0vh;
-  margin-left: -2.41vw;
-  margin-top: -3.6vh;
-  position: absolute;
-  width: 102.4vw;
-  z-index: 10000;
-}
-
 .menu-box-1 {
   padding: 0.7vw 0vh;
-  margin-left: -2.41vw;
-  margin-top: -3.2vh;
+  transform: translate(-2.4vw, -3.5vh);
   position: absolute;
   width: 102.4vw;
   z-index: 10000;
+  /*float:left;*/
 }
 
 .year-text-2015 {
