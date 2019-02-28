@@ -138,9 +138,9 @@ class ScenarioChart{
 	
 	constructor(){
 		// Initialize the barchart
-		const svgWidth = 245;
+		const svgWidth = 255;
 		const svgHeight = 180;
-		this.margin = {top: 20, right:2, bottom: 10, left:2};
+		this.margin = {top: 20, right:2, bottom: 10, left:30};
 
 		this.width = svgWidth - this.margin.left - this.margin.right,
 		this.height = svgHeight - this.margin.top - this.margin.bottom;
@@ -172,7 +172,16 @@ class ScenarioChart{
 		this.g.selectAll(".bar")
 			.data(data)
 			.enter().append("rect")
-				.attr("class", d => d < 0 ? "bar negative" : "bar positive")
+				.attr("class", (d,i) => {
+					switch(i%3) {
+						case 0:
+							return 'bar greenGrowth';
+						case 1:
+							return 'bar regionalRivalry';
+						case 2:
+							return 'bar fossilFuels';
+					}	
+				})
 				.attr("y", d => d < 0 ? y(0) : y(d))
 				.attr("x", (d,i) => x(this.labels[i]))
 				.attr("width", d => x.bandwidth())
@@ -181,14 +190,13 @@ class ScenarioChart{
 		const paddingTop = Math.abs(y(max(0,d3.max(data, d => d ))) - y(0))
 		const xAxis = d3.axisBottom(d3.scaleLinear().range([0, this.width-1])).ticks(0)
 		this.g.append("g")
-			.attr("transform", "translate(" + this.margin.left + "," + paddingTop + ")")
+			.attr("transform", "translate(" + "0," + paddingTop + ")")
 			.attr("class", "X axis")
 			.call(xAxis);
 		
 		// Append values 
 		this.g.append("g")
 			.attr("class", "labelText")
-			.attr("transform", "translate(" + this.margin.left + ",0)")
 			.selectAll(".textlabel")
 			.data(data)
 			.enter()
@@ -210,13 +218,23 @@ class ScenarioChart{
 			.attr("y", -5)
 			.style("width",x.bandwidth())
 			.style("height",20)
-			.text((d,i) => this.labels[i]);
+			.style("font-size","0.6rem")
+			.html((d,i) => this.labels[i]);
+		
+		//Append tics and Y-axis
+		this.g.append("g")
+			.attr("class", "axis")
+			.call(d3.axisLeft(y)
+				.ticks(5, "s"));
 	}
 	remove(){
-		this.g.selectAll(".bar.positive")
+		this.g.selectAll(".bar.greenGrowth")
 						.remove()
 						.exit()
-		this.g.selectAll(".bar.negative")
+		this.g.selectAll(".bar.regionalRivalry")
+						.remove()
+						.exit()
+		this.g.selectAll(".bar.fossilFuels")
 						.remove()
 						.exit()
 		this.g.selectAll("g")
@@ -225,11 +243,25 @@ class ScenarioChart{
 	}
 
 	calculateChangeInUnmetNeed(focusedData){
-		const UN2015 = focusedData.map(x=> parseFloat(x['UN_c'])).reduce((a, b) => a + b, 0);
-		const UNssp1 = focusedData.map(x=> parseFloat(x['UN_1'])).reduce((a, b) => a + b, 0);
-		const UNssp3 = focusedData.map(x=> parseFloat(x['UN_3'])).reduce((a, b) => a + b, 0);
-		const UNssp5 = focusedData.map(x=> parseFloat(x['UN_5'])).reduce((a, b) => a + b, 0);
-		return [(UNssp1/UN2015 - 1)*100, (UNssp3/UN2015 -1)*100, (UNssp5/UN2015 -1)*100];
+		if(focusedData==0)
+		{
+			return[0,0,0];
+		}
+		let UN_c = 0, 
+			UN_1 = 0, 
+			UN_3 = 0, 
+			UN_5 = 0;
+
+		focusedData.forEach( (d) => {
+			if(d){
+				UN_c += parseFloat(d.UN_c);
+				UN_1 += parseFloat(d.UN_1);
+				UN_3 += parseFloat(d.UN_3);
+				UN_5 += parseFloat(d.UN_5);
+			}	
+		});
+
+		return [(UN_1/UN_c - 1)*100, (UN_3/UN_c -1)*100, (UN_5/UN_c -1)*100];
 	}
 }
 
@@ -334,7 +366,6 @@ class SuperScenarioChart{
 			.call(xAxis);
 		
 		this.g.append("g")
-
 			.attr("class", "axis")
 			.call(d3.axisLeft(y)
 				.ticks(5, "s"));
@@ -400,38 +431,133 @@ class SuperScenarioChart{
 
 class PopulationChart{
 	constructor(){
+		// Initialize the barchart
+		const svgWidth = 255;
+		const svgHeight = 180;
+		this.margin = {top: 20, right:2, bottom: 10, left:30};
 
-	}
-	update(data){
-		let population = data.map(x => 
-			({pop_c: parseFloat(x.pop_c),
-			pop_1: parseFloat(x.pop_1), 
-			pop_3: parseFloat(x.pop_3), 
-			pop_5: parseFloat(x.pop_5), })
+		this.width = svgWidth - this.margin.left - this.margin.right,
+		this.height = svgHeight - this.margin.top - this.margin.bottom;
+
+		this.svg = d3.select('#population-comparison-svg')
+			.attr("width", svgWidth)
+			.attr("height", svgHeight);
+
+		this.g = this.svg.append("g")
+			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 		
-			);
-		this.show(population);
+		this.labels = ["Green Growth","Regional Rivalry","Fossil Fuels"];
 	}
-	
-	show(population){
+	/*Function to update the bar chart*/
+	update(focusedData){
+		// Remove old data
+		this.remove();
+
+		// calculate changes
+		const data = this.getPopulation(focusedData)
+		// Scale axis
+		const y = d3.scaleLinear()
+			.range([this.height, 0])
+			.domain([min(d3.min(data, d => d ),0), max(0,d3.max(data, d => d ))]);
+		const x = d3.scaleBand().range([0,this.width]);
+		x.domain(data.map((d,i) => this.labels[i] )).padding(0.1);
+		
+		// Add new bars
+		this.g.selectAll(".bar")
+			.data(data)
+			.enter().append("rect")
+				.attr("class", (d,i) => {
+					switch(i%3) {
+						case 0:
+							return 'bar greenGrowth';
+						case 1:
+							return 'bar regionalRivalry';
+						case 2:
+							return 'bar fossilFuels';
+					}	
+				})
+				.attr("y", d => d < 0 ? y(0) : y(d))
+				.attr("x", (d,i) => x(this.labels[i]))
+				.attr("width", d => x.bandwidth())
+				.attr("height", d => Math.abs(y(d) - y(0)))
+
+		const paddingTop = Math.abs(y(max(0,d3.max(data, d => d ))) - y(0))
+		const xAxis = d3.axisBottom(d3.scaleLinear().range([0, this.width-1])).ticks(0)
+		this.g.append("g")
+			.attr("transform", "translate(" + "0," + paddingTop + ")")
+			.attr("class", "X axis")
+			.call(xAxis);
+		
+		// Append values 
+		this.g.append("g")
+			.attr("class", "labelText")
+			.selectAll(".textlabel")
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("class", "textlabel")
+			.attr("x", (d,i) => x(this.labels[i]) + x.bandwidth()/2)
+			.attr("y", d => d > 0 ? y(d) + 13 : y(d) - 5)
+			.text(d => round(d));
+		
+		// Append scenario labels
+		this.g.append("g")
+			.attr("class", "labelText")
+			.selectAll(".textlabel")
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("class", "textlabel")
+			.attr("x", (d,i) => x(this.labels[i]) + x.bandwidth()/2)
+			.attr("y", -5)
+			.style("width",x.bandwidth())
+			.style("height",20)
+			.style("font-size","0.6rem")
+			.text((d,i) => this.labels[i]);
+
+		//Append Y-axis
+		this.g.append("g")
+			.attr("class", "axis")
+			.call(d3.axisLeft(y)
+				.ticks(5, "s"));
+	}
+	remove(){
+		this.g.selectAll(".bar.greenGrowth")
+						.remove()
+						.exit()
+		this.g.selectAll(".bar.regionalRivalry")
+						.remove()
+						.exit()
+		this.g.selectAll(".bar.fossilFuels")
+						.remove()
+						.exit()
+		this.g.selectAll("g")
+						.remove()
+						.exit()
+	}
+
+	getPopulation(focusedData){
+		if(focusedData == 0)
+		{
+			return[0,0,0];
+		}
 		let pop_c = 0, 
 			pop_1 = 0, 
 			pop_3 = 0, 
 			pop_5 = 0;
 
-		population.forEach( (d) => {
-			pop_c += d.pop_c;
-			pop_1 += d.pop_1 ;
-			pop_3 += d.pop_3 ;
-			pop_5 += d.pop_5 ;
+		focusedData.forEach( (d) => {
+			if(d){
+				pop_c += parseFloat(d.pop_c);
+				d.UN_c < d.UN_1 ? pop_1 += parseFloat(d.pop_1) : pop_1 += 0;
+				d.UN_c < d.UN_3 ? pop_3 += parseFloat(d.pop_3) : pop_3 += 0;
+				d.UN_c < d.UN_5 ? pop_5 += parseFloat(d.pop_5) : pop_5 += 0;
+			}
 		});
-
-		document.getElementById("population-chart-value-cur").innerHTML = pop_c ? round(pop_c) : "0";
-		document.getElementById("population-chart-value-ssp1").innerHTML = pop_1 ? round(pop_1) : "0";
-		document.getElementById("population-chart-value-ssp3").innerHTML = pop_3 ? round(pop_3) : "0";
-		document.getElementById("population-chart-value-ssp5").innerHTML = pop_5 ? round(pop_5): "0";
-
+		return[pop_1,pop_3,pop_5];
 	}
+
+	
 }
 class SuperPopulationChart{
 	
