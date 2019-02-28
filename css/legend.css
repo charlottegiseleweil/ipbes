@@ -1,0 +1,19 @@
+#legend{
+    color: white;
+    position: absolute;
+    right: 4rem;
+    top: 0.6rem;
+    z-index: 100;
+}
+#legendBar{
+    display: inline-block;
+    vertical-align: middle;
+}
+.legendText{
+    display: inline-block;
+    font-size: 0.5rem;
+    vertical-align: middle;
+    text-align: center;
+    width: 2.5rem;
+    
+}
