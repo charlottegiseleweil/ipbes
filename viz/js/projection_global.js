@@ -1,4 +1,4 @@
-let dataset_global = 'Data/2d_poll_global.csv';
+let dataset_global = 'Data/2d_scale.csv';
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
@@ -10,14 +10,14 @@ var zoom_2D_global = get_global_zoom();
 function initialize_2D_global(data_) {
   let coordstoplot = [];
   for (let key in data_) {
-    coordstoplot.push([data_[key]['long'], data_[key]['lat'], data_[key]['UN_cur_perc'],data_[key]['NCP_cur']]);
+    coordstoplot.push([data_[key]['long'], data_[key]['lat'], data_[key]['UN_cur'], data_[key]['NCP_cur'], data_[key]['population']]);
   }
   return coordstoplot;
 }
 
 // Function to load the pollination visualization
 function load_pollination() {
-  location.href='viz/Pollination.html';
+  location.href = 'viz/Pollination.html';
 }
 
 
@@ -55,29 +55,29 @@ let coastal_box = document.getElementById("coastal-risk-box");
 function load_pollination_data() {
   if (pollination_box.checked == true) {
     if (water_box.checked == false && coastal_box.checked == false) {
-    legendTitle.innerHTML = "Pollination Key Areas"
+      legendTitle.innerHTML = "Pollination Key Areas"
+    } else {
+      legendTitle.innerHTML = "Hotspots";
+    }
   } else {
-    legendTitle.innerHTML = "Hotspots";
-  }
-} else {
     if (water_box.checked == true) {
       load_waterquality_data();
     }
-}
+  }
 }
 
 function load_waterquality_data() {
   if (water_box.checked == true) {
     if (pollination_box.checked == false && coastal_box.checked == false) {
-    legendTitle.innerHTML = "WQ Key Areas";
+      legendTitle.innerHTML = "WQ Key Areas";
+    } else {
+      legendTitle.innerHTML = "Hotspots";
+    }
+
+
   } else {
-    legendTitle.innerHTML = "Hotspots";
-  }
-
-
-} else {
-  if (pollination_box.checked == true) {
-    load_pollination_data();
+    if (pollination_box.checked == true) {
+      load_pollination_data();
     }
   }
 }
@@ -85,10 +85,10 @@ function load_waterquality_data() {
 function load_coastalrisk_data() {
   if (coastal_box.checked == true) {
     if (pollination_box.checked == false && water_box.checked == false) {
-    legendTitle.innerHTML = "CR Key Areas";
-  } else {
-    legendTitle.innerHTML = "Hotspots";
-  }
+      legendTitle.innerHTML = "CR Key Areas";
+    } else {
+      legendTitle.innerHTML = "Hotspots";
+    }
   }
 }
 
@@ -194,9 +194,9 @@ function click_about() {
 }
 
 function get_global_zoom() {
-    return d3.zoom()
-      .scaleExtent([0.95, 15])
-      .on("zoom", zoomed_2D_global);
+  return d3.zoom()
+    .scaleExtent([0.95, 15])
+    .on("zoom", zoomed_2D_global);
 }
 
 // Changes both groups in 2D
@@ -214,7 +214,7 @@ function activate_risk_button() {
   document.getElementsByTagName('li')[3].style.background = "black";
   document.getElementsByTagName('li')[4].style.background = "#c0c0c0";
   //Load HTML file of the other group
-  location.href='viz_risk/index.html';
+  location.href = 'viz_risk/index.html';
 }
 
 activate_nature_button();
