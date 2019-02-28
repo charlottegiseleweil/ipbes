@@ -85,7 +85,7 @@ class MapPlot {
             this.currentModeName = "UN";
 			// the current scenario, either 'c', '1', '3' or '5'
             this.scenarios = ["c", "1", "3", "5"];
-            this.currentScenario = "c";
+            this.currentScenario = "3";
             // The population limit for a city to be displayed
             this.pop_limit = 2000000; 
 

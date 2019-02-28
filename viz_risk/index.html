@@ -57,8 +57,8 @@
 			</td></tr>
 			<tr><td>
 				<p class="row-label">Year</p>
-				<button type="button" class="year-button selected" id="year-button-2015" onclick="switchYear(false)">2015</button>
-				<button type="button"  class="year-button" id="year-button-2050" onclick="switchYear(true)">2050</button>
+				<button type="button" class="year-button " id="year-button-2015" onclick="switchYear(false)">2015</button>
+				<button type="button"  class="year-button selected" id="year-button-2050" onclick="switchYear(true)">2050</button>
 			</td></tr>
 			<tr id="scenario"><td>
 				<p class="row-label">Scenario</p>
@@ -84,26 +84,26 @@
 			<svg id="distribution"></svg>
 			<h3 id="distri-x-axis">Number of people</h3>
 			<h3 id="distri-y-axis">Coastal Hazard</h3>
+	</div> 
+	
+	<div id="compare-scenarios">
+		<h1 id="compare-scenario-header">Compare Scenarios and Services</h1>
+		<div id="scenario-chart">
+			<h2 class="scenario-chart-head">How much has the total <br>deficit changed since 2015?</h2>
+			<svg id="scenario-comparison-svg"></svg>
 		</div> 
-	
-		<div id="compare-scenarios">
-			<h1 id="compare-scenario-header">Compare Scenarios and Services</h1>
-			<div id="scenario-chart">
-				<h2 class="scenario-chart-head">How much has the total <br>deficit changed since 2015?</h2>
-				<svg id="scenario-comparison-svg"></svg>
-			</div> 
-			<div id="population-chart">
-				<h2 class= "scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
-				<svg id="population-comparison-svg"></svg>
-			</div> 
-		</div>
-	
-		<div id ="legend">
-			<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
-			<svg id="legendBar"></svg>
-			<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
-		</div>
+		<div id="population-chart">
+			<h2 class= "scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
+			<svg id="population-comparison-svg"></svg>
+		</div> 
 	</div>
+
+	<div id ="legend">
+		<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
+		<svg id="legendBar"></svg>
+		<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
+	</div>
+</div>
 
 <div id="greyOut" class="visible"></div>
 

@@ -12,7 +12,7 @@ let opts = {
 
 whenDocumentLoaded(() => {
 	// Initialize dashboard
-	is2050 = false;
+	is2050 = true;
 	colorSchema = {UN: [d3.hcl(100, 90, 100),d3.hcl(15, 90, 60)], pop: [d3.hcl(227,5,98),d3.hcl(254,45,23)], NC: [d3.hcl(119,22,93),d3.hcl(133,34,25)]};
 	plot_object = new MapPlot('globe-plot');
 	charts = {distribution: new DistributionChart(), scenario: new SuperScenarioChart(), population: new SuperPopulationChart()};
@@ -60,7 +60,6 @@ function switchYear(toggle) {
 		scenarioRow.style.transition = 'opacity 0.5s linear';
 		scenarioRow.style.transition = 'visibility 0.15s linear';
 		plot_object.setScenario("c");
-		document.getElementById('compare-scenarios').style.visibility = 'hidden';
 		document.getElementById('year-button-2015').classList.add('selected');
 		document.getElementById('year-button-2050').classList.remove('selected');
     }
@@ -120,16 +119,17 @@ function updateCountryName(name) {
 
 function updateCharts(focusedData, colorScale, allfocusedCountryData){
 	if(focusedData == 0){
-		hideCharts();
+		document.getElementById('distribution-chart').style.visibility = 'hidden';
 	}
 	else{
 		charts.distribution.show(focusedData, colorScale);
-		if(is2050){
-			charts.scenario.update(allfocusedCountryData);
-			charts.population.update(allfocusedCountryData);
-			document.getElementById('compare-scenarios').style.visibility = 'visible';
-		}
 	}
+	
+	charts.scenario.update(allfocusedCountryData);
+	charts.population.update(allfocusedCountryData);
+	document.getElementById('compare-scenarios').style.visibility = 'visible';
+	
+	
 }
 
 function hideCharts(){
