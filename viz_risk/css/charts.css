@@ -90,7 +90,7 @@
     margin: auto;
 }
 
-#scenario-chart-head{
+.scenario-chart-head{
     text-align: center;
     margin-bottom: 0;
     font-weight: 300;
@@ -103,12 +103,12 @@
   }
 
 .bar.negative {
-    fill: #42A644;
+    fill: rgb(56, 179, 58);
 }
 
 .bar.greenGrowth {
-    fill: rgb(29, 150, 31);
-  }
+    fill: rgb(42, 129, 43);
+}
 
 .bar.regionalRivalry{
     fill: rgb(184, 152, 13);
@@ -180,7 +180,7 @@ div.tooltip {
     font-size: 1rem;
 }
 .tooltip_negative{
-    color: rgb(1, 56, 2);
+    color: rgb(16, 153, 18);
     padding:0;
     margin:0;
     font-weight: 800;
