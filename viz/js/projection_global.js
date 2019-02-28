@@ -214,6 +214,7 @@ function activate_risk_button() {
   document.getElementsByTagName('li')[3].style.background = "black";
   document.getElementsByTagName('li')[4].style.background = "#c0c0c0";
   //Load HTML file of the other group
+  location.href='viz_risk/index.html';
 }
 
 activate_nature_button();
