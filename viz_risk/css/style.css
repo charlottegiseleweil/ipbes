@@ -30,10 +30,43 @@ body {
 	justify-content: center;
 	align-content: center;
 	background: black;
+	color: white;
 
 	font-family: 'Muli', sans-serif;
 }
+#menu{
+	position: absolute;
+	top:0;
+	z-index: 100;
+	left: 16.5rem;
+	box-sizing: border-box;
+	width: 58%;
+}
 
+.menu_option{
+	background: rgba(255, 255, 255, 0.096);
+    padding: 1.2rem 0.3rem 1.2rem 0.3rem;
+    margin: 1rem 0rem 0rem 1rem;
+    font-size: 1rem;
+    z-index: 100;
+    float: left;
+	width: 21rem;
+	text-align: center;
+	cursor: pointer;
+
+}
+.menu_option:hover{
+	background-color: rgba(255, 255, 255, 0.205);
+	font-weight: 700;
+}
+#menu_today{
+	
+}
+#menu_future{
+	background-color: rgba(255, 255, 255, 0.205);
+	font-weight: 700;
+
+}
 
 .selected {
 	fill: dimgrey;

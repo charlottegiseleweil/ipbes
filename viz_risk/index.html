@@ -31,6 +31,18 @@
 	<div id="resetButton"><p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p></div>
 	<div id="countryLabel"></div>
 	
+	<div id="menu">
+		<div class="menu_option" id="menu_today" onClick="location.href='../index.html'"> Where does nature help us most today?</div>
+		<div class="menu_option" id="menu_future">Where are peaople at most risk in the future?</div>
+	</div>
+	<div id ="legend">
+		<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
+		<svg id="legendBar"></svg>
+		<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
+	</div>
+	
+	
+	
 	<div id="radio_container">	
 		<table>
 			<tr><td>
@@ -96,12 +108,6 @@
 			<h2 class= "scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
 			<svg id="population-comparison-svg"></svg>
 		</div> 
-	</div>
-
-	<div id ="legend">
-		<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
-		<svg id="legendBar"></svg>
-		<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
 	</div>
 </div>
 

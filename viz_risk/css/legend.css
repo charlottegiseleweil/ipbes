@@ -1,9 +1,12 @@
 #legend{
     color: white;
+	padding: 0.3rem 0.3rem 0.5rem 0.3rem;
+    margin: 1rem;
+	font-size: 1rem;
+	z-index: 10;
     position: absolute;
-    right: 4rem;
-    top: 0.6rem;
-    z-index: 100;
+    top: 0;
+    right: 0rem;
 }
 #legendBar{
     display: inline-block;
