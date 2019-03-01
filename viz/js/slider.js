@@ -199,7 +199,7 @@ function runSegmentedSSPs(period) {
     BarGraphObject.updateBarGraph('../Data/ssp5_impacted.csv');
     current_SSP = "SSP5";
   }
-  parseData("../Data/nc_degree.csv", doStuff, false);
+  parseData(dataset_2D, doStuff, false);
   change_pollination_contribution(period);
   //update_percentages(period);
 }

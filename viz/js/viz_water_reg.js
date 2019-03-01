@@ -1,7 +1,7 @@
 document.getElementById("checked3D").disabled = true;
 document.getElementById("checked2D").disabled = false;
 
-let region_text = "Percent Nitrogen Pollution Avoided";
+let region_text = "Nature's contribution to Water Purification";
 
 // We instantiate the bar chart object for the 2D section
 let BarGraphObject = new BarGraph();
@@ -62,6 +62,17 @@ let tip = d3.tip()
 // Adding tip to the svg
 svg.call(tip);
 
+let tip2 = d3.tip()
+  .attr('class', 'd3-tip')
+
+  .offset([50, 80])
+  // Here d -> is basically the data which is given to the circle -> right now it is just lat long
+  .html(function(d) {
+    return "<strong>" + region_text + ": <span>" + Number(d[current_SSP]).toFixed(2) + "</span></strong>" + "%";
+  })
+// Adding tip to the svg
+svg_map2.call(tip2)
+
 // Makes the legend
 makeLegendInitializations(false);
 makeLegend(colorScale);
@@ -100,16 +111,16 @@ let colorScale_folate = d3.scaleOrdinal()
 let color_graph = colorScale_energy;
 
 // We define the function
-function load_file(){
+function load_file() {
   document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
   load_file();
 });
 
 function load_global() {
-  location.href='../index.html';
+  location.href = '../index.html';
 }
 
 //projection2D();

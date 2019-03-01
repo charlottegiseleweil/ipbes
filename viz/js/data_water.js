@@ -2,7 +2,7 @@
 // and also the initializations
 let firstTime = true;
 let dataset = '../Data/country_en.csv';
-let dataset_2D = '../Data/ncp_2d_cur.csv';
+let dataset_2D = '../Data/nc_degree.csv';
 let current_viz = "Food Energy";
 let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
@@ -78,13 +78,13 @@ function updateData(data_type) {
       // colorSchemeDisplay = d3.schemeReds[9];
       // dataset = 'dataset/country_en.csv';
       // dataset_graph = 'dataset/plot_energy.csv';
-      dataset_2D = '../Data/ncp_2d_cur.csv';
+      dataset_2D = '../Data/n_load_degree.csv';
       // color_graph = colorScale_energy;
       //change_dataset = '../Data/ncp_2d_change.csv';
       // lineGraphObject.updateGraph(previousCountryClicked);
       break;
     case "Pollution":
-      region_text = "Percent Nitrogen Pollution Avoided";
+      region_text = "Nature's contribution to Water Purification";
       // current_viz = "Folate";
       // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
       // colorScheme = d3.schemePurples[6];
@@ -104,7 +104,7 @@ function updateData(data_type) {
       // colorSchemeDisplay = d3.schemePurples[9];
       // dataset = 'dataset/country_fo.csv';
       // dataset_graph = 'dataset/plot_folate.csv';
-      // dataset_2D = 'dataset/pixel_folate.csv';
+      dataset_2D = '../Data/n_export_degree.csv';
       // color_graph = colorScale_folate;
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
@@ -121,8 +121,8 @@ function updateData(data_type) {
     .range(colorSchemeDisplay);
 
   //updateLegend(colorScale);
-  svg_map2.selectAll('.plot-point').remove();
   parseData(dataset_2D, doStuff, true);
+  svg_map2.selectAll('.plot-point').remove();
 }
 
 // Access data loads the daa for 3D and 2D and depending upon that colors
@@ -141,14 +141,17 @@ function accessData() {
 
 function doStuff(data, firstTime) {
   //Data is usable here
+  svg.selectAll('.plot-point').remove();
   if (firstTime) {
     showData(g_map2, data, '2015', colorScaleDisplay);
-    showData(g, data, 'SSP1', changeColorScaleDisplay);
-  } else {
-    svg.selectAll('.plot-point').remove();
-    showData(g, data, current_SSP, changeColorScaleDisplay);
   }
+  showData(g, data, current_SSP, changeColorScaleDisplay);
+
 }
+
+function change_labels(dataset_name, firstTime)(
+
+)
 
 function parseData(url, callBack, firstTime) {
   Papa.parse(url, {
