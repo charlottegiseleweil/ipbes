@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 
 <head>
@@ -7,7 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
   <link href="https://goo.gl/mTc43h" rel="stylesheet">
+      
+  <!-- w3 style thingz -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/w3.css" />
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 </head>
 
 <body>
@@ -26,8 +30,6 @@
   <script src="libraries/d3-tip.js"></script>
 
   <script src="libraries/noframework.waypoints.min.js"></script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
   <!-- StoryTelling form - 1st page for Title and other content, 2nd Page for the visualization  -->
@@ -118,21 +120,24 @@
     </div>
   </div> -->
   <!-- End of popup window -->
-  <div class="box-container" id='3rd_box'>
-    <div class="menu-box-1">
-    <div class="nav">
-  <ul>
-    <li><a href="#" class="nav-link" onclick="load_global()"> &larr; BACK TO ALL</a></li>
-    <li><a href="#" class="nav-link" onclick="projection2D()">NCP 2015 & 2050</a></li>
-    <li><a href="#" class="nav-link">PEOPLE IMPACTED</a></li>
-    <li><a href="#" class="nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a></li>
-    <li><a href="methods_polli.html" class="nav-link">MODELING METHOD</a></li>
-    <li><a href="#" class="nav-link" onclick="showNow()">ABOUT</a></li>
-    <li><a href="#" class="nav-link" onclick="showNow()">&#9432;</a></li>
-  </ul>
-</div>
+
+   
+   <!-- Menu Navbar -->
+    <div class="w3-top">
+      <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
+      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="load_global()"> &larr; </a>
+      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">NCP 2015 & 2050</a>
+      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
+      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
+      <a href="methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
+      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
+      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">About</a>
+      </div>
     </div>
-    <div class="box box-1">
+   <!-- End Menu Navbar -->
+
+  <div class="box-container" id='3rd_box'>
+  <div class="box box-1">
       <button class="back-button" style="display:none;" name="answer" value="info" onclick="load_global()"><i class="fa fa-arrow-left fa-2x"></i></button>
       <button class="info-button" style="display:none;" name="answer" value="info" onclick="showNow()"><i class="fa fa-info-circle fa-2x"></i></button>
       <div class="switch-proj" id="projectionChangeChecked" style="display:none;">
