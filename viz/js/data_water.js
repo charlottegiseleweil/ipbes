@@ -149,9 +149,7 @@ function doStuff(data, firstTime) {
 
 }
 
-function change_labels(dataset_name, firstTime)(
 
-)
 
 function parseData(url, callBack, firstTime) {
   Papa.parse(url, {
