@@ -1,5 +1,5 @@
 function mapsTimeout() {
-  setTimeout(showMaps, 5000);
+  setTimeout(showMaps, 4000);
 }
 
 function showMaps() {
