@@ -6,7 +6,7 @@ function projection2D() {
 
 
 
-  	parseData("../Data/ncwp.csv", doStuff, true);
+    parseData("../Data/nc_degree.csv", doStuff, true);
 
     // let promise = new Promise(function(resolve, reject) {
     //   // loadGlobalData(dataset);

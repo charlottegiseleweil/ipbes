@@ -19,30 +19,30 @@ function showData(the_g, data, period, colorScaleSelect) {
       .data(data).enter()
       .append("polygon")
       .classed('plot-point', true)
-      .attr("points",function(d) {
-            let x_1 = projection([d['lat1'], d['long1']])[0];
-            let y_1 = projection([d['lat1'], d['long1']])[1];
-            let x_2 = projection([d['lat2'], d['long2']])[0];
-            let y_2 = projection([d['lat2'], d['long2']])[1];
-            let x_3 = projection([d['lat3'], d['long3']])[0];
-            let y_3 = projection([d['lat3'], d['long3']])[1];
-            let x_4 = projection([d['lat4'], d['long4']])[0];
-            let y_4 = projection([d['lat4'], d['long4']])[1];
-            let x_5 = projection([d['lat5'], d['long5']])[0];
-            let y_5 = projection([d['lat5'], d['long5']])[1];
+      .attr("points", function(d) {
+        let x_1 = projection([d['lat1'], d['long1']])[0];
+        let y_1 = projection([d['lat1'], d['long1']])[1];
+        let x_2 = projection([d['lat2'], d['long2']])[0];
+        let y_2 = projection([d['lat2'], d['long2']])[1];
+        let x_3 = projection([d['lat3'], d['long3']])[0];
+        let y_3 = projection([d['lat3'], d['long3']])[1];
+        let x_4 = projection([d['lat4'], d['long4']])[0];
+        let y_4 = projection([d['lat4'], d['long4']])[1];
+        let x_5 = projection([d['lat5'], d['long5']])[0];
+        let y_5 = projection([d['lat5'], d['long5']])[1];
 
-            return (x_1 + ',' + y_1 + ' ' +
-                x_2 + ',' + y_2 + ' ' +
-                x_3 + ',' + y_3 + ' ' +
-                x_4 + ',' + y_4 + ' ' +
-                x_5 + ',' + y_5);
-        })
+        return (x_1 + ',' + y_1 + ' ' +
+          x_2 + ',' + y_2 + ' ' +
+          x_3 + ',' + y_3 + ' ' +
+          x_4 + ',' + y_4 + ' ' +
+          x_5 + ',' + y_5);
+      })
       .attr("fill", function(d) {
         color = d[period] || 0;
-        if(d[period] == 0) {
+        if (d[period] == 0) {
           return "#ffffff00";
         }
-          return colorScaleSelect(color);
+        return colorScaleSelect(color);
       })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide);
@@ -62,8 +62,8 @@ function updateData(data_type) {
       // colorSchemeDisplay = d3.schemeGreens[9];
       // dataset = 'dataset/country_va.csv';
       // dataset_graph = 'dataset/plot_vitamin.csv';
-      dataset_2D = '../Data/pop_2d_cur.csv';
-      change_dataset = '../Data/pop_2d_change.csv';
+      dataset_2D = '../Data/rural_pop_degree.csv';
+      //change_dataset = '../Data/pop_2d_change.csv';
       // color_graph = colorScale_vitamin;
       // lineGraphObject.updateGraph(previousCountryClicked);
 
@@ -80,11 +80,24 @@ function updateData(data_type) {
       // dataset_graph = 'dataset/plot_energy.csv';
       dataset_2D = '../Data/ncp_2d_cur.csv';
       // color_graph = colorScale_energy;
-      change_dataset = '../Data/ncp_2d_change.csv';
+      //change_dataset = '../Data/ncp_2d_change.csv';
       // lineGraphObject.updateGraph(previousCountryClicked);
       break;
     case "Pollution":
       region_text = "Percent Nitrogen Pollution Avoided";
+      // current_viz = "Folate";
+      // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
+      // colorScheme = d3.schemePurples[6];
+      // colorSchemeDisplay = d3.schemePurples[9];
+      // dataset = 'dataset/country_fo.csv';
+      // dataset_graph = 'dataset/plot_folate.csv';
+      dataset_2D = '../Data/nc_degree.csv';
+      // color_graph = colorScale_folate;
+      // change_dataset = 'dataset/change_fo.csv';
+      // lineGraphObject.updateGraph(previousCountryClicked)
+      break;
+    case "Export":
+      region_text = "Nitrogen Export";
       // current_viz = "Folate";
       // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
       // colorScheme = d3.schemePurples[6];
@@ -96,42 +109,20 @@ function updateData(data_type) {
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
       break;
-    case "Export":
-      region_text = "Nitrogen Export";
-        // current_viz = "Folate";
-        // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
-        // colorScheme = d3.schemePurples[6];
-        // colorSchemeDisplay = d3.schemePurples[9];
-        // dataset = 'dataset/country_fo.csv';
-        // dataset_graph = 'dataset/plot_folate.csv';
-        // dataset_2D = 'dataset/pixel_folate.csv';
-        // color_graph = colorScale_folate;
-        // change_dataset = 'dataset/change_fo.csv';
-        // lineGraphObject.updateGraph(previousCountryClicked)
-      break;
   }
-map_title.innerHTML = region_text;
-colorScale = d3.scaleThreshold()
-  .domain([20, 40, 60, 80, 99, 100])
-  .range(colorScheme);
+  map_title.innerHTML = region_text;
+  colorScale = d3.scaleThreshold()
+    .domain([20, 40, 60, 80, 99, 100])
+    .range(colorScheme);
 
-// The color scheme which displays more gradient
-colorScaleDisplay = d3.scaleThreshold()
-  .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
-  .range(colorSchemeDisplay);
+  // The color scheme which displays more gradient
+  colorScaleDisplay = d3.scaleThreshold()
+    .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
+    .range(colorSchemeDisplay);
 
   //updateLegend(colorScale);
-  let promise = new Promise(function(resolve, reject) {
-    // loadGlobalData(dataset);
-    data_2D = load(dataset_2D);
-    change_data = load(change_dataset)
-    setTimeout(() => resolve(1), 10);
-  });
-  promise.then(function(result) {
-    //update_percentages(current_year);
-    change_pollination_contribution(current_year);
-    accessData();
-  });
+  svg_map2.selectAll('.plot-point').remove();
+  parseData(dataset_2D, doStuff, true);
 }
 
 // Access data loads the daa for 3D and 2D and depending upon that colors
@@ -150,7 +141,7 @@ function accessData() {
 
 function doStuff(data, firstTime) {
   //Data is usable here
-  if(firstTime) {
+  if (firstTime) {
     showData(g_map2, data, '2015', colorScaleDisplay);
     showData(g, data, 'SSP1', changeColorScaleDisplay);
   } else {

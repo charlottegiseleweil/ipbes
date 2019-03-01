@@ -199,7 +199,7 @@ function runSegmentedSSPs(period) {
     BarGraphObject.updateBarGraph('../Data/ssp5_impacted.csv');
     current_SSP = "SSP5";
   }
-  parseData("../Data/ncwp.csv", doStuff, false);
+  parseData("../Data/nc_degree.csv", doStuff, false);
   change_pollination_contribution(period);
   //update_percentages(period);
 }
@@ -209,7 +209,7 @@ function changeActiveState(button_number) {
   var header = document.getElementById("container");
   var btns = header.getElementsByClassName("container-column");
   for (var i = 0; i < btns.length; i++) {
-      btns[i].className = btns[i].className.replace(" active-btn", "");
+    btns[i].className = btns[i].className.replace(" active-btn", "");
   }
   btns[button_number].className += " active-btn";
 }
