@@ -110,6 +110,10 @@ function updateData(data_type) {
       // lineGraphObject.updateGraph(previousCountryClicked)
       break;
   }
+  //Loader done for
+  mapsTimeout();
+  disappearLoader();
+
   map_title.innerHTML = region_text;
   colorScale = d3.scaleThreshold()
     .domain([20, 40, 60, 80, 99, 100])

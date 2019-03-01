@@ -119,6 +119,15 @@
     </div>
   </div> -->
   <!-- End of popup window -->
+  <div id="loader-bg" style="background-color:#f0f8ff; width:100%; height: 100%; z-index: 1000000;"></div>
+  <script>
+    setTimeout(showMaps, 5000);
+
+    function showMaps() {
+      document.getElementById("loader-bg").style.display = "none";
+      document.getElementById("loader").style.display = "none";
+    }
+  </script>
   <div class="box-container" id='3rd_box'>
     <div class="menu-box-1">
     <div class="nav">
@@ -167,6 +176,7 @@
       <div class="map-global"></div>
     </div>
 
+    <div id="loader"></div>
     <div class="box box-2" style="display: flex;">
       <div id="container">
         <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>
@@ -327,6 +337,7 @@
       </div>
 
     </div> -->
+    <script src="js/loader.js"></script>
     <script src="js/statFunctions.js"></script>
     <script src="js/lineGraph.js"></script>
     <script src="js/barGraph.js"></script>
