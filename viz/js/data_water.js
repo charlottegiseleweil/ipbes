@@ -8,6 +8,7 @@ let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
 let map_title = document.getElementById('map-name-1');
 
+
 // plot points on the map for 2D and 3D map
 function showData(the_g, data, period, colorScaleSelect) {
   // Add circles to the country which has been selected
@@ -63,6 +64,7 @@ function updateData(data_type) {
       // dataset = 'dataset/country_va.csv';
       // dataset_graph = 'dataset/plot_vitamin.csv';
       dataset_2D = '../Data/rural_pop_degree.csv';
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 3)
       //change_dataset = '../Data/pop_2d_change.csv';
       // color_graph = colorScale_vitamin;
       // lineGraphObject.updateGraph(previousCountryClicked);
@@ -79,6 +81,7 @@ function updateData(data_type) {
       // dataset = 'dataset/country_en.csv';
       // dataset_graph = 'dataset/plot_energy.csv';
       dataset_2D = '../Data/n_load_degree.csv';
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 1)
       // color_graph = colorScale_energy;
       //change_dataset = '../Data/ncp_2d_change.csv';
       // lineGraphObject.updateGraph(previousCountryClicked);
@@ -92,6 +95,7 @@ function updateData(data_type) {
       // dataset = 'dataset/country_fo.csv';
       // dataset_graph = 'dataset/plot_folate.csv';
       dataset_2D = '../Data/nc_degree.csv';
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 0)
       // color_graph = colorScale_folate;
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
@@ -103,28 +107,25 @@ function updateData(data_type) {
       // colorScheme = d3.schemePurples[6];
       // colorSchemeDisplay = d3.schemePurples[9];
       // dataset = 'dataset/country_fo.csv';
+
       // dataset_graph = 'dataset/plot_folate.csv';
       dataset_2D = '../Data/n_export_degree.csv';
       // color_graph = colorScale_folate;
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
+
+      // The color scheme which displays more gradient
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 2)
       break;
   }
-  //Loader done for
-  mapsTimeout();
-  disappearLoader();
-
   map_title.innerHTML = region_text;
   colorScale = d3.scaleThreshold()
     .domain([20, 40, 60, 80, 99, 100])
     .range(colorScheme);
 
-  // The color scheme which displays more gradient
-  colorScaleDisplay = d3.scaleThreshold()
-    .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
-    .range(colorSchemeDisplay);
 
-  //updateLegend(colorScale);
+
+  updateLegend(colorScale);
   parseData(dataset_2D, doStuff, true);
   svg_map2.selectAll('.plot-point').remove();
 }
@@ -152,7 +153,6 @@ function doStuff(data, firstTime) {
   showData(g, data, current_SSP, changeColorScaleDisplay);
 
 }
-
 
 
 function parseData(url, callBack, firstTime) {

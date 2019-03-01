@@ -5,7 +5,6 @@ function projection2D() {
   if (checked2D === 'false') {
 
 
-    disappearLoader();
     parseData("../Data/nc_degree.csv", doStuff, true);
 
     // let promise = new Promise(function(resolve, reject) {
