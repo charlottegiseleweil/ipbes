@@ -343,11 +343,11 @@ img {
   border-radius: 1.8vh;
   -moz-border-radius: 1.8vh;
   -webkit-border-radius: 1.8vh;
-  height: 55%;
-  width: 50%;
+  height: 55vh;
+  width: 50vw;
   margin: 0;
   position: absolute;
-  top: 50%;
+  top: 50vh;
   -ms-transform: translateY(-50%) translateX(50%);
   transform: translateY(-50%) translateX(50%);
 }
@@ -373,33 +373,6 @@ img {
   font-size: 1.2em;
   line-height: 110%;
   text-align: left;
-}
-
-.folate-button {
-  width: 3vw;
-  height: 34vh;
-  background: #DDD;
-  border-left: solid 0.3vw rgb(65, 3, 126);
-  font-weight: bold;
-  box-shadow: 0vh 0.2vh 0.2vh rgba(0, 0, 0, 0.29);
-}
-
-.vitamin-button {
-  width: 3vw;
-  height: 34vh;
-  background: #DDD;
-  border-left: solid 0.3vw rgb(145, 207, 96);
-  font-weight: bold;
-  box-shadow: 0vh 0.2vh 0.2vh rgba(0, 0, 0, 0.29);
-}
-
-.energy-button {
-  width: 3vw;
-  height: 34vh;
-  background: #DDD;
-  border-left: solid 0.3vw rgb(215, 48, 39);
-  font-weight: bold;
-  box-shadow: 0vh 0.2vh 0.2vh rgba(0, 0, 0, 0.29);
 }
 
 .parent-button-div {
@@ -676,7 +649,8 @@ img {
 
 .label2DLegendX {
   font-size: 0.33em;
-  margin-top: -0.5vh;
+  margin-top: 0.7vh;
+  font-family: ourFont;
 }
 
 .title2DLegend {
@@ -687,8 +661,9 @@ img {
 .label2DLegendY {
   font-size: 0.33em;
   margin-top:-8.5vh;
-  margin-left: -7vw;
+  margin-left: -8vw;
   transform: rotate(-90deg);
+  font-family: ourFont;
 }
 
 span {
@@ -740,7 +715,7 @@ span {
 	border: 0.5vh solid;
 	border-left: 0;
 	border-top: 0;
-	height: 2vh;
+	height: 2.5vh;
 	left: 0.9vw;
 	opacity: 0;
 	position: absolute;
@@ -1177,22 +1152,21 @@ span2 {
 .nav {
   font-family: ourFont;
   background-color:black;
-  height: 4vh; /* set same as height & line-height below */
-  width: 102.4vw;
+  width: 100%;
 }
 
 /* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
 .nav li {
   display: inline-block;
   list-style: none;
-  height: 4vh; /* should be the same as line-height */
+  top: 4vh;
   line-height: 4vh; /* should be the same as height */
   padding: 0 3.2vw; /* "0" sets top and bottom padding to none */
 }
 
 /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
 .nav li:hover {
-  /* background: black; */
+  /* color: "black"; */
   transition: background .2s;
 }
 
@@ -1205,8 +1179,7 @@ span2 {
 .nav-global {
   font-family: ourFont;
   background-color:black;
-  height: 4vh; /* set same as height & line-height below */
-  width: 102.4vw;
+  width: 100%;
   font-size: 1.315em;
 }
 
@@ -1214,9 +1187,9 @@ span2 {
 .nav-global li {
   display: inline-block;
   list-style: none;
-  height: 4vh; /* should be the same as line-height */
+  top: 4vh;
   line-height: 4vh; /* should be the same as height */
-  padding: 0 5vw; /* "0" sets top and bottom padding to none */
+  padding: 0 5.5vw; /* "0" sets top and bottom padding to none */
 }
 
 /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
@@ -1232,8 +1205,7 @@ span2 {
 }
 
 .menu-box-1-global {
-  padding: 0.7vw 0vh;
-  transform: translate(-2.4vw, -3.5vh);
+  /* transform: translate(-2.4vw, -3.5vh); */
   position: absolute;
   width: 102.4vw;
   z-index: 10000;
@@ -1242,8 +1214,9 @@ span2 {
 
 .menu-box-1 {
   padding: 0.7vw 0vh;
-  transform: translate(-2.4vw, -3.2vh);
-  position: absolute;
+  margin-left: -2.4vw;
+  margin-top: -3.4vh;
+  position: fixed;
   width: 102.4vw;
   z-index: 10000;
   /*float:left;*/
@@ -1253,7 +1226,8 @@ span2 {
   font-family: ourFont;
   position: absolute;
   font-size: 1.7em;
-  transform: translate(2vw, -35vh);
+  margin-top: -70vh;
+  margin-left: 2.5vw;
   z-index: 1000000;
   color: black;
 }
@@ -1262,7 +1236,8 @@ span2 {
   font-family: ourFont;
   position: absolute;
   font-size: 1.7em;
-  transform: translate(2vw, 15vh);
+  margin-bottom: -18vh;
+  margin-left: 2.5vw;
   z-index: 1000000;
   color: black;
 }

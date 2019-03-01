@@ -8,6 +8,8 @@
   <link rel="stylesheet" type="text/css" href="viz/css/styles.css" />
   <link href="https://goo.gl/mTc43h" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="viz/css/w3.css" />
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 </head>
 
 <body>
@@ -99,14 +101,22 @@
   <!-- End of popup window -->
   <div class="box-container" id='3rd_box'>
     <div class="menu-box-1-global">
-    <div class="nav-global">
+    <!-- <div class="nav-global">
   <ul>
     <li><a href="#" class="nav-link" onclick="activate_nature_button()"> WHERE NATURE HELPS US MOST TODAY?</a></li>
     <li><a href="#" class="nav-link" onclick="activate_risk_button()">WHERE ARE PEOPLE AT RISK IN THE FUTURE?</a></li>
     <li><a href="#" class="nav-link" onclick="click_about()">ABOUT</a></li>
-    <li><a href="#" class="nav-link" onclick="showNow()">INFO</a></li>
+    <li><a href="#" class="nav-link" onclick="showNow()">&#9432;</a></li>
   </ul>
-</div>
+</div> -->
+<div class="w3-top">
+  <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="activate_nature_button()"><i class="fa fa-home w3-margin-right"></i> WHERE DOES NATURE HELP US MOST TODAY?</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="activate_risk_button()"><i class="fa fa-home w3-margin-right"></i> WHERE ARE PEOPLE AT MOST RISK IN THE FUTURE?</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-grey" title="info-button" onclick="showNow()">&#9432;</a>
+    <a id="About" href="viz/about.html" onclick="click_about()" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-grey"> About</a>
+  </div>
+    </div>
     </div>
     <div class="box box-1" style="visibility: collapse">
       <button class="info-button" style="display:none;" name="answer" value="info" onclick="showNow()"><i class="fa fa-info-circle fa-2x"></i></button>
