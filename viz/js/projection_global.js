@@ -205,15 +205,13 @@ function zoomed_2D_global() {
 }
 
 function activate_nature_button() {
-  document.getElementsByTagName('a')[0].style.background = "#9d9d9d";
-  document.getElementsByTagName('a')[0].style.color = "black";
-  document.getElementsByTagName('li')[4].style.background = "black";
+  document.getElementsByTagName('a')[2].style.background = "#9d9d9d";
+  document.getElementsByTagName('a')[2].style.textDecoration = "underline";
+  document.getElementsByTagName('a')[2].style.color = "black";
   //Load our HTML file
 }
 
 function activate_risk_button() {
-  document.getElementsByTagName('li')[3].style.background = "black";
-  document.getElementsByTagName('li')[4].style.background = "#c0c0c0";
   //Load HTML file of the other group
   location.href = 'viz_risk/index.html';
 }

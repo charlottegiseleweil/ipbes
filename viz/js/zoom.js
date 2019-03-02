@@ -41,7 +41,7 @@ function clicked(d) {
     .call(zoom_3D.scaleTo, scale);
 
   $('.box-container').css({
-    'background': 'radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)'
+    'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
   });
 
   countryName.innerHTML = active_info.__data__.properties.name;
@@ -115,7 +115,7 @@ function reset() {
   countryName.innerHTML = "World";
   previousCountryClicked = 'WLD';
   $('.box-container').css({
-    'background': 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)'
+    'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
   });
   current_unmet_need = 100 - data_c[previousCountryClicked];
   change_percentage_animation(data_c[previousCountryClicked], current_unmet_need);

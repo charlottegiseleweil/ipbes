@@ -13,7 +13,8 @@ html, body {
   height: 100%;
   min-height: 100%;
   display: flex;
-  background: radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%);
+  background: #696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%
+  /* background: radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%); */
 }
 
 .title-container {
@@ -33,7 +34,7 @@ html, body {
 #map-name-1 {
   display: none;
   font-family: ourFont;
-  color: black;
+  color: white;
   font-weight: bold;
   font-size: 1.2em;
   transform: translate(5vw, -1vh);
@@ -55,6 +56,7 @@ html, body {
 }
 
 .legendThreshold {
+  fill: white;
   font-size: 40%;
   font-family: sans-serif;
 }
@@ -75,7 +77,7 @@ html, body {
 }
 
 .caption {
-  fill: #000;
+  fill: white;
   font-weight: bold;
 }
 
@@ -631,7 +633,7 @@ img {
   /*transform: translateY(5vh);*/
   font-size: 1.5em;
   font-family: ourFont;
-  color: rgb(0, 0, 0);
+  color: white;
 }
 
 .box-1-global {
@@ -650,11 +652,13 @@ img {
 .label2DLegendX {
   font-size: 0.33em;
   margin-top: 0.7vh;
+  color: white;
   font-family: ourFont;
 }
 
 .title2DLegend {
   font-family: ourFont;
+  color: white;
   font-size: 0.5em;
 }
 
@@ -662,12 +666,14 @@ img {
   font-size: 0.33em;
   margin-top:-8.5vh;
   margin-left: -8vw;
+  color: white;
   transform: rotate(-90deg);
   font-family: ourFont;
 }
 
 span {
   content: "\2192";
+  color: white;
   transform: translate(0.5vw, 6.7vh);
 }
 
@@ -861,6 +867,7 @@ span2 {
   text-align: initial;
   margin-top: -4.8vh;
   transform: translate(-3vw, 10vh);
+  color: white;
 }
 
 .option-input {
@@ -1086,7 +1093,7 @@ span2 {
 	font-size: 0.60em;
 	font-weight: bold;
   margin-left: 5.5vw;
-  margin-top: -12vh;
+  margin-top: -7vh;
 	/* transform: translate(6vw, -8.5vh); */
 }
 
@@ -1223,23 +1230,23 @@ span2 {
 }
 
 .year-text-2015 {
+  color: white;
   font-family: ourFont;
   position: absolute;
   font-size: 1.7em;
   margin-top: -70vh;
   margin-left: 2.5vw;
   z-index: 1000000;
-  color: black;
 }
 
 .year-text-2050 {
+  color: white;
   font-family: ourFont;
   position: absolute;
   font-size: 1.7em;
   margin-bottom: -18vh;
   margin-left: 2.5vw;
   z-index: 1000000;
-  color: black;
 }
 
 
@@ -1276,4 +1283,12 @@ a:hover{
 .darkgrey{
   color: darkgrey;
   font-size: 300%;
+}
+
+span1 {
+  margin-top: -10vh;
+}
+
+span3 {
+  display: block;
 }

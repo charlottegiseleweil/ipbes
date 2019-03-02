@@ -97,7 +97,8 @@ let color_graph = colorScale_energy;
 
 // We define the function
 function load_file(){
-  document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
+  document.getElementsByTagName('a')[1].style.backgroundColor = "#9d9d9d";
+  document.getElementsByTagName('a')[1].style.color = "black";
 }
 
 $(document).ready(function(){
