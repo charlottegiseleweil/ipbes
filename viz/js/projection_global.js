@@ -28,7 +28,7 @@ let svg_global = d3.select(".map-global").append("svg")
   .attr("height", height_global)
   .on("click", stopped, true);
 
-svg_global.attr('transform', 'translate(0,-135) scale(1.25)');
+svg_global.attr('transform', 'translate(0,-140) scale(1.2)');
 
 let g_global = svg_global.append('g');
 
@@ -190,14 +190,17 @@ function showDataGlobal(the_g, data, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_thi
 
 }
 
-
-function click_about() {
-  //console.log("About button clicked");
-}
-
 function get_global_zoom() {
   return d3.zoom()
-    .scaleExtent([0.95, 15])
+    .scaleExtent([1, 12])
+    .translateExtent([
+        [0, 0],
+        [$(".map-global").width(), $(".map-global").height()]
+      ])
+      .extent([
+        [0, 0],
+        [$(".map-global").width(), $(".map-global").height()]
+      ])
     .on("zoom", zoomed_2D_global);
 }
 
