@@ -6,6 +6,7 @@ let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb
 let gradient_white = '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%';
 let counter = 0;
 var zoom_2D_global = get_global_zoom();
+let region_text_global = "Water Quality Regulation";
 
 
 
@@ -50,6 +51,7 @@ function load_pollination_data() {
   if (pollination_box.checked == true) {
     if (water_box.checked == false && coastal_box.checked == false) {
       legendTitle.innerHTML = "Pollination Key Areas"
+      region_text_global = "Pollination";
 
       // dataset_global = 'Data/data_water_2d.csv' // dataset for pollination
       // parseDataGlobal(dataset_global, draw_points);
@@ -67,6 +69,7 @@ function load_pollination_data() {
 function load_waterquality_data() {
   if (water_box.checked == true) {
     if (pollination_box.checked == false && coastal_box.checked == false) {
+      region_text_global = "Water Quality Regulation";
       legendTitle.innerHTML = "WQ Key Areas";
 
       dataset_global = 'Data/data_water_2d.csv'
@@ -87,6 +90,7 @@ function load_waterquality_data() {
 function load_coastalrisk_data() {
   if (coastal_box.checked == true) {
     if (pollination_box.checked == false && water_box.checked == false) {
+      region_text_global = "Coastal Risk Mitigation";
       legendTitle.innerHTML = "CR Key Areas";
 
       dataset_global = 'Data/data_coastal_2d.csv'
@@ -131,6 +135,21 @@ function load_2d_global(dataset) {
 
 let data_2D_global;
 let promise_global;
+
+// Adding tip for hover
+let tip_global = d3.tip()
+  .attr('class', 'd3-tip')
+
+  .offset([0, 0])
+  // Here d -> is basically the data which is given to the circle -> right now it is just lat long
+  .html(function(d) {
+    return "<strong>" + region_text_global + "<br>" +
+    "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + "</span></strong> <br>" +
+    "<strong>" + "Unmet need" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
+    "<strong>" + "Population" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
+  })
+// Adding tip to the svg
+svg_global.call(tip_global);
 
 parseDataGlobal(dataset_global, draw_points);
 
@@ -186,8 +205,8 @@ function showDataGlobal(the_g, data, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_thi
     .attr("fill", function(d) {
       return getColor(d['UN_cur'], d['population'], d['NCP_cur'], UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q)
     })
-  // .on('mouseover', tip.show)
-  // .on('mouseout', tip.hide);
+  .on('mouseover', tip_global.show)
+  .on('mouseout', tip_global.hide);
 
 }
 

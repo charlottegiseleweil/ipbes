@@ -57,7 +57,6 @@ let tip = d3.tip()
   .offset([50, 80])
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
-    console.log(d['2015']);
     return "<strong>" + region_text + ": <span>" + Number(d['2015']).toFixed(2) + "</span></strong>";
   })
 // Adding tip to the svg
