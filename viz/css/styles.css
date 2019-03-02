@@ -1272,3 +1272,8 @@ span2 {
 a:hover{
   color:darkgrey;
 }
+
+.darkgrey{
+  color: darkgrey;
+  font-size: 300%;
+}
