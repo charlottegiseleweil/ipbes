@@ -1241,3 +1241,34 @@ span2 {
   z-index: 1000000;
   color: black;
 }
+
+
+.pop-up-big{
+    background-color: black;
+    overflow: scroll;
+    border-radius: 1.8vh;
+    margin: 3%;
+    opacity: 0.97;
+    background-color: lightgrey;
+    position: absolute;
+    display: inline;
+    z-index: 90000000000;
+}
+
+.close-btn {
+    position: absolute;
+    right: 22px;
+    top: 0px;
+    font-size: 90px;
+    background-color: transparent;
+    border: transparent;
+    color: black;
+}
+
+.close-btn:hover {
+  color: grey;
+}
+
+a:hover{
+  color:darkgrey;
+}
