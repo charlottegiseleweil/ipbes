@@ -183,7 +183,7 @@ function runSlider(period, if_ssp) {
   }
 }
 
-function runSegmentedSSPs(period) {
+function runSegmentedSSPs(period, firstTime) {
   // OMG, oh lord, this code needs to be cleaned.
   // Python - concatentation - '{}'.format()
   current_year = period;
@@ -201,7 +201,11 @@ function runSegmentedSSPs(period) {
   }
   //Loader for 3 SSPs
   disappearMaps();
+  if (firstTime) {
+    mapsTimeout(4000);
+  } else {
   mapsTimeout(2500);
+  }
 
   parseData(dataset_2D, doStuff, false);
   change_pollination_contribution(period);

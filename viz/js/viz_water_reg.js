@@ -48,7 +48,7 @@ map2.setAttribute("style", "width: 0; height: 0;");
 // let data_2D_water;
 
 // Add projection to the viz
-changeProjection(false);
+changeProjection(true);
 
 // Adding tip for hover
 let tip = d3.tip()
@@ -57,10 +57,11 @@ let tip = d3.tip()
   .offset([50, 80])
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
-    return "<strong>" + region_text + ": <span>" + Number(d['2015']).toFixed(2) + "</span></strong>" + "%";
+    console.log(d['2015']);
+    return "<strong>" + region_text + ": <span>" + Number(d['2015']).toFixed(2) + "</span></strong>";
   })
 // Adding tip to the svg
-svg.call(tip);
+svg_map2.call(tip);
 
 let tip2 = d3.tip()
   .attr('class', 'd3-tip')
@@ -71,7 +72,7 @@ let tip2 = d3.tip()
     return "<strong>" + region_text + ": <span>" + Number(d[current_SSP]).toFixed(2) + "</span></strong>" + "%";
   })
 // Adding tip to the svg
-svg_map2.call(tip2)
+svg.call(tip2)
 
 // Makes the legend
 makeLegendInitializations(false);
@@ -115,7 +116,11 @@ let color_graph = colorScale_energy;
 
 // We define the function
 function load_file() {
+
   document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
+  // disappearMaps();
+  // mapsTimeout(4000);
+  projection2D();
 }
 
 $(document).ready(function() {

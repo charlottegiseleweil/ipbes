@@ -82,7 +82,7 @@ function projection2D() {
     d3.select(".map-slider").html("");
 
     // Plot points on the map
-    runSegmentedSSPs("SSP1");
+    runSegmentedSSPs("SSP1", true);
     // showData(g_map2, '2015', colorScaleDisplay);
   }
 }

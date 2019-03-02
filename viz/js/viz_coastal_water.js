@@ -58,7 +58,7 @@ let tip = d3.tip()
     return "<strong>" + region_text + ": <span>" + d[2] + "</span></strong>" + "%";
   })
 // Adding tip to the svg
-svg.call(tip);
+svg_map2.call(tip);
 
 let tip2 = d3.tip()
   .attr('class', 'd3-tip')
