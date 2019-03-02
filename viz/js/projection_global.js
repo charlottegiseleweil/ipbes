@@ -88,7 +88,7 @@ function load_coastalrisk_data() {
     if (pollination_box.checked == false && water_box.checked == false) {
       legendTitle.innerHTML = "CR Key Areas";
 
-      dataset_global = 'Data/data_water_2d.csv'
+      dataset_global = 'Data/data_coastal_2d.csv'
       parseDataGlobal(dataset_global, draw_points);
     } else {
       legendTitle.innerHTML = "Hotspots";
@@ -106,7 +106,7 @@ function ready_global(g, path) {
       .data(features)
       .enter().append("path")
       .attr("d", path)
-      .attr("fill", "#FFFFFF")
+      .attr("fill", "rgb(115,115,115)")
       .attr("class", "feature");
     // Creates a mesh around the border
     g.append("path")
