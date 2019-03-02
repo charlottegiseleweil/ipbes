@@ -94,14 +94,6 @@ let colorScale_folate = d3.scaleOrdinal()
 // set the colour scale
 let color_graph = colorScale_energy;
 
-function load_file(){
-  document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
-}
-
-$(document).ready(function(){
-  load_file();
-});
-
 function load_global() {
   location.href='../index.html';
 }

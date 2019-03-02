@@ -3,11 +3,6 @@ function projection2D() {
   checked2D = document.getElementById("checked2D").value;
   checked3D = document.getElementById("checked3D").value;
   if (checked2D === 'false') {
-    document.getElementsByTagName('li')[0].style.backgroundColor = "black";
-    document.getElementsByTagName('li')[1].style.background = "#c0c0c0";
-    document.getElementsByTagName('li')[2].style.backgroundColor = "black";
-    document.getElementsByTagName('li')[3].style.backgroundColor = "black";
-    document.getElementsByTagName('li')[4].style.backgroundColor = "black";
     document.getElementsByClassName("map-slider")[0].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "block";
 

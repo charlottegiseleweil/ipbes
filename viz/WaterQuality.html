@@ -9,7 +9,7 @@
   <link href="https://goo.gl/mTc43h" rel="stylesheet">
 
  <!-- w3 style thingz -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/w3.css" />
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css"></head>
 
@@ -33,6 +33,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+  <!-- "About" overlay -->
+  <!-- "About" overlay -->
   <!-- StoryTelling form - 1st page for Title and other content, 2nd Page for the visualization  -->
   <!-- If needed to add another page, just copy the title container and change the name of the classes -->
   <!-- <div class="title-container">
@@ -80,46 +82,27 @@
     </div>
   </div> -->
 
-  <!-- for the PopUpwindow -->
-  <!-- <div id="ac-wrapper" style='display:none' onClick="hideNow(event)">
-    <div id="popup" class="grad1">
+  <!-- About Pop-up Window -->
+
+    <!-- End of About Pop-up Window -->
+  <!-- Info Button Pop-up Window -->
+  <div id="ac-wrapper" style='display:none' onClick="hideNow(event)">
+    <div id="popup-small" class="grad1">
       <center>
-        <h2 class="h2_popup">How to use ?</h2>
+        <h2 class="h2_popup">How to read these maps?</h2>
         <p>
           <ul class="p_popup">
-            <li>On the Left:
               <ul>
-                <li>The info button lets you call this popup again.</li>
-                <li>These buttons let you choose the whether you want to visualize a 3D globe or 2D map.</li>
-                <li>Choose the 2D map to compare future scenarios. </li>
-                <li>The legend shows the colors represented on the globe/map.</li>
-              </ul>
-            </li>
-            <li>In the center:
-              <ul>
-                <li>Here we have the visualization.</li>
-                <li>You can interact with it by rotating it (in 3D only) using the mouse or by clicking on a country to display the information we have about it.</li>
-              </ul>
-            </li>
-            <li>On the right:
-              <ul>
-                <li>All the information about the world or selected country is displayed.</li>
-                <li>You can choose what information to display by clicking on the buttons.</li>
-                <li>In 2D, you can hover over of the bar graph to compare different continents.</li>
-              </ul>
-            </li>
-            <li>On the bottom:
-              <ul>
-                <li>You can select the year you want to visualize using the slider.</li>
-              </ul>
-            </li>
+                <li>These maps showcase how the current situation for the selected visualization compares to the different scenarios proposed in 2050. <br> <br> <br> </li>
+                <li>You can select the desired visualization by using the "Choose Metric to Visualize" dropdown menu.<br> <br> <br>  </li>
 
+              </ul>
           </ul>
         </p>
         <input type="submit" name="submit" value="Got it !" onClick="PopUp('hide')" />
       </center>
     </div>
-  </div> -->
+  </div>
   <!-- End of popup window -->
 
 
@@ -131,7 +114,7 @@
       <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
       <a href="methods_wq.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
-      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">About</a>
+      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
       </div>
     </div>
    <!-- End Menu Navbar -->
@@ -189,11 +172,11 @@
           <div id="options-radios">
             <label>
               <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked />
-              Sustainability  <span1 class="glyphicon glyphicon-leaf">&#xe103;</span1>
+              Sustainability  <i class="fas fa-leaf"></i>
             </label>
             <label>
               <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP3')" />
-              Regional Rivalry <span1 class="glyphicon">&#xe104;</span1>
+              Regional Rivalry <i class="fas fa-fire"></i>
             </label>
             <label>
               <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP5')" />
