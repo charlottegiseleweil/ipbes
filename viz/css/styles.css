@@ -612,9 +612,10 @@ img {
 }
 
 #box-3-global-text {
-  font-size: 1.7vh;
+  font-size: 2em;
   font-family: ourFont;
   color: white;
+  padding: 2vh;
   font-weight: bold;
 }
 
@@ -660,6 +661,7 @@ img {
   font-size: 0.9vh;
   box-sizing: border-box;
   overflow: hidden;
+  padding-bottom: 2vh;
 }
 
 .label2DLegendX {
