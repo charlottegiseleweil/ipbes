@@ -19,6 +19,7 @@
   <script src="libraries/jquery.min.js"></script>
 
   <script src="libraries/d3.js"></script>
+  <script src="libraries/papaparse.js"></script>
   <script src="libraries/topojson.v1.min.js"></script>
   <script src="libraries/versor.min.js"></script>
   <script src="libraries/d3-inertia.min.js"></script>
@@ -149,7 +150,6 @@
       <br>
       <div class="map-global"></div>
     </div>
-
     <div class="box box-2" style="display: flex;">
       <div id="container">
         <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>
@@ -165,17 +165,16 @@
 
           <div id="options-radios">
             <label>
-              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP1')" checked />
+              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP1', false)" checked />
               Sustainability  <i class="fas fa-leaf"></i>
             </label>
             <label>
-              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP3')" />
+              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP3', false)" />
               Regional Rivalry <i class="fas fa-fire"></i>
             </label>
             <label>
-              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP5')" />
+              <input type="radio" class="option-input radio" name="example" autocomplete="off" onclick="runSegmentedSSPs('SSP5', false)" />
               Fossil Fuels <span1 class="glyphicon">&#x2601;</span1>
-            </label>
           </div>
 
         </div>
@@ -310,6 +309,7 @@
       </div>
 
     </div> -->
+    <script src="js/loader.js"></script>
     <script src="js/statFunctions.js"></script>
     <script src="js/lineGraph.js"></script>
     <script src="js/barGraph.js"></script>

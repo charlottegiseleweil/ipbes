@@ -3,6 +3,10 @@ function projection2D() {
   checked2D = document.getElementById("checked2D").value;
   checked3D = document.getElementById("checked3D").value;
   if (checked2D === 'false') {
+
+    disappearMaps();
+    parseData("../Data/nc_degree.csv", doStuff, true);
+
     document.getElementsByClassName("map-slider")[0].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "block";
 
@@ -27,7 +31,7 @@ function projection2D() {
     svg.call(zoom_2D);
     svg_map2.call(zoom_2D);
 
-    let coordstoplot = initialize_2D(current_year, data_2D);
+    //let coordstoplot = initialize_2D(current_year, data_2D);
 
     // Change the size of the maps
     svg.attr("width", $(".box.box-1").width())
@@ -46,7 +50,6 @@ function projection2D() {
     );
     document.getElementById('svg_map2').style.overflow = "initial";
 
-
     map1.setAttribute(
       "style",
       "width: 100%; height: 46%; overflow-x:hidden; overflow-y:hidden;"
@@ -54,7 +57,6 @@ function projection2D() {
     document.getElementById('svg_map1').style.overflow = "initial";
 
     // TODO: Need to change it
-    make2015staticMap();
     // loadDifferentScenario("NC");
 
     // Making the name of the maps appear in 2D
@@ -65,7 +67,7 @@ function projection2D() {
     d3.select(".map-slider").html("");
 
     // Plot points on the map
-    runSegmentedSSPs("SSP1");
-    showData(g, coordstoplot);
+    runSegmentedSSPs("SSP1", true);
+    // showData(g_map2, '2015', colorScaleDisplay);
   }
 }

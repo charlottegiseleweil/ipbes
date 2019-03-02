@@ -2,140 +2,104 @@
 // and also the initializations
 let firstTime = true;
 let dataset = '../Data/country_en.csv';
-let dataset_2D = '../Data/ncp_2d_cur.csv';
+let dataset_2D = '../Data/nc_degree.csv';
 let current_viz = "Food Energy";
 let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
 let map_title = document.getElementById('map-name-1');
 
 // plot points on the map for 2D and 3D map
-function showData(the_g, coordinates) {
+function showData(the_g, data, period, colorScaleSelect) {
   // Add circles to the country which has been selected
   // Removing part is within
-  if (checked3D == 'true') {
-    the_g.selectAll(".plot-point")
-      .data(coordinates).enter()
-      .append("circle")
-      .classed('plot-point', true)
-      .attr("cx", function(d) {
-        return projection(d)[0];
-      })
-      .attr("cy", function(d) {
-        return projection(d)[1];
-      })
-      .attr("r", "1px")
-      .attr("fill", function(d) {
-        color = d[2] || 0;
-        return colorScale(color);
-      })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
-  } else {
+
+  if (checked2D == 'true') {
     // This is just for 2D, we are creating a raster by creating a rectangle
     the_g.selectAll(".plot-point")
-      .data(coordinates).enter()
-      .append("rect")
+      .data(data).enter()
+      .append("polygon")
       .classed('plot-point', true)
-      .attr("x", function(d) {
-        return projection(d)[0];
+      .attr("points", function(d) {
+        let x_1 = projection([d['lat1'], d['long1']])[0];
+        let y_1 = projection([d['lat1'], d['long1']])[1];
+        let x_2 = projection([d['lat2'], d['long2']])[0];
+        let y_2 = projection([d['lat2'], d['long2']])[1];
+        let x_3 = projection([d['lat3'], d['long3']])[0];
+        let y_3 = projection([d['lat3'], d['long3']])[1];
+        let x_4 = projection([d['lat4'], d['long4']])[0];
+        let y_4 = projection([d['lat4'], d['long4']])[1];
+        let x_5 = projection([d['lat5'], d['long5']])[0];
+        let y_5 = projection([d['lat5'], d['long5']])[1];
+
+        return (x_1 + ',' + y_1 + ' ' +
+          x_2 + ',' + y_2 + ' ' +
+          x_3 + ',' + y_3 + ' ' +
+          x_4 + ',' + y_4 + ' ' +
+          x_5 + ',' + y_5);
       })
-      .attr("y", function(d) {
-        return projection(d)[1];
-      })
-      .attr("width", "3")
-      .attr("height", "3")
       .attr("fill", function(d) {
-        color = d[2] || 0;
-        return colorScaleDisplay(color);
+        color = d[period] || 0;
+        if (d[period] == 0) {
+          return "#ffffff00";
+        }
+        return colorScaleSelect(color);
       })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide);
   }
 }
 
-// Update data loads the data depending upon the columns for Vitamin, Energy and Folate
+// Update data loads the data depending upon the columns for Population, Nitrogen, pollution, export
 // and changes the storytelling
 function updateData(data_type) {
   switch (data_type) {
     case "Population":
       region_text = "Rural Population";
-      // title.innerHTML = "Pollination Contribution to Nutrition (Vitamin A) in " + current_year;
-      // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-      //   current_viz + " in " + current_year + "?";
-      // colorScheme = d3.schemeGreens[6];
-      // colorSchemeDisplay = d3.schemeGreens[9];
-      // dataset = 'dataset/country_va.csv';
-      // dataset_graph = 'dataset/plot_vitamin.csv';
-      dataset_2D = '../Data/pop_2d_cur.csv';
-      change_dataset = '../Data/pop_2d_change.csv';
-      // color_graph = colorScale_vitamin;
-      // lineGraphObject.updateGraph(previousCountryClicked);
+      dataset_2D = '../Data/rural_pop_degree.csv';
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 3)
+      colorScheme = d3.schemePurples[6];
+      colorSchemeDisplay = d3.schemePurples[9];
 
       break;
     case "Nitrogen":
-      // current_viz = "Food Energy";
-      region_text = "Nitrogen Pollution Potential";
-      // title.innerHTML = "Pollination Contribution to Nutrition (Food Energy) in " + current_year;
-      // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-      //   current_viz + " in " + current_year + "?";
-      // colorScheme = d3.schemeReds[6];
-      // colorSchemeDisplay = d3.schemeReds[9];
-      // dataset = 'dataset/country_en.csv';
-      // dataset_graph = 'dataset/plot_energy.csv';
-      dataset_2D = '../Data/ncp_2d_cur.csv';
-      // color_graph = colorScale_energy;
-      change_dataset = '../Data/ncp_2d_change.csv';
-      // lineGraphObject.updateGraph(previousCountryClicked);
+      region_text = "Total Nitrogen Load";
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 1)
+      dataset_2D = '../Data/n_load_degree.csv';
+      colorScheme = d3.schemeOranges[6];
+      colorSchemeDisplay = d3.schemeOranges[9];
       break;
     case "Pollution":
-      region_text = "Percent Nitrogen Pollution Avoided";
-      // current_viz = "Folate";
-      // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
-      // colorScheme = d3.schemePurples[6];
-      // colorSchemeDisplay = d3.schemePurples[9];
-      // dataset = 'dataset/country_fo.csv';
-      // dataset_graph = 'dataset/plot_folate.csv';
-      // dataset_2D = 'dataset/pixel_folate.csv';
-      // color_graph = colorScale_folate;
-      // change_dataset = 'dataset/change_fo.csv';
-      // lineGraphObject.updateGraph(previousCountryClicked)
+      region_text = "Nature's contribution to Water Purification";
+      dataset_2D = '../Data/nc_degree.csv';
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 0)
+      colorScheme = d3.schemeGreens[6];
+      colorSchemeDisplay = d3.schemeGreens[9];
       break;
     case "Export":
       region_text = "Nitrogen Export";
-        // current_viz = "Folate";
-        // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
-        // colorScheme = d3.schemePurples[6];
-        // colorSchemeDisplay = d3.schemePurples[9];
-        // dataset = 'dataset/country_fo.csv';
-        // dataset_graph = 'dataset/plot_folate.csv';
-        // dataset_2D = 'dataset/pixel_folate.csv';
-        // color_graph = colorScale_folate;
-        // change_dataset = 'dataset/change_fo.csv';
-        // lineGraphObject.updateGraph(previousCountryClicked)
+      dataset_2D = '../Data/n_export_degree.csv';
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 2)
+      colorScheme = d3.schemeReds[6];
+      colorSchemeDisplay = d3.schemeReds[9];
       break;
   }
-map_title.innerHTML = region_text;
-colorScale = d3.scaleThreshold()
-  .domain([20, 40, 60, 80, 99, 100])
-  .range(colorScheme);
+  //Loader for 4 scenarios
+  disappearMaps();
+  mapsTimeout(4000);
 
-// The color scheme which displays more gradient
-colorScaleDisplay = d3.scaleThreshold()
-  .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
-  .range(colorSchemeDisplay);
+  map_title.innerHTML = region_text;
+  colorScale = d3.scaleThreshold()
+    .domain([20, 40, 60, 80, 99, 100])
+    .range(colorScheme);
 
-  //updateLegend(colorScale);
-  let promise = new Promise(function(resolve, reject) {
-    loadGlobalData(dataset);
-    data_2D = load(dataset_2D);
-    change_data = load(change_dataset)
-    setTimeout(() => resolve(1), 10);
-  });
-  promise.then(function(result) {
-    update_percentages(current_year);
-    change_pollination_contribution(current_year);
-    accessData();
-  });
+  // The color scheme which displays more gradient
+  colorScaleDisplay = d3.scaleThreshold()
+    .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
+    .range(colorSchemeDisplay);
+
+  updateLegend(colorScale);
+  parseData(dataset_2D, doStuff, true);
+  svg_map2.selectAll('.plot-point').remove();
 }
 
 // Access data loads the daa for 3D and 2D and depending upon that colors
@@ -152,47 +116,23 @@ function accessData() {
     .attr("d", path);
 }
 
-// Construct the static Map for 2D visualization by showData and initializing
-// the 2D coordsplot
-function make2015staticMap() {
+function doStuff(data, firstTime) {
+  //Data is usable here
+  svg.selectAll('.plot-point').remove();
   if (firstTime) {
-    let coordstoplot = initialize_2D("2015", data_2D);
-    showData(g_map2, coordstoplot);
-    firstTime = false;
+    showData(g_map2, data, '2015', colorScaleDisplay);
   }
+  showData(g, data, current_SSP, changeColorScaleDisplay);
+
 }
 
-// Loading the global data depending upon the dataset you give
-// and make a data structure as a dictionary depending upon iso3 - this is more for 3D
-function loadGlobalData(dataset) {
-  global_data_c = load(dataset);
-  data_c = {};
-  d3.csv(dataset, function(error, data) {
-    data.forEach(function(d) {
-      data_c[d.iso3] = global_data_c[d.iso3][current_year];
-    });
-
+function parseData(url, callBack, firstTime) {
+  Papa.parse(url, {
+    download: true,
+    dynamicTyping: false, // Parse values as their true type (not as strings)
+    header: true, // to parse the data as a dictionary
+    complete: function(results) {
+      callBack(results.data, firstTime);
+    }
   });
-}
-
-// Load the data from the dataset but construction a different kind of dictionary
-// and does not take into account the current year into account - and is for 2D since
-// the data is not aggregated
-function load(dataset) {
-  let result = {};
-  d3.csv(dataset, function(error, data) {
-    data.forEach(function(d) {
-      result[d.iso3] = d;
-    });
-  });
-  return result;
-}
-
-// Initialize the data for 2D by making a list
-function initialize_2D(period, data_) {
-  let coordstoplot = [];
-  for (let key in data_) {
-    coordstoplot.push([data_[key]['lat'], data_[key]['long'], data_[key][period]]);
-  }
-  return coordstoplot;
 }

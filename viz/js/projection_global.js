@@ -192,7 +192,7 @@ function showDataGlobal(the_g, data, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_thi
 
 
 function click_about() {
-  console.log("About button clicked");
+  //console.log("About button clicked");
 }
 
 function get_global_zoom() {
