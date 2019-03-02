@@ -46,7 +46,7 @@ map1.setAttribute("style", "width: 100%; height: 94%;");
 map2.setAttribute("style", "width: 0; height: 0;");
 
 // Add projection to the viz
-changeProjection(false);
+changeProjection(true);
 
 // Adding tip for hover
 let tip = d3.tip()
@@ -97,8 +97,7 @@ let color_graph = colorScale_energy;
 
 // We define the function
 function load_file(){
-  document.getElementsByTagName('a')[1].style.backgroundColor = "#9d9d9d";
-  document.getElementsByTagName('a')[1].style.color = "black";
+  projection2D();
 }
 
 $(document).ready(function(){

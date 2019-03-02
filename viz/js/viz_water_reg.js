@@ -117,7 +117,6 @@ let color_graph = colorScale_energy;
 // We define the function
 function load_file() {
 
-  document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
   // disappearMaps();
   // mapsTimeout(4000);
   projection2D();

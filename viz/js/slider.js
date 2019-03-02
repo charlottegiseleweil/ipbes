@@ -133,7 +133,6 @@ function createSlider() {
         if (val == 2000) runSlider("1945", false);
         if (val == 2050) runSlider("1980", false);
         if (val == 2100) runSlider("2015", false);
-        if (val == 2150) runSlider("2050", true);
       } else {
         if (val == 50) {
           runSlider("SSP1", false);
@@ -206,8 +205,9 @@ function runSegmentedSSPs(period, firstTime) {
   } else {
   mapsTimeout(2500);
   }
-
-  parseData(dataset_2D, doStuff, false);
+  if (current_html == "WaterQuality.html") {
+    parseData(dataset_2D, doStuff, false);
+  }
   change_pollination_contribution(period);
   //update_percentages(period);
 }

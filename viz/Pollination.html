@@ -150,6 +150,24 @@
       <br>
       <div class="map-global"></div>
     </div>
+
+    <div class="loader" style="left: 36%; top: 25%"></div>
+    <div class="loader" style="left: 36%; top: 73%"></div>
+    <script>
+      setTimeout(showMaps, 5000);
+
+      function showMaps() {
+        // console.log("inside show maps");
+        document.getElementsByClassName('loader')[0].style.display = "none";
+        document.getElementsByClassName('loader')[1].style.display = "none";
+
+        document.getElementsByClassName('d3-tip')[0].style.display = "block";
+
+        document.getElementById('svg_map1').style.visibility = "visible";
+        document.getElementById('svg_map2').style.visibility = "visible";
+      }
+
+    </script>
     <div class="box box-2" style="display: flex;">
       <div id="container">
         <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>
@@ -273,9 +291,9 @@
    <li class="menu-item"><a href="#">Choose metric to visualize</a>
      <ul class="dropdown">
        <li class="menu-item sub-menu" onclick="updateData('Population')"><a href="#">Pollination-Dependent Population</a></li>
-       <li class="menu-item sub-menu"><a href="#">Crop Population Dependence</a></li>
-       <li class="menu-item sub-menu" onclick="updateData('NCP')"><a href="#">Percent Pollination Need Met</a></li>
-       <li class="menu-item sub-menu"><a href="#">Lost Crop Production</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('Crop')"><a href="#">Crop Population Dependence</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('NCP')"><a href="#">Average Micronutrient Pollination Dependance</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('Lost')"><a href="#">Lost Crop Production</a></li>
      </ul>
    </li>
  </ul>
@@ -289,8 +307,8 @@
     for bees could lead to a continuous decline in pollination, affecting millions of people. </h2>
       <h2 id="bar_title"> People in millions impacted in 2050 </h2>
       <div class="graph2d"> </div>
-      <h3 class="labelGraph"> Regions </h3>
-      <h3 class="labelGraphY"> People impacted (Logscale) </h3>
+      <h4 class="labelGraph"> Regions </h4>
+      <h4 class="labelGraphY"> People impacted (Logscale) </h4>
       <h1 id="box-3-header">
     </h1>
     </div>

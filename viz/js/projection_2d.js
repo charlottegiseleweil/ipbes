@@ -5,7 +5,12 @@ function projection2D() {
   if (checked2D === 'false') {
 
     disappearMaps();
-    parseData("../Data/nc_degree.csv", doStuff, true);
+    if (current_html == "WaterQuality.html") {
+      parseData("../Data/nc_degree.csv", doStuff, true);
+    }
+    if (current_html == "Pollination.html") {
+      updateData('NCP');
+    }
 
     document.getElementsByClassName("map-slider")[0].style.display = "none";
     document.getElementsByClassName("overlay")[0].style.display = "block";
@@ -24,6 +29,10 @@ function projection2D() {
     document.getElementById("container").style.display = "block";
     document.getElementsByClassName("year-text-2015")[0].style.display = "block";
     document.getElementsByClassName("year-text-2050")[0].style.display = "block";
+    document.getElementsByTagName('a')[1].style.backgroundColor = "#9d9d9d";
+    document.getElementsByTagName('a')[1].style.color = "black";
+    document.getElementsByTagName('a')[3].style.backgroundColor = "black";
+    document.getElementsByTagName('a')[3].style.color = "white";
 
     checked2D = "true";
     checked3D = "false";

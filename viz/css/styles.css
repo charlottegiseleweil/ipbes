@@ -92,6 +92,7 @@ line {
 }
 
 #box-3-header {
+  margin-top: 7vh;
   font-size: 2.8vh;
 }
 
@@ -1123,7 +1124,7 @@ span2 {
   background: #000000;
 	display: block;
 	float: left;
-	margin: 0 0.5vw 0 0;
+	margin: 0 0.2vw 0 0;
 	padding: 0.8vw;
 	position: relative;
 	text-decoration: none;

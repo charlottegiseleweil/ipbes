@@ -50,11 +50,10 @@ function projection3D() {
   svg_map2.call(zoom_2D.transform, d3.zoomIdentity);
   document.getElementsByClassName("map-slider")[0].style.display = "block";
   if (checked3D === 'true') {
-    document.getElementsByClassName('menu-box-1')[0].style.display = "inline-block";
-    document.getElementsByTagName('li')[1].style.backgroundColor = "black";
-    document.getElementsByTagName('li')[2].style.background = "black";
-    document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
-    document.getElementsByTagName('li')[4].style.backgroundColor = "black";
+    document.getElementsByTagName('a')[3].style.backgroundColor = "#9d9d9d";
+    document.getElementsByTagName('a')[3].style.color = "black";
+    document.getElementsByTagName('a')[1].style.background = "black";
+    document.getElementsByTagName('a')[1].style.color = "white";
     zoom_2D = null; // Set zoom 2D is null
 
     // Remove the points and change the style depending upon the display
