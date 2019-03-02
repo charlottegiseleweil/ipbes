@@ -62,8 +62,8 @@ function updateData(data_type) {
       // title.innerHTML = "Pollination Contribution to Nutrition (Vitamin A) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       //   current_viz + " in " + current_year + "?";
-      // colorScheme = d3.schemeGreens[6];
-      // colorSchemeDisplay = d3.schemeGreens[9];
+      colorScheme = d3.schemePurples[6];
+      colorSchemeDisplay = d3.schemePurples[9];
       // dataset = 'dataset/country_va.csv';
       // dataset_graph = 'dataset/plot_vitamin.csv';
       dataset_2D = '../Data/pop_2d_cur.csv';
@@ -78,8 +78,8 @@ function updateData(data_type) {
       // title.innerHTML = "Pollination Contribution to Nutrition (Food Energy) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       //   current_viz + " in " + current_year + "?";
-      // colorScheme = d3.schemeReds[6];
-      // colorSchemeDisplay = d3.schemeReds[9];
+      colorScheme = d3.schemeGreens[6];
+      colorSchemeDisplay = d3.schemeGreens[9];
       // dataset = 'dataset/country_en.csv';
       // dataset_graph = 'dataset/plot_energy.csv';
       dataset_2D = '../Data/ncp_2d_cur.csv';
@@ -89,13 +89,13 @@ function updateData(data_type) {
       break;
     case "Crop":
       // current_viz = "Folate";
-      region_text = "Crop Population Dependence";
+      region_text = "Pollination-Dependant Crop Production";
       // region_text = "Pollination Contribution to Folate";
       // title.innerHTML = "Pollination Contribution to Nutrition (Folate) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       //   current_viz + " in " + current_year + "?";
-      // colorScheme = d3.schemePurples[6];
-      // colorSchemeDisplay = d3.schemePurples[9];
+      colorScheme = d3.schemeOranges[6];
+      colorSchemeDisplay = d3.schemeOranges[9];
       // dataset = 'dataset/country_fo.csv';
       // dataset_graph = 'dataset/plot_folate.csv';
       // dataset_2D = 'dataset/pixel_folate.csv';
@@ -105,6 +105,8 @@ function updateData(data_type) {
       break;
     case "Lost":
       region_text = "Lost Crop Production";
+      colorScheme = d3.schemeReds[6];
+      colorSchemeDisplay = d3.schemeReds[9];
       break;
   }
 map_title.innerHTML = region_text;
@@ -117,7 +119,7 @@ colorScaleDisplay = d3.scaleThreshold()
   .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
   .range(colorSchemeDisplay);
 
-  //updateLegend(colorScale);
+  updateLegend(colorScale);
   let promise = new Promise(function(resolve, reject) {
     loadGlobalData(dataset);
     data_2D = load(dataset_2D);

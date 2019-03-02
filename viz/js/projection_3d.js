@@ -66,6 +66,8 @@ function projection3D() {
     document.getElementsByClassName("overlay")[0].style.display = "none";
     document.getElementById("svg_map2").style.overflow = "";
     document.getElementById("container").style.display = "none";
+    colorScheme = d3.schemeGreens[6];
+    colorSchemeDisplay = d3.schemeGreens[9];
 
 
     changeProjection(false);
