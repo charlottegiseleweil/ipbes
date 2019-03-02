@@ -119,7 +119,7 @@
     </div>
   </div> -->
   <!-- End of popup window -->
-  <div id="loader-bg" style="background-color:#f0f8ff; width:100%; height: 100%; z-index: 1000000;"></div>
+<!--   <div class="loader-bg" style="background-color:#f0f8ff; width:70%; height: 50%; z-index: 1000000;"></div>
   <script>
     setTimeout(showMaps, 4000);
 
@@ -127,7 +127,7 @@
       document.getElementById("loader-bg").style.display = "none";
       document.getElementById("loader").style.display = "none";
     }
-  </script>
+  </script> -->
   <div class="box-container" id='3rd_box'>
     <div class="menu-box-1">
     <div class="nav">
@@ -176,7 +176,23 @@
       <div class="map-global"></div>
     </div>
 
-    <div id="loader"></div>
+    <div class="loader" style="left: 36%; top: 25%"></div>
+    <div class="loader" style="left: 36%; top: 73%"></div>
+    <script>
+      setTimeout(showMaps, 5000);
+
+      function showMaps() {
+        // console.log("inside show maps");
+        document.getElementsByClassName('loader')[0].style.display = "none";
+        document.getElementsByClassName('loader')[1].style.display = "none";
+
+        document.getElementsByClassName('d3-tip')[0].style.display = "block";
+
+        document.getElementById('svg_map1').style.visibility = "visible";
+        document.getElementById('svg_map2').style.visibility = "visible";
+      }
+
+    </script>
     <div class="box box-2" style="display: flex;">
       <div id="container">
         <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>

@@ -138,7 +138,6 @@ line {
   z-index: 1000;
   grid-area: 'map-slider';
   display: block;
-  z-index: 1000;
 }
 
 .box-3 {
@@ -1267,10 +1266,8 @@ span2 {
   color: black;
 }
 
-#loader {
+.loader {
   position: absolute;
-  left: 50%;
-  top: 50%;
   z-index: 1;
   width: 150px;
   height: 150px;
