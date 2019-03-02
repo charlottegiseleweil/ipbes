@@ -1,4 +1,4 @@
-let dataset_global = 'Data/2d_scale.csv';
+let dataset_global = 'Data/data_water_2d.csv'; // Dataset for pollination
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
@@ -7,13 +7,7 @@ let gradient_white = '#696969 radial-gradient(circle at 37% center, #494949 36%,
 let counter = 0;
 var zoom_2D_global = get_global_zoom();
 
-function initialize_2D_global(data_) {
-  let coordstoplot = [];
-  for (let key in data_) {
-    coordstoplot.push([data_[key]['long'], data_[key]['lat'], data_[key]['UN_cur'], data_[key]['NCP_cur'], data_[key]['population']]);
-  }
-  return coordstoplot;
-}
+
 
 // Function to load the pollination visualization
 function load_pollination() {
@@ -56,6 +50,9 @@ function load_pollination_data() {
   if (pollination_box.checked == true) {
     if (water_box.checked == false && coastal_box.checked == false) {
       legendTitle.innerHTML = "Pollination Key Areas"
+
+      dataset_global = 'Data/data_water_2d.csv' // dataset for pollination
+      parseDataGlobal(dataset_global, draw_points);
     } else {
       legendTitle.innerHTML = "Hotspots";
     }
@@ -70,6 +67,10 @@ function load_waterquality_data() {
   if (water_box.checked == true) {
     if (pollination_box.checked == false && coastal_box.checked == false) {
       legendTitle.innerHTML = "WQ Key Areas";
+
+      dataset_global = 'Data/data_water_2d.csv'
+      parseDataGlobal(dataset_global, draw_points);
+
     } else {
       legendTitle.innerHTML = "Hotspots";
     }
@@ -86,6 +87,9 @@ function load_coastalrisk_data() {
   if (coastal_box.checked == true) {
     if (pollination_box.checked == false && water_box.checked == false) {
       legendTitle.innerHTML = "CR Key Areas";
+
+      dataset_global = 'Data/data_water_2d.csv'
+      parseDataGlobal(dataset_global, draw_points);
     } else {
       legendTitle.innerHTML = "Hotspots";
     }
@@ -124,23 +128,10 @@ function load_2d_global(dataset) {
   return result;
 }
 
-let data_2D_global = load_2d_global(dataset_global);
-let promise_global = new Promise(function(resolve, reject) {
-  setTimeout(() => resolve(1), 100);
-});
-promise_global.then(() => {
-  let coordstoplot_global = initialize_2D_global(data_2D_global);
-  array_UN_cur = [];
-  array_NCP_cur = [];
-  array_pop_cur = [];
-  for (i = 0; i < coordstoplot_global.length; i++) {
-    array_UN_cur[i] = Number(coordstoplot_global[i][2]);
-    array_NCP_cur[i] = Number(coordstoplot_global[i][3]);
-    array_pop_cur[i] = Number(coordstoplot_global[i][4]);
-  }
-  showDataGlobal(g_global, coordstoplot_global, Quartile_50(array_UN_cur),
-    Quartile_50(array_pop_cur), Quartile_33(array_NCP_cur), Quartile_66(array_NCP_cur));
-});
+let data_2D_global;
+let promise_global;
+
+parseDataGlobal(dataset_global, draw_points);
 
 function getColor(UN_value, pop_value, NCP_value, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
   let colors = [
@@ -162,32 +153,43 @@ function getColor(UN_value, pop_value, NCP_value, UN_mid_q, pop_mid_q, NCP_third
   } else if (NCP_value >= NCP_2_third_q) {
     ncp = 2;
   }
-
   return colors[un + pop][ncp];
 }
 
 // plot points on the map for 2D global map
-function showDataGlobal(the_g, coordinates, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
+function showDataGlobal(the_g, data, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
+
   // This is just for 2D, we are creating a raster by creating a rectangle
   the_g.selectAll(".plot-point")
-    .data(coordinates).enter()
-    .append("rect")
+    .data(data).enter()
+    .append("polygon")
     .classed('plot-point', true)
-    .attr("x", function(d) {
-      return projection_global(d)[0];
-    })
-    .attr("y", function(d) {
-      return projection_global(d)[1];
-    })
-    .attr("width", "3")
-    .attr("height", "3")
-    .attr("fill", function(d) {
+    .attr("points", function(d) {
+      let x_1 = projection_global([d['lat1'], d['long1']])[0];
+      let y_1 = projection_global([d['lat1'], d['long1']])[1];
+      let x_2 = projection_global([d['lat2'], d['long2']])[0];
+      let y_2 = projection_global([d['lat2'], d['long2']])[1];
+      let x_3 = projection_global([d['lat3'], d['long3']])[0];
+      let y_3 = projection_global([d['lat3'], d['long3']])[1];
+      let x_4 = projection_global([d['lat4'], d['long4']])[0];
+      let y_4 = projection_global([d['lat4'], d['long4']])[1];
+      let x_5 = projection_global([d['lat5'], d['long5']])[0];
+      let y_5 = projection_global([d['lat5'], d['long5']])[1];
 
-      return getColor(d[2], d[3], d[4], UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q)
+      return (x_1 + ',' + y_1 + ' ' +
+        x_2 + ',' + y_2 + ' ' +
+        x_3 + ',' + y_3 + ' ' +
+        x_4 + ',' + y_4 + ' ' +
+        x_5 + ',' + y_5);
+    })
+    .attr("fill", function(d) {
+      return getColor(d['UN_cur'], d['population'], d['NCP_cur'], UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q)
     })
   // .on('mouseover', tip.show)
   // .on('mouseout', tip.hide);
+
 }
+
 
 function click_about() {
   console.log("About button clicked");
@@ -202,6 +204,34 @@ function get_global_zoom() {
 // Changes both groups in 2D
 function zoomed_2D_global() {
   g_global.attr("transform", d3.event.transform);
+}
+
+function draw_points(data) {
+  //Data is usable here
+  g_global.selectAll('.plot-point').remove();
+  array_UN_cur = [];
+  array_NCP_cur = [];
+  array_pop_cur = [];
+  for (i = 0; i < data.length; i++) {
+    array_UN_cur[i] = Number(data[i]['UN_cur']);
+    array_NCP_cur[i] = Number(data[i]['NCP_cur']);
+    array_pop_cur[i] = Number(data[i]['population']);
+  }
+  showDataGlobal(g_global, data, Quartile_50(array_UN_cur),
+    Quartile_50(array_pop_cur), Quartile_33(array_NCP_cur), Quartile_66(array_NCP_cur));
+
+
+}
+
+function parseDataGlobal(url, callBack) {
+  Papa.parse(url, {
+    download: true,
+    dynamicTyping: false, // Parse values as their true type (not as strings)
+    header: true, // to parse the data as a dictionary
+    complete: function(results) {
+      callBack(results.data);
+    }
+  });
 }
 
 function activate_nature_button() {
