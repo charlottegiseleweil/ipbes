@@ -63,7 +63,7 @@ function updateData(data_type) {
       // dataset = 'dataset/country_va.csv';
       // dataset_graph = 'dataset/plot_vitamin.csv';
       dataset_2D = '../Data/rural_pop_degree.csv';
-      //change_dataset = '../Data/pop_2d_change.csv';
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 3)
       // color_graph = colorScale_vitamin;
       // lineGraphObject.updateGraph(previousCountryClicked);
 
@@ -76,6 +76,8 @@ function updateData(data_type) {
       //   current_viz + " in " + current_year + "?";
       // colorScheme = d3.schemeReds[6];
       // colorSchemeDisplay = d3.schemeReds[9];
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 1)
+
       // dataset = 'dataset/country_en.csv';
       // dataset_graph = 'dataset/plot_energy.csv';
       dataset_2D = '../Data/n_load_degree.csv';
@@ -92,7 +94,7 @@ function updateData(data_type) {
       // dataset = 'dataset/country_fo.csv';
       // dataset_graph = 'dataset/plot_folate.csv';
       dataset_2D = '../Data/nc_degree.csv';
-      // color_graph = colorScale_folate;
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 0)
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
       break;
@@ -105,7 +107,7 @@ function updateData(data_type) {
       // dataset = 'dataset/country_fo.csv';
       // dataset_graph = 'dataset/plot_folate.csv';
       dataset_2D = '../Data/n_export_degree.csv';
-      // color_graph = colorScale_folate;
+      colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 2)
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
       break;
