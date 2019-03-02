@@ -1,13 +1,23 @@
-function mapsTimeout() {
-  setTimeout(showMaps, 4000);
+function mapsTimeout(seconds) {
+  setTimeout(showMaps, seconds);
 }
 
 function showMaps() {
-  document.getElementById("loader-bg").style.display = "none";
-  document.getElementById("loader").style.display = "none";
+  document.getElementsByClassName('loader')[0].style.display = "none";
+  document.getElementsByClassName('loader')[1].style.display = "none";
+
+  document.getElementsByClassName('d3-tip')[0].style.display = "block";
+
+  document.getElementById('svg_map1').style.visibility = "visible";
+  document.getElementById('svg_map2').style.visibility = "visible";
 }
 
-function disappearLoader() {
-  document.getElementById("loader-bg").style.display = "block";
-  document.getElementById("loader").style.display = "block";
+function disappearMaps() {
+  document.getElementsByClassName('loader')[0].style.display = "block";
+  document.getElementsByClassName('loader')[1].style.display = "block";
+
+  document.getElementsByClassName('d3-tip')[0].style.display = "none";
+
+  document.getElementById('svg_map1').style.visibility = "hidden";
+  document.getElementById('svg_map2').style.visibility = "hidden";
 }

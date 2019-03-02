@@ -76,8 +76,8 @@ function projection3D() {
     checked2D = "false";
     svg.on(".zoom", null);
 
-    document.getElementById('loader-bg').style.display = "none";
-    document.getElementById('loader').style.display = "none";
+    document.getElementsByClassName('loader')[0].style.display = "none";
+    document.getElementsByClassName('loader')[1].style.display = "none";
     // Make the 3D projection to come back to its own form :) because from 2D to 3D
     svg.call(zoom_3D.transform, d3.zoomIdentity);
 

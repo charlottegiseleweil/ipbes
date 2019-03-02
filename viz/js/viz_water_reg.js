@@ -84,8 +84,8 @@ var data_c = {}; // DELETE this!
 
 let data_2D, change_data;
 
-document.getElementById('loader-bg').style.display = "none";
-document.getElementById('loader').style.display = "none";
+document.getElementsByClassName('loader')[0].style.display = "none";
+document.getElementsByClassName('loader')[1].style.display = "none";
 
 // Calling the ready function to render everything even chloropleth
 ready(g, path);

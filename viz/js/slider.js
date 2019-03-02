@@ -199,6 +199,10 @@ function runSegmentedSSPs(period) {
     BarGraphObject.updateBarGraph('../Data/ssp5_impacted.csv');
     current_SSP = "SSP5";
   }
+  //Loader for 3 SSPs
+  disappearMaps();
+  mapsTimeout(2500);
+
   parseData(dataset_2D, doStuff, false);
   change_pollination_contribution(period);
   //update_percentages(period);
