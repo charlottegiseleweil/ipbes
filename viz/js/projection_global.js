@@ -51,8 +51,9 @@ function load_pollination_data() {
     if (water_box.checked == false && coastal_box.checked == false) {
       legendTitle.innerHTML = "Pollination Key Areas"
 
-      dataset_global = 'Data/data_water_2d.csv' // dataset for pollination
-      parseDataGlobal(dataset_global, draw_points);
+      // dataset_global = 'Data/data_water_2d.csv' // dataset for pollination
+      // parseDataGlobal(dataset_global, draw_points);
+      g_global.selectAll('.plot-point').remove(); //to remove
     } else {
       legendTitle.innerHTML = "Hotspots";
     }
@@ -194,13 +195,13 @@ function get_global_zoom() {
   return d3.zoom()
     .scaleExtent([1, 12])
     .translateExtent([
-        [0, 0],
-        [$(".map-global").width(), $(".map-global").height()]
-      ])
-      .extent([
-        [0, 0],
-        [$(".map-global").width(), $(".map-global").height()]
-      ])
+      [0, 0],
+      [$(".map-global").width(), $(".map-global").height()]
+    ])
+    .extent([
+      [0, 0],
+      [$(".map-global").width(), $(".map-global").height()]
+    ])
     .on("zoom", zoomed_2D_global);
 }
 
