@@ -9,7 +9,7 @@ The goal of this interactive viewer (tailored to the specific needs of this comp
 
 ## Prototype
 
-The visualization prototype is accessible [here](https://charlottegiseleweil.github.io/natureforpeople/).
+The visualization prototype is accessible [here](https://charlottegiseleweil.github.io/natureforpeople/index.html).
 
 
 ## Structure
