@@ -1,6 +1,6 @@
 // Initializations
-let colorScheme = d3.schemeReds[6];
-let colorSchemeDisplay = d3.schemeReds[9];
+let colorScheme = d3.schemeGreens[6];
+let colorSchemeDisplay = d3.schemeGreens[9];
 let changeColorScheme = d3.schemeRdYlGn[5];
 
 let changeColorSchemeDisplay = d3.schemeRdYlGn[9];
@@ -72,7 +72,7 @@ function makeLegend(colorScale) {
     .attr("class", "caption")
     .attr("x", 0)
     .attr("y", -4)
-    .text("% contrib.");
+    .text("Quantiles");
 
   let labels = ['1-20', '21-40', '41-60', '61-80', '81-99', '100'];
   let legend = d3.legendColor()
@@ -164,7 +164,6 @@ function change_labels(data, dataset_pos) {
 
 
 function parseDataLegends(url, callBack, dataset_pos) {
-  console.log('called parsing function');
   Papa.parse(url, {
     download: true,
     dynamicTyping: false, // Parse values as their true type (not as strings)

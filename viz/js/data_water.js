@@ -64,13 +64,15 @@ function updateData(data_type) {
       // dataset_graph = 'dataset/plot_vitamin.csv';
       dataset_2D = '../Data/rural_pop_degree.csv';
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 3)
+      colorScheme = d3.schemePurples[6];
+      colorSchemeDisplay = d3.schemePurples[9];
       // color_graph = colorScale_vitamin;
       // lineGraphObject.updateGraph(previousCountryClicked);
 
       break;
     case "Nitrogen":
       // current_viz = "Food Energy";
-      region_text = "Nitrogen Pollution Potential";
+      region_text = "Total Nitrogen Load";
       // title.innerHTML = "Pollination Contribution to Nutrition (Food Energy) in " + current_year;
       // contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
       //   current_viz + " in " + current_year + "?";
@@ -81,6 +83,8 @@ function updateData(data_type) {
       // dataset = 'dataset/country_en.csv';
       // dataset_graph = 'dataset/plot_energy.csv';
       dataset_2D = '../Data/n_load_degree.csv';
+      colorScheme = d3.schemeOranges[6];
+      colorSchemeDisplay = d3.schemeOranges[9];
       // color_graph = colorScale_energy;
       //change_dataset = '../Data/ncp_2d_change.csv';
       // lineGraphObject.updateGraph(previousCountryClicked);
@@ -95,6 +99,8 @@ function updateData(data_type) {
       // dataset_graph = 'dataset/plot_folate.csv';
       dataset_2D = '../Data/nc_degree.csv';
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 0)
+      colorScheme = d3.schemeGreens[6];
+      colorSchemeDisplay = d3.schemeGreens[9];
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
       break;
@@ -108,6 +114,8 @@ function updateData(data_type) {
       // dataset_graph = 'dataset/plot_folate.csv';
       dataset_2D = '../Data/n_export_degree.csv';
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 2)
+      colorScheme = d3.schemeReds[6];
+      colorSchemeDisplay = d3.schemeReds[9];
       // change_dataset = 'dataset/change_fo.csv';
       // lineGraphObject.updateGraph(previousCountryClicked)
       break;
@@ -126,7 +134,7 @@ function updateData(data_type) {
     .domain([11, 22, 33, 44, 55, 66, 77, 88, 100])
     .range(colorSchemeDisplay);
 
-  //updateLegend(colorScale);
+  updateLegend(colorScale);
   parseData(dataset_2D, doStuff, true);
   svg_map2.selectAll('.plot-point').remove();
 }
