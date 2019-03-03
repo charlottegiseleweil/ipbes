@@ -266,7 +266,7 @@ function activate_nature_button() {
 
 function activate_risk_button() {
   //Load HTML file of the other group
-  location.href = 'viz_risk/index.html';
+  location.href = 'viz_risk/risk_index.html';
 }
 
 activate_nature_button();

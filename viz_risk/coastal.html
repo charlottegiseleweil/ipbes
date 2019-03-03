@@ -6,11 +6,13 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>TheEarthWontScale</title>
+	<title>Coastal Risk</title>
 	<meta name="author" content="David Malmström, Josef Weber, Anna Häägg">
 	<link href="https://fonts.googleapis.com/css?family=Muli:300" rel="stylesheet">
 
 	<link rel="shortcut icon" href="#" />
+	<!-- w3 style thingz -->
+	<link rel="stylesheet" type="text/css" href="../viz/css/w3.css">
 	
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/radio.css">
@@ -23,6 +25,19 @@
 <div id="landingpage">
 	<h3 id="landing-page-loader">loading ...</h3>
 </div>  
+
+<!-- Menu Navbar -->
+<div class="w3-top">
+	<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
+		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='../index.html'"> &larr; </a>
+		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='coastal.html'">NCP 2015 & 2050</a>
+		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
+		<a href="../viz/methods_coastal.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
+		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
+		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
+	</div>
+</div>
+<!-- End Menu Navbar -->
 
 <div class="wrapper" id="map-content">
 	<canvas id="heatmap"></canvas> 

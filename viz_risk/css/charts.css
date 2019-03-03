@@ -1,4 +1,5 @@
 /*Styling for the distribution chart of impacted people*/
+
 #distribution-chart{
     color: white;
     position: absolute;
@@ -70,7 +71,7 @@
     right: 2rem;
     bottom: 2rem;
     color: white;
-    width: 16rem;
+    width: 18rem;
     padding: 0;
     margin: 0;
     visibility: hidden;
