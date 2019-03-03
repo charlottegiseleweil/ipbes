@@ -14,7 +14,7 @@ whenDocumentLoaded(() => {
 	// Initialize dashboard
 	is2050 = true;
 	colorSchema = {UN: [d3.hcl(100, 90, 100),d3.hcl(15, 90, 60)], pop: [d3.hcl(227,5,98),d3.hcl(254,45,23)], NC: [d3.hcl(119,22,93),d3.hcl(133,34,25)]};
-	plot_object = new MapPlot('globe-plot');
+	plot_object = new MapPlot('globe-plot','pop');
 	charts = {distribution: new DistributionChart(), scenario: new ScenarioChart(), population: new PopulationChart()};
 	
 	// When the dataset radio buttons are changed: change the dataset
@@ -26,7 +26,7 @@ whenDocumentLoaded(() => {
 		plot_object.setScenario(this.value)
 	});
 
-	showledgend(colorSchema['UN']);
+	showledgend(colorSchema['pop']);
 });
 
 
@@ -123,22 +123,20 @@ function updateCharts(focusedData, colorScale, allfocusedCountryData){
 	}
 	else{
         charts.distribution.show(focusedData, colorScale);
-        charts.scenario.update(focusedData);
         charts.population.update(focusedData);
         document.getElementById('compare-scenarios').style.visibility = 'visible';
 	}
 }
 
-function showGlobalChart(focusedData){
-	hideCharts();
-	charts.scenario.update(focusedData);
-	charts.population.update(focusedData);
-    document.getElementById('compare-scenarios').style.visibility = 'visible';
-}
-
 function hideCharts(){
 	document.getElementById('distribution-chart').style.visibility = 'hidden';
 	document.getElementById('compare-scenarios').style.visibility = 'hidden';
+}
+
+function showGlobalChart(focusedData){
+	hideCharts();
+	charts.population.update(focusedData);
+    document.getElementById('compare-scenarios').style.visibility = 'visible';
 }
 
 

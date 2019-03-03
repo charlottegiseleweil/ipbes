@@ -128,8 +128,10 @@ function updateCharts(focusedData, colorScale, allfocusedCountryData){
 	charts.scenario.update(allfocusedCountryData);
 	charts.population.update(allfocusedCountryData);
 	document.getElementById('compare-scenarios').style.visibility = 'visible';
-	
-	
+}
+
+function showGlobalChart(focusedData){
+	hideCharts()
 }
 
 function hideCharts(){

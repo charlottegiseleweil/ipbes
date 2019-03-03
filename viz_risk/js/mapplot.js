@@ -1,5 +1,5 @@
 class MapPlot {
-	constructor(svg_element_id) {
+	constructor(svg_element_id, mode="UN") {
         this.svg = d3.select('#' + svg_element_id);
         this.svg_borders = d3.select('#' + svg_element_id + "_borders");
         
@@ -50,7 +50,7 @@ class MapPlot {
 
 			this.ndr_data = results[3];  // data
 			this.poll_data = results[4];
-			this.cv_data = results[5];
+            this.cv_data = results[5];
 
 			this.ndr_country_mapping = results[6];  // mapping between country name and data points
 			this.poll_country_mapping = results[7];  
@@ -58,7 +58,8 @@ class MapPlot {
             
             this.cities_data = results[9];
 
-			this.currentData = this.cv_data;
+            this.currentData = this.cv_data;
+            showGlobalChart(this.currentData);
             this.currentCountryMapping = this.cv_country_mapping
 
 			
@@ -82,7 +83,7 @@ class MapPlot {
 			this.focusedCountry = "";
             this.currentDatasetName = "cv";
             this.modes = ["UN", "NC", "pop"]
-            this.currentModeName = "UN";
+            this.currentModeName = mode;
 			// the current scenario, either 'c', '1', '3' or '5'
             this.scenarios = ["c", "1", "3", "5"];
             this.currentScenario = "3";
@@ -555,7 +556,6 @@ class MapPlot {
         
         this.init_110map();
         
-        hideCharts();
         this.focused = false;
 
         let already_triggered = false;
@@ -581,6 +581,9 @@ class MapPlot {
             }
         })
         
+        //show global chart
+        showGlobalChart(this.currentData);
+
         // Remove reset button and country label
         document.getElementById('resetText').style.visibility = 'hidden';
         document.getElementById("countryLabel").style.visibility = 'hidden';

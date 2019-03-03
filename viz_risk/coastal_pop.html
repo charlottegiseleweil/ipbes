@@ -31,7 +31,7 @@
 	<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
 		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='../index.html'"> &larr; </a>
 		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='coastal.html'">NCP 2015 & 2050</a>
-		<a href="coastal_pop.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
+		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
 		<a href="../viz/methods_coastal.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
 		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
 		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
@@ -48,11 +48,6 @@
 	
 	<div id="radio_container">	
 		<table>
-			<tr><td>
-				<p class="row-label">Mode</p>
-				<button type="button" class="mode-button selected"  style="width: 48%;"id="UN-button" onclick="switchMode('UN')">Deficit</button>
-				<button type="button" class="mode-button" style="width: 48%;"  id="NC-button" onclick="switchMode('NC')">Natures <br> contribution</button>
-			</td></tr>
 			<tr><td>
 				<p class="row-label">Year</p>
 				<button type="button" class="year-button " id="year-button-2015" onclick="switchYear(false)">2015</button>
@@ -78,30 +73,26 @@
 	
 
 	<div id="distribution-chart">
-			<h5 id="distri-chart-head">How severe are <br> people Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h5>
-			<svg id="distribution"></svg>
-			<h3 id="distri-x-axis">Number of people</h3>
-			<h3 id="distri-y-axis">Coastal Hazard</h3>
+		<h5 id="distri-chart-head">How severe are <br> people Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h5>
+		<svg id="distribution"></svg>
+		<h3 id="distri-x-axis">Number of people</h3>
+		<h3 id="distri-y-axis">Coastal Hazard</h3>
+	</div> 
+	
+	<div id="compare-scenarios">
+		<h1 id="compare-scenario-header">Compare Scenarios</h1>
+		<div id="population-chart">
+			<h2 class= "scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
+			<svg id="population-comparison-svg"></svg>
 		</div> 
-	
-		<div id="compare-scenarios">
-			<h1 id="compare-scenario-header">Compare Scenarios</h1>
-			<div id="scenario-chart">
-				<h2 class="scenario-chart-head">How much has the total <br>deficit changed since 2015?</h2>
-				<svg id="scenario-comparison-svg"></svg>
-			</div> 
-			<div id="population-chart">
-				<h2 class= "scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
-				<svg id="population-comparison-svg"></svg>
-			</div> 
-		</div>
-	
-		<div id ="legend">
-			<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
-			<svg id="legendBar"></svg>
-			<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
-		</div>
 	</div>
+	
+	<div id ="legend">
+		<p class="legendText" id="legendText-low">Small<br>Population</p>
+		<svg id="legendBar"></svg>
+		<p class="legendText" id="legendText-high">Big<br>Population</p>
+	</div>
+</div>
 
 <div id="greyOut" class="visible"></div>
 
@@ -116,6 +107,6 @@
 <script src="js/charts.js"></script>
 <script src="lib/simpleheat.js"></script>
 <script src="js/mapplot.js"></script>
-<script src="js/main_coastal.js"></script>
+<script src="js/main_coastal_pop.js"></script>
 </body>
 </html>
