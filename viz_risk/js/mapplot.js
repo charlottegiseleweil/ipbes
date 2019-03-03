@@ -274,7 +274,7 @@ class MapPlot {
                 scaleFactor = 0.0008;
         }
 
-        let nodeScale = this.projection.scale() * scaleFactor;
+        let nodeScale = Math.pow(this.projection.scale(), 1.05) * scaleFactor;
         let counter = 0;
         let counter2 = 0; 
         
