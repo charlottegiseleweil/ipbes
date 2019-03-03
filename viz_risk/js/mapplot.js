@@ -1,4 +1,8 @@
 class MapPlot {
+    static get SCALE() {
+        return 380;
+    }
+
 	constructor(svg_element_id, mode="UN") {
         this.svg = d3.select('#' + svg_element_id);
         this.svg_borders = d3.select('#' + svg_element_id + "_borders");
@@ -67,14 +71,16 @@ class MapPlot {
 			this.map_data.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 			this.map_data_50.forEach(x => Object.assign(x, country_label_data.find(country_label => country_label['id'] == x['id'])))
 
-			const center_x = this.svgWidth/2;
+            const center_x = this.svgWidth/2;
 			const center_y = this.svgHeight/2;	
-            const scale = 380;
-            this.setHeatRadius(scale);
+            
+            this.setHeatRadius(MapPlot.SCALE);
             this.heatMinOpacity = 0.05;
-            this.scaleExtent = [0.8, 1.5];
+            this.scaleExtent = [0.8, 5];
+            // different max scale for nmr and poll viz than for cv
+            this.ndrPollScaleMax = 1.5;
             this.countryBorderWidth = "0.3";
-			this.resetScale = scale;
+			this.resetScale = MapPlot.SCALE;
 			this.resetRotate = [0, 0];
 			this.activeClick = d3.select(null)
 			this.clickedRotate;
@@ -107,7 +113,7 @@ class MapPlot {
 
 			this.projection = d3.geoOrthographic()
 				.rotate([0, 0])
-				.scale(scale)
+				.scale(MapPlot.SCALE)
 				.translate([center_x, center_y]);
 
 			this.path = d3.geoPath(this.projection);
@@ -138,19 +144,7 @@ class MapPlot {
 					d3.select(this).classed("selected", false)	
 				})
                 .on("click", this.clicked())
-            
-            // add borders
-            this.svg_borders.selectAll("path")
-                .data(this.map_data)
-                .enter().append("path")
-                .attr("class", "globe")
-                .attr("fill", "grey")
-                .attr("fill-opacity", "0")
-                .attr("stroke-opacity","0.5")
-                .style("stroke", "dimgrey")
-                .style("stroke-width", this.countryBorderWidth)
-                .attr("d", this.path)
-            
+
             // print city text
             this.svg.selectAll("text")
                 .data(this.cities_data.filter((d) => d.population > this.pop_limit))
@@ -627,15 +621,7 @@ class MapPlot {
                 this.resetClick(false)
             })
         
-        this.svg_borders.selectAll("path").remove().enter()
-            .data(this.map_data_50)
-            .enter().append("path")
-            .attr("fill", "grey")
-            .attr("fill-opacity", "0")
-            .style("stroke", "dimgrey")
-            .attr("stroke-opacity","0.5")
-            .style("stroke-width", this.countryBorderWidth)
-            .attr("d", this.path)
+        this.updateBorders();
     
         this.render()
     }
@@ -664,7 +650,13 @@ class MapPlot {
                 d3.select(this).classed("selected", false)
             })
 
-            this.svg_borders.selectAll("path").remove().enter()
+            this.updateBorders();
+    }
+
+    updateBorders() {
+        // Don't need to fill in borders for cv, since it does not have the heatmaps
+        if (this.currentDatasetName != 'cv') {
+        this.svg_borders.selectAll("path").remove().enter()
                 .data(this.map_data)
                 .enter().append("path")
                 .attr("fill", "grey")
@@ -673,6 +665,9 @@ class MapPlot {
                 .style("stroke", "dimgrey")
                 .style("stroke-width", this.countryBorderWidth)
                 .attr("d", this.path)
+        } else {
+            this.svg_borders.selectAll("path").remove();
+        }
     }
 
     // find country object in json
@@ -726,24 +721,70 @@ class MapPlot {
     setDataset(dataset) {
         this.currentDatasetName = dataset;
         switch (this.currentDatasetName) {
+            case 'cv':
+                this.scaleExtent = [0.8, 5];  
+                this.currentData = this.cv_data;
+                this.currentCountryMapping = this.cv_country_mapping;
+                break; 
             case 'ndr': 
+                this.scaleExtent = [0.8, this.ndrPollScaleMax];
                 this.currentData = this.ndr_data;
                 this.currentCountryMapping = this.ndr_country_mapping;
                 break;
             case 'poll':
+                this.scaleExtent = [0.8, this.ndrPollScaleMax];
                 this.currentData = this.poll_data;
                 this.currentCountryMapping = this.poll_country_mapping;
                 break;
-            case 'cv':  
-                this.currentData = this.cv_data;
-                this.currentCountryMapping = this.cv_country_mapping;
-                break; 
-            
         }
-        this.setUNColorScale()
-        this.update_all();
-        // change labels depending on dataset
-        updateLabels(`${this.currentDatasetName}`,`${this.currentModeName}`);
+
+        let currentScale = this.projection.scale();
+        // if we are switching to the ndr or poll vizes and are more zoomed in than we should be, we do a 
+        // transition zoom out to the maximum zoom for ndr and poll.
+        if ((this.currentDatasetName != 'cv') && currentScale > this.ndrPollScaleMax * MapPlot.SCALE && 
+            (!this.focused)) {
+                let currentRotate = this.projection.rotate();
+                let end_callback_triggered = false;
+                // Don't allow clicks during transition
+                d3.select(".wrapper").style("pointer-events", "none")
+
+                this.svg.selectAll("circle").remove();
+                d3.selectAll("path")
+                    .transition()
+                    .attrTween("d", this.zoomRotateFactory(currentRotate, currentScale, currentRotate, 
+                                                           this.ndrPollScaleMax * MapPlot.SCALE))
+                    .duration(600)
+                    .on("end", () => {
+                        if (!end_callback_triggered) {                            
+                            this.setUNColorScale();
+                            this.update_all();
+
+                            this.updateBorders();
+
+                            // set the proper scale for the d3 zoom
+                            d3.zoomTransform(this.svg.node()).k = MapPlot.SCALE * this.ndrPollScaleMax * 2 / (this.svgHeight - 10);
+                            // change labels depending on dataset
+                            updateLabels(`${this.currentDatasetName}`,`${this.currentModeName}`);
+
+                            end_callback_triggered = true;
+                            this.setHeatRadius(this.ndrPollScaleMax * MapPlot.SCALE)
+                            this.initializeZoom();
+                            this.render();
+
+                            // Allow clicks after transition is done
+                            d3.select(".wrapper").style("pointer-events", "all")                            
+                        }
+                    });
+        } else {
+            this.setUNColorScale();
+            this.update_all();
+            this.updateBorders();
+            // update zoom, since the scaleExtent might have changed
+            this.initializeZoom();
+            // change labels depending on dataset
+            updateLabels(`${this.currentDatasetName}`,`${this.currentModeName}`);
+        }
+
     }
     
     setScenario(scenario) {
