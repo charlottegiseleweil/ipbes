@@ -12,8 +12,8 @@
 
 
 	  <!-- w3 style thingz -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="../viz/css/w3.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../viz/css/w3.css">
 
 
 
@@ -24,11 +24,26 @@
 	<link rel="stylesheet" href="css/charts.css">
 	<link rel="stylesheet" href="css/legend.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+	<script src="../viz/libraries/noframework.waypoints.min.js"></script>
 
 </head>
 
 
 <body>
+
+	  <!-- "About" overlay -->
+	<div id="myNav" class="overlay">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<div class="overlay-content">
+				<a href="#">About blah blah </a>
+			</div>
+	</div>
+	<!-- About Pop-up Window -->
+	<div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
+			<div w3-include-html="about.html"></div>
+		</center>
+	</div>
+	<!-- End of About Pop-up Window -->
 
 	<!-- Menu Navbar -->
 	<div class="w3-top">
