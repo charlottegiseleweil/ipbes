@@ -69,7 +69,7 @@ function updateData(data_type) {
       colorSchemeDisplay = d3.schemeOranges[9];
       break;
     case "Pollution":
-      region_text = "Nature's contribution to Water Purification";
+      region_text = "Nature's Contribution to Water Purification";
       dataset_2D = '../Data/nc_degree.csv';
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 0)
       colorScheme = d3.schemeGreens[6];
