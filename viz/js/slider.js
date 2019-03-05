@@ -199,7 +199,7 @@ function runSegmentedSSPs(period, firstTime) {
     current_SSP = "SSP5";
   }
   //Loader for 3 SSPs
-  disappearMaps();
+  disappearSSPMap();
   if (firstTime) {
     mapsTimeout(4000);
   } else {
