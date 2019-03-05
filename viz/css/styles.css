@@ -1263,8 +1263,8 @@ span2 {
   font-family: ourFont;
   position: absolute;
   font-size: 1.7em;
-  margin-top: 28vh;
-  margin-left: 2.5vw;
+  top: 50vh;
+  left: 2.5vw;
   z-index: 1000000;
 }
 

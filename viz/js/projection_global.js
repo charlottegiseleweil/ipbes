@@ -144,7 +144,7 @@ let tip_global = d3.tip()
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
     return "<strong>" + region_text_global + "<br>" +
-    "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + "</span></strong> <br>" +
+    "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
     "<strong>" + "Unmet need" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
     "<strong>" + "Population" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
   })

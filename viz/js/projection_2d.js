@@ -77,6 +77,5 @@ function projection2D() {
 
     // Plot points on the map
     runSegmentedSSPs("SSP1", true);
-    // showData(g_map2, '2015', colorScaleDisplay);
   }
 }

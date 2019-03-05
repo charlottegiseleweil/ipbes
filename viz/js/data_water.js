@@ -9,7 +9,7 @@ let country_data_2D;
 let map_title = document.getElementById('map-name-1');
 
 // plot points on the map for 2D and 3D map
-function showData(the_g, data, period, colorScaleSelect) {
+function showData(the_g, data, colorScaleSelect) {
   // Add circles to the country which has been selected
   // Removing part is within
 
@@ -38,14 +38,54 @@ function showData(the_g, data, period, colorScaleSelect) {
           x_5 + ',' + y_5);
       })
       .attr("fill", function(d) {
-        color = d[period] || 0;
-        if (d[period] == 0) {
+        color = d['2015'] || 0;
+        if (d['2015'] == 0) {
           return "#ffffff00";
         }
         return colorScaleSelect(color);
       })
       .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+      .on('mouseout', tip.hide)
+  }
+}
+
+function showDataSSP(the_g, data, colorScaleSelect) {
+  // Add circles to the country which has been selected
+  // Removing part is within
+
+  if (checked2D == 'true') {
+    // This is just for 2D, we are creating a raster by creating a rectangle
+    the_g.selectAll(".plot-point")
+      .data(data).enter()
+      .append("polygon")
+      .classed('plot-point', true)
+      .attr("points", function(d) {
+        let x_1 = projection([d['lat1'], d['long1']])[0];
+        let y_1 = projection([d['lat1'], d['long1']])[1];
+        let x_2 = projection([d['lat2'], d['long2']])[0];
+        let y_2 = projection([d['lat2'], d['long2']])[1];
+        let x_3 = projection([d['lat3'], d['long3']])[0];
+        let y_3 = projection([d['lat3'], d['long3']])[1];
+        let x_4 = projection([d['lat4'], d['long4']])[0];
+        let y_4 = projection([d['lat4'], d['long4']])[1];
+        let x_5 = projection([d['lat5'], d['long5']])[0];
+        let y_5 = projection([d['lat5'], d['long5']])[1];
+
+        return (x_1 + ',' + y_1 + ' ' +
+          x_2 + ',' + y_2 + ' ' +
+          x_3 + ',' + y_3 + ' ' +
+          x_4 + ',' + y_4 + ' ' +
+          x_5 + ',' + y_5);
+      })
+      .attr("fill", function(d) {
+        color = d[current_SSP] || 0;
+        if (d[current_SSP] == 0) {
+          return "#ffffff00";
+        }
+        return colorScaleSelect(color);
+      })
+      .on('mouseover', tip2.show)
+      .on('mouseout', tip2.hide);
   }
 }
 
@@ -120,9 +160,9 @@ function doStuff(data, firstTime) {
   //Data is usable here
   svg.selectAll('.plot-point').remove();
   if (firstTime) {
-    showData(g_map2, data, '2015', colorScaleDisplay);
+    showData(g_map2, data, colorScaleDisplay);
   }
-  showData(g, data, current_SSP, changeColorScaleDisplay);
+  showDataSSP(g, data, changeColorScaleDisplay);
 
 }
 
