@@ -21,3 +21,9 @@ function disappearMaps() {
   document.getElementById('svg_map1').style.visibility = "hidden";
   document.getElementById('svg_map2').style.visibility = "hidden";
 }
+
+function disappearSSPMap() {
+  document.getElementsByClassName('loader')[1].style.display = "block";
+  document.getElementsByClassName('d3-tip')[0].style.display = "none";
+  document.getElementById('svg_map1').style.visibility = "hidden";
+}

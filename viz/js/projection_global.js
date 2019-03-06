@@ -3,7 +3,7 @@ let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
 let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
-let gradient_white = '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%';
+let gradient_white = '#696969 radial-gradient(circle at 70% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%';
 let counter = 0;
 var zoom_2D_global = get_global_zoom();
 let region_text_global = "Water Quality Regulation";
@@ -144,7 +144,7 @@ let tip_global = d3.tip()
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
     return "<strong>" + region_text_global + "<br>" +
-    "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + "</span></strong> <br>" +
+    "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
     "<strong>" + "Unmet need" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
     "<strong>" + "Population" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
   })
