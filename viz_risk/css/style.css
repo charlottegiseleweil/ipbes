@@ -1,8 +1,21 @@
 .nav-global {
-   
-	font-size: 1.2em;
+	font-size: 1.1em;
 	z-index: 100;
 }
+.overlay {
+	position: fixed;
+	display: none;
+	width: 18%;
+	height: 18%;
+	top: 80vh;
+	left: 8vh;
+	right: 0;
+	bottom: 0;
+	/*background-color: rgba(0,0,0,0.5);*/
+	z-index: 2;
+	cursor: pointer;
+  }
+  
 .wrapper {
 	width: 100%;
 	height: 100%;

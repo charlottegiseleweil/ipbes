@@ -10,12 +10,9 @@
 	<title>Future</title>
 	<meta name="author" content="David Malmström, Josef Weber, Anna Häägg">
 
-
 	  <!-- w3 style thingz -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="../viz/css/w3.css">
-
-
 
 	<link rel="shortcut icon" href="#" />
 	<link href="https://fonts.googleapis.com/css?family=Muli:300" rel="stylesheet">
@@ -23,6 +20,7 @@
 	<link rel="stylesheet" href="css/radio.css">
 	<link rel="stylesheet" href="css/charts.css">
 	<link rel="stylesheet" href="css/legend.css">
+	<link rel="stylesheet" href="css/info.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 	<script src="../viz/libraries/noframework.waypoints.min.js"></script>
 
@@ -30,21 +28,6 @@
 
 
 <body>
-
-	  <!-- "About" overlay -->
-	<div id="myNav" class="overlay">
-			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<div class="overlay-content">
-				<a href="#">About blah blah </a>
-			</div>
-	</div>
-	<!-- About Pop-up Window -->
-	<div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
-			<div w3-include-html="about.html"></div>
-		</center>
-	</div>
-	<!-- End of About Pop-up Window -->
-
 	<!-- Menu Navbar -->
 	<div class="w3-top">
 		<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
@@ -60,9 +43,21 @@
 		<h3 id="landing-page-loader">loading ...</h3>
 	</div>  
 
+	<!-- "About" overlay -->
+	<div id="myNav" class="overlay">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<div class="overlay-content">
+	</div>
+	</div>
+	<!-- About Pop-up Window -->
+	<div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
+			<div w3-include-html="../about.html"></div>
+		</center>
+	</div>
+	<!-- End of About Pop-up Window -->
+
 
 	<div class="wrapper" id="map-content">
-		
 		<canvas id="heatmap"></canvas> 
 		<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
 		<svg id="globe-plot_borders" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
@@ -144,7 +139,30 @@
 		
 	</div>
 
-	<div id="greyOut" class="visible"></div>
+	<!-- Info Button Pop-up Window -->
+	<div id="greyOut" onClick="hideInfo()">
+		<div id="info_popup">
+			<h2 class="info_header">How to read these maps?</h2>
+				<ul class="p_popup">
+					<i>This map highlight where people will be most at risk in the future. 
+						By using the control panel different services and scenarios can be explored.</i><br><br>
+					<li>The <i>Deficit-mode</i> displays where people are most in need of nature’s contribution.
+							The <i>People Impacted-mode</i> displays how big the impacted population are and the 
+							<i>Nature’s contribution-mode</i> shows how much nature helps to reduce risks in different parts of the world.
+					</li><br>
+					<li> Choose which service to explore by selecting <i>Coastal risk</i>, <i>Water quality</i> or <i>Pollination</i> with the radio buttons.  
+					</li><br>
+					<li> 
+						Choose which scenario to explore by selecting <i>Green Growth</i>, <i>Regional Rivalry</i> or <i>Fossil Fuels</i> with the radio buttons. 
+					</li><br>
+					<li> 
+						For more detailed data and the possibility to compare services and scenarios, select a country by clicking on it.
+					</li>
+				</ul>
+			<p style="cursor: pointer; font-size: 1.3em; text-align: center" onClick="hideInfo()">&#x2716; Got it! </p>
+		</div>
+	</div>
+	<!-- End of popup window -->
 
 
 	<script src="https://d3js.org/d3.v5.min.js"></script>
@@ -153,7 +171,6 @@
 	<script>
 		if (!window.d3) document.write('<script src="lib/d3.min.js"><\/script>');
 	</script>
-	<script src="../viz/js/popup.js"></script>
 	<script src="lib/topojson.min.js"></script>
 	<script src="js/charts.js"></script>
 	<script src="lib/simpleheat.js"></script>

@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="css/radio.css">
 	<link rel="stylesheet" href="css/charts.css">
 	<link rel="stylesheet" href="css/legend.css">
+	<link rel="stylesheet" href="css/info.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 </head>
 
@@ -40,6 +41,7 @@
 <!-- End Menu Navbar -->
 
 <div class="wrapper" id="map-content">
+
 	<canvas id="heatmap"></canvas> 
 	<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
 	<svg id="globe-plot_borders" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
@@ -103,7 +105,28 @@
 		</div>
 	</div>
 
-<div id="greyOut" class="visible"></div>
+	
+	<!-- Info Button Pop-up Window -->
+	<div id="greyOut" onClick="hideInfo()">
+		<div id="info_popup">
+			<h2 class="info_header">How to read these maps?</h2>
+				<ul class="p_popup">
+					<i>This map highlight where people will be most at risk for coastal storms floods and costal erosion in the future. 
+						By using the control panel different scenarios can be explored.</i><br><br>
+					<li>The <i>Deficit-mode</i> displays where people are most in need of nature’s contribution. The 
+							<i>Nature’s contribution-mode</i> shows how much nature helps to reduce risks in different parts of the world.
+					</li><br>
+					<li> 
+						Choose which scenario to explore by selecting <i>Green Growth</i>, <i>Regional Rivalry</i> or <i>Fossil Fuels</i> with the radio buttons. 
+					</li><br>
+					<li> 
+						For more detailed data and the possibility to compare services and scenarios, select a country by clicking on it.
+					</li>
+				</ul>
+			<p style="cursor: pointer; font-size: 1.3em; text-align: center" onClick="hideInfo">&#x2716; Got it! </p>
+		</div>
+	</div>
+	<!-- End of popup window -->
 
 
 <script src="https://d3js.org/d3.v5.min.js"></script>

@@ -155,3 +155,15 @@ function whenDocumentLoaded(action) {
 		action();
 	}
 }
+
+// For hiding the popup window
+function hideInfo() {
+	document.getElementById('greyOut').style.visibility = "hidden";
+}
+
+// For showing the INFO popup window
+function showNow() {
+	document.getElementById('greyOut').style.visibility = "visible";
+
+}
+
