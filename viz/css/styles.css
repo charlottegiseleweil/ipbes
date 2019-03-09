@@ -652,6 +652,7 @@ img {
   font-size: 1.5em;
   font-family: ourFont;
   color: white;
+  z-index: 1000;
 }
 
 .box-1-global {
