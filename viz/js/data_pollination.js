@@ -1,7 +1,7 @@
 // Current dataset depending on what we visualize
 // and also the initializations
 let firstTime = true;
-let dataset = '../Data/country_en.csv';
+let dataset = '../Data/aggregated_country.csv';
 let dataset_2D = '../Data/nc_degree.csv';
 let current_viz = "Food Energy";
 let change_dataset = '../Data/ncp_2d_change.csv';
@@ -158,7 +158,7 @@ function updateData(data_type) {
   }
   //Loader for 4 scenarios
   disappearMaps();
-  mapsTimeout(4000);
+  mapsTimeout(50);
 
   map_title.innerHTML = region_text;
   colorScale = d3.scaleThreshold()
