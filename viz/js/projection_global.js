@@ -1,4 +1,4 @@
-let dataset_global = 'Data/data_water_2d.csv'; // Dataset for pollination
+let dataset_global = 'Data/data_pol_2d.csv';
 let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
@@ -53,9 +53,8 @@ function load_pollination_data() {
       legendTitle.innerHTML = "Pollination Key Areas"
       region_text_global = "Pollination";
 
-      // dataset_global = 'Data/data_water_2d.csv' // dataset for pollination
-      // parseDataGlobal(dataset_global, draw_points);
-      g_global.selectAll('.plot-point').remove(); //to remove
+      dataset_global = 'Data/data_pol_2d.csv'
+      parseDataGlobal(dataset_global, draw_points);
     } else {
       legendTitle.innerHTML = "Hotspots";
     }
@@ -144,13 +143,12 @@ let tip_global = d3.tip()
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
     return "<strong>" + region_text_global + "<br>" +
-    "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
-    "<strong>" + "Unmet need" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
-    "<strong>" + "Population" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
+      "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
+      "<strong>" + "Unmet need" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
+      "<strong>" + "Population" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
   })
 // Adding tip to the svg
 svg_global.call(tip_global);
-
 parseDataGlobal(dataset_global, draw_points);
 
 function getColor(UN_value, pop_value, NCP_value, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
@@ -205,8 +203,8 @@ function showDataGlobal(the_g, data, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_thi
     .attr("fill", function(d) {
       return getColor(d['UN_cur'], d['population'], d['NCP_cur'], UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q)
     })
-  .on('mouseover', tip_global.show)
-  .on('mouseout', tip_global.hide);
+    .on('mouseover', tip_global.show)
+    .on('mouseout', tip_global.hide);
 
 }
 
@@ -215,11 +213,11 @@ function get_global_zoom() {
     .scaleExtent([1, 12])
     .translateExtent([
       [0, 0],
-      [$(".map-global").width(), $(".map-global").width()/2]
+      [$(".map-global").width(), $(".map-global").width() / 2]
     ])
     .extent([
       [0, 0],
-      [$(".map-global").width(), $(".map-global").width()/2]
+      [$(".map-global").width(), $(".map-global").width() / 2]
     ])
     .on("zoom", zoomed_2D_global);
 }
