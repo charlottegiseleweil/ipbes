@@ -215,11 +215,11 @@ function get_global_zoom() {
     .scaleExtent([1, 12])
     .translateExtent([
       [0, 0],
-      [$(".map-global").width(), $(".map-global").height()]
+      [$(".map-global").width(), $(".map-global").width()/2]
     ])
     .extent([
       [0, 0],
-      [$(".map-global").width(), $(".map-global").height()]
+      [$(".map-global").width(), $(".map-global").width()/2]
     ])
     .on("zoom", zoomed_2D_global);
 }
