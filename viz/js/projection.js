@@ -39,10 +39,6 @@ function changeProjection(sliderChecked) {
       $('.box-container').css({
         'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
       });
-
-    // Make the map grey
-    g.selectAll('path').attr('fill', '#D3D3D3').on("click", null);
-    g_map2.selectAll('path').attr('fill', '#D3D3D3').on("click", null);
   } else {
 
     zoom_3D = d3.zoom()

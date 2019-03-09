@@ -10,6 +10,9 @@ function showMaps() {
 
   document.getElementById('svg_map1').style.visibility = "visible";
   document.getElementById('svg_map2').style.visibility = "visible";
+
+  g.selectAll('path').attr('fill', '#D3D3D3').on("click", null);
+  g_map2.selectAll('path').attr('fill', '#D3D3D3').on("click", null);
 }
 
 function disappearMaps() {

@@ -17,7 +17,6 @@ function loadGlobalData(dataset) {
     data.forEach(function(d) {
       data_c[d.iso3] = global_data_c[d.iso3][current_year];
     });
-
   });
 }
 
@@ -158,7 +157,7 @@ function updateData(data_type) {
   }
   //Loader for 4 scenarios
   disappearMaps();
-  mapsTimeout(50);
+  mapsTimeout(500);
 
   map_title.innerHTML = region_text;
   colorScale = d3.scaleThreshold()

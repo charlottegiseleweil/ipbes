@@ -10,6 +10,7 @@ function projection2D() {
     }
     if (current_html == "Pollination.html") {
       updateData('NCP');
+      // Make the map grey
     }
 
     document.getElementsByClassName("map-slider")[0].style.display = "none";
@@ -17,7 +18,6 @@ function projection2D() {
 
     zoom_3D = null;
     BarGraphObject.updateBarGraph('../Data/ssp1_impacted.csv');
-    changeProjection(true);
     updateLegendPosition(true);
 
     document.getElementsByClassName('box box-1')[0].style.display = "none";
@@ -37,10 +37,9 @@ function projection2D() {
     checked2D = "true";
     checked3D = "false";
 
+    changeProjection(true);
     svg.call(zoom_2D);
     svg_map2.call(zoom_2D);
-
-    //let coordstoplot = initialize_2D(current_year, data_2D);
 
     // Change the size of the maps
     svg.attr("width", $(".box.box-1").width())
@@ -64,9 +63,6 @@ function projection2D() {
       "width: 100%; height: 46%; overflow-x:hidden; overflow-y:hidden;"
     );
     document.getElementById('svg_map1').style.overflow = "initial";
-
-    // TODO: Need to change it
-    // loadDifferentScenario("NC");
 
     // Making the name of the maps appear in 2D
     document.getElementById("map-name-1").style.display = "initial";
