@@ -584,6 +584,14 @@ img {
   margin-bottom: 1vh;
 }
 
+.img-story2 {
+  margin-top: 1vh;
+  width: 110%;
+  height: 22%;
+  margin-left: -1.1vw;
+  margin-bottom: 1vh;
+}
+
 .bar {
   fill: #80cbc4;
 }
