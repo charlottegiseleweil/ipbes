@@ -20,7 +20,9 @@
 	<link rel="stylesheet" href="css/radio.css">
 	<link rel="stylesheet" href="css/charts.css">
 	<link rel="stylesheet" href="css/legend.css">
+	<link rel="stylesheet" href="css/left-menu.css">
 	<link rel="stylesheet" href="css/info.css">
+	<link href="https://goo.gl/mTc43h" rel="stylesheet">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 	<script src="../viz/libraries/noframework.waypoints.min.js"></script>
 
@@ -32,7 +34,7 @@
 	<div class="w3-top">
 		<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
 			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='../index.html'"><i class="fa fa-home w3-margin-right"></i> WHERE DOES NATURE HELP US MOST TODAY?</a>
-			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='risk_index.html'"><i class="fa fa-home w3-margin-right"></i> WHERE ARE PEOPLE AT MOST RISK IN THE FUTURE?</a>
+			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" style="background-color: #9e9e9e; color:black" onClick="location.href='risk_index.html'"><i class="fa fa-home w3-margin-right"></i> WHERE ARE PEOPLE AT MOST RISK IN THE FUTURE?</a>
 			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-grey" title="info-button" onclick="showNow()">&#9432;</a>
 			<a id="About" onclick="showAbout()" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-grey"> About</a>
 		</div>
@@ -138,6 +140,42 @@
 		</div>
 		
 	</div>
+	<!--left menu-->
+	<div id="left-menu" style="z-index: 100;">
+			<h1 class="left-menu-header"> Ecosystem Services </h1>
+
+			<div class="section_marker"> </div>
+
+			<h2 class="left-menu-header"> Pollination <span class="glyphicon glyphicon-grain"> </span> </h2>
+				
+			<h4 class="left-menu-text">
+				Wild pollination of crops is critical to ensure people a healthy nutritious diet to humans. 
+				Habitat quality is important for insect pollinators, such as bees, pollen wasps, ants, 
+				flies or butterflies to thrive. <br>
+				<p class="left-menu-link"> &#8594; <a onClick="location.href='../viz/Pollination.html';return false;">To Pollination Modeling</a></p>
+			</h4>
+
+			<div class="section_marker"> </div>
+
+			<h2 class="left-menu-header"> Water Quality Regulation <i class="fa fa-tint" viewBox = "0 0 15 15"></i> </h2>
+			<h4 class="left-menu-text">
+				When fertilizers are applied, some of it will percolate and transport to the stream, 
+				polluting the water and altering drinking water quality. However, some of it may be retained by healthy 
+				soil, this is an NCP (here, specifically: Nitrogen Retention) <br> 
+				<p class="left-menu-link"> &#8594; <a onClick="location.href='../viz/WaterQuality.html';return false;">To Water Quality Regulation Modeling</a></p>
+			</h4>
+
+			<div class="section_marker"> </div>
+
+			<h2 class="left-menu-header"> Coastal Risk Mitigation <i class="fas fa-water"></i> </h2>
+			<h4 class="left-menu-text">
+				Coastal habitats such as coral reefs, mangroves or sea grass protect the shorelines 
+				from the impacts of storms, such as floods and erosion. <br> 
+				<p class="left-menu-link"> &#8594; <a onClick="location.href='coastal.html';return false;">To Coastal Risk Mitigation Modeling</a></p>
+			</h4>
+	
+		</div>
+		<!--End of left menu-->
 
 	<!-- Info Button Pop-up Window -->
 	<div id="greyOut" onClick="hideInfo()">
