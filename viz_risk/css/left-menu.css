@@ -35,6 +35,14 @@
 }
 
 /*Some changes only when the left-menu is used*/
+#radio_container {
+    top: 2rem;
+    left: 21rem;
+}
+#distribution-chart{
+    left: 22rem;
+}
+/*
 #globe-plot {
     right: 0;
 	width: 80%;
@@ -47,13 +55,7 @@
     left: initial;
 	width: 80%;
 }
-#radio_container {
-    top: 2rem;
-    left: 21rem;
-}
-#distribution-chart{
-    left: 22rem;
-}
+
 #countryLabel {
     right: 0;
     width: 80%
@@ -64,4 +66,4 @@
     right: 0;
     width: 80%;
     margin: 0;
-}
+}*/
