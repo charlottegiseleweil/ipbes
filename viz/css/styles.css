@@ -1216,6 +1216,7 @@ span2 {
   background-color:black;
   width: 100%;
   font-size: 1.315em;
+  text-decoration: none;
 }
 
 /* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
@@ -1225,19 +1226,17 @@ span2 {
   top: 4vh;
   line-height: 4vh; /* should be the same as height */
   padding: 0 5.5vw; /* "0" sets top and bottom padding to none */
+  text-decoration: none;
 }
 
 /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
 .nav-global li:hover {
   /* background: black; */
   transition: background .2s;
+  text-decoration: none;
 }
 
 /* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */
-.nav-link {
-  color: #fff;
-  text-decoration: none;
-}
 
 .menu-box-1-global {
   /* transform: translate(-2.4vw, -3.5vh); */
