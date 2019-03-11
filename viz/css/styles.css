@@ -664,7 +664,7 @@ img {
 }
 
 .box-1-global {
-  width: 9%;
+  width: 0%;
   box-sizing: border-box;
 }
 
@@ -838,6 +838,20 @@ span2 {
 }
 
 .overlay {
+  position: fixed;
+  display: none;
+  width: 18%;
+  height: 18%;
+  top: 80vh;
+  left: 8vh;
+  right: 0;
+  bottom: 0;
+  /*background-color: rgba(0,0,0,0.5);*/
+  z-index: 2;
+  cursor: pointer;
+}
+
+.overlay2 {
   position: fixed;
   display: none;
   width: 18%;
