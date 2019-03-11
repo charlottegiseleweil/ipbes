@@ -33,13 +33,13 @@ class MapPlot {
 			return country_features;
 		})
 
-		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/updated_data/ndr_countries.json")
-		const country_mapping_poll_promise = d3.json("data/preprocessed_data/updated_data/poll_countries.json")
-		const country_mapping_cv_promise = d3.json("data/preprocessed_data/updated_data/cv_countries.json")
+		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/updated_data3/ndr_countries.json")
+		const country_mapping_poll_promise = d3.json("data/preprocessed_data/updated_data3/poll_countries.json")
+		const country_mapping_cv_promise = d3.json("data/preprocessed_data/updated_data3/cv_countries.json")
         
-		const ndr_promise = d3.csv("data/preprocessed_data/updated_data/ndr_table_preprocessed.csv").then(data => data)
-		const poll_promise = d3.csv("data/preprocessed_data/updated_data/poll_table_preprocessed.csv").then(data => data)
-		const cv_promise = d3.csv("data/preprocessed_data/updated_data/cv_table_preprocessed.csv").then(data => data)
+		const ndr_promise = d3.csv("data/preprocessed_data/updated_data3/ndr_table_preprocessed.csv").then(data => data)
+		const poll_promise = d3.csv("data/preprocessed_data/updated_data3/poll_table_preprocessed.csv").then(data => data)
+		const cv_promise = d3.csv("data/preprocessed_data/updated_data3/cv_table_preprocessed.csv").then(data => data)
 
         const cities_promise = d3.csv("data/city_data/cities1000000.csv").then(data => data)
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
