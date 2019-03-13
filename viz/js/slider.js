@@ -164,8 +164,7 @@ function createSlider() {
 function runSlider(period, if_ssp) {
   if (!if_ssp) {
     title.innerHTML = "Pollination Contribution to Nutrition (Historical) in " + period;
-    contribution_text.innerHTML = "What is the percentage of pollination contribution to " +
-      current_viz + " in " + period + "?";
+    contribution_text.innerHTML = "What is the percentage of pollination contribution per country in " + period + "?";
     current_year = period;
     removeSSPs();
     change_pollination_contribution(period);

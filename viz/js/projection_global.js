@@ -5,6 +5,7 @@ let legendTitle = document.getElementsByClassName("title2DLegend")[0];
 let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
 let gradient_white = '#696969 radial-gradient(circle at 70% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%';
 let counter = 0;
+let unit = "People Fed Equivalents";
 var zoom_2D_global = get_global_zoom();
 let region_text_global = "Pollination";
 
@@ -50,7 +51,8 @@ let coastal_box = document.getElementById("coastal-risk-box");
 function load_pollination_data() {
   if (pollination_box.checked == true) {
     if (water_box.checked == false && coastal_box.checked == false) {
-      legendTitle.innerHTML = "Pollination Key Areas"
+      legendTitle.innerHTML = "Pollination Key Areas";
+      unit = "Tons of Nitrogen / Year";
       region_text_global = "Pollination";
 
       dataset_global = 'Data/data_pol_2d.csv'
@@ -70,6 +72,7 @@ function load_waterquality_data() {
     if (pollination_box.checked == false && coastal_box.checked == false) {
       region_text_global = "Water Quality Regulation";
       legendTitle.innerHTML = "WQ Key Areas";
+      unit = "People Fed Equivalents";
 
       dataset_global = 'Data/data_water_2d.csv'
       parseDataGlobal(dataset_global, draw_points);
@@ -90,6 +93,7 @@ function load_coastalrisk_data() {
   if (coastal_box.checked == true) {
     if (pollination_box.checked == false && water_box.checked == false) {
       region_text_global = "Coastal Risk Mitigation";
+      unit = "Relative Coastal Risk Index";
       legendTitle.innerHTML = "CR Key Areas";
 
       dataset_global = 'Data/data_coastal_2d.csv'
@@ -110,7 +114,7 @@ function ready_global(g, path) {
       .data(features)
       .enter().append("path")
       .attr("d", path)
-      .attr("fill", "rgb(115,115,115)")
+      .attr("fill", "rgb(200,200,200)")
       .attr("class", "feature");
     // Creates a mesh around the border
     g.append("path")
@@ -144,8 +148,8 @@ let tip_global = d3.tip()
   .html(function(d) {
     return "<strong>" + region_text_global + "<br>" +
       "<strong>" + "NC" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
-      "<strong>" + "Deficit" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
-      "<strong>" + "Population Exposed" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
+      "<strong>" + "Deficit" + ": <span>" + roundNumber(Number(d['UN_cur']).toFixed(2)) + " " + unit + "</span></strong> <br>" +
+      "<strong>" + "Population" + ": <span>" + roundNumber(Number(d['population']).toFixed(2)) + "</span></strong>";
   })
 // Adding tip to the svg
 svg_global.call(tip_global);
@@ -255,6 +259,8 @@ function parseDataGlobal(url, callBack) {
   });
 }
 
+console.log(roundNumber(5775.02));
+
 function activate_nature_button() {
   document.getElementsByTagName('a')[2].style.background = "#9d9d9d";
   document.getElementsByTagName('a')[2].style.color = "black";
@@ -265,5 +271,6 @@ function activate_risk_button() {
   //Load HTML file of the other group
   location.href = 'viz_risk/risk_index.html';
 }
+
 
 activate_nature_button();

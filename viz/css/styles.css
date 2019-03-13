@@ -349,7 +349,20 @@ img {
   border-radius: 1.8vh;
   -moz-border-radius: 1.8vh;
   -webkit-border-radius: 1.8vh;
-  height: 50vh;
+  height: 47vh;
+  width: 50vw;
+  margin: 0;
+  position: absolute;
+  top: 50vh;
+  -ms-transform: translateY(-50%) translateX(50%);
+  transform: translateY(-50%) translateX(50%);
+}
+
+#popup-medium {
+  border-radius: 1.8vh;
+  -moz-border-radius: 1.8vh;
+  -webkit-border-radius: 1.8vh;
+  height: 33vh;
   width: 50vw;
   margin: 0;
   position: absolute;
@@ -362,7 +375,7 @@ img {
   border-radius: 1.8vh;
   -moz-border-radius: 1.8vh;
   -webkit-border-radius: 1.8vh;
-  height: 33vh;
+  height: 22vh;
   width: 50vw;
   margin: 0;
   position: absolute;
@@ -1151,8 +1164,8 @@ span2 {
   background: #000000;
 	display: block;
 	float: left;
-	margin: 0 0.2vw 0 0;
-	padding: 0.8vw;
+	margin: 0 0.5vw 0 0;
+	padding: 1.1vw;
 	position: relative;
 	text-decoration: none;
 	text-transform: uppercase;
