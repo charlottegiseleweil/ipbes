@@ -70,7 +70,7 @@
     <div class="w3-top">
       <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
       <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="load_global()"> &larr; </a>
-      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">NCP 2015 & 2050</a>
+      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">2015 & 2050</a>
       <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
       <a href="methods_wq.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
       <a href="../highrez/highrez.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
@@ -105,7 +105,7 @@
     <div class="box box-2-global" style="display:none">
 
       <div style="display:flex; justify-content: center;">
-      <div style="position:absolute;"><h1 class="map-title"> Nature's Contributions to People </h1></div>
+      <div style="position:absolute;"><h1 class="map-title"> Rural Population Exposed </h1></div>
       <!-- <a href="#" class="about-button" onclick="click_about()">About</a> -->
 
       <div id="container-2D" style="position:absolute;margin-top:6%">
@@ -141,7 +141,7 @@
         <a href="#" class="historical-button" onclick="projection3D()">Historical</a>
         <a href="#" class="modeling-button" onclick="modeling_button()">Pollination modeling method</a> -->
       </div>
-      <p id="map-name-1">Nature's Contribution to Water Purification</p>
+      <p id="map-name-1">Deficit: Nitrogen Export</p>
       <p class="year-text-2015" style="display: none;"> 2015 </p>
       <p class="year-text-2050" style="display: none;"> 2050 </p>
       <div class="map2">
@@ -257,10 +257,10 @@
  <ul class="menu">
    <li class="menu-item"><a href="#">Choose metric to visualize</a>
      <ul class="dropdown">
-       <li class="menu-item sub-menu" onclick="updateData('Population')"><a href="#">Rural Population</a></li>
-       <li class="menu-item sub-menu" onclick="updateData('Nitrogen')"><a href="#">Total Nitrogen Load</a></li>
-       <li class="menu-item sub-menu" onclick="updateData('Pollution')"><a href="#">Nature's contribution to Water Purification</a></li>
-       <li class="menu-item sub-menu" onclick="updateData('Export')"><a href="#">Nitrogen Export</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('Export')"><a href="#">Deficit: Nitrogen Export</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('Population')"><a href="#">People Exposed: Rural Population</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('Nitrogen')"><a href="#">Potential Need: Total Nitrogen Load</a></li>
+       <li class="menu-item sub-menu" onclick="updateData('Pollution')"><a href="#">Nature's Contribution to Water Purification</a></li>
      </ul>
    </li>
  </ul>
@@ -271,12 +271,10 @@
         polluting the water and altering drinking water quality.  </h2>
       <img src="images/faucet2.jpg" class="img-story2"> </img>
       <h2 id="story"> However, some of it may be retained by healthy soil, this is an NCP (here, specifically: Nitrogen Retention). </h2>
-      <h2 id="bar_title"> People in millions impacted in 2050 </h2>
-      <div class="graph2d"> </div>
-      <h4 class="labelGraph"> Regions </h4>
-      <h4 class="labelGraphY"> People impacted (Logscale) </h4>
-      <h1 id="box-3-header">
-    </h1>
+      <h2 id="bar_title" style="display:none;"> People in millions impacted in 2050 </h2>
+      <div class="graph2d" style="display:none;"> </div>
+      <h4 class="labelGraph" style="display:none;"> Regions </h4>
+      <h4 class="labelGraphY"style="display:none;"> People impacted (Logscale) </h4>
     </div>
 
     <!-- Add buttons for folate, vitamin, energy  -->

@@ -6,7 +6,7 @@ let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb
 let gradient_white = '#696969 radial-gradient(circle at 70% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%';
 let counter = 0;
 var zoom_2D_global = get_global_zoom();
-let region_text_global = "Water Quality Regulation";
+let region_text_global = "Pollination";
 
 
 
@@ -143,9 +143,9 @@ let tip_global = d3.tip()
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
     return "<strong>" + region_text_global + "<br>" +
-      "<strong>" + "NCP" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
-      "<strong>" + "Unmet need" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
-      "<strong>" + "Population" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
+      "<strong>" + "NC" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
+      "<strong>" + "Deficit" + ": <span>" + Number(d['UN_cur']).toFixed(2) + "</span></strong> <br>" +
+      "<strong>" + "Population Exposed" + ": <span>" + Number(d['population']).toFixed(2) + "</span></strong>";
   })
 // Adding tip to the svg
 svg_global.call(tip_global);

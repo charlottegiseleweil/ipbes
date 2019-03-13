@@ -1,7 +1,7 @@
 document.getElementById("checked3D").disabled = true;
 document.getElementById("checked2D").disabled = false;
 
-let region_text = "Nature's Contribution to Water Purification";
+let region_text = "Rural Population Exposed";
 
 // We instantiate the bar chart object for the 2D section
 let BarGraphObject = new BarGraph();

@@ -1,6 +1,6 @@
 // Initializations
-let colorScheme = d3.schemeGreens[6];
-let colorSchemeDisplay = d3.schemeGreens[9];
+let colorScheme = d3.schemeReds[6];
+let colorSchemeDisplay = d3.schemeReds[9];
 let changeColorScheme = d3.schemeRdYlGn[5];
 
 let changeColorSchemeDisplay = d3.schemeRdYlGn[9];

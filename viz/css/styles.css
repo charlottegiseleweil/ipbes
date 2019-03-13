@@ -36,7 +36,7 @@ html, body {
   font-family: ourFont;
   color: white;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.1em;
   transform: translate(5vw, -1vh);
   margin: 0;
   padding: 0;
@@ -1132,10 +1132,10 @@ span2 {
 .site-navigation {
 	display: block;
 	font-family: ourFont;
-	font-size: 0.60em;
+	font-size: 0.75em;
 	font-weight: bold;
-  margin-left: 5.5vw;
-  margin-top: -7vh;
+  margin-left: 4vw;
+  margin-top: -15vh;
 	/* transform: translate(6vw, -8.5vh); */
 }
 

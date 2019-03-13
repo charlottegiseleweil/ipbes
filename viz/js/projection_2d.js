@@ -6,10 +6,11 @@ function projection2D() {
 
     disappearMaps();
     if (current_html == "WaterQuality.html") {
-      parseData("../Data/nc_degree.csv", doStuff, true);
+      updateData('Export');
+      //parseData('../Data/rural_pop_degree.csv', doStuff, true);
     }
     if (current_html == "Pollination.html") {
-      updateData('NCP');
+      updateData('Lost');
       // Make the map grey
     }
 

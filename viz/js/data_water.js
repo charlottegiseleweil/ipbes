@@ -95,6 +95,7 @@ function updateData(data_type) {
   switch (data_type) {
     case "Population":
       region_text = "Rural Population";
+      map_title.innerHTML = "People Exposed: Rural Population";
       dataset_2D = '../Data/rural_pop_degree.csv';
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 3)
       colorScheme = d3.schemePurples[6];
@@ -103,12 +104,14 @@ function updateData(data_type) {
       break;
     case "Nitrogen":
       region_text = "Total Nitrogen Load";
+      map_title.innerHTML = "Potential Need: Total Nitrogen Load";
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 1)
       dataset_2D = '../Data/n_load_degree.csv';
       colorScheme = d3.schemeOranges[6];
       colorSchemeDisplay = d3.schemeOranges[9];
       break;
     case "Pollution":
+      map_title.innerHTML = "Nature's Contribution to Water Purification";
       region_text = "Nature's Contribution to Water Purification";
       dataset_2D = '../Data/nc_degree.csv';
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 0)
@@ -117,6 +120,7 @@ function updateData(data_type) {
       break;
     case "Export":
       region_text = "Nitrogen Export";
+      map_title.innerHTML = "Deficit: Nitrogen Export";
       dataset_2D = '../Data/n_export_degree.csv';
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 2)
       colorScheme = d3.schemeReds[6];
@@ -127,7 +131,6 @@ function updateData(data_type) {
   disappearMaps();
   mapsTimeout(4000);
 
-  map_title.innerHTML = region_text;
   colorScale = d3.scaleThreshold()
     .domain([20, 40, 60, 80, 99, 100])
     .range(colorScheme);

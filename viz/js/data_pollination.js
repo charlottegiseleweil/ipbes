@@ -124,6 +124,7 @@ function showDataSSP(the_g, data, colorScaleSelect) {
 function updateData(data_type) {
   switch (data_type) {
     case "Population":
+      map_title.innerHTML = "People Exposed: Pollination-Dependent Population";
       region_text = "Pollination-Dependent Population";
       dataset_2D = '../Data/pol_pop.csv';
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 3)
@@ -132,22 +133,23 @@ function updateData(data_type) {
 
       break;
     case "NCP":
-      // current_viz = "Food Energy";
-      region_text = "Average Micronutrient Pollination Dependance";
+      map_title.innerHTML = "Nature's Contribution to Crop Pollination";
+      region_text = "Nature's Contribution to Crop Pollination";
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 0)
       dataset_2D = '../Data/NCP.csv';
       colorScheme = d3.schemeGreens[6];
       colorSchemeDisplay = d3.schemeGreens[9];
       break;
     case "Crop":
-      // current_viz = "Folate";
-      region_text = "Pollination-Dependant Crop Production";
+      map_title.innerHTML = "Potential Need: Pollination-Dependant Crop Production";
+      region_text.innerHTML = "Pollination-Dependant Crop Production";
       dataset_2D = '../Data/potential.csv';
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 1)
       colorScheme = d3.schemeOranges[6];
       colorSchemeDisplay = d3.schemeOranges[9];
       break;
     case "Lost":
+      map_title.innerHTML = "Deficit: Lost Crop Production";
       region_text = "Lost Crop Production";
       dataset_2D = '../Data/unmet_need.csv';
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 2)
@@ -159,7 +161,6 @@ function updateData(data_type) {
   disappearMaps();
   mapsTimeout(500);
 
-  map_title.innerHTML = region_text;
   colorScale = d3.scaleThreshold()
     .domain([20, 40, 60, 80, 99, 100])
     .range(colorScheme);

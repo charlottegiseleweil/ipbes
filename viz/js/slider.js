@@ -187,15 +187,12 @@ function runSegmentedSSPs(period, firstTime) {
   // Python - concatentation - '{}'.format()
   current_year = period;
   if (period == "SSP1") {
-    BarGraphObject.updateBarGraph('../Data/ssp1_impacted.csv');
     current_SSP = "SSP1";
   }
   if (period == "SSP3") {
-    BarGraphObject.updateBarGraph('../Data/ssp3_impacted.csv');
     current_SSP = "SSP3";
   }
   if (period == "SSP5") {
-    BarGraphObject.updateBarGraph('../Data/ssp5_impacted.csv');
     current_SSP = "SSP5";
   }
   //Loader for 3 SSPs

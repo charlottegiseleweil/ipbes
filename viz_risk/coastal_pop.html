@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="#" />
 	<!-- w3 style thingz -->
 	<link rel="stylesheet" type="text/css" href="../viz/css/w3.css">
-	
+
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/radio.css">
 	<link rel="stylesheet" href="css/charts.css">
@@ -25,13 +25,13 @@
 <body>
 <div id="landingpage">
 	<h3 id="landing-page-loader">loading ...</h3>
-</div>  
+</div>
 
 <!-- Menu Navbar -->
 <div class="w3-top">
 	<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
 		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='../index.html'"> &larr; </a>
-		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='coastal.html'">NCP 2015 & 2050</a>
+		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='coastal.html'">2015 & 2050</a>
 		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" style="background-color: #9e9e9e; color:black" >PEOPLE IMPACTED</a></li>
 		<a href="../viz/methods_coastal.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
 		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
@@ -41,13 +41,13 @@
 <!-- End Menu Navbar -->
 
 <div class="wrapper" id="map-content">
-	<canvas id="heatmap"></canvas> 
+	<canvas id="heatmap"></canvas>
 	<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
 	<svg id="globe-plot_borders" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
 	<div id="resetButton"><p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p></div>
 	<div id="countryLabel"></div>
-	
-	<div id="radio_container">	
+
+	<div id="radio_container">
 		<table>
 			<tr><td>
 				<p class="row-label">Year</p>
@@ -71,23 +71,23 @@
 			</td></tr>
 		</table>
 	</div>
-	
+
 
 	<div id="distribution-chart">
 		<h5 id="distri-chart-head">How severely are <br> people Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h5>
 		<svg id="distribution"></svg>
 		<h3 id="distri-x-axis">Number of people</h3>
 		<h3 id="distri-y-axis">Coastal Hazard</h3>
-	</div> 
-	
+	</div>
+
 	<div id="compare-scenarios">
 		<h1 id="compare-scenario-header">Compare Scenarios</h1>
 		<div id="population-chart">
 			<h2 class= "scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
 			<svg id="population-comparison-svg"></svg>
-		</div> 
+		</div>
 	</div>
-	
+
 	<div id ="legend">
 		<p class="legendText" id="legendText-low">Small<br>Population</p>
 		<svg id="legendBar"></svg>
@@ -100,13 +100,13 @@
 	<div id="info_popup">
 		<h2 class="info_header">How to read these maps?</h2>
 		<ul class="p_popup">
-			<i>This map highlight where people will be most at risk for coastal storms floods and costal erosion in the future. 
+			<i>This map highlight where people will be most at risk for coastal storms floods and costal erosion in the future.
 				The blue color scale indicates how many people will be impacated in different places of the world.
 			</i><br><br>
-			<li> 
-				Choose which scenario to explore by selecting <i>Green Growth</i>, <i>Regional Rivalry</i> or <i>Fossil Fuels</i> with the radio buttons. 
+			<li>
+				Choose which scenario to explore by selecting <i>Green Growth</i>, <i>Regional Rivalry</i> or <i>Fossil Fuels</i> with the radio buttons.
 			</li><br>
-			<li> 
+			<li>
 				For more detailed data and the possibility to compare services and scenarios, select a country by clicking on it.
 			</li>
 		</ul>
