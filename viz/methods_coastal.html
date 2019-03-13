@@ -20,6 +20,20 @@
 
 <body>
 
+  <div id="myNav" class="overlay2">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+          <a href="#"></a>
+        </div>
+  </div>
+
+
+  <!-- About Pop-up Window -->
+    <div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
+            <div w3-include-html="about_viz.html"></div>
+        </center>
+    </div>
+
   <div id="ac-wrapper" style='display:none' onClick="hideNow(event)">
     <div id="popup-small" class="grad1">
       <center>
@@ -44,7 +58,7 @@
       <a href="methods_wq.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
       <a href="../highrez/highrez.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
-      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">About</a>
+      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
       </div>
     </div>
    <!-- End Menu Navbar -->
@@ -150,8 +164,8 @@
 function load_global() {
   location.href='../index.html';
 }
-document.getElementsByTagName('a')[3].style.backgroundColor = "#9d9d9d";
-document.getElementsByTagName('a')[3].style.color = "black";
+document.getElementsByTagName('a')[5].style.backgroundColor = "#9d9d9d";
+document.getElementsByTagName('a')[5].style.color = "black";
 
 </script>
 <script src="js/popup.js"></script>

@@ -35,6 +35,20 @@
     </div>
   </div>
 
+  <div id="myNav" class="overlay2">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+          <a href="#"></a>
+        </div>
+  </div>
+
+
+  <!-- About Pop-up Window -->
+    <div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
+            <div w3-include-html="about_viz.html"></div>
+        </center>
+    </div>
+
      <!-- Menu Navbar -->
     <div class="w3-top">
       <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
@@ -45,7 +59,7 @@
       <a href="methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
       <a href="../highrez/highrez.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
-      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">About</a>
+      <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
       </div>
     </div>
    <!-- End Menu Navbar -->
@@ -146,8 +160,8 @@
   </div>
 
   <script>
-  document.getElementsByTagName('a')[4].style.backgroundColor = "#9d9d9d";
-  document.getElementsByTagName('a')[4].style.color = "black";
+  document.getElementsByTagName('a')[6].style.backgroundColor = "#9d9d9d";
+  document.getElementsByTagName('a')[6].style.color = "black";
   function load_global() {
     location.href='../index.html';
   }

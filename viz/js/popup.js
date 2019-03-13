@@ -1,10 +1,10 @@
 // Waypoint initialization - since use of library
-let waypoint = new Waypoint({
-  element: document.getElementById('3rd_box'),
-  handler: function() {
-    PopUp('show')
-  }
-});
+// let waypoint = new Waypoint({
+//   element: document.getElementById('3rd_box'),
+//   handler: function() {
+//     PopUp('show')
+//   }
+// });
 
 // For the popup window - controls the showing and hiding
 function PopUp(hideOrshow) {

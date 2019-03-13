@@ -30,10 +30,10 @@ function projection2D() {
     document.getElementById("container").style.display = "block";
     document.getElementsByClassName("year-text-2015")[0].style.display = "flex";
     document.getElementsByClassName("year-text-2050")[0].style.display = "flex";
-    document.getElementsByTagName('a')[1].style.backgroundColor = "#9d9d9d";
-    document.getElementsByTagName('a')[1].style.color = "black";
-    document.getElementsByTagName('a')[3].style.backgroundColor = "black";
-    document.getElementsByTagName('a')[3].style.color = "white";
+    document.getElementsByTagName('a')[3].style.backgroundColor = "#9d9d9d";
+    document.getElementsByTagName('a')[3].style.color = "black";
+    document.getElementsByTagName('a')[5].style.backgroundColor = "black";
+    document.getElementsByTagName('a')[5].style.color = "white";
 
     checked2D = "true";
     checked3D = "false";
