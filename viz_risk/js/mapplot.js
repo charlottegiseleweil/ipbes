@@ -35,18 +35,22 @@ class MapPlot {
 
 		const country_mapping_ndr_promise = d3.json("data/preprocessed_data/updated_data3/ndr_countries.json")
 		const country_mapping_poll_promise = d3.json("data/preprocessed_data/updated_data3/poll_countries.json")
-		const country_mapping_cv_promise = d3.json("data/preprocessed_data/updated_data3/cv_countries.json")
+        const country_mapping_cv_promise = d3.json("data/preprocessed_data/updated_data3/cv_countries.json")
+        const country_mapping_cv_high_res_promise = d3.json("data/preprocessed_data/updated_data3/cv_high_res_countries.json")
         
 		const ndr_promise = d3.csv("data/preprocessed_data/updated_data3/ndr_table_preprocessed.csv").then(data => data)
 		const poll_promise = d3.csv("data/preprocessed_data/updated_data3/poll_table_preprocessed.csv").then(data => data)
 		const cv_promise = d3.csv("data/preprocessed_data/updated_data3/cv_table_preprocessed.csv").then(data => data)
+		const cv_high_res_promise = d3.csv("data/preprocessed_data/updated_data3/cv_high_res_table_preprocessed.csv").then(data => data)
+
 
         const cities_promise = d3.csv("data/city_data/cities1000000.csv").then(data => data)
 		const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data)
 
 		Promise.all([map_promise_110, map_promise_50, country_label_promise, ndr_promise, 
                     poll_promise, cv_promise, country_mapping_ndr_promise, country_mapping_poll_promise, 
-                    country_mapping_cv_promise, cities_promise]).then((results) => {
+                    country_mapping_cv_promise, cities_promise, cv_high_res_promise, 
+                    country_mapping_cv_high_res_promise]).then((results) => {
 
 			this.map_data = results[0];  // 110m map
 			this.map_data_50 = results[1];  // 50m map
@@ -61,6 +65,9 @@ class MapPlot {
 			this.cv_country_mapping = results[8]; 
             
             this.cities_data = results[9];
+
+            this.cv_high_res_data = results[10];
+            this.cvHighResCountryMapping = results[11];
 
             this.currentData = this.cv_data;
             showGlobalChart(this.currentData);
@@ -168,7 +175,7 @@ class MapPlot {
         this.svg_borders.selectAll("path").attr('d', this.path)
 
         if (!this.focused) {
-            let data = this.worldDataSelection();
+            let data = this.worldData();
 
             if (this.currentDatasetName === "cv") {  // render regular dots for cv data, removing (if existing) heatmap
                 // remove the heatmap (if it exists)
@@ -191,11 +198,6 @@ class MapPlot {
         // Update positions of circles 
         this.svg.selectAll("circle")
             .attr("transform", (d) => `translate(${this.projection([d.lng, d.lat])})`)
-            // make the data dots disappear when they are on the other side of the globe.
-            .style("display", (d) => {  
-                let globeDistance = d3.geoDistance([d.lng, d.lat], this.projection.invert([this.svgWidth/2, this.svgHeight/2]));
-                return (globeDistance > 1.42) ? 'none' : 'inline';
-            })
 
         // print city text
         this.pop_limit = 2000000000000 / this.projection.scale();
@@ -244,10 +246,15 @@ class MapPlot {
     
         
     setupQuadtree() {
+        let data = this.currentData;
+        // Use high res cv data if conditions are met
+        if (this.currentDatasetName == "cv" && (this.currentModeName == "NC" || this.currentModeName == "UN")) {
+            data = this.cv_high_res_data;
+        }
         let quadtree = d3.quadtree()
             .x((d) => d.lng)
             .y((d) => d.lat)
-            .addAll(this.currentData);
+            .addAll(data);
         return quadtree;
     }
 
@@ -303,7 +310,7 @@ class MapPlot {
                 subPixel = false;
             }
 
-            if ((p) && d3.geoDistance([p.lng, p.lat], mapCenter) < 1.57) {  
+            if ((p) && d3.geoDistance([p.lng, p.lat], mapCenter) < 1.42) {  
                 counter2 += 1;
                 if (subPixel) {
                     subPts.push(p);
@@ -334,13 +341,19 @@ class MapPlot {
         this.quadtree = this.setupQuadtree();
         this.updateNodes(this.quadtree);
         if (this.focused) {
-            let focusedData = this.focusedData();
+            let chartData = this.focusedData();
+            let renderData = chartData
+            // change renderData to high res if current dataset is cv and the mode is NC or UN
+            if (this.currentDatasetName == "cv" && (this.currentModeName == "NC" || this.currentModeName == "UN")) {
+                renderData = this.cvHighResFocusedData();
+            }
+
             this.svg.selectAll("circle").remove();
             this.heat.clear();
             this.heat.draw(this.heatMinOpacity);
             if (!scenario_change) this.setCurrentColorScale();
-            this.initFocusedMapData(focusedData);
-            updateCharts(focusedData, this.UNColorScale, this.allfocusedCountryData())
+            this.initFocusedMapData(renderData);
+            updateCharts(chartData, this.UNColorScale, this.allfocusedCountryData())
 
         } else {
             if (!scenario_change) this.setCurrentColorScale();
@@ -348,7 +361,7 @@ class MapPlot {
         }
     }
 
-    worldDataSelection() {
+    worldData() {
         let topLeft = this.projection.invert([0, 0]);
         let topRight = this.projection.invert([this.svgWidth, 0]);
         let top = this.projection.invert([this.svgWidth/2, 0])[1];
@@ -416,6 +429,14 @@ class MapPlot {
         // Get data for just the country that is focused (all data available)
         return this.currentCountryMapping[`${this.focusedCountry}`].reduce((acc, cur) => {
             acc.push(this.currentData[cur]);
+            return acc;
+        }, [])
+    }
+
+    cvHighResFocusedData() {
+        // get the focused high res country data for cv. This is not done for modes with population
+        return this.cvHighResCountryMapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+            acc.push(this.cv_high_res_data[cur]);
             return acc;
         }, [])
     }
@@ -501,9 +522,7 @@ class MapPlot {
             that.clickedRotate = that.projection.rotate();
             
             let end_callback_triggered = false;
-            
-            let focusedData = that.focusedData();
-            
+                        
             // Update the map:
             d3.selectAll("path")
                 .transition()
@@ -517,20 +536,18 @@ class MapPlot {
                         that.init_50map(d)						
                         end_callback_triggered = true
                         d3.select(this).classed("selected", false)
-                        that.initFocusedMapData(focusedData);
+                        that.focused = true;
+
+                        that.update_all();
 
                         // Allow clicks after transition is done
                         d3.select(".wrapper").style("pointer-events", "all")
-                        }
-                    });
-
-                    
-            // Remove the world map data
-            that.focused = true;
-            // dataSelection.exit().remove()
-
-            // update charts
-            updateCharts(focusedData, that.UNColorScale, that.allfocusedCountryData())
+                    }
+                });
+                
+                
+                // Remove the world map data
+                // dataSelection.exit().remove()
         
             // change country name
             updateCountryName(d.name);
@@ -722,7 +739,7 @@ class MapPlot {
         this.currentDatasetName = dataset;
         switch (this.currentDatasetName) {
             case 'cv':
-                this.scaleExtent = [0.8, 5];  
+                this.scaleExtent = [0.8, 5];
                 this.currentData = this.cv_data;
                 this.currentCountryMapping = this.cv_country_mapping;
                 break; 

@@ -42,7 +42,7 @@ const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv
         console.log("Constructing array...")
 
         // Creates an array of objects where each object has a country name and a list of indices for the data array for the data pointthat are within the boundaries of that country
-        let countryMapping = no_undefined.map((x) => {return  {name:  x.name, dataPointList: data.map((d, i) => i).filter(index => {
+        let countryMapping = no_undefined.map((x, i) => {console.log("Processing country " + (i + 1) + ":   " + x.name); return  {name:  x.name, dataPointList: data.map((d, i) => i).filter(index => {
                 if (x.geometry.type == "MultiPolygon") {  // This is if the country has several areas on the map (for example USA with Alaska and Hawaii)
                     for (var j = 0; j < x.geometry.coordinates.length; j++) {
                         if (d3.polygonContains( x.geometry.coordinates[j][0], [data[index].lng, data[index].lat])) return true
