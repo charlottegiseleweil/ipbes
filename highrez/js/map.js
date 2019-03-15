@@ -12,7 +12,7 @@ var maxZoom = 10;
                 });
     $('.leaflet-container').css('cursor','crosshair');
     var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'}).addTo(map);
-    
+
     var esri_minimap_layer = L.esri.basemapLayer('DarkGray');
     var miniMap = new L.Control.MiniMap(
             esri_minimap_layer,
@@ -70,8 +70,11 @@ var maxZoom = 10;
 
 function updateMap(ecoshard){
     // Here must remove previous layer!!
-    
-    console.log('Updating Map with ',ecoshard)
+
+    console.log('Updating Map with ',ecoshard);
+    map.eachLayer(function (layer) {
+        map.removeLayer(layer);
+    });
     var lyr = L.tileLayer(
             'http://ipbes.ecoshard.org:8080/workspace/tiles/'+ecoshard+'/{z}/{x}/{y}.png',
             {tms: true, opacity: 0.9, attribution: ""}).addTo(map);
@@ -80,3 +83,6 @@ function updateMap(ecoshard){
 var initialEcoshard = 'pollhab_2km_prop_on_ag_10s_ssp5_md5_48a6718435e58e9e67e39824005c4ad1';
 
 updateMap(initialEcoshard);
+
+document.getElementsByTagName('a')[5].style.backgroundColor = "#9d9d9d";
+document.getElementsByTagName('a')[5].style.color = "black";

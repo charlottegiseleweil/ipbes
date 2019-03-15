@@ -1,7 +1,12 @@
+@font-face {
+  font-family: ourFont;
+  src: url("../fonts/OpenSans-Regular.ttf");
+}
+
 html, body, #mapid {
         height: 100%;
         width: 100%;
-        font-family: Roboto, Arial, sans-serif;
+        font-family: ourFont;
         color: rgb(51, 51, 51);
         font-size: 15px;
         font-weight: 400;

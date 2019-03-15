@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html>
 <head>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -13,7 +13,7 @@
 
  <!-- w3 style thingz -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="css/w3.css" />
+  <link rel="stylesheet" type="text/css" href="../viz/css/w3.css" />
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 
 
@@ -42,12 +42,12 @@
   <!-- Menu Navbar -->
     <div class="w3-top">
       <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
-      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="load_global()"> &larr; </a>
-      <a href="Pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">2015 & 2050</a>
-      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
-      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
-      <a href="methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
-      <a href="../highrez/highrez.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
+      <a href="../index.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="load_global()"> &larr; </a>
+      <a href="../viz/Pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">2015 & 2050</a>
+      <a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
+      <a href="../viz/Pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
+      <a href="../viz/methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
+      <a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
       </div>
@@ -106,11 +106,11 @@
     <!-- Map  -->
     <div id="mapid"></div>
 
-  <!-- Hoovering for values: TODO  
+  <!-- Hoovering for values: TODO
     <div id="mouse_tip">
         Values upon hoover (to do!)
     </div>-->
-    
+
 
 
     <!--

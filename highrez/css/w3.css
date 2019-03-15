@@ -4,7 +4,7 @@
     color: #FFFFFF;
     background-image: url('../images/noise.png');
     background-repeat: repeat;
-    font-family: "Segoe UI", "Helvetica Neue", Helvetica, sans-serif;
+    font-family: ourFont;
     font-size: 20px;
 
 }
