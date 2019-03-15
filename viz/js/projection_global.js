@@ -155,31 +155,30 @@ let tip_global = d3.tip()
 svg_global.call(tip_global);
 parseDataGlobal(dataset_global, draw_points);
 
-function getColor(UN_value, pop_value, NCP_value, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
+function getColor(PNpop_value, NCP_value, PNpop_third_q, PNpop_2_third_q, NCP_third_q, NCP_2_third_q) {
   let colors = [
     ["rgb(232,232,244)", "rgb(211,244,215)", "rgb(89,202,93)"],
     ["rgb(248,226,252)", "rgb(137,143,143)", "rgb(33,112,55)"],
     ["rgb(249,95,250)", "rgb(174,38,168)", "rgb(33,38,38)"]
   ];
-  var un = 0;
-  var pop = 0;
+  var pnpop = 0;
   var ncp = 0;
-  if (UN_value > UN_mid_q) {
-    un = 1;
-  }
-  if (pop_value > pop_mid_q) {
-    pop = 1;
+
+  if (PNpop_value > PNpop_third_q && PNpop_value < PNpop_2_third_q) {
+    pnpop = 1;
+  } else if (PNpop_value >= PNpop_2_third_q) {
+    pnpop = 2;
   }
   if (NCP_value > NCP_third_q && NCP_value < NCP_2_third_q) {
     ncp = 1;
   } else if (NCP_value >= NCP_2_third_q) {
     ncp = 2;
   }
-  return colors[un + pop][ncp];
+  return colors[pnpop][ncp];
 }
 
 // plot points on the map for 2D global map
-function showDataGlobal(the_g, data, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q) {
+function showDataGlobal(the_g, data, PNpop_third_q, PNpop_2_third_q, NCP_third_q, NCP_2_third_q) {
 
   // This is just for 2D, we are creating a raster by creating a rectangle
   the_g.selectAll(".plot-point")
@@ -205,7 +204,7 @@ function showDataGlobal(the_g, data, UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_thi
         x_5 + ',' + y_5);
     })
     .attr("fill", function(d) {
-      return getColor(d['UN_cur'], d['population'], d['NCP_cur'], UN_mid_q, pop_mid_q, NCP_third_q, NCP_2_third_q)
+      return getColor(d['PNpop_c_norm'], d['NCP_cur'], PNpop_third_q, PNpop_2_third_q, NCP_third_q, NCP_2_third_q)
     })
     .on('mouseover', tip_global.show)
     .on('mouseout', tip_global.hide);
@@ -234,16 +233,14 @@ function zoomed_2D_global() {
 function draw_points(data) {
   //Data is usable here
   g_global.selectAll('.plot-point').remove();
-  array_UN_cur = [];
+  array_PNpop_c_norm = [];
   array_NCP_cur = [];
-  array_pop_cur = [];
   for (i = 0; i < data.length; i++) {
-    array_UN_cur[i] = Number(data[i]['UN_cur']);
     array_NCP_cur[i] = Number(data[i]['NCP_cur']);
-    array_pop_cur[i] = Number(data[i]['population']);
+    array_PNpop_c_norm[i] = Number(data[i]['PNpop_c_norm']);
   }
-  showDataGlobal(g_global, data, Quartile_50(array_UN_cur),
-    Quartile_50(array_pop_cur), Quartile_33(array_NCP_cur), Quartile_66(array_NCP_cur));
+  showDataGlobal(g_global, data, Quartile_33(array_PNpop_c_norm),
+    Quartile_66(array_PNpop_c_norm), Quartile_33(array_NCP_cur), Quartile_66(array_NCP_cur));
 
 
 }
@@ -259,7 +256,6 @@ function parseDataGlobal(url, callBack) {
   });
 }
 
-console.log(roundNumber(5775.02));
 
 function activate_nature_button() {
   document.getElementsByTagName('a')[2].style.background = "#9d9d9d";

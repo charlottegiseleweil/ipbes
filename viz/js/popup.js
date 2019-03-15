@@ -69,5 +69,4 @@ function includeHTML() {
     }
   }
 }
-
-includeHTML();
+ includeHTML();
