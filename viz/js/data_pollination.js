@@ -7,6 +7,7 @@ let current_viz = "Food Energy";
 let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
 let map_title = document.getElementById('map-name-1');
+let text_metric = document.getElementById('story-text');
 // plot points on the map for 2D and 3D map
 
 
@@ -130,6 +131,7 @@ function updateData(data_type) {
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 3)
       colorScheme = d3.schemePurples[6];
       colorSchemeDisplay = d3.schemePurples[9];
+      text_metric.innerHTML = "We consider “local” beneficiaries as populations whose dietary requirements exceed pollinator-independent production within 100 km.";
 
       break;
     case "NCP":
@@ -138,12 +140,14 @@ function updateData(data_type) {
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 0)
       dataset_2D = '../Data/NCP.csv';
       colorScheme = d3.schemeGreens[6];
+      text_metric.innerHTML = "Nature’s contribution to pollination is represented by the proportion of total potential pollination-dependent crop output that is produced.";
       colorSchemeDisplay = d3.schemeGreens[9];
       break;
     case "Crop":
       map_title.innerHTML = "Potential Need: Pollination-Dependant Crop Production";
       region_text.innerHTML = "Pollination-Dependant Crop Production";
       dataset_2D = '../Data/potential.csv';
+      text_metric.innerHTML = "The potential human need for benefits of nature is manifested by the total agricultural crop output that is dependent to some degree on insect pollination.";
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 1)
       colorScheme = d3.schemeOranges[6];
       colorSchemeDisplay = d3.schemeOranges[9];
@@ -155,6 +159,7 @@ function updateData(data_type) {
       colorScaleDisplay = parseDataLegends('../Data/pollination_quantiles.csv', change_labels, 2)
       colorScheme = d3.schemeReds[6];
       colorSchemeDisplay = d3.schemeReds[9];
+      text_metric.innerHTML = "A deficit in pollination can be measured as the amount of crop losses due to insufficiently pollinated crops for pollination.";
       break;
   }
   //Loader for 4 scenarios

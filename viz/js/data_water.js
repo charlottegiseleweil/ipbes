@@ -7,6 +7,7 @@ let current_viz = "Food Energy";
 let change_dataset = '../Data/ncp_2d_change.csv';
 let country_data_2D;
 let map_title = document.getElementById('map-name-1');
+let text_metric = document.getElementById('story-text');
 
 // plot points on the map for 2D and 3D map
 function showData(the_g, data, colorScaleSelect) {
@@ -100,6 +101,7 @@ function updateData(data_type) {
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 3)
       colorScheme = d3.schemePurples[6];
       colorSchemeDisplay = d3.schemePurples[9];
+      text_metric.innerHTML = "We use rural populations (within 100 km watersheds) as the population exposed because they are presumably less likely to have water treatment options.";
 
       break;
     case "Nitrogen":
@@ -109,6 +111,7 @@ function updateData(data_type) {
       dataset_2D = '../Data/n_load_degree.csv';
       colorScheme = d3.schemeOranges[6];
       colorSchemeDisplay = d3.schemeOranges[9];
+      text_metric.innerHTML = "The human pressure that creates a potential need for it in a given region or watershed is the total amount of pollutant (i.e. nitrogen load) requiring retention by vegetation in that area.";
       break;
     case "Pollution":
       map_title.innerHTML = "Nature's Contribution to Water Purification";
@@ -117,6 +120,7 @@ function updateData(data_type) {
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 0)
       colorScheme = d3.schemeGreens[6];
       colorSchemeDisplay = d3.schemeGreens[9];
+      text_metric.innerHTML = "Nature’s contribution to meeting potential human need is the proportion of total nitrogen pollutant load retained by ecosystems, the pollution avoided.";
       break;
     case "Export":
       region_text = "Nitrogen Export";
@@ -125,6 +129,7 @@ function updateData(data_type) {
       colorScaleDisplay = parseDataLegends('../Data/water_quantiles.csv', change_labels, 2)
       colorScheme = d3.schemeReds[6];
       colorSchemeDisplay = d3.schemeReds[9];
+      text_metric.innerHTML = "A deficit in water quality regulation can be measured by nitrogen export, the amount not retained by vegetation that therefore enters waterways and drinking water supplies as pollution."
       break;
   }
   //Loader for 4 scenarios

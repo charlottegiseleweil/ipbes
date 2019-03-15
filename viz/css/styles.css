@@ -590,6 +590,11 @@ img {
   font-size: 1vw;
 }
 
+#story-text {
+
+  font-size: 1.3vw;
+}
+
 .img-story {
   margin-top: 1vh;
   width: 108%;
@@ -1149,7 +1154,7 @@ span2 {
 	font-size: 0.75em;
 	font-weight: bold;
   margin-left: 4vw;
-  margin-top: -15vh;
+  margin-top: -10vh;
 	/* transform: translate(6vw, -8.5vh); */
 }
 
