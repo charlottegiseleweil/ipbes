@@ -637,7 +637,7 @@ img {
 }
 
 #box-3-global-text {
-  font-size: 2em;
+  font-size: 1.7em;
   font-family: ourFont;
   color: white;
   padding: 2vh;
@@ -728,6 +728,7 @@ span {
 /*style wrapper to give some space*/
 .wrapper {
 	  position: relative;
+    margin-bottom: -2vh;
 }/*style label to give some more space*/
 
 .wrapper label {
