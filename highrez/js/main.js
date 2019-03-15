@@ -1,70 +1,111 @@
-var minZoom = 3;
-    var maxZoom = 10;
-    var ecoshard = 'pollhab_2km_prop_on_ag_10s_ssp5_md5_48a6718435e58e9e67e39824005c4ad1';
+// Control Panel
+// Year toggle
+var is2050 = false;
+function switchYear(toggle) {
+    is2050 = toggle;
+    let scenarioRow = document.getElementById('scenario');
+    if (is2050) {
+        scenarioRow.style.opacity = '1';
+        scenarioRow.style.transition = 'opacity 0.5s linear';
+        scenarioRow.style.visibility = 'visible';
+        document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'));
+        document.getElementById('year-button-2015').classList.remove('selected');
+        document.getElementById('year-button-2050').classList.add('selected');
+    } else {
+        scenarioRow.style.visibility = 'collapse';
+        scenarioRow.style.opacity = '0';
+        scenarioRow.style.transition = 'opacity 0.5s linear';
+        scenarioRow.style.transition = 'visibility 0.15s linear';
+        //plot_object.setScenario("c");
+        document.getElementById('year-button-2015').classList.add('selected');
+        document.getElementById('year-button-2050').classList.remove('selected');
+    }
+    updateMap(pickEcoshard());
+};
 
+// Mode toggle
+var mode = 'UN';
+function switchMode(toggle) {
+    mode = toggle;
+    let nutrientRow = document.getElementById('nutrient');
+    if (mode == 'UN') {
+        nutrientRow.style.opacity = '1';
+        nutrientRow.style.transition = 'opacity 0.5s linear';
+        nutrientRow.style.visibility = 'visible';
+        document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'));
+        document.getElementById('NC-button').classList.remove('selected');
+        document.getElementById('UN-button').classList.add('selected');
+    } else {
+        nutrientRow.style.visibility = 'collapse';
+        nutrientRow.style.opacity = '0';
+        nutrientRow.style.transition = 'opacity 0.5s linear';
+        nutrientRow.style.transition = 'visibility 0.15s linear';
+        //plot_object.setScenario("c");
+        document.getElementById('NC-button').classList.add('selected');
+        document.getElementById('UN-button').classList.remove('selected');
+    }
+    updateMap(pickEcoshard());
+};
 
-    var map = L.map('mapid', {
-        center: [0, 0],
-        zoom: 2,
-        minZoom: minZoom,
-        maxZoom: maxZoom
-        });
-    $('.leaflet-container').css('cursor','crosshair');
-    var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'}).addTo(map);
-    var lyr = L.tileLayer(
-        'http://ipbes.ecoshard.org:8080/workspace/tiles/'+ecoshard+'/{z}/{x}/{y}.png',
-        {tms: true, opacity: 0.9, attribution: ""}).addTo(map);
-    var esri_minimap_layer = L.esri.basemapLayer('DarkGray');
-    var miniMap = new L.Control.MiniMap(
-        esri_minimap_layer,
-        {
-            width: 100,
-            height: 100,
-            zoomLevelFixed: 0,
-            position: 'bottomleft',
-            aimingRectOptions: {
-                weight: 1,
-                stroke: true,
-                color: 'red',
-                interactive: false
-            },
-        }).addTo(map);
+// 
 
-    var clicked = false;
-    var bounding_box = false;
-    var first_click_lat_lng = false;
-    var movedlatlng = false;
-    function bounding_box_move(ev) {
-        movedlatlng = map.mouseEventToLatLng(ev.originalEvent);
-        bounding_box.setBounds([first_click_lat_lng, movedlatlng]);
-        var diag_dist = first_click_lat_lng.distanceTo(movedlatlng);
-        $('#mouse_tip').text(
-            "Bounding box diagonal length " + diag_dist.toFixed(1) + "m");
-    };
-
-    map.on('click', function(ev){
-        clicked = !clicked;
-        first_click_lat_lng = map.mouseEventToLatLng(ev.originalEvent);
-        var bounds = [first_click_lat_lng, first_click_lat_lng];
-        // create an orange rectangle
-        if (clicked) {
-            if (bounding_box) {
-                map.removeLayer(bounding_box);
+var ecoshard = 'pollhab_2km_prop_on_ag_10s_ssp5_md5_48a6718435e58e9e67e39824005c4ad1';
+// Link selection to ecoshard UGLIEST FUNCTION
+function pickEcoshard(){
+    if (mode == 'NC'){
+        if (is2050){
+            if (document.getElementById("btnSSP1").checked){
+                ecoshard = 'pollsuff_on_ag_10s_ssp1_md5_c936c53a80471731fac0d6a6895628e8'
+                //for test:
+                //ecoshard = 'worldclim_2050_ssp1_n_export_compressed_md5_47c237fb127bc52cbb3228621cabe143'
             }
-            bounding_box = L.rectangle(bounds, {color: "#CCAAAA", weight: 1});
-            map.on('mousemove', bounding_box_move);
-            bounding_box.addTo(map);
+            else if (document.getElementById("btnSSP3").checked){
+                ecoshard = 'pollsuff_on_ag_10s_ssp3_md5_edf116e6020b6f88bb4c4e15741413ba'
+            }
+            else if (document.getElementById("btnSSP5").checked){
+                ecoshard = 'pollsuff_on_ag_10s_ssp5_md5_105a4ae2c2407344e0c1beaf8bbd529f'
+            }
         } else {
-            map.off('mousemove', bounding_box_move);
-            bounding_box.setStyle({color: "#22ff22", weight: 3});
-            map.panTo(bounding_box.getCenter());
-            map.fitBounds(bounding_box.getBounds());
-        }
-    });
+            ecoshard = 'pollsuff_on_ag_10s_cur_md5_0c94931b5687e98fcf293b789afdd96e'
+        }   
 
-    $(document).bind('mousemove', function(e){
-        $('#mouse_tip').css({
-            'left':  e.pageX + 5,
-            'top':   e.pageY - 55,
-        });
-    });
+
+    } else {
+        if (is2050){
+            if (document.getElementById("btnSSP1").checked){
+                if (document.getElementById("btnNutrientNRJ").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_en_10s_ssp1_md5_2ae004b2e3559cdfc53ed754bfd6b33e';
+                } else if (document.getElementById("btnNutrientFo").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_fo_10s_ssp1_md5_08c28442f699f35ab903b23480945785';
+                } else if (document.getElementById("btnNutrientVitA").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_va_10s_ssp1_md5_d9b620961bfe56b7bfb52ee67babe364';
+                };
+            } else if (document.getElementById("btnSSP3").checked){
+                if (document.getElementById("btnNutrientNRJ").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_en_10s_ssp3_md5_10ce2f30db2ac4a97266cfd075e67fa9';
+                } else if (document.getElementById("btnNutrientFo").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_fo_10s_ssp3_md5_19a2a1423c028e883a477e6b73524da5';
+                } else if (document.getElementById("btnNutrientVitA").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_va_10s_ssp3_md5_0a6744d0b69ec295292a84c8383290d5';
+                };
+            } else if (document.getElementById("btnSSP5").checked){
+                if (document.getElementById("btnNutrientNRJ").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_en_10s_ssp5_md5_b5fb16243689850078961e0228f774f2';
+                } else if (document.getElementById("btnNutrientFo").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_fo_10s_ssp5_md5_155e5e1aab3c226a693973efc41400fc';
+                } else if (document.getElementById("btnNutrientVitA").checked){
+                    ecoshard = 'prod_poll_dep_unrealized_va_10s_ssp5_md5_33e0cd5f3a846d1532a44c56c2d4ade5';
+                };
+            }
+        } else {
+            if (document.getElementById("btnNutrientNRJ").checked){
+                ecoshard = 'prod_poll_dep_unrealized_en_10s_cur_md5_d3e8bc025523d74cd4258f9f954b3cf4';
+            } else if (document.getElementById("btnNutrientFo").checked){
+                ecoshard = 'prod_poll_dep_unrealized_fo_10s_cur_md5_857aa9c09357ad6614e33f23710ea380';
+            } else if (document.getElementById("btnNutrientVitA").checked){
+                ecoshard = 'prod_poll_dep_unrealized_va_10s_cur_md5_c8035666f5a6e5c32fb290df989183e2';
+            }
+        };
+    }
+    return ecoshard;
+};

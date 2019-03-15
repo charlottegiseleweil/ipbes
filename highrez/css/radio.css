@@ -2,7 +2,7 @@
 /* CSS for user settings - radio button section */
 
 #radio_container {
-    background:rgba(255, 255, 255, 0.096);
+    background:black;
     color: white;
     position: absolute;
     top: 2rem;
@@ -11,6 +11,7 @@
     margin: 1rem;
     font-size: 0.7rem;
     width: 15rem;
+    z-index:2000;
 }
 
 /* radio btn */
