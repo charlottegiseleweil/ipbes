@@ -29,6 +29,7 @@
 
 
 <body>
+	<div id="aboutDiv"><div w3-include-html="about.html"></div></div>
 	<!-- Menu Navbar -->
 	<div class="w3-top">
 		<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
@@ -40,18 +41,7 @@
 	</div>
 	<!-- End Menu Navbar -->
 
-	<!-- "About" overlay -->
-	<div id="myNav" class="overlay">
-			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<div class="overlay-content"></div>
-	</div>
 
-	<!-- About Pop-up Window -->
-	<div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
-			<div w3-include-html="../about.html"></div>
-		</center>
-	</div>
-	<!-- End of About Pop-up Window -->
 
 	<!--left menu-->
 	<div id="left-menu" style="z-index: 100;">
@@ -88,6 +78,7 @@
 
 	</div>
 	<!--End of left menu-->
+
 	<!--Loading landing page-->
 	<div id="landingpage">
 		<h3 id="landing-page-loader">loading ...</h3>
@@ -203,8 +194,9 @@
 				</ul>
 			<p style="cursor: pointer; font-size: 1.3em; text-align: center" onClick="hideInfo()">&#x2716; Got it! </p>
 		</div>
-	</div>
+</div>
 	<!-- End of popup window -->
+
 
 
 	<script src="https://d3js.org/d3.v5.min.js"></script>
@@ -218,5 +210,6 @@
 	<script src="lib/simpleheat.js"></script>
 	<script src="js/mapplot.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/show_info.js"></script>
 </body>
 </html>

@@ -164,6 +164,5 @@ function hideInfo() {
 // For showing the INFO popup window
 function showNow() {
 	document.getElementById('greyOut').style.visibility = "visible";
-
 }
 
