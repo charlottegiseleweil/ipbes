@@ -1,11 +1,11 @@
 #left-menu{
     position: absolute;
-    width: 21rem;
+    width: 25%;
     background-color: black;
     text-align: center;
     top: 2.5rem;
     left: 0;
-    bottom: 0;
+    
     color: white;
 }
 .left-menu-header{
@@ -37,7 +37,7 @@
 /*Some changes only when the left-menu is used*/
 #radio_container {
     top: 2rem;
-    left: 21rem;
+    left: 0rem;
 }
 #distribution-chart{
     left: 22rem;

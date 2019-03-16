@@ -65,6 +65,21 @@
     transform: rotate(-90deg);
 }
 
+#info_about_measurments{
+    height: fit-content;
+    position: absolute;
+    right: 2rem;
+    top: 10rem;
+    color: white;
+    width: 18rem;
+    padding: 0;
+    margin: 0;
+    z-index: 100;
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.1rem;
+}
+
 #compare-scenarios{
     height: fit-content;
     position: absolute;

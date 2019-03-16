@@ -6,8 +6,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Coastal Risk</title>
-	<meta name="author" content="David Malmström, Josef Weber, Anna Häägg">
+	<title>Water quality - People exposed</title>
+	<meta name="author" content="David Malmström, Anna Häägg">
 	<link href="https://fonts.googleapis.com/css?family=Muli:300" rel="stylesheet">
 
 	<link rel="shortcut icon" href="#" />
@@ -30,12 +30,13 @@
 <!-- Menu Navbar -->
 <div class="w3-top">
 	<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
-		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='../index.html'"> &larr; </a>
-		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='coastal.html'">2015 & 2050</a>
-		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" style="background-color: #9e9e9e; color:black" >PEOPLE EXPOSED</a></li>
-		<a href="../viz/methods_coastal.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
-		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
-		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
+	<a href="../index.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link"> &larr; </a>
+	<a href="../viz/WaterQuality.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">2015 & 2050</a>
+	<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" style="background-color: #9e9e9e; color:black">PEOPLE EXPOSED</a></li>
+	<a href="../viz/methods_wq.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
+			<a href="../../highrez/highrez.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
+	<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
+	<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
 	</div>
 </div>
 <!-- End Menu Navbar -->
@@ -79,8 +80,7 @@
 		<h3 id="distri-x-axis">Number of people</h3>
 		<h3 id="distri-y-axis">Coastal Hazard</h3>
 	</div>
-	<div id="info_about_measurments">People living either nearest to the shoreline or between 0 and 10 m above sea level are 
-		considered to be the population exposed, since these are the people most susceptible to flooding, especially with sea level rise. 
+	<div id="info_about_measurments">We use rural populations (within 100 km watersheds) as the population exposed because they are presumably less likely to have water treatment options.  
 	</div>
 	<div id="compare-scenarios">
 		<h1 id="compare-scenario-header">Compare Scenarios</h1>
@@ -128,6 +128,6 @@
 <script src="js/charts.js"></script>
 <script src="lib/simpleheat.js"></script>
 <script src="js/mapplot.js"></script>
-<script src="js/main_coastal_pop.js"></script>
+<script src="js/main_water_pop.js"></script>
 </body>
 </html>

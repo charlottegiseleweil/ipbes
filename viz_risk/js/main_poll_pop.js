@@ -14,7 +14,7 @@ whenDocumentLoaded(() => {
 	// Initialize dashboard
 	is2050 = true;
 	colorSchema = {UN: [d3.hcl(100, 90, 100),d3.hcl(15, 90, 60)], pop: [d3.hcl(227,5,98),d3.hcl(254,45,23)], NC: [d3.hcl(119,22,93),d3.hcl(133,34,25)]};
-	plot_object = new MapPlot('globe-plot');
+	plot_object = new MapPlot('globe-plot','pop','poll');
 	charts = {distribution: new DistributionChart(), scenario: new ScenarioChart(), population: new PopulationChart()};
 	
 	// When the dataset radio buttons are changed: change the dataset
@@ -26,13 +26,12 @@ whenDocumentLoaded(() => {
 		plot_object.setScenario(this.value)
 	});
 
-	showledgend(colorSchema['UN']);
+	showledgend(colorSchema['pop']);
 });
 
 
 function switchMode(mode){
 	plot_object.setMode(mode);
-	console.log(mode);
 	const elements = document.getElementsByClassName('mode-button');
 	for (let i = 0; i < elements.length; i++) {
 		elements[i].classList.remove('selected');
@@ -41,14 +40,6 @@ function switchMode(mode){
 	
 	showledgend(colorSchema[mode]);
 	updateLabels(plot_object.currentDatasetName,mode);
-	if(mode =="UN"){
-		document.getElementById('info_about_measurments').innerText = "A deficit in coastal protection can be measured as the exposure to coastal hazards, the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat.";
-	}
-	else{
-		console.log("ds");
-		document.getElementById('info_about_measurments').innerText = "Nature’s contribution to meeting potential needs for coastal protection  is the proportion of that coastal storm risk that is attenuated by ecosystems.";
-
-	}
 }
 
 
@@ -118,6 +109,7 @@ function updateLabels(dataset,mode){
 					NC: {ndr: "Nitrogen Pollution Avoided", poll: "Pollination Need Met", cv: "Coastal Risk Reduction"}};
 	document.getElementById('legendText-low').innerHTML = "Low <br>" + labels[mode][dataset];
 	document.getElementById('legendText-high').innerHTML = "High <br>" + labels[mode][dataset];
+	document.getElementById('distri-y-axis').innerHTML = labels['UN'][dataset];
 
 }
 
@@ -130,20 +122,21 @@ function updateCharts(focusedData, colorScale, allfocusedCountryData){
 		this.hideCharts();
 	}
 	else{
-        charts.scenario.update(focusedData);
+        charts.distribution.show(focusedData, colorScale);
+        charts.population.update(focusedData);
         document.getElementById('compare-scenarios').style.visibility = 'visible';
 	}
 }
 
-function showGlobalChart(focusedData){
-	hideCharts();
-	charts.scenario.update(focusedData);
-	charts.population.update(focusedData);
-    document.getElementById('compare-scenarios').style.visibility = 'visible';
+function hideCharts(){
+	document.getElementById('distribution-chart').style.visibility = 'hidden';
+	document.getElementById('compare-scenarios').style.visibility = 'hidden';
 }
 
-function hideCharts(){
-	document.getElementById('compare-scenarios').style.visibility = 'hidden';
+function showGlobalChart(focusedData){
+	hideCharts();
+	charts.population.update(focusedData);
+    document.getElementById('compare-scenarios').style.visibility = 'visible';
 }
 
 
@@ -162,7 +155,6 @@ function whenDocumentLoaded(action) {
 		action();
 	}
 }
-
 // For hiding the popup window
 function hideInfo() {
 	document.getElementById('greyOut').style.visibility = "hidden";

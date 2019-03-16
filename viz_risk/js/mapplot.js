@@ -3,7 +3,7 @@ class MapPlot {
         return 380;
     }
 
-	constructor(svg_element_id, mode="UN") {
+	constructor(svg_element_id, mode="UN", dataSet = "cv") {
         this.svg = d3.select('#' + svg_element_id);
         this.svg_borders = d3.select('#' + svg_element_id + "_borders");
         
@@ -164,8 +164,9 @@ class MapPlot {
             this.update_all();
 
             d3.selectAll("#landingpage").attr("class", "hidden");           
-            d3.select("#map-content").style("display","block")
-		});
+            d3.select("#map-content").style("display","block");
+            this.setDataset(dataSet);
+        });
 
     }
     

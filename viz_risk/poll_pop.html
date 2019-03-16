@@ -6,8 +6,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Coastal Risk</title>
-	<meta name="author" content="David Malmström, Josef Weber, Anna Häägg">
+	<title>Pollination - People exposed</title>
+	<meta name="author" content="David Malmström, Anna Häägg">
 	<link href="https://fonts.googleapis.com/css?family=Muli:300" rel="stylesheet">
 
 	<link rel="shortcut icon" href="#" />
@@ -29,16 +29,19 @@
 
 <!-- Menu Navbar -->
 <div class="w3-top">
-	<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
-		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='../index.html'"> &larr; </a>
-		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='coastal.html'">2015 & 2050</a>
-		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" style="background-color: #9e9e9e; color:black" >PEOPLE EXPOSED</a></li>
-		<a href="../viz/methods_coastal.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
+		<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
+		<a href="../viz/index.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" > &larr; </a>
+		<a href="../viz/Pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">2015 & 2050</a>
+		<a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" style="background-color: #9e9e9e; color:black">PEOPLE EXPOSED</a></li>
+		<a href="../viz/Pollination_historical.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
+		<a href="../viz/methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
+		<a href="../highrez/highrez_pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
 		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
 		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
-	</div>
+		</div>
 </div>
 <!-- End Menu Navbar -->
+
 
 <div class="wrapper" id="map-content">
 	<canvas id="heatmap"></canvas>
@@ -77,10 +80,9 @@
 		<h5 id="distri-chart-head">How severely are <br> people Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h5>
 		<svg id="distribution"></svg>
 		<h3 id="distri-x-axis">Number of people</h3>
-		<h3 id="distri-y-axis">Coastal Hazard</h3>
+		<h3 id="distri-y-axis"></h3>
 	</div>
-	<div id="info_about_measurments">People living either nearest to the shoreline or between 0 and 10 m above sea level are 
-		considered to be the population exposed, since these are the people most susceptible to flooding, especially with sea level rise. 
+	<div id="info_about_measurments">We consider “local” beneficiaries as populations whose dietary requirements exceed pollinator-independent production within 100 km.  
 	</div>
 	<div id="compare-scenarios">
 		<h1 id="compare-scenario-header">Compare Scenarios</h1>
@@ -128,6 +130,6 @@
 <script src="js/charts.js"></script>
 <script src="lib/simpleheat.js"></script>
 <script src="js/mapplot.js"></script>
-<script src="js/main_coastal_pop.js"></script>
+<script src="js/main_poll_pop.js"></script>
 </body>
 </html>

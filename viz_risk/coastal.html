@@ -32,7 +32,7 @@
 	<div class="nav-global w3-bar w3-theme-d2 w3-left-align">
 		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='../index.html'"> &larr; </a>
 		<a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onClick="location.href='coastal.html'" style="background-color: #9e9e9e; color:black" >2015 & 2050</a>
-		<a href="coastal_pop.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
+		<a href="coastal_pop.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE EXPOSED</a></li>
 		<a href="../viz/methods_coastal.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
 		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
 		<a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
@@ -78,32 +78,25 @@
 		</table>
 	</div>
 
+	<div id="info_about_measurments">A deficit in coastal protection can be measured as the exposure to coastal hazards, 
+			the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat.
+	</div>
 
-	<div id="distribution-chart">
-			<h5 id="distri-chart-head">How severely are <br> people Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h5>
-			<svg id="distribution"></svg>
-			<h3 id="distri-x-axis">Number of people</h3>
-			<h3 id="distri-y-axis">Coastal Hazard</h3>
-		</div>
-
-		<div id="compare-scenarios">
-			<h1 id="compare-scenario-header">Compare Scenarios</h1>
-			<div id="scenario-chart">
-				<h2 class="scenario-chart-head">How much has the total <br>deficit changed since 2015?</h2>
-				<svg id="scenario-comparison-svg"></svg>
-			</div>
-			<div id="population-chart">
-				<h2 class= "scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
-				<svg id="population-comparison-svg"></svg>
-			</div>
-		</div>
-
-		<div id ="legend">
-			<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
-			<svg id="legendBar"></svg>
-			<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
+	<div id="compare-scenarios">
+		
+		<h1 id="compare-scenario-header">Compare Scenarios</h1>
+		<div id="scenario-chart">
+			<h2 class="scenario-chart-head">How much has the total <br>deficit changed since 2015?</h2>
+			<svg id="scenario-comparison-svg"></svg>
 		</div>
 	</div>
+
+	<div id ="legend">
+		<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
+		<svg id="legendBar"></svg>
+		<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
+	</div>
+</div>
 
 
 	<!-- Info Button Pop-up Window -->

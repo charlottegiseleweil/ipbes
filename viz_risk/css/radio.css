@@ -14,16 +14,7 @@
 }
 
 /* radio btn */
-input[type="radio"] {
-  -webkit-appearance: none;
-  width:1.1rem; 
-  height:1.1rem;
-  outline: none;
-  border-radius:100%;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-}
+
 #radio_container input {
   border: 1px solid white;
   padding-bottom: 1px;
@@ -37,6 +28,7 @@ input[type="radio"] {
 }
 
 /* affect also the label on check */
+
 input[type="radio"]:checked + label {
   color: white;
   font-weight: bold;
@@ -51,6 +43,7 @@ input[type="radio"]:hover + label {
   font-weight: bold;
   opacity: 1;
 } 
+
 #radio_container input:hover {
   border: 2px solid white;
   opacity: 1;
@@ -88,6 +81,15 @@ table {
 }
 .radio_btn{
   margin-bottom: 2px;
+  -webkit-appearance: none;
+  width: 1.1rem; 
+  height: 1.1rem;
+  outline: none;
+  border-radius:100%;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  color: white;
 }
 
 .input-radio{
@@ -140,7 +142,8 @@ table {
   background:rgba(255, 255, 255, 0.205);
 }
 #UN-button{
-    border-image: linear-gradient(to right, #fffa35 0%,#ff126d 100%);
+  border-style: solid;
+  border-image: linear-gradient(to right, #fffa35 0%,#ff126d 100%);
 }
 #pop-button{
     border-image: linear-gradient(to right, #D5E8F3 0%,#273871 100%);
