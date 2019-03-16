@@ -49,12 +49,12 @@
   <div id="ac-wrapper" style='display:none' onClick="hideNow(event)">
     <div id="popup-medium" class="grad1">
       <center>
-        <h2 class="h2_popup">How to read these maps?</h2>
+        <h2 class="h2_popup">How to read this map?</h2>
         <p>
           <ul class="p_popup">
               <ul>
-                <li>These maps showcase how the current situation for the selected visualization compares to the different scenarios proposed in 2050. <br> <br> <br> </li>
-                <li>You can select the desired visualization by using the "Choose Metric to Visualize" dropdown menu.<br> <br> <br>  </li>
+                <li>This 3D globe showcases the pollination contribution per country since 1850. <br> <br> <br> </li>
+                <li>On the right, you can see the graph showing how the deficit and the NC evolved since 1850 for the selected region.<br> <br> <br>  </li>
 
               </ul>
           </ul>
@@ -70,9 +70,9 @@
     <div class="w3-top">
       <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
       <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="load_global()"> &larr; </a>
-      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">2015 & 2050</a>
+      <a href="Pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection2D()">2015 & 2050</a>
       <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
-      <a href="Pollination_historical.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
+      <a href="#" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
       <a href="methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
       <a href="../highrez/highrez_pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
@@ -116,22 +116,6 @@
       <div class="map-global"></div>
     </div>
 
-    <div class="loader" style="left: 36%; top: 25%"></div>
-    <div class="loader" style="left: 36%; top: 73%"></div>
-    <script>
-      setTimeout(showMaps, 5000);
-
-      function showMaps() {
-        document.getElementsByClassName('loader')[0].style.display = "none";
-        document.getElementsByClassName('loader')[1].style.display = "none";
-
-        document.getElementsByClassName('d3-tip')[0].style.display = "block";
-
-        document.getElementById('svg_map1').style.visibility = "visible";
-        document.getElementById('svg_map2').style.visibility = "visible";
-      }
-
-    </script>
     <div class="box box-2" style="display: flex;">
       <div id="container">
         <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>
@@ -301,7 +285,7 @@
     <script src="js/arcs.js"></script>
     <script src="js/storytelling_helper.js"></script>
     <script src="js/slider.js"></script>
-    <script src="js/viz.js"></script>
+    <script src="js/viz_historical.js"></script>
 </body>
 
 </html>

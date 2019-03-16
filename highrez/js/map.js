@@ -72,12 +72,26 @@ function updateMap(ecoshard){
     // Here must remove previous layer!!
 
     console.log('Updating Map with ',ecoshard);
-    map.eachLayer(function (layer) {
-        map.removeLayer(layer);
+    // map.eachLayer(function (layer) {
+    //     map.removeLayer(layer);
+    // });
+
+
+    let promise_highrez = new Promise(function(resolve, reject) {
+      map.eachLayer(function (layer) {
+          map.removeLayer(layer);
+      });
+      setTimeout(() => resolve(1), 10);
     });
-    var lyr = L.tileLayer(
-            'http://ipbes.ecoshard.org:8080/workspace/tiles/'+ecoshard+'/{z}/{x}/{y}.png',
-            {tms: true, opacity: 0.9, attribution: ""}).addTo(map);
+    promise_highrez.then(() => {
+      var lyr = L.tileLayer(
+              'http://ipbes.ecoshard.org:8080/workspace/tiles/'+ecoshard+'/{z}/{x}/{y}.png',
+              {tms: true, opacity: 0.9, attribution: ""}).addTo(map);
+    });
+
+    map.eachLayer(function (layer) {
+        console.log(layer);
+    });
 };
 
 var initialEcoshard = 'pollhab_2km_prop_on_ag_10s_ssp5_md5_48a6718435e58e9e67e39824005c4ad1';

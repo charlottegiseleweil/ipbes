@@ -1,7 +1,7 @@
 document.getElementById("checked3D").disabled = true;
 document.getElementById("checked2D").disabled = false;
 
-let region_text = "Pollination Contribution to Food Energy";
+let region_text = "Lost Crop Production";
 
 // We instantiate the bar chart object for the 2D section
 let BarGraphObject = new BarGraph();
@@ -55,10 +55,10 @@ let tip = d3.tip()
   .offset([50, 80])
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
-    return "<strong>" + region_text + ": <span>" + roundNumber(d[2]) + "</span></strong>" + "%";
+    return "<strong>" + region_text + ": <span>" + roundNumber(Number(d['2015']).toFixed(2)) + "</span></strong>";
   })
 // Adding tip to the svg
-svg_map2.call(tip);
+svg.call(tip);
 
 let tip2 = d3.tip()
   .attr('class', 'd3-tip')
@@ -66,12 +66,13 @@ let tip2 = d3.tip()
   .offset([50, 80])
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
-    return "<strong>" + region_text + ": <span>" + d[current_SSP] + "</span></strong>" + "%";
+    return "<strong> Change in " + region_text + ": <span>" + Number(d[current_SSP]).toFixed(2) + "</span></strong>" + "%";
   })
 // Adding tip to the svg
-svg.call(tip2);
+svg.call(tip2)
 
 // Makes the legend
+makeLegendInitializations(false);
 makeLegend(colorScale);
 
 
@@ -92,27 +93,32 @@ createSlider();
 change_percentage_animation(current_nature_contribution, current_unmet_need);
 
 let contribution_text = document.getElementsByClassName("small-title")[0];
-let colorScale_energy = d3.scaleOrdinal()
-  .domain(["contribution", "unmet"])
-  .range(["#d73027", "#4fb1fe"]);
-let colorScale_vitamin = d3.scaleOrdinal()
-  .domain(["contribution", "unmet"])
-  .range(["#91cf60", "#4fb1fe"]);
-let colorScale_folate = d3.scaleOrdinal()
-  .domain(["contribution", "unmet"])
-  .range(["#41037e", "#4fb1fe"]);
 
 // set the colour scale
-let color_graph = colorScale_energy;
+let color_graph = d3.scaleOrdinal()
+  .domain(["contribution", "deficit"])
+  .range(["#91cf60", "#4fb1fe"]);
 
-function load_file() {
-  document.getElementsByTagName('li')[3].style.backgroundColor = "#c0c0c0";
+// We define the function
+function load_file(){
+  document.getElementsByTagName('a')[5].style.backgroundColor = "#9d9d9d";
+  document.getElementsByTagName('a')[5].style.color = "black";
+  document.getElementsByTagName('a')[3].style.background = "black";
+  document.getElementsByTagName('a')[3].style.color = "white";
+  colorScheme = d3.schemeGreens[6];
+  colorSchemeDisplay = d3.schemeGreens[9];
+  colorScale = d3.scaleThreshold()
+    .domain([20, 40, 60, 80, 99, 100])
+    .range(colorScheme);
+  makeLegend(colorScale);
+  updateLegend(colorScale);
+  projection3D();
 }
 
-$(document).ready(function() {
+$(document).ready(function(){
   load_file();
 });
 
 function load_global() {
-  location.href = '../index.html';
+  location.href='../index.html';
 }
