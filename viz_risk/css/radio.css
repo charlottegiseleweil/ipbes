@@ -10,7 +10,7 @@
     padding: 0.3rem 0.3rem 0.5rem 0.3rem;
     margin: 1rem;
     font-size: 0.7rem;
-    width: 15rem;
+    width: 17rem;
 }
 
 /* radio btn */
@@ -111,6 +111,7 @@ table {
     border-image-slice: 1;
     border-width: 2px;
     outline: none;
+    border-width: 3px;
 }
 .mode-button:hover  {
     border-width: 3px;
@@ -142,14 +143,13 @@ table {
   background:rgba(255, 255, 255, 0.205);
 }
 #UN-button{
-  border-style: solid;
-  border-image: linear-gradient(to right, #fffa35 0%,#ff126d 100%);
+  border-color:  #ff126d;;
 }
 #pop-button{
-    border-image: linear-gradient(to right, #D5E8F3 0%,#273871 100%);
+    border-color: #6a3d9e ;
 }
 #NC-button{
-    border-image: linear-gradient(to right, #B4DCAB 0%,#004616 100%);
+    border-color: #0b6828;
 }
 
 .input-wrapper{

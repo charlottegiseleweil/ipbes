@@ -13,7 +13,7 @@ let opts = {
 whenDocumentLoaded(() => {
 	// Initialize dashboard
 	is2050 = true;
-	colorSchema = {UN: [d3.hcl(100, 90, 100),d3.hcl(15, 90, 60)], pop: [d3.hcl(227,5,98),d3.hcl(254,45,23)], NC: [d3.hcl(119,22,93),d3.hcl(133,34,25)]};
+	colorSchema = {UN: [d3.hcl(100, 90, 100),d3.hcl(15, 90, 60)], pop: [d3.hcl(305,70,110),d3.hcl(305,70,30)], NC: [d3.hcl(119,22,93),d3.hcl(133,34,25)]};
 	plot_object = new MapPlot('globe-plot');
 	charts = {distribution: new DistributionChart(), scenario: new ScenarioChart(), population: new PopulationChart()};
 	
