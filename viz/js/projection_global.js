@@ -42,8 +42,6 @@ map_global.setAttribute("style", "height: 80%;");
 
 svg_global.call(zoom_2D_global);
 
-ready_global(g_global, path_global);
-
 let pollination_box = document.getElementById("pollination-box");
 let water_box = document.getElementById("water-quality-box");
 let coastal_box = document.getElementById("coastal-risk-box");
@@ -137,7 +135,13 @@ function load_2d_global(dataset) {
 }
 
 let data_2D_global;
-let promise_global;
+let promise_global = new Promise(function(resolve, reject) {
+  ready_global(g_global, path_global);
+  setTimeout(() => resolve(1), 10);
+});
+  promise_global.then(function(result) {
+    parseDataGlobal(dataset_global, draw_points);
+  });
 
 // Adding tip for hover
 let tip_global = d3.tip()
@@ -148,12 +152,10 @@ let tip_global = d3.tip()
   .html(function(d) {
     return "<strong>" + region_text_global + "<br>" +
       "<strong>" + "NC" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
-      "<strong>" + "Deficit" + ": <span>" + roundNumber(Number(d['UN_cur']).toFixed(2)) + " " + unit + "</span></strong> <br>" +
-      "<strong>" + "Population" + ": <span>" + roundNumber(Number(d['population']).toFixed(2)) + "</span></strong>";
+      "<strong>" + "Deficit" + ": <span>" + roundNumber(Number(d['PNpop_c_norm']).toFixed(2)) + "</span></strong> <br>";
   })
 // Adding tip to the svg
 svg_global.call(tip_global);
-parseDataGlobal(dataset_global, draw_points);
 
 function getColor(PNpop_value, NCP_value, PNpop_third_q, PNpop_2_third_q, NCP_third_q, NCP_2_third_q) {
   let colors = [
