@@ -47,7 +47,7 @@ function switchMode(toggle) {
     updateMap(pickEcoshard());
 };
 
-// 
+//
 
 var ecoshard = 'pollhab_2km_prop_on_ag_10s_ssp5_md5_48a6718435e58e9e67e39824005c4ad1';
 // Link selection to ecoshard UGLIEST FUNCTION
@@ -67,7 +67,7 @@ function pickEcoshard(){
             }
         } else {
             ecoshard = 'pollsuff_on_ag_10s_cur_md5_0c94931b5687e98fcf293b789afdd96e'
-        }   
+        }
 
 
     } else {

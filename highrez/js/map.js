@@ -11,7 +11,6 @@ var maxZoom = 10;
                 maxZoom: maxZoom
                 });
     $('.leaflet-container').css('cursor','crosshair');
-    var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'}).addTo(map);
 
     var esri_minimap_layer = L.esri.basemapLayer('DarkGray');
     var miniMap = new L.Control.MiniMap(
@@ -71,19 +70,29 @@ var maxZoom = 10;
 function updateMap(ecoshard){
     // Here must remove previous layer!!
 
-    console.log('Updating Map with ',ecoshard);
-    // map.eachLayer(function (layer) {
-    //     map.removeLayer(layer);
-    // });
 
-      var lyr = L.tileLayer(
-              'http://ipbes.ecoshard.org:8080/workspace/tiles/'+ecoshard+'/{z}/{x}/{y}.png',
-              {tms: true, opacity: 0.9, attribution: ""}).addTo(map);
+    map.eachLayer(function (layer) {
+      if (layer._url != "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png") {
+        map.removeLayer(layer);
+      }
+    });
+     
+  var lyr = L.tileLayer(
+          'http://ipbes.ecoshard.org:8080/workspace/tiles/'+ecoshard+'/{z}/{x}/{y}.png',
+          {tms: true, opacity: 0.9, attribution: ""}).addTo(map);
 }
 
-var initialEcoshard = 'pollhab_2km_prop_on_ag_10s_ssp5_md5_48a6718435e58e9e67e39824005c4ad1';
+var initialEcoshard = 'prod_poll_dep_unrealized_fo_10s_cur_md5_857aa9c09357ad6614e33f23710ea380';
 
-updateMap(initialEcoshard);
+let promise_layer = new Promise(function(resolve, reject) {
+  var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
+  {attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'}).addTo(map);
+  setTimeout(() => resolve(1), 10);
+});
+  promise_layer.then(function(result) {
+    updateMap(initialEcoshard);
+  });
+
 
 document.getElementsByTagName('a')[5].style.backgroundColor = "#9d9d9d";
 document.getElementsByTagName('a')[5].style.color = "black";
