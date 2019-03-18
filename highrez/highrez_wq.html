@@ -29,7 +29,7 @@
   <script src="js/main.js"></script>
 
 
-  <title>Pollination High resolution results</title>
+  <title>Water Quality High resolution results</title>
 
 </head>
 
@@ -39,10 +39,9 @@
   <div class="w3-top">
     <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
       <a href="../index.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="load_global()"> &larr; </a>
-      <a href="../viz/Pollination.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">2015 & 2050</a>
+      <a href="../viz/WaterQuality.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">2015 & 2050</a>
       <a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
-      <a href="../viz/Pollination_historical.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
-      <a href="../viz/methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
+      <a href="../viz/methods_wq.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
       <a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
@@ -66,7 +65,7 @@
           <p class="row-label">Year</p>
           <button type="button" class="year-button " id="year-button-2015" onclick="switchYear(false)">2015</button>
           <button type="button" class="year-button selected" id="year-button-2050" onclick="switchYear(true)">2050</button>
-        </td> 
+        </td>
       </tr>
       <tr id="scenario">
         <td>
@@ -85,26 +84,18 @@
           </div>
         </td>
       </tr>
-      <tr id="nutrient">
-        <td>
-          <p class="row-label">Micronutrient</p>
-          <div class="input-radio">
-            <input name="radio" type="radio" class="radio_btn" id="btnNutrientNRJ" value="1" onchange="updateMap(pickEcoshard())" autocomplete="off" />
-            <label for="nutrient_radio-1">Energy</label>
-          </div>
-          <div class="input-radio">
-            <input name="radio" type="radio" class="radio_btn" id="btnNutrientFo" value="3" checked="checked" / onchange="updateMap(pickEcoshard())" autocomplete="off">
-            <label for="nutrient_radio-2">Folate</label>
-          </div>
-          <div class="input-radio">
-            <input name="radio" type="radio" class="radio_btn" id="btnNutrientVitA" value="5" onchange="updateMap(pickEcoshard())" autocomplete="off" />
-            <label for="nutrient_radio-3">Vitamin A</label>
-          </div>
-        </td>
-      </tr>
     </table>
   </div>
   <!-- End Control Panel -->
+
+
+  <!-- Work in progress if no time to change to WQ Tiles -->
+  <div id="workinprogress" style="position:absolute; background-color:darkblue; color:white; z-index: 10000000; top:150px; right:50px">
+    <h1> /!\ WORK IN PROGRESS /!\ </h1>
+      <h2> WATER QUALITY HIGH RESOLUTION RESULTS DIPLAYED SOON! </h2>
+  </div>
+
+
 
 
   <!-- Map  -->
