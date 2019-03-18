@@ -23,7 +23,7 @@ All data displayed is publicly available [here](http://ipbes-natcap-ecoshard-dat
 
 
 ## Contributors
-### Visualization 
+### Visualization
 
 * Charlotte Gisèle Weil | [chweil@stanford.edu](mailto:chweil@stanford.edu)
 *  Ahmed Ahres | [ahmed.ahres@epfl.ch](mailto:ahmed.ahres@epfl.ch)
@@ -39,4 +39,3 @@ Correspondence to: Charlotte Gisèle Weil | [chweil@stanford.edu](mailto:chweil@
 Rebecca Chaplin-Kramer, Richard P. Sharp, Charlotte G. Weil, Elena M. Bennett, Unai Pascual, Adrian L. Vogl, Katie K. Arkema, Kate A. Brauman, Anne D. Guerry, Nick M. Haddad, Maike Hamann, Perrine Hamel, Justin A. Johnson, Lisa Mandle, Henrique M. Pereira, Stephen Polasky, Mary Ruckelshaus, M. Rebecca Shaw, Jessica M. Silver, Gretchen C. Daily
 
 Correspondence to: Rebecca Chaplin-Kramer | [bchaplin@stanford.edu](bchaplin@stanford.edu)
-

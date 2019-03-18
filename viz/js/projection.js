@@ -36,9 +36,9 @@ function changeProjection(sliderChecked) {
       .translate([width / 2, height / 2])
       .precision(.1);
 
-      $('.box-container').css({
-        'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
-      });
+    $('.box-container').css({
+      'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
+    });
   } else {
 
     zoom_3D = d3.zoom()
@@ -49,11 +49,11 @@ function changeProjection(sliderChecked) {
       .scale(planet_radius * 0.844)
       .translate([width / 2, height / 2])
       .precision(.1);
-      if (global_activated == false) {
-    $('.box-container').css({
-      'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
-    });
-  }
+    if (global_activated == false) {
+      $('.box-container').css({
+        'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
+      });
+    }
     // inertia versor dragging after everything has been rendered
     inertia = d3.geoInertiaDrag(svg, function() {
       render();

@@ -100,7 +100,7 @@ let color_graph = d3.scaleOrdinal()
   .range(["#91cf60", "#4fb1fe"]);
 
 // We define the function
-function load_file(){
+function load_file() {
   document.getElementsByClassName('historical')[0].style.backgroundColor = "#9d9d9d";
   document.getElementsByClassName('historical')[0].style.color = "black";
   colorScheme = d3.schemeGreens[6];
@@ -113,10 +113,10 @@ function load_file(){
   projection3D();
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
   load_file();
 });
 
 function load_global() {
-  location.href='../index.html';
+  location.href = '../index.html';
 }

@@ -13,7 +13,7 @@ html, body {
   height: 100%;
   min-height: 100%;
   display: flex;
-  background: #696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%
+  background: #696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%, black 91%) repeat scroll 0% 0%
   /* background: radial-gradient(circle at 37%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%); */
 }
 
@@ -591,7 +591,6 @@ img {
 }
 
 #story-text {
-
   font-size: 1.3vw;
 }
 
@@ -710,7 +709,7 @@ img {
 
 .label2DLegendY {
   font-size: 0.33em;
-  margin-top:-8.5vh;
+  margin-top: -8.5vh;
   margin-left: -8vw;
   color: white;
   transform: rotate(-90deg);
@@ -723,7 +722,6 @@ span {
   transform: translate(0.5vw, 6.7vh);
 }
 
-
 .back-button {
   transform: translateY(-25vh);
   width: 6vh;
@@ -731,86 +729,94 @@ span {
 }
 
 /*style wrapper to give some space*/
+
 .wrapper {
-	  position: relative;
-    margin-bottom: -2vh;
-}/*style label to give some more space*/
+  position: relative;
+  margin-bottom: -2vh;
+}
+
+/*style label to give some more space*/
 
 .wrapper label {
-    display: block;
-    padding: 0vw 0vw 0vw 2.5vw;
+  display: block;
+  padding: 0vw 0vw 0vw 2.5vw;
 }
 
 /*style and hide original checkbox*/
+
 .wrapper input {
-	height: 10vh;
-	left: 0;
-	opacity: 0;
-	position: absolute;
-	top: 0;
-	width: 10vw;
+  height: 10vh;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 10vw;
 }
 
 /*position new box*/
-.wrapper input + label::before {
-	border: 2px solid;
-	content: "";
-	height: 4.3vh;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 2.5vw;
+
+.wrapper input+label::before {
+  border: 2px solid;
+  content: "";
+  height: 4.3vh;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 2.5vw;
 }
 
 /*create check symbol with pseudo element*/
-.wrapper input + label::after {
-	content: "";
-	border: 0.5vh solid;
-	border-left: 0;
-	border-top: 0;
-	height: 2.5vh;
-	left: 0.9vw;
-	opacity: 0;
-	position: absolute;
-	top: 0.5vh;
-	transform: rotate(45deg);
-	transition: opacity 0.2s ease-in-out;
-	width: 0.7vw;
+
+.wrapper input+label::after {
+  content: "";
+  border: 0.5vh solid;
+  border-left: 0;
+  border-top: 0;
+  height: 2.5vh;
+  left: 0.9vw;
+  opacity: 0;
+  position: absolute;
+  top: 0.5vh;
+  transform: rotate(45deg);
+  transition: opacity 0.2s ease-in-out;
+  width: 0.7vw;
 }
 
 /*reveal check for 'on' state*/
-.wrapper input:checked + label::after {
-	opacity: 1;
+
+.wrapper input:checked+label::after {
+  opacity: 1;
 }
 
 .about-button {
-	background-color:rgb(0, 0, 0);
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:ourFont;
-	font-size:0.55em;
-	font-weight:bold;
-	padding:0.5vh 2vh;
-	text-decoration:none;
+  background-color: rgb(0, 0, 0);
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: ourFont;
+  font-size: 0.55em;
+  font-weight: bold;
+  padding: 0.5vh 2vh;
+  text-decoration: none;
   display: inline-block;
-  margin-top:7vh;
+  margin-top: 7vh;
 }
 
 .about-button:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
-	background:-moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
-	background:-webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
-	background:-o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
-	background:-ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
-	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef',GradientType=0);
-	background-color:#019ad2;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
+  background: -moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+  background: -webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+  background: -o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+  background: -ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+  background: linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef', GradientType=0);
+  background-color: #019ad2;
 }
+
 .about-button:active {
-	position:relative;
-	top:0.2vh;
+  position: relative;
+  top: 0.2vh;
 }
 
 span2 {
@@ -820,9 +826,10 @@ span2 {
 }
 
 /* THIS CSS PART IS FOR REPLACING THE SLIDER IN 2D */
+
 #radios {
   position: relative;
-  z-index:5;
+  z-index: 5;
   width: 17%;
   height: 5%;
   display: none;
@@ -835,8 +842,7 @@ span2 {
   transform: translateY(8vh);
 } */
 
-#bckgrnd,
-.labels {
+#bckgrnd, .labels {
   width: 3vw;
   height: 2.77vh;
   font-family: ourFont;
@@ -885,16 +891,18 @@ span2 {
 }
 
 /* THIS IS FOR ANIMATION WHEN YOU CHANGE THE OPTION */
-#rad1:checked ~ #bckgrnd {
+
+#rad1:checked~#bckgrnd {
   transform: translateX(0vw);
   transition: transform 0.5s ease-in-out;
 }
 
-#rad2:checked ~ #bckgrnd {
+#rad2:checked~#bckgrnd {
   transform: translateX(3.2vw);
   transition: transform 0.5s ease-in-out;
 }
-#rad3:checked ~ #bckgrnd {
+
+#rad3:checked~#bckgrnd {
   transform: translateX(6.5vw);
   transition: transform 0.5s ease-in-out;
 }
@@ -955,12 +963,15 @@ span2 {
   z-index: 1000;
   font-size: 10px;
 }
+
 .option-input:hover {
   background: #9faab7;
 }
+
 .option-input:checked {
   background: #40e0d0;
 }
+
 .option-input:checked::before {
   height: 3.15vh;
   width: 3.15vh;
@@ -971,6 +982,7 @@ span2 {
   text-align: center;
   line-height: 3.15vh;
 }
+
 .option-input:checked::after {
   -webkit-animation: click-wave 0.65s;
   -moz-animation: click-wave 0.65s;
@@ -981,12 +993,15 @@ span2 {
   position: relative;
   z-index: 100;
 }
+
 .option-input.radio {
   border-radius: 50%;
 }
+
 .option-input.radio::after {
   border-radius: 50%;
 }
+
 #container {
   display: flex;
   width: 100%;
@@ -1023,8 +1038,9 @@ span2 {
 }
 
 */
+
 .container-column:hover {
-    background-color: #40e0d0;
+  background-color: #40e0d0;
 }
 
 .active-btn {
@@ -1032,149 +1048,153 @@ span2 {
 }
 
 .nature-help-button {
-	background-color:#000000;
-	border:1px solid #8c8c8c;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:ourFont;
-	font-size:0.75em;
-	padding:0.3vh 1vw;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #090a09;
+  background-color: #000000;
+  border: 1px solid #8c8c8c;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: ourFont;
+  font-size: 0.75em;
+  padding: 0.3vh 1vw;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #090a09;
   width: 50%;
   margin-bottom: 2vh;
   transform: translateX(-27vh);
 }
+
 .nature-help-button:active {
-  background-color:#000000;
+  background-color: #000000;
 }
 
 .risk-button {
-	background-color:#9c9c9c;
-	border:1px solid #8c8c8c;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:ourFont;
-	font-size:0.75em;
-	padding:0.3vh 2vw;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #090a09;
+  background-color: #9c9c9c;
+  border: 1px solid #8c8c8c;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: ourFont;
+  font-size: 0.75em;
+  padding: 0.3vh 2vw;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #090a09;
   transform: translate(15.2vw, -7.1vh);
 }
+
 .risk-button:active {
-	position:relative;
-  background-color:#000000;
+  position: relative;
+  background-color: #000000;
 }
 
 .future-button {
-	background-color:#000000;
-	border:1px solid #8c8c8c;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:ourFont;
-	font-size:0.55em;
-	padding:5px 15px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #090a09;
+  background-color: #000000;
+  border: 1px solid #8c8c8c;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: ourFont;
+  font-size: 0.55em;
+  padding: 5px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #090a09;
 }
+
 .future-button:active {
-	position:relative;
+  position: relative;
 }
 
 .impact-button {
-	background-color:#9c9c9c;
-	border:1px solid #8c8c8c;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:ourFont;
-	font-size:0.55em;
-	padding:5px 15px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #090a09;
+  background-color: #9c9c9c;
+  border: 1px solid #8c8c8c;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: ourFont;
+  font-size: 0.55em;
+  padding: 5px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #090a09;
 }
+
 .impact-button:active {
-	position:relative;
+  position: relative;
 }
 
 .historical-button {
-	background-color:#9c9c9c;
-	border:1px solid #8c8c8c;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:ourFont;
-	font-size:0.55em;
-	padding:5px 15px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #090a09;
+  background-color: #9c9c9c;
+  border: 1px solid #8c8c8c;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: ourFont;
+  font-size: 0.55em;
+  padding: 5px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #090a09;
 }
 
 .historical-button:active {
-	position:relative;
+  position: relative;
 }
 
 .modeling-button {
-	background-color:#9c9c9c;
-	border:1px solid #8c8c8c;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:ourFont;
-	font-size:0.55em;
-	padding:5px 15px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #090a09;
+  background-color: #9c9c9c;
+  border: 1px solid #8c8c8c;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: ourFont;
+  font-size: 0.55em;
+  padding: 5px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #090a09;
 }
 
 .modeling-button:active {
-	position:relative;
+  position: relative;
 }
 
 .metric-button {
-	background-color:#000000;
-	border:0.1vh solid #000000;
-	display:inline-block;
+  background-color: #000000;
+  border: 0.1vh solid #000000;
+  display: inline-block;
   cursor: auto;
-	color:#fcfcfc;
-	font-family:ourFont;
-	font-size:0.75em;
-	padding:5px 20px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #000000;
+  color: #fcfcfc;
+  font-family: ourFont;
+  font-size: 0.75em;
+  padding: 5px 20px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #000000;
   transform: translateY(-13vh);
 }
 
 .site-navigation {
-	display: block;
-	font-family: ourFont;
-	font-size: 0.75em;
-	font-weight: bold;
+  display: block;
+  font-family: ourFont;
+  font-size: 0.75em;
+  font-weight: bold;
   margin-left: 4vw;
   margin-top: -10vh;
-	/* transform: translate(6vw, -8.5vh); */
+  /* transform: translate(6vw, -8.5vh); */
 }
 
 .site-navigation ul {
   background: #000000;
-	list-style: none;
-	margin: 0;
-	padding-left: 0;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
 }
 
 .site-navigation li {
-	color: #fff;
+  color: #fff;
   background: #000000;
-	display: block;
-	float: left;
-	margin: 0 0.5vw 0 0;
-	padding: 1.1vw;
-	position: relative;
-	text-decoration: none;
-	text-transform: uppercase;
+  display: block;
+  float: left;
+  margin: 0 0.5vw 0 0;
+  padding: 1.1vw;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .site-navigation li a {
@@ -1184,61 +1204,66 @@ span2 {
 }
 
 .site-navigation li:hover {
-	@include transition(background, 0.1s);
-	background: #52a6df;
-	cursor: pointer;
+  @include transition(background, 0.1s);
+  background: #52a6df;
+  cursor: pointer;
 }
 
 .site-navigation ul li ul {
-	background: #52a6df;
-	visibility: hidden;
-	float: left;
+  background: #52a6df;
+  visibility: hidden;
+  float: left;
   min-width: 3vw;
-	position: absolute;
+  position: absolute;
   transition: visibility 0.65s ease-in;
-  margin-top:12px;
-	left: 0;
-	z-index: 999;
+  margin-top: 12px;
+  left: 0;
+  z-index: 999;
 }
 
-.site-navigation ul li:hover > ul,
-.site-navigation ul li ul:hover {
-   visibility: visible;
+.site-navigation ul li:hover>ul, .site-navigation ul li ul:hover {
+  visibility: visible;
 }
 
 .site-navigation ul li ul li {
-	clear: both;
-	padding: 5px 0 5px 18px;
+  clear: both;
+  padding: 5px 0 5px 18px;
   width: 100%;
 }
 
 .site-navigation ul li ul li:hover {
-	background: #74b7e4;
+  background: #74b7e4;
 }
 
 /* This class is applied to the containing div <div class="nav"> and is used to set the background color and height of the navbar */
+
 .nav {
   font-family: ourFont;
-  background-color:black;
+  background-color: black;
   width: 100%;
 }
 
 /* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
+
 .nav li {
   display: inline-block;
   list-style: none;
   top: 4vh;
-  line-height: 4vh; /* should be the same as height */
-  padding: 0 3.2vw; /* "0" sets top and bottom padding to none */
+  line-height: 4vh;
+  /* should be the same as height */
+  padding: 0 3.2vw;
+  /* "0" sets top and bottom padding to none */
 }
 
 /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
+
 .nav li:hover {
   /* color: "black"; */
   transition: background .2s;
 }
 
 /* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */
+
 .nav-link {
   color: #fff;
   text-decoration: none;
@@ -1246,23 +1271,27 @@ span2 {
 
 .nav-global {
   font-family: ourFont;
-  background-color:black;
+  background-color: black;
   width: 100%;
   font-size: 1.315em;
   text-decoration: none;
 }
 
 /* This rule centers the nav items verticaly in the bar with the height and line height properties. Spacing between the nav items is controlled by setting right and left padding.  */
+
 .nav-global li {
   display: inline-block;
   list-style: none;
   top: 4vh;
-  line-height: 4vh; /* should be the same as height */
-  padding: 0 5.5vw; /* "0" sets top and bottom padding to none */
+  line-height: 4vh;
+  /* should be the same as height */
+  padding: 0 5.5vw;
+  /* "0" sets top and bottom padding to none */
   text-decoration: none;
 }
 
 /* :hover allows you change the background color of the nav items when you mouse over them. Play around with the transition value to change the speed of the hover transition. */
+
 .nav-global li:hover {
   /* background: black; */
   transition: background .2s;
@@ -1309,38 +1338,37 @@ span2 {
   z-index: 1000000;
 }
 
-
-.pop-up-big{
-    background-color: black;
-    overflow: scroll;
-    border-radius: 1.8vh;
-    margin: 3%;
-    opacity: 0.97;
-    background-color: lightgrey;
-    position: absolute;
-    display: inline;
-    z-index: 90000000000;
+.pop-up-big {
+  background-color: black;
+  overflow: scroll;
+  border-radius: 1.8vh;
+  margin: 3%;
+  opacity: 0.97;
+  background-color: lightgrey;
+  position: absolute;
+  display: inline;
+  z-index: 90000000000;
 }
 
 .close-btn {
-    position: absolute;
-    right: 22px;
-    top: 0px;
-    font-size: 90px;
-    background-color: transparent;
-    border: transparent;
-    color: black;
+  position: absolute;
+  right: 22px;
+  top: 0px;
+  font-size: 90px;
+  background-color: transparent;
+  border: transparent;
+  color: black;
 }
 
 .close-btn:hover {
   color: grey;
 }
 
-a:hover{
-  color:darkgrey;
+a:hover {
+  color: darkgrey;
 }
 
-.darkgrey{
+.darkgrey {
   color: darkgrey;
   font-size: 300%;
 }
@@ -1369,16 +1397,25 @@ span3 {
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Add animation to "page content" */
+
 .animate-bottom {
   position: relative;
   -webkit-animation-name: animatebottom;
@@ -1388,11 +1425,23 @@ span3 {
 }
 
 @-webkit-keyframes animatebottom {
-  from { bottom:-100px; opacity:0 }
-  to { bottom:0px; opacity:1 }
+  from {
+    bottom: -100px;
+    opacity: 0
+  }
+  to {
+    bottom: 0px;
+    opacity: 1
+  }
 }
 
 @keyframes animatebottom {
-  from{ bottom:-100px; opacity:0 }
-  to{ bottom:0; opacity:1 }
+  from {
+    bottom: -100px;
+    opacity: 0
+  }
+  to {
+    bottom: 0;
+    opacity: 1
+  }
 }

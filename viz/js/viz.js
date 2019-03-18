@@ -107,14 +107,14 @@ let colorScale_folate = d3.scaleOrdinal()
 let color_graph = colorScale_energy;
 
 // We define the function
-function load_file(){
+function load_file() {
   projection2D();
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
   load_file();
 });
 
 function load_global() {
-  location.href='../index.html';
+  location.href = '../index.html';
 }

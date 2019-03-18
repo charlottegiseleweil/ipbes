@@ -1,5 +1,6 @@
 from math import cos, sin, atan2, sqrt, pi
 
+
 def center_geolocation(geolocations):
     """
     Provide a relatively accurate center lat, lon returned as a list pair, given
@@ -23,6 +24,7 @@ def center_geolocation(geolocations):
     z = float(z / len(geolocations))
 
     return (atan2(z, sqrt(x * x + y * y)) * 180 / pi, atan2(y, x) * 180 / pi)
+
 
 def center_rect(geolocations):
     """

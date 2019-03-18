@@ -55,8 +55,12 @@ function includeHTML() {
       xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          if (this.status == 200) {
+            elmnt.innerHTML = this.responseText;
+          }
+          if (this.status == 404) {
+            elmnt.innerHTML = "Page not found.";
+          }
           /* Remove the attribute, and call this function once more: */
           elmnt.removeAttribute("w3-include-html");
           includeHTML();
@@ -69,4 +73,4 @@ function includeHTML() {
     }
   }
 }
- includeHTML();
+includeHTML();

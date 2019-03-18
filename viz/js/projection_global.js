@@ -139,9 +139,9 @@ let promise_global = new Promise(function(resolve, reject) {
   ready_global(g_global, path_global);
   setTimeout(() => resolve(1), 10);
 });
-  promise_global.then(function(result) {
-    parseDataGlobal(dataset_global, draw_points);
-  });
+promise_global.then(function(result) {
+  parseDataGlobal(dataset_global, draw_points);
+});
 
 // Adding tip for hover
 let tip_global = d3.tip()

@@ -31,7 +31,7 @@ ECOSHARD_LIST = [
     'https://storage.googleapis.com/ipbes-natcap-ecoshard-data-for-publication/pollhab_2km_prop_on_ag_10s_ssp1_md5_b843575b5ef98c8431f6e78e2ce3fba0.tif',
     'https://storage.googleapis.com/ipbes-natcap-ecoshard-data-for-publication/pollhab_2km_prop_on_ag_10s_ssp3_md5_5d50078e62d5cb1066a95a408f6c15da.tif',
     'https://storage.googleapis.com/ipbes-natcap-ecoshard-data-for-publication/pollhab_2km_prop_on_ag_10s_ssp5_md5_48a6718435e58e9e67e39824005c4ad1.tif',
-    ]
+]
 MIN_ZOOM = 3
 MAX_ZOOM = 10
 

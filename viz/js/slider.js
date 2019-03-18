@@ -199,7 +199,7 @@ function runSegmentedSSPs(period, firstTime) {
   if (firstTime) {
     mapsTimeout(4000);
   } else {
-  mapsTimeout(2500);
+    mapsTimeout(2500);
   }
   if (current_html == "WaterQuality.html") {
     parseData(dataset_2D, doStuff, false);
