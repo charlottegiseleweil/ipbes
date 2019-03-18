@@ -101,10 +101,8 @@ let color_graph = d3.scaleOrdinal()
 
 // We define the function
 function load_file(){
-  document.getElementsByTagName('a')[5].style.backgroundColor = "#9d9d9d";
-  document.getElementsByTagName('a')[5].style.color = "black";
-  document.getElementsByTagName('a')[3].style.background = "black";
-  document.getElementsByTagName('a')[3].style.color = "white";
+  document.getElementsByClassName('historical')[0].style.backgroundColor = "#9d9d9d";
+  document.getElementsByClassName('historical')[0].style.color = "black";
   colorScheme = d3.schemeGreens[6];
   colorSchemeDisplay = d3.schemeGreens[9];
   colorScale = d3.scaleThreshold()
