@@ -2,6 +2,8 @@
 var minZoom = 3;
 var maxZoom = 10;
 
+let current_html = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+
 var pollination_fo_def_legend_label = {
   0: '#ffffd4',
   125000: '#fed98e',
@@ -106,7 +108,6 @@ $(document).bind('mousemove', function(e) {
 
 var legend = L.control({position: 'bottomright'});
 
-makeLegend(pollination_fo_def_legend_label);
 
 function makeLegend(labels) {
   legend.onAdd = function (map) {
@@ -117,7 +118,7 @@ function makeLegend(labels) {
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var key in labels) {
           div.innerHTML +=
-              "<li style=color:white; float:left; margin-right:10px;><span style=background-color:"+ labels[key]  +";></span>" + key + "</li>";
+              "<li style=color:white; float:left; margin-right:10px;><span class=span_legend style=background-color:"+ labels[key]  +";></span>" + key + "</li>";
       }
 
       return div;
@@ -131,7 +132,6 @@ function updateMap(ecoshard) {
 
   map.eachLayer(function(layer) {
     if (layer._url != "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png") {
-      console.log(layer);
       map.removeLayer(layer);
     }
   });
@@ -142,9 +142,18 @@ function updateMap(ecoshard) {
       opacity: 0.9,
       attribution: ""
     }).addTo(map);
+
 }
 
-var initialEcoshard = 'prod_poll_dep_unrealized_fo_10s_cur_md5_857aa9c09357ad6614e33f23710ea380';
+if (current_html == "highrez_pollination.html") {
+  var initialEcoshard = 'prod_poll_dep_unrealized_fo_10s_cur_md5_857aa9c09357ad6614e33f23710ea380';
+  makeLegend(pollination_fo_def_legend_label);
+}
+
+if (current_html == "highrez_wq.html") {
+  var initialEcoshard = 'worldclim_2050_ssp5_n_export_compressed_md5_ca38c7e16d9934b25f6fadcc44649c14';
+  makeLegend(wq_deficit);
+}
 
 let promise_layer = new Promise(function(resolve, reject) {
   var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {

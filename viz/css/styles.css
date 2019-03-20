@@ -722,6 +722,12 @@ span {
   transform: translate(0.5vw, 6.7vh);
 }
 
+.span_legend {
+  content: "\2192";
+  color: white;
+  transform: translate(0,0);
+}
+
 .back-button {
   transform: translateY(-25vh);
   width: 6vh;

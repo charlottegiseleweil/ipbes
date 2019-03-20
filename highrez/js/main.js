@@ -37,6 +37,7 @@ function switchMode(toggle) {
     document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'));
     document.getElementById('NC-button').classList.remove('selected');
     document.getElementById('UN-button').classList.add('selected');
+    is2050 = true;
   } else {
     nutrientRow.style.visibility = 'collapse';
     nutrientRow.style.opacity = '0';

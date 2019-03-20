@@ -13,6 +13,7 @@
   <!-- w3 style thingz -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../viz/css/w3.css" />
+  <link rel="stylesheet" type="text/css" href="../viz/css/styles.css" />
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 
 
@@ -45,8 +46,26 @@
 
   <!-- About Pop-up Window -->
   <div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
-    <div w3-include-html="about_viz.html"></div>
+    <div w3-include-html="about_highrez.html"></div>
     </center>
+  </div>
+
+  <div id="ac-wrapper" style='display:none' onClick="hideNow(event)">
+    <div id="popup-medium" class="grad1">
+      <center>
+        <h2 class="h2_popup">How to read this map?</h2>
+        <p>
+          <ul class="p_popup">
+            <ul>
+              <li>This map showcases high resolution data for pollination. <br> <br> <br> </li>
+              <li>You can select the desired visualization using the top-left control panel.<br> <br> <br> </li>
+
+            </ul>
+          </ul>
+        </p>
+        <input type="submit" name="submit" value="Got it !" onClick="PopUp('hide')" />
+      </center>
+    </div>
   </div>
 
   <!-- Menu Navbar -->
