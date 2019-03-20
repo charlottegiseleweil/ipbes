@@ -2,7 +2,37 @@
 var minZoom = 3;
 var maxZoom = 10;
 
+var pollination_fo_def_legend_label = {
+  0: '#ffffd4',
+  125000: '#fed98e',
+  250000: '#fe9929',
+  500000: '#d95f0e',
+  1000000: '#993404'
+};
 
+var pollination_va_def_legend_label = {
+  0: '#ffffd4',
+  5000000: '#fed98e',
+  10000000: '#fe9929',
+  20000000: '#d95f0e',
+  40000000: '#993404'
+};
+
+var pollination_en_def_legend_label = {
+  0: '#ffffd4',
+  2000000: '#fed98e',
+  4000000: '#fe9929',
+  8000000: '#d95f0e',
+  16000000: '#993404'
+};
+
+var pollination_nc_legend_label = {
+  0: '#f7cf5',
+  25: '#caeac3',
+  50: '#7bc87c',
+  75: '#2a924a',
+  100: '#00441b'
+};
 
 var map = L.map('mapid', {
   center: [0, 0],
@@ -73,12 +103,35 @@ $(document).bind('mousemove', function(e) {
   });
 });
 
+
+var legend = L.control({position: 'bottomright'});
+
+makeLegend(pollination_fo_def_legend_label);
+
+function makeLegend(labels) {
+  legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend');
+
+      div.innerHTML = "<strong style=color:white>Legend</strong>"
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var key in labels) {
+          div.innerHTML +=
+              "<li style=color:white; float:left; margin-right:10px;><span style=background-color:"+ labels[key]  +";></span>" + key + "</li>";
+      }
+
+      return div;
+  };
+
+  legend.addTo(map);
+}
+
 function updateMap(ecoshard) {
   // Here must remove previous layer!!
 
-
   map.eachLayer(function(layer) {
     if (layer._url != "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png") {
+      console.log(layer);
       map.removeLayer(layer);
     }
   });
@@ -102,7 +155,3 @@ let promise_layer = new Promise(function(resolve, reject) {
 promise_layer.then(function(result) {
   updateMap(initialEcoshard);
 });
-
-
-document.getElementsByTagName('a')[5].style.backgroundColor = "#9d9d9d";
-document.getElementsByTagName('a')[5].style.color = "black";

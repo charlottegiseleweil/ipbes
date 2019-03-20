@@ -35,6 +35,20 @@
 
 <body>
 
+  <div id="myNav" class="overlay2">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay-content">
+      <a href="#"></a>
+    </div>
+  </div>
+
+
+  <!-- About Pop-up Window -->
+  <div id="about" style='display:none' onClick="hideNow(event)" class="pop-up-big">
+    <div w3-include-html="about_viz.html"></div>
+    </center>
+  </div>
+
   <!-- Menu Navbar -->
   <div class="w3-top">
     <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
@@ -43,7 +57,7 @@
       <a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">PEOPLE IMPACTED</a></li>
       <a href="../viz/Pollination_historical.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="projection3D()">HISTORICAL ANALYSIS</a>
       <a href="../viz/methods_polli.html" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">MODELING METHOD</a>
-      <a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link">HIGH RESOLUTION</a>
+      <a href="" class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link highrez">HIGH RESOLUTION</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showNow()">&#9432;</a>
       <a href="#" class="nav-link w3-right w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="showAbout()">About</a>
     </div>
@@ -66,7 +80,7 @@
           <p class="row-label">Year</p>
           <button type="button" class="year-button " id="year-button-2015" onclick="switchYear(false)">2015</button>
           <button type="button" class="year-button selected" id="year-button-2050" onclick="switchYear(true)">2050</button>
-        </td> 
+        </td>
       </tr>
       <tr id="scenario">
         <td>
@@ -131,6 +145,11 @@
 
 
 <script src="js/map.js"></script>
+<script src="../viz/js/popup.js"></script>
+<script>
+document.getElementsByClassName('highrez')[0].style.backgroundColor = "#9d9d9d";
+document.getElementsByClassName('highrez')[0].style.color = "black";
+</script>
 
 
 </html>
