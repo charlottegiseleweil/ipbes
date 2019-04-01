@@ -8,6 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="viz/css/styles.css" />
+  <link rel="stylesheet" type="text/css" href="css/menu.css" />
   <link href="https://goo.gl/mTc43h" rel="stylesheet">
 
   <!-- w3 style thingz -->
@@ -34,6 +35,11 @@
   <script src="viz/libraries/d3-tip.js"></script>
 
   <script src="viz/libraries/noframework.waypoints.min.js"></script>
+
+
+  <!-- Menu Navbar -->
+ <div id="main_menu"></div>
+  <!-- End Menu Navbar -->
 
 
 
@@ -76,10 +82,11 @@
     </div>
   </div>
   <!-- End of popup window -->
+    
 
 
   <div class="box-container" id='3rd_box'>
-    <div class="menu-box-1-global">
+    <div class="menu-box-1-global"> 
       <!-- <div class="nav-global">
   <ul>
     <li><a href="#" class="nav-link" onclick="activate_nature_button()"> WHERE NATURE HELPS US MOST TODAY?</a></li>
@@ -89,16 +96,6 @@
   </ul>
 </div> -->
 
-      <!-- Menu Navbar -->
-      <div class="w3-top">
-        <div class="nav-global w3-bar w3-theme-d2 w3-left-align">
-          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="activate_nature_button()"><i class="fa fa-home w3-margin-right"></i> WHERE DOES NATURE HELP US MOST TODAY?</a>
-          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-grey nav-link" onclick="activate_risk_button()"><i class="fa fa-home w3-margin-right"></i> IN WHICH COUNTRIES ARE PEOPLE MOST AT RISK?</a>
-          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-grey" title="info-button" onclick="showNow()">&#9432;</a>
-          <a id="About" onclick="showAbout()" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-grey"> About</a>
-        </div>
-      </div>
-      <!-- End Menu Navbar -->
 
     </div>
     <div class="box box-1" style="visibility: collapse">
@@ -112,10 +109,7 @@
 
     <div class="box box-2" style="display: none;">
       <div id="container">
-        <!-- <a href="#" class="future-button" onclick="future_button()">Future maps</a>
-        <a href="#" class="impact-button" onclick="impact_button()">Impact distribution</a>
-        <a href="#" class="historical-button" onclick="projection3D()">Historical</a>
-        <a href="#" class="modeling-button" onclick="modeling_button()">Pollination modeling method</a> -->
+        
       </div>
       <p id="map-name-1">Average Micronutrient Pollination Dependance</p>
       <div class="map1"></div>
@@ -294,6 +288,8 @@
         <script src="viz/js/storytelling_helper.js"></script>
         <script src="viz/js/projection_global.js"></script>
         <script src="viz/js/slider.js"></script>
+        <script src="js/navigation.js"></script>
+        <script src="js/index_main.js"></script>
 </body>
 
 </html>
