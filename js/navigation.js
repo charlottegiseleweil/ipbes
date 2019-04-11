@@ -62,6 +62,12 @@ function addMenu() {
     menu.appendChild(second);
     menu.appendChild(third);
     menu.appendChild(forth);
-
-
+   
+  }
+  function showInfo(info) {
+    document.getElementById(info).style.width = "100%";
+  }
+  
+  function hideInfo(info) {
+    document.getElementById(info).style.width = "0%";
   }

@@ -3,7 +3,6 @@ let risk_button = document.getElementsByClassName("risk-button")[0];
 let nature_button = document.getElementsByClassName("nature-help-button")[0];
 let legendTitle = document.getElementsByClassName("title2DLegend")[0];
 let gradient_blue = 'radial-gradient( circle at 37%, rgb(105, 190, 255) 29%, rgb(236, 246, 255) 36%, rgb(228, 255, 255) 42%, rgb(215, 254, 255) 49%, rgb(204, 245, 255) 56%, rgb(191, 234, 255) 63%, rgb(147, 193, 227) 70%, rgb(147, 193, 227) 77%, rgb(147, 193, 227) 84%, rgb(81, 119, 164) 91%)';
-let gradient_white = '#696969 radial-gradient(circle at 70% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%';
 let counter = 0;
 let unit = "People Fed Equivalents";
 var zoom_2D_global = get_global_zoom();
@@ -17,20 +16,15 @@ function load_pollination() {
 }
 
 
-if (global_activated == true) {
-  document.getElementsByClassName("box-container")[0].style.background = gradient_white;
-}
-
 let width_global = $(".box.box-2-global").width(),
   height_global = $(".box.box-2-global").height();
 
 let svg_global = d3.select(".map-global").append("svg")
   .attr("id", "svg_map_global")
-  .attr("width", width_global)
-  .attr("height", height_global)
+  
   .on("click", stopped, true);
 
-svg_global.attr('transform', 'translate(0,-140) scale(1.2)');
+svg_global.attr('transform', 'translate(0,-60) scale(1.3)');
 
 let g_global = svg_global.append('g');
 
@@ -112,7 +106,7 @@ function ready_global(g, path) {
       .data(features)
       .enter().append("path")
       .attr("d", path)
-      .attr("fill", "rgb(200,200,200)")
+      .attr("fill", "rgb(80, 80, 80)")
       .attr("class", "feature");
     // Creates a mesh around the border
     g.append("path")
@@ -260,8 +254,7 @@ function parseDataGlobal(url, callBack) {
 
 
 function activate_nature_button() {
-  document.getElementsByTagName('a')[2].style.background = "#9d9d9d";
-  document.getElementsByTagName('a')[2].style.color = "black";
+ 
   //Load our HTML file
 }
 

@@ -40,9 +40,7 @@ function clicked(d) {
     // TODO: Need to set it on the basis of the size of the country to fit in the whole svg
     .call(zoom_3D.scaleTo, scale);
 
-  $('.box-container').css({
-    'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
-  });
+  
 
   countryName.innerHTML = active_info.__data__.properties.name;
 
@@ -108,15 +106,11 @@ function reset() {
   document.getElementById("checked3D").disabled = false;
   document.getElementById("checked2D").disabled = false;
 
-  $('.box-container').css({
-    'background': ''
-  });
+  
 
   countryName.innerHTML = "World";
   previousCountryClicked = 'WLD';
-  $('.box-container').css({
-    'background': '#696969 radial-gradient(circle at 37% center, #494949 36%, #3A3A3A 42%, black 61%,black 91%) repeat scroll 0% 0%'
-  });
+  
   current_unmet_need = 100 - data_c[previousCountryClicked];
   change_percentage_animation(data_c[previousCountryClicked], current_unmet_need);
   lineGraphObject.updateGraph(previousCountryClicked);
