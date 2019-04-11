@@ -16,6 +16,23 @@ body {
     background: black;
     color: white;
     font-family: 'Helvetica', 'Arial', sans-serif; 
+    font-weight: 300;
+}
+h2{
+    color:  rgb(114, 114, 114);
+    padding: 1vh 2vh;
+    margin: 2vh 0;
+    font-weight: 200;
+}
+
+h3{
+    font-size: 12px;  
+    border: none;
+    outline: none;
+    color:   rgb(114, 114, 114);
+    padding: 14px 16px 0 16px;
+    margin: 0;
+    
 }
 
 .content-wrapper{
@@ -43,7 +60,7 @@ body {
 }
 .info_head{
     text-align: center;
-    color: rgb( 56, 87, 114);
+    color:rgb(152, 171, 189); 
     font-weight: 300;
     font-size: 5vh;
 }

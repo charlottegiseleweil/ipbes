@@ -13,8 +13,11 @@
   font-weight: 300;
   line-height: normal;
   margin: 0;
-  padding: 1vh 2vh;
+  padding: 0 2vh;
   color:rgb(146, 145, 145);
+  height: 0;
+  overflow: hidden;
+  transition: .5s ease;
 }
 
 
@@ -40,23 +43,44 @@
 }
 
 
-/* The container */
 .left-menu-header {
   display: block;
   position: relative;
-  font-size: 2.5vh;
+  font-size: 2vh;
   font-weight: 300;
-  padding: 2vh 2vh;
-  color: rgb( 109, 125, 140);
+  padding: 1.5vh 2vh;
+  color:rgb(165, 165, 165);
   cursor: pointer;
+  transition: .3s ease;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
 
+.left-menu-header:hover{
+  color: rgb(152, 171, 189); 
+  padding-left: 4vh;
+}
+
+input:checked  + .left-menu-header  {
+  font-size: 2.5vh;
+  color:rgb(152, 171, 189);
+  display: block;
+}
+
+
+/*hovering effects*/
+.left-menu-header:hover + .left-menu-text {
+  height: 15vh;
+}
+.left-menu-text:hover{
+  height: 15vh;
+}
+
+
 /* Hide the browser's default radio button */
-.left-menu-header input {
+.no_show {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -78,6 +102,7 @@
 }
 
 
+
 /* Create the indicator (the dot/circle - hidden when not checked) */
 .checkmark:after {
   content: "";
@@ -86,7 +111,7 @@
 }
 
 /* Show the indicator (dot/circle) when checked */
-.left-menu-header input:checked ~ .checkmark:after {
+input:checked ~ .checkmark:after {
   display: block;
 }
 

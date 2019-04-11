@@ -44,43 +44,36 @@
   <div class="content-wrapper">
      <!--left menu-->
      <div id="left-menu">
+        <h2>Control panel</h2>
+        <h3>Services</h3>
 
-        <label class="left-menu-header">Pollination
-            <input id="pollination-box" type="radio" name="button-global" onclick="load_pollination_data()" value="pollination" autocomplete="off" checked>
-            <span class="checkmark"></span> 
-        </label>
-        <h4 class="left-menu-text">
+        <input id="pollination-box" type="radio" name="button-global" onclick="load_pollination_data()" value="pollination" autocomplete="off" checked  class="no_show">
+        <label for="pollination-box" class="left-menu-header" id="left-menu-header-1">Pollination</label>
+
+        <h4 class="left-menu-text" id="left-menu-text-1">
             Up to two-thirds of all crops require some degree of animal pollination to reach their maximum yields,
             and natural habitat around farmlands can support healthy
             populations of wild pollinators by providing them with foraging and nesting resources. <br>
-          <p class="left-menu-link"> <a onClick="location.href='../viz/Pollination.html';return false;">To Pollination Modeling</a></p>
+          <!--<p class="left-menu-link"> <a onClick="location.href='../viz/Pollination.html';return false;">To Pollination Modeling</a></p>-->
         </h4>
   
-        <div class="section_marker"> </div>
-  
-        <label class="left-menu-header">
-            <input id="water-quality-box" name="button-global" type="radio" onclick="load_waterquality_data()" value="waterquality" autocomplete="off" >
-            <span class="checkmark"></span> Water Quality Regulation
-        </label>
-        <h4 class="left-menu-text">
+        <input id="water-quality-box" name="button-global" type="radio" onclick="load_waterquality_data()" value="waterquality" autocomplete="off" class="no_show">
+        <label for="water-quality-box" class="left-menu-header" id="left-menu-header-2">Water Quality Regulation </label>
+        
+        <h4 class="left-menu-text" id="left-menu-text-2">
             Fertilizers like nitrogen are a major source pollution to freshwater systems and drinking water. However,
             some of it may be retained by healthy ecosystems,
             and this nitrogen retention regulating drinking water quality is one of nature’s contributions to people. <br>
-          <p class="left-menu-link"> <a onClick="location.href='../viz/WaterQuality.html';return false;">To Water Quality Regulation Modeling</a></p>
+         <!-- <p class="left-menu-link"> <a onClick="location.href='../viz/WaterQuality.html';return false;">To Water Quality Regulation Modeling</a></p>-->
         </h4>
   
-        <div class="section_marker"> </div>
-  
-        <label class="left-menu-header">
-            <input id="coastal-risk-box" name="button-global" type="radio" onclick="load_coastalrisk_data()" value="coastal" autocomplete="off">
-            <span class="checkmark"></span>Coastal Risk Mitigation
-        </label>
-        <h4 class="left-menu-text">
+        <input id="coastal-risk-box" name="button-global" type="radio" onclick="load_coastalrisk_data()" value="coastal" autocomplete="off"  class="no_show">
+        <label for="coastal-risk-box" class="left-menu-header" id="left-menu-header-3"><!--<span class="checkmark"></span>-->Coastal Risk Mitigation</label>
+        <h4 class="left-menu-text" id="left-menu-text-3">
           Coastal habitats such as coral reefs, mangroves, salt marsh, or sea grass, attenuate waves and protect
           the shorelines from the impacts of storms, such as floods and erosion. <br>
-          <p class="left-menu-link"><a onClick="location.href='coastal.html';return false;">To Coastal Risk Mitigation Modeling</a></p>
+          <!--<p class="left-menu-link"><a onClick="location.href='coastal.html';return false;">To Coastal Risk Mitigation Modeling</a></p>-->
         </h4>
-        <div class="section_marker"> </div>
   
       </div>
       <!--End of left menu-->
