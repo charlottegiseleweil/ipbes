@@ -10,10 +10,14 @@
 .menu_element {
     float: left;
 }
+.about_tab{
+    float: right;
+    margin-right: 1vh;
+}
   
 .menu_element a {
     display: block;
-    color: rgb(165, 165, 165);
+    color: var(--primary_c);
     text-align: center;
     padding: 14px 12px;
     text-decoration: none;
@@ -21,7 +25,7 @@
   
 .menu_element a:hover {
     text-decoration: none;
-    color: rgb(152, 171, 189); 
+    color: var(--light_blue);
 }
 
 .menu_dropdown {
@@ -33,7 +37,7 @@
     font-size: 16px;  
     border: none;
     outline: none;
-    color:   rgb(152, 171, 189); 
+    color:   var(--light_blue);
     padding: 14px 16px;
     background-color: inherit;
     font-family: inherit;
@@ -59,7 +63,7 @@
 }
   
 .menu_dropdown-content a:hover {
-    color: rgb(152, 171, 189); 
+    color: var(--light_blue);
 }
   
 .menu_dropdown:hover .menu_dropdown-content {

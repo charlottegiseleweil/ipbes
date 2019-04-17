@@ -30,17 +30,17 @@ function addMenu() {
         dropSymbol.classList.add('fa-caret-down');
     let poll = document.createElement('a');
         poll.href = 'index.html';
-        poll.innerHTML = "Pollination";
+        poll.innerHTML = "Pollination <span class='glyphicon glyphicon-grain'> </span>";
     let wq = document.createElement('a');
         wq.href = 'index.html';
-        wq.innerHTML = "Water quality";
+        wq.innerHTML = "Water quality <i class='fa fa-tint' viewBox = '0 0 15 15'>";
     let coast = document.createElement('a');
         coast.href = 'index.html';
-        coast.innerHTML = "Coastal Risk";
+        coast.innerHTML = "Coastal Risk <i class='fas fa-water'></i>";
 
     let services = document.createElement('a');
         services.href = 'index.html';
-        services.innerHTML = "Services ";
+        services.innerHTML = "Ecosystem Services ";
     services.appendChild(dropSymbol);
     dropdown.appendChild(services);
     dropdown_content.appendChild(poll);
@@ -51,8 +51,9 @@ function addMenu() {
     
     let forth = document.createElement('div')
         forth.classList.add('menu_element');
+        forth.classList.add('about_tab');
     let about = document.createElement('a');
-        about.href = 'index.html';
+        about.href = 'about.html';
         about.innerHTML = "About";
     forth.appendChild(about);
 

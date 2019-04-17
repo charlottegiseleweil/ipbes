@@ -1,3 +1,9 @@
+:root{
+    --primary_c: rgb(190, 190, 190);
+    --inprinted_c: rgb(114,114,114);
+    --light_blue: rgb(152, 171, 189); 
+    --ligh: rgb(165, 198, 230);
+}
 html, body, figure {
     width: 100%;
     height: 100%;
@@ -19,7 +25,7 @@ body {
     font-weight: 300;
 }
 h2{
-    color:  rgb(114, 114, 114);
+    color:  var(--inprinted_c);
     padding: 1vh 2vh;
     margin: 2vh 0;
     font-weight: 200;
@@ -29,7 +35,7 @@ h3{
     font-size: 12px;  
     border: none;
     outline: none;
-    color:   rgb(114, 114, 114);
+    color:   var(--inprinted_c);
     padding: 14px 16px 0 16px;
     margin: 0;
     
@@ -42,38 +48,41 @@ h3{
     bottom: 0;
     background-color: azure;
 }
-#index-map{
+#main_content_container{
     position: absolute;
     top:0;
     right:0;
     bottom: 0;
     width: 80%;
     background: rgb(29, 29, 29);
+    background-image: linear-gradient(to bottom right,
+     rgb(0, 0, 0),
+     rgb(77, 96, 114));
 }
 .info-button{
     cursor: pointer;
     width: 4vh;
     height: 4vh;
     font-size: 4vh;
-    color: rgb( 109, 125, 140);
+    color:var(--light_blue) ;
     position: absolute;
 }
 .info_head{
     text-align: center;
-    color:rgb(152, 171, 189); 
+    color:var(--light_blue) ;
     font-weight: 300;
     font-size: 5vh;
 }
 .info_text{
     text-align: left;
-    color:rgb(146, 145, 145);
+    color: var(--primary_c);
     padding: 2vh 20vh;
     font-size: 2.5vh;
     font-weight: 300;
     margin: 0;
 }
 .info_exit{
-    color:rgb(146, 145, 145);
+    color:var(--primary_c);
     cursor: pointer; 
     font-size: 4vh; 
     position: absolute; 

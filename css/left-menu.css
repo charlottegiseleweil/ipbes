@@ -59,13 +59,13 @@
 }
 
 .left-menu-header:hover{
-  color: rgb(152, 171, 189); 
+  color: var(--light_blue);
   padding-left: 4vh;
 }
 
 input:checked  + .left-menu-header  {
   font-size: 2.5vh;
-  color:rgb(152, 171, 189);
+  color:var(--light_blue);
   display: block;
 }
 
@@ -90,37 +90,3 @@ input:checked  + .left-menu-header  {
   user-select: none;
 }
 
-/* Create a custom radio button */
-.checkmark {
-  position: absolute;
-  top: 2vh;
-  right: 2vh;
-  height: 2.5vh;
-  width: 2.5vh;
-  border-radius: 50%;
-  border: 2px solid rgb( 109, 125, 140);
-}
-
-
-
-/* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the indicator (dot/circle) when checked */
-input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the indicator (dot/circle) */
-.left-menu-header .checkmark:after {
- 	top: 0.75vh;
-	left: 0.75vh;
-	width: 1vh;
-	height: 1vh;
-	border-radius: 50%;
-	background:  rgb( 109, 125, 140);
-}

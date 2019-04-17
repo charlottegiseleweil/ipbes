@@ -106,7 +106,7 @@ function ready_global(g, path) {
       .data(features)
       .enter().append("path")
       .attr("d", path)
-      .attr("fill", "rgb(80, 80, 80)")
+      .attr("fill", "rgb(165, 198, 230)")
       .attr("class", "feature");
     // Creates a mesh around the border
     g.append("path")

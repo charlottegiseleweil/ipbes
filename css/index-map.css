@@ -4,20 +4,19 @@
     bottom: 1.5vh;
     left: 1.5vh;
     right: 1.5vh;
-    background: rgb(41, 41, 41);
+    background: rgba(41, 41, 41, 0.212);
     display: flex;
   }
 
 .box {
     text-align: center;
     color: gray;
-    font-family: ourFont;
     font-size: 3.6vh;
     padding: 2vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
+}
 
 .box-2-global {
     width: 100%;
