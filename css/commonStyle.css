@@ -2,7 +2,6 @@
     --primary_c: rgb(190, 190, 190);
     --inprinted_c: rgb(114,114,114);
     --light_blue: rgb(152, 171, 189); 
-    --ligh: rgb(165, 198, 230);
 }
 html, body, figure {
     width: 100%;
@@ -36,9 +35,8 @@ h3{
     border: none;
     outline: none;
     color:   var(--inprinted_c);
-    padding: 14px 16px 0 16px;
+    padding: 14px 16px 0 8px;
     margin: 0;
-    
 }
 
 .content-wrapper{
@@ -48,6 +46,37 @@ h3{
     bottom: 0;
     background-color: azure;
 }
+/*Landing page*/
+
+#landingpage {
+    width: 100%;
+    position: absolute;
+    top: 46.6px;
+    bottom: 0;
+    z-index: 10;
+    background: black;
+    color: white;
+    text-align: center;
+}
+  
+  /*Transition show hide with fade*/
+  
+.hidden {
+    display: none;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+  
+  #landing-page-header {
+    font-weight: 300;
+    font-size: 3rem;
+    margin-top: 5rem;
+  }
+  
+  #landing-page-loader {
+    font-weight: 300;
+  }
+
 #main_content_container{
     position: absolute;
     top:0;
@@ -56,8 +85,8 @@ h3{
     width: 80%;
     background: rgb(29, 29, 29);
     background-image: linear-gradient(to bottom right,
-     rgb(0, 0, 0),
-     rgb(77, 96, 114));
+     rgb(0, 0, 0) 0%,
+     rgb(20, 35, 56) 80%);
 }
 .info-button{
     cursor: pointer;

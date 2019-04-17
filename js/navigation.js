@@ -13,7 +13,7 @@ function addMenu() {
     let second = document.createElement('div')
         second.classList.add('menu_element');
     let future = document.createElement('a');
-       future.href = 'index.html';
+       future.href = 'risk_index.html';
        future.innerHTML = "In which contries are people most at risk?";
     second.appendChild(future);
 

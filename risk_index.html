@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>In which contries are people most at risk?</title>
+	<meta name="author" content="David Malmström, Anna Häägg">
+	
+	<link rel="stylesheet" href="css/bootstrap.css">
+  	<link rel="stylesheet" type="text/css" href="css/commonStyle.css" />
+  	<link rel="stylesheet" type="text/css" href="css/menu.css" />
+	<link rel="stylesheet" type="text/css" href="css/left-menu.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+	
+	<link rel="stylesheet" href="css/risk_style.css">
+	<link rel="stylesheet" href="css/charts.css">
+	<link rel="stylesheet" href="css/legend.css">
+	<link rel="stylesheet" href="css/left-menu.css">
+	<link rel="stylesheet" href="css/info.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+	<script src="../viz/libraries/noframework.waypoints.min.js"></script>
+
+</head>
+
+
+<body>
+
+	<!-- Menu Navbar -->
+	<div id="main_menu"></div>
+	<!-- End Menu Navbar -->
+	<!--Loading landing page-->
+	<div id="landingpage">
+			<h3 id="landing-page-loader">loading ...</h3>
+	</div>
+	<!--End Loading landing page-->
+   
+	<div class="content-wrapper">
+		<!--left menu-->
+		<div id="left-menu">
+			<h3>Ecosystem Services</h3>
+
+			<input id="pollination-box" type="radio" class="no_show radio_btn" name="radio1" id="a_radio-3" value="poll" autocomplete="off" checked="checked">
+			<label for="pollination-box" class="left-menu-header" id="left-menu-header-1">Pollination <span class="glyphicon glyphicon-grain"> </span> </label>
+			<h4 class="left-menu-text" id="left-menu-text-1">
+				Up to two-thirds of all crops require some degree of animal pollination to reach their maximum yields,
+				and natural habitat around farmlands can support healthy
+				populations of wild pollinators by providing them with foraging and nesting resources. <br>
+			</h4>
+		
+			<input id="water-quality-box" type="radio" class="no_show radio_btn" name="radio1" id="a_radio-2" value="ndr" autocomplete="off">
+			<label for="water-quality-box" class="left-menu-header" id="left-menu-header-2">Water Quality Regulation <i class="fa fa-tint" viewBox = "0 0 15 15"></i> </label>
+			<h4 class="left-menu-text" id="left-menu-text-2">
+				Fertilizers like nitrogen are a major source pollution to freshwater systems and drinking water. However,
+				some of it may be retained by healthy ecosystems,
+				and this nitrogen retention regulating drinking water quality is one of nature’s contributions to people. <br>
+			</h4>
+		
+			<input id="coastal-risk-box" type="radio" class="no_show radio_btn" name="radio1" id="a_radio-1" value="cv" autocomplete="off">
+			<label for="coastal-risk-box" class="left-menu-header" id="left-menu-header-3">Coastal Risk Mitigation <i class="fas fa-water"></i></label>
+			<h4 class="left-menu-text" id="left-menu-text-3">
+				Coastal habitats such as coral reefs, mangroves, salt marsh, or sea grass, attenuate waves and protect
+				the shorelines from the impacts of storms, such as floods and erosion. <br>
+			</h4>
+
+			<div class="section_marker"> </div>
+			<h3>Mode</h3>
+
+			<input id="deficit-box" type="radio" class="no_show" onclick="switchMode('UN')" autocomplete="off" name="mode" checked="checked">
+			<label for="deficit-box" class="left-menu-header">Deficit</label>
+
+		
+			<input id="people-exposed-box" type="radio" class="no_show" onclick="switchMode('pop')" name="mode" autocomplete="off">
+			<label for="people-exposed-box" class="left-menu-header">People Exposed</label>
+			
+		
+			<input id="nat-cap-box" type="radio" class="no_show" onclick="switchMode('NC')" name="mode"autocomplete="off">
+			<label for="nat-cap-box" class="left-menu-header">Natures contribution</label>
+			
+			<div class="section_marker"> </div>
+			<h3>Scenarios</h3>
+
+			<input type="radio" class="no_show" name="radio2" id="b_radio-2" value="3" checked="checked" />
+			<label for="b_radio-2" class="left-menu-header" >Regional Rivalry</label>
+
+			<input type="radio" class="no_show" name="radio2" id="b_radio-1" value="1">
+			<label for="b_radio-1" class="left-menu-header" >Green Growth</label>
+
+			<input type="radio" class="no_show" name="radio2" id="b_radio-3" value="5" />
+			<label for="b_radio-3" class="left-menu-header" >Fossil Fuels</label>
+
+		</div>
+		<!--End of left menu-->
+
+
+	<div id="main_content_container">
+		<div id="risk_map">
+			<canvas id="heatmap"></canvas>
+			<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
+			<svg id="globe-plot_borders" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
+			<div id="resetButton">
+				<p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p>
+			</div>
+			<div id="countryLabel"></div>
+<!--
+			<div id="legend">
+				<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
+				<svg id="legendBar"></svg>
+				<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
+			</div> -->
+			<div id="distribution-chart">
+					<h5 id="distri-chart-head">How severely are <br> people Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h5>
+					<svg id="distribution"></svg>
+					<h3 id="distri-x-axis">Number of people</h3>
+					<h3 id="distri-y-axis">Coastal Hazard</h3>
+			</div>
+
+		</div>
+
+		<div id="compare-scenarios">
+			<h1 id="compare-scenario-header">Compare Scenarios and Services</h1>
+			<div id="scenario-chart">
+				<h2 class="scenario-chart-head">How much has the total <br>deficit changed since 2015?</h2>
+				<svg id="scenario-comparison-svg"></svg>
+			</div>
+			<div id="scenario-chart">
+				<h2 class="scenario-chart-head">How many people are <br> Negatively Impacted? </h2>
+				<svg id="population-comparison-svg"></svg>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="https://d3js.org/d3-geo.v1.min.js"></script>
+	<script src="https://unpkg.com/versor"></script>
+	<script>
+		if (!window.d3) document.write('<script src="lib/d3.min.js"><\/script>');
+	</script>
+	<script src="lib/topojson.min.js"></script>
+	<script src="js/charts.js"></script>
+	<script src="lib/simpleheat.js"></script>
+	<script src="js/mapplot.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/navigation.js"></script>
+	<!--<script src="js/show_info.js"></script>-->
+</body>
+
+</html>
