@@ -5,7 +5,6 @@ class MapPlot {
 
   constructor(svg_element_id, mode = "UN", dataSet = "poll") {
     this.svg = d3.select('#' + svg_element_id);
-    this.svg_borders = d3.select('#' + svg_element_id + "_borders");
 
     // may be useful for calculating scales
     const svg_viewbox = this.svg.node().viewBox.animVal;
@@ -156,9 +155,8 @@ class MapPlot {
   }
 
   render() {
-    // Update countries and country borders
+    // Update countries
     this.svg.selectAll("path.globe").attr('d', this.path)
-    this.svg_borders.selectAll("path").attr('d', this.path)
 
     if (!this.focused) {
       let data = this.worldData();
@@ -602,9 +600,6 @@ class MapPlot {
       .on("click", () => {
         this.resetClick(false)
       })
-
-    this.updateBorders();
-
     this.render()
   }
 
@@ -631,25 +626,6 @@ class MapPlot {
           .style("display", "none");
         d3.select(this).classed("selected", false)
       })
-
-    this.updateBorders();
-  }
-
-  updateBorders() {
-    // Don't need to fill in borders for cv
-    if (this.currentDatasetName != 'cv') {
-      this.svg_borders.selectAll("path").remove().enter()
-        .data(this.map_data)
-        .enter().append("path")
-        .attr("fill", "grey")
-        .attr("fill-opacity", "0")
-        .attr("stroke-opacity", "0.5")
-        .style("stroke", "dimgrey")
-        .style("stroke-width", this.countryBorderWidth)
-        .attr("d", this.path)
-    } else {
-      this.svg_borders.selectAll("path").remove();
-    }
   }
 
   // find country object in json
@@ -681,7 +657,6 @@ class MapPlot {
 
     this.setUNColorScale();
     this.update_all();
-    this.updateBorders();
     // update zoom, since the scaleExtent might have changed
     this.initializeZoom();
     this.render();
