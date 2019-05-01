@@ -14,16 +14,16 @@ instead.
 */
 
 
-const map_promise = d3.json("data/map_data/50m.json").then(topojson_raw => {
+const map_promise = d3.json("Data/map_data/50m.json").then(topojson_raw => {
   const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
   // remove leading zeros for the id:s
   country_features.forEach(x => x.id = x.id.replace(/^0+/, ''));
   return country_features;
 })
-const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv").then(data => data);
+const country_label_promise = d3.tsv("Data/map_data/world-110m-country-names.tsv").then(data => data);
 
-["poll", "ndr", "cv"].forEach((dataset) => {
-  const data_promise = d3.csv(`data/preprocessed_data/updated_data3/${dataset}_table_preprocessed.csv`).then(data => data)
+["poll", "ndr", "cv", "cv_high_res"].forEach((dataset) => {
+  const data_promise = d3.csv(`Data/preprocessed_data/updated_data3/${dataset}_table_preprocessed.csv`).then(data => data)
 
 
   Promise.all([map_promise, country_label_promise, data_promise]).then((results) => {
@@ -39,7 +39,7 @@ const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv
     // remove one australia, which exists twice, at place 7 (for the 50m.json map data only)
     no_undefined.splice(7, 1)
 
-    console.log("Constructing array...")
+    console.log("Constructing array for \"" + dataset + "\" dataset...")
 
     // Creates an array of objects where each object has a country name and a list of indices for the data array for the data pointthat are within the boundaries of that country
     let countryMapping = no_undefined.map((x, i) => {
@@ -62,10 +62,34 @@ const country_label_promise = d3.tsv("data/map_data/world-110m-country-names.tsv
       }
     })
 
+    console.log("Calculating averages...")
+
+    // Calculate averages over the datapoints per country:
+    // We do not need to sum lat or lng
+    let data_keys = Object.keys(data[0]).filter(x => !(["lat", "lng"].includes(x)))
+
+    countryMapping.forEach((country) => {
+      let averages = null;  // If we don't have any datapoints; let averages be null
+      if (country.dataPointList.length > 0) {
+        // Sum up all the values per data category
+        averages = country.dataPointList.reduce((acc, cur) => {
+          data_keys.forEach(key => acc[key] = acc[key] + parseFloat(data[cur][key]));
+          return acc;
+        }, data_keys.reduce((o, key) => ({ ...o, [key]: 0}), {}));
+
+        // Divide by the amount of data points to get averages
+        Object.keys(averages).forEach(key => averages[key] /= country.dataPointList.length);
+      }
+      country['averages'] = averages;
+    })
+
     console.log("Converting array to object...")
     // We want to save the mapping as an object (dictionary) instead of an array for easier access
     let countryMappingObject = countryMapping.reduce((acc, cur) => {
-      acc[cur.name] = cur.dataPointList;
+      acc[cur.name] = {
+        datapoints: cur.dataPointList,
+        averages: cur.averages
+      }
       return acc;
     }, {});
 

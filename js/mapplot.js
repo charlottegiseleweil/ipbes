@@ -164,10 +164,15 @@ class MapPlot {
       let data = this.worldData();
 
       if (this.currentDatasetName === "cv") { // render regular dots for cv data
+        // Remove the country coloring for cv
+        this.svg.selectAll("path")
+          .attr("fill", "grey")
+
         let dataSelection = this.svg.selectAll("circle.datapoints").data(data, (d) => d);
         dataSelection.exit().remove();
         this.initWorldMapData(dataSelection);
       } else { 
+        this.color_countries_by_average();
       }
     }
 
@@ -192,6 +197,21 @@ class MapPlot {
         let globeDistance = d3.geoDistance([d.longitude, d.latitude], this.projection.invert([this.svgWidth / 2, this.svgHeight / 2]));
         return (globeDistance > 1.42) ? 'none' : 'inline';
       })
+  }
+
+  color_countries_by_average() {
+    this.svg.selectAll("path")
+          .attr("fill", (d) => {
+            if (this.currentCountryMapping[d.name] === undefined) {
+              return "grey";
+            }
+            let averages = this.currentCountryMapping[d.name].averages;
+            if (averages == null) {
+              return "grey";
+            } else {
+              return this.currentColorScale(averages[`${this.currentModeName}_${this.currentScenario}`]);
+            }
+          })
   }
 
   initializeZoom() {
@@ -322,6 +342,9 @@ class MapPlot {
       }
 
       this.svg.selectAll("circle").remove();
+      // Clear the country coloring
+      this.svg.selectAll("path")
+        .attr("fill", "grey");
       if (!scenario_change) this.setCurrentColorScale();
       this.initFocusedMapData(renderData);
       updateCharts(chartData, this.UNColorScale, this.allfocusedCountryData())
@@ -387,7 +410,7 @@ class MapPlot {
 
   focusedData() {
     // Get data for just the country that is focused (all data available)
-    return this.currentCountryMapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+    return this.currentCountryMapping[`${this.focusedCountry}`].datapoints.reduce((acc, cur) => {
       acc.push(this.currentData[cur]);
       return acc;
     }, [])
@@ -395,24 +418,24 @@ class MapPlot {
 
   cvHighResFocusedData() {
     // get the focused high res country data for cv. This is not done for modes with population
-    return this.cvHighResCountryMapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+    return this.cvHighResCountryMapping[`${this.focusedCountry}`].datapoints.reduce((acc, cur) => {
       acc.push(this.cv_high_res_data[cur]);
       return acc;
     }, [])
   }
 
   allfocusedCountryData() {
-    const ndr = this.ndr_country_mapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+    const ndr = this.ndr_country_mapping[`${this.focusedCountry}`].datapoints.reduce((acc, cur) => {
       acc.push(this.ndr_data[cur]);
       return acc;
     }, []);
 
-    const poll = this.poll_country_mapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+    const poll = this.poll_country_mapping[`${this.focusedCountry}`].datapoints.reduce((acc, cur) => {
       acc.push(this.poll_data[cur]);
       return acc;
     }, []);
 
-    const cv = this.cv_country_mapping[`${this.focusedCountry}`].reduce((acc, cur) => {
+    const cv = this.cv_country_mapping[`${this.focusedCountry}`].datapoints.reduce((acc, cur) => {
       acc.push(this.cv_data[cur]);
       return acc;
     }, [])
@@ -436,6 +459,7 @@ class MapPlot {
         .style("fill", (d) => this.currentColorScale(d[`${this.currentModeName}_${this.currentScenario}`]))
         .style("display", "inline")
     } else {
+      this.color_countries_by_average();
     }
   }
 
@@ -574,13 +598,6 @@ class MapPlot {
       .data(this.map_data_50)
       .enter().append("path")
       .attr("class", "globe")
-      .attr("fill-opacity", "0.5")
-      .attr("fill", function(d) {
-        if (d.name == country_sel.name) {
-          return "grey"
-        }
-        return "white";
-      })
       .attr("d", this.path)
       .on("click", () => {
         this.resetClick(false)
@@ -660,13 +677,16 @@ class MapPlot {
         this.currentCountryMapping = this.poll_country_mapping;
         break;
     }
-      this.setUNColorScale();
-      this.update_all();
-      this.updateBorders();
-      // update zoom, since the scaleExtent might have changed
-      this.initializeZoom();
-      // change labels depending on dataset
-      updateLabels(`${this.currentDatasetName}`, `${this.currentModeName}`);
+    if (this.currentDatasetName != 'cv') this.svg.selectAll("circle").remove();
+
+    this.setUNColorScale();
+    this.update_all();
+    this.updateBorders();
+    // update zoom, since the scaleExtent might have changed
+    this.initializeZoom();
+    this.render();
+    // change labels depending on dataset
+    updateLabels(`${this.currentDatasetName}`, `${this.currentModeName}`);
 
   }
 
