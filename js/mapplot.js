@@ -12,13 +12,6 @@ class MapPlot {
     this.svgWidth = svg_viewbox.width;
     this.svgHeight = svg_viewbox.height;
 
-    // initialize canvas layer and heatmap
-    this.canvasLayer = d3.select('#heatmap')
-      .attr('width', this.svgWidth).attr('height', this.svgHeight);
-    this.canvas = this.canvasLayer.node();
-    this.context = this.canvas.getContext("2d");
-    this.heat = simpleheat(this.canvas);
-
     const map_promise_110 = d3.json("Data/map_data/110m.json").then(topojson_raw => {
       const country_features = topojson.feature(topojson_raw, topojson_raw.objects.countries).features;
       // remove leading zeros for the id:s
@@ -81,11 +74,7 @@ class MapPlot {
       const center_x = this.svgWidth / 2;
       const center_y = this.svgHeight / 2;
 
-      this.setHeatRadius(MapPlot.SCALE);
-      this.heatMinOpacity = 0.05;
       this.scaleExtent = [0.8, 5];
-      // different max scale for nmr and poll viz than for cv
-      this.ndrPollScaleMax = 1.5;
       this.countryBorderWidth = "0.3";
       this.resetScale = MapPlot.SCALE;
       this.resetRotate = [0, 0];
@@ -114,9 +103,6 @@ class MapPlot {
 
       this.setCurrentColorScale();
       this.setUNColorScale();
-
-      // let r = this.currentColorScale.range();
-      // this.heatGradientDict = {0: r}
 
       this.projection = d3.geoOrthographic()
         .rotate([0, 0])
@@ -177,21 +163,11 @@ class MapPlot {
     if (!this.focused) {
       let data = this.worldData();
 
-      if (this.currentDatasetName === "cv") { // render regular dots for cv data, removing (if existing) heatmap
-        // remove the heatmap (if it exists)
-        this.heat.clear();
-        this.heat.draw(this.heatMinOpacity);
-
+      if (this.currentDatasetName === "cv") { // render regular dots for cv data
         let dataSelection = this.svg.selectAll("circle.datapoints").data(data, (d) => d);
         dataSelection.exit().remove();
         this.initWorldMapData(dataSelection);
-      } else { // render heatmap for ndr and poll, removing (if existing) cv dots
-        this.svg.selectAll("circle.datapoints").remove()
-
-        this.heat.data(this.formatDataIntoHeatList(data))
-
-        // draw into canvas, with minimum opacity threshold
-        this.heat.draw(this.heatMinOpacity);
+      } else { 
       }
     }
 
@@ -231,8 +207,6 @@ class MapPlot {
       .on('zoom', function() {
         let scaleFactor = d3.event.transform.k * (that.svgHeight - 10) / 2;
         that.projection.scale(scaleFactor);
-
-        that.setHeatRadius(scaleFactor)
 
         let v1 = versor.cartesian(that.projection.rotate(that.r0).invert(d3.mouse(this)));
         let q1 = versor.multiply(that.q0, versor.delta(that.v0, v1));
@@ -348,8 +322,6 @@ class MapPlot {
       }
 
       this.svg.selectAll("circle").remove();
-      this.heat.clear();
-      this.heat.draw(this.heatMinOpacity);
       if (!scenario_change) this.setCurrentColorScale();
       this.initFocusedMapData(renderData);
       updateCharts(chartData, this.UNColorScale, this.allfocusedCountryData())
@@ -382,17 +354,6 @@ class MapPlot {
     this.dataExtent = d3.extent(extents);
     // Use the ${this.currentModeName}_c scenario as the domain, but add the dataExtent points as well to include the outliers
     this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`${this.currentModeName}_c`])).concat(this.dataExtent));
-
-    // Adjust the colors for the heatmap gradient
-    let r = this.currentColorScale.range();
-
-    // Use the last element in the quantiles as the heat max instead of the max of the whole data, to avoid
-    // letting outliers have to big influence
-    this.heat.max(this.currentColorScale.quantiles().slice(-1)[0]);
-
-    this.heatGradDict = {};
-    r.forEach((color, i) => this.heatGradDict[14 / 20 + (i) / 20] = color)
-    this.heat.gradient(this.heatGradDict)
   }
 
   // TODO: testa att ha olika parameters zoomat och ine för blur
@@ -475,26 +436,14 @@ class MapPlot {
         .style("fill", (d) => this.currentColorScale(d[`${this.currentModeName}_${this.currentScenario}`]))
         .style("display", "inline")
     } else {
-      this.heat.data(this.formatDataIntoHeatList(focusedData));
-      this.heat.draw(this.heatMinOpacity);
     }
-  }
-
-  formatDataIntoHeatList(data) {
-    return data.map(d => {
-      let list = this.projection([d.lng, d.lat]);
-      list.push(parseFloat(d[`${this.currentModeName}_${this.currentScenario}`]));
-      return list;
-    })
   }
 
   clicked(that = this) {
     return function(d) {
-      // hide points or heat map before transition
+      // hide points
       that.svg.selectAll("circle").remove();
       that.svg.selectAll("text").remove();
-      that.heat.clear();
-      that.heat.draw(this.heatMinOpacity);
 
       if (that.activeClick.node() === this) return that.resetClick(); // zoom out again if click on the same country
       else if (that.activeClick.node() != null) return null; // else if we are already zoomed in, do nothing
@@ -534,9 +483,6 @@ class MapPlot {
         .duration(1000)
         .on("end", () => {
           if (!end_callback_triggered) {
-            that.setHeatRadius(that.clickedScale);
-
-
             that.init_50map(d)
             end_callback_triggered = true
             d3.select(this).classed("selected", false)
@@ -576,8 +522,6 @@ class MapPlot {
     let already_triggered = false;
     this.svg.selectAll("circle").remove();
     this.svg.selectAll("text").remove();
-    this.heat.clear();
-    this.heat.draw(this.heatMinOpacity);
 
     d3.selectAll("path")
       .transition()
@@ -585,7 +529,6 @@ class MapPlot {
       .duration(1000)
       .on("end", () => {
         if (!already_triggered) {
-          this.setHeatRadius(this.resetScale)
           this.initializeZoom();
 
           already_triggered = true;
@@ -676,7 +619,7 @@ class MapPlot {
   }
 
   updateBorders() {
-    // Don't need to fill in borders for cv, since it does not have the heatmaps
+    // Don't need to fill in borders for cv
     if (this.currentDatasetName != 'cv') {
       this.svg_borders.selectAll("path").remove().enter()
         .data(this.map_data)
@@ -701,105 +644,22 @@ class MapPlot {
     );
   }
 
-  setHeatRadius(zoomScaleFactor) {
-    // Tweak the numbers in this function to make the heat map look different.
-
-    // Adjust the scale of the blurred points
-    let heatScale = zoomScaleFactor / 60;
-
-    // set point radius and blur radius (25 and 15 by default)
-
-    // pointradius: 0.45654*heatscale + 8.6927...
-    // blurradius: 0.38173*heatscale + 3.65363...
-
-    // bäst just nu
-    // let pointRadius = heatScale/1;
-    // let blurRadius = heatScale/1.1;
-
-
-    // för indien: 1.15, 1.8
-    // för tjeckien: 2, 2.5
-    // för normal: 1.14, 1.2
-    // för tjeckien:
-    // let pointRadius = heatScale/1.14;
-    // let blurRadius = heatScale/1.2;
-
-    // let pointRadius = 0.45654*heatScale + 5.6927;
-    // let blurRadius = 0.38173*heatScale + 3.65363;
-    let pointRadius = -0.00213 * heatScale * heatScale + 0.9272 * heatScale - 0.2516;
-    let blurRadius = -0.0002467 * heatScale * heatScale + 0.4363 * heatScale + 2.617;
-
-    this.heat.radius(pointRadius, blurRadius);
-    //console.log("point: " + pointRadius, "blur: " + blurRadius);
-
-    // 1.5 1 är ok typ
-    // let pointRadius = 380/60*2.9;
-    // let blurRadius = 380/60*1.8;
-
-    // heatscale = 200, pointradius = 100, blurradius = 80
-    // heatscale = 21, pointradius = 18.28, blurradius = 11.67
-    // heatscale = 6.6, pointradius = 5.7748, blurradius = 5.486
-
-  }
-
   setDataset(dataset) {
     this.currentDatasetName = dataset;
     switch (this.currentDatasetName) {
       case 'cv':
-        this.scaleExtent = [0.8, 5];
         this.currentData = this.cv_data;
         this.currentCountryMapping = this.cv_country_mapping;
         break;
       case 'ndr':
-        this.scaleExtent = [0.8, this.ndrPollScaleMax];
         this.currentData = this.ndr_data;
         this.currentCountryMapping = this.ndr_country_mapping;
         break;
       case 'poll':
-        this.scaleExtent = [0.8, this.ndrPollScaleMax];
         this.currentData = this.poll_data;
         this.currentCountryMapping = this.poll_country_mapping;
         break;
     }
-
-    let currentScale = this.projection.scale();
-    // if we are switching to the ndr or poll vizes and are more zoomed in than we should be, we do a
-    // transition zoom out to the maximum zoom for ndr and poll.
-    if ((this.currentDatasetName != 'cv') && currentScale > this.ndrPollScaleMax * MapPlot.SCALE &&
-      (!this.focused)) {
-      let currentRotate = this.projection.rotate();
-      let end_callback_triggered = false;
-      // Don't allow clicks during transition
-      d3.select(".wrapper").style("pointer-events", "none")
-
-      this.svg.selectAll("circle").remove();
-      d3.selectAll("path")
-        .transition()
-        .attrTween("d", this.zoomRotateFactory(currentRotate, currentScale, currentRotate,
-          this.ndrPollScaleMax * MapPlot.SCALE))
-        .duration(600)
-        .on("end", () => {
-          if (!end_callback_triggered) {
-            this.setUNColorScale();
-            this.update_all();
-
-            this.updateBorders();
-
-            // set the proper scale for the d3 zoom
-            d3.zoomTransform(this.svg.node()).k = MapPlot.SCALE * this.ndrPollScaleMax * 2 / (this.svgHeight - 10);
-            // change labels depending on dataset
-            updateLabels(`${this.currentDatasetName}`, `${this.currentModeName}`);
-
-            end_callback_triggered = true;
-            this.setHeatRadius(this.ndrPollScaleMax * MapPlot.SCALE)
-            this.initializeZoom();
-            this.render();
-
-            // Allow clicks after transition is done
-            d3.select(".wrapper").style("pointer-events", "all")
-          }
-        });
-    } else {
       this.setUNColorScale();
       this.update_all();
       this.updateBorders();
@@ -807,7 +667,6 @@ class MapPlot {
       this.initializeZoom();
       // change labels depending on dataset
       updateLabels(`${this.currentDatasetName}`, `${this.currentModeName}`);
-    }
 
   }
 
