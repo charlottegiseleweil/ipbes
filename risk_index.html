@@ -68,6 +68,18 @@
 			</h4>
 
 			<div class="section_marker"> </div>
+			<h3>Scenarios</h3>
+
+			<input type="radio" class="no_show" name="radio2" id="b_radio-2" value="3" checked="checked" />
+			<label for="b_radio-2" class="left-menu-header" >Regional Rivalry</label>
+
+			<input type="radio" class="no_show" name="radio2" id="b_radio-1" value="1">
+			<label for="b_radio-1" class="left-menu-header" >Green Growth</label>
+
+			<input type="radio" class="no_show" name="radio2" id="b_radio-3" value="5" />
+			<label for="b_radio-3" class="left-menu-header" >Fossil Fuels</label>
+
+			<div class="section_marker"> </div>
 			<h3>Mode</h3>
 
 			<input id="deficit-box" type="radio" class="no_show" onclick="switchMode('UN')" autocomplete="off" name="mode" checked="checked">
@@ -81,17 +93,10 @@
 			<input id="nat-cap-box" type="radio" class="no_show" onclick="switchMode('NC')" name="mode"autocomplete="off">
 			<label for="nat-cap-box" class="left-menu-header">Natures contribution</label>
 			
-			<div class="section_marker"> </div>
-			<h3>Scenarios</h3>
+			<br>
 
-			<input type="radio" class="no_show" name="radio2" id="b_radio-2" value="3" checked="checked" />
-			<label for="b_radio-2" class="left-menu-header" >Regional Rivalry</label>
-
-			<input type="radio" class="no_show" name="radio2" id="b_radio-1" value="1">
-			<label for="b_radio-1" class="left-menu-header" >Green Growth</label>
-
-			<input type="radio" class="no_show" name="radio2" id="b_radio-3" value="5" />
-			<label for="b_radio-3" class="left-menu-header" >Fossil Fuels</label>
+			<div id="info_about_measurments">A deficit in pollination can be measured as the amount of crop losses due to insufficiently pollinated crops for pollination
+			</div>
 
 		</div>
 		<!--End of left menu-->
@@ -99,24 +104,37 @@
 
 	<div id="main_content_container">
 		<div id="risk_map">
-			<canvas id="heatmap"></canvas>
-			<svg id="globe-plot" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
-			<svg id="globe-plot_borders" viewBox="0 0 1200 800" width="100%" height="100%"></svg>
-			<div id="resetButton">
-				<p id="resetText" onclick="backToGlobe()">Back to globe &#x2716;</p>
-			</div>
-			<div id="countryLabel"></div>
-<!--
+			<svg id="globe-plot" viewBox="0 0 800 800" width="100%" height="100%"></svg>
+			<div id="countryLabel" onclick="backToGlobe()"></div>
+
 			<div id="legend">
-				<p class="legendText" id="legendText-low">Low <br>Coastal Hazard</p>
+				
+				<p class="legendText" id="legendText-high"></p>
 				<svg id="legendBar"></svg>
-				<p class="legendText" id="legendText-high">High <br>Coastal Hazard</p>
-			</div> -->
+				<p class="legendText" id="legendText-low"></p>
+				
+			</div> 
+
 			<div id="distribution-chart">
-					<h5 id="distri-chart-head">How severely are <br> people Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h5>
+					<h2 id="distri-chart-head">How severely are people <br>Impacted?<br> (<p id ="distri-chart-choosen-scenario"></p>) </h2>
 					<svg id="distribution"></svg>
 					<h3 id="distri-x-axis">Number of people</h3>
 					<h3 id="distri-y-axis">Coastal Hazard</h3>
+			</div>
+			<!--Information containter-->
+			<i class="info-button fas fa-info-circle" onclick="showInfo('info-overlay')"></i>
+			<div id="info-overlay">
+			  <p class="info_exit" onClick="hideInfo('info-overlay')">&#x2716;</p>
+					<h2 class="info_head">How to read the map?</h2>
+
+					<p class="info_text">This map highlight where people will be most at risk in the future.
+						By using the control panel different services and scenarios can be explored.</p><br> 
+
+					<p class="info_text">The <i>Deficit-mode</i> displays where people are most in need of nature’s contribution. The <i>People Impacted-mode</i> displays how big the impacted population are and the
+						<i>Nature’s contribution-mode</i> shows how much nature helps to reduce risks in different parts of the world.</p><br> 
+
+					<p class="info_text">For more detailed data and the possibility to compare services and scenarios, select a country by clicking on it.</p><br> 
+
 			</div>
 
 		</div>
@@ -147,7 +165,7 @@
 	<script src="js/mapplot.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/navigation.js"></script>
-	<!--<script src="js/show_info.js"></script>-->
+	
 </body>
 
 </html>

@@ -150,6 +150,10 @@ class MapPlot {
 
       d3.selectAll("#landingpage").attr("class", "hidden");
       this.setDataset(dataSet);
+      this.allData = {"ndr": this.ndr_data,
+      "poll": this.poll_data,
+      "cv": this.cv_data}
+      updateGlobalCharts(this.UNColorScale, this.allData);
     });
 
   }
@@ -346,6 +350,7 @@ class MapPlot {
       if (!scenario_change) this.setCurrentColorScale();
       this.initFocusedMapData(renderData);
       updateCharts(chartData, this.UNColorScale, this.allfocusedCountryData())
+      
 
     } else {
       if (!scenario_change) this.setCurrentColorScale();
@@ -377,7 +382,6 @@ class MapPlot {
     this.currentColorScale.domain(this.currentData.map(x => parseFloat(x[`${this.currentModeName}_c`])).concat(this.dataExtent));
   }
 
-  // TODO: testa att ha olika parameters zoomat och ine för blur
   /*
   This function sets and saves the UNcolorScale for a particular dataset, so that
   this color scale is always available for the distribution chart in the focused
@@ -428,6 +432,8 @@ class MapPlot {
       return acc;
     }, []);
 
+
+
     const poll = this.poll_country_mapping[`${this.focusedCountry}`].datapoints.reduce((acc, cur) => {
       acc.push(this.poll_data[cur]);
       return acc;
@@ -466,6 +472,8 @@ class MapPlot {
       // hide points
       that.svg.selectAll("circle").remove();
       that.svg.selectAll("text").remove();
+      removeCharts();
+      
 
       if (that.activeClick.node() === this) return that.resetClick(); // zoom out again if click on the same country
       else if (that.activeClick.node() != null) return null; // else if we are already zoomed in, do nothing
@@ -517,7 +525,6 @@ class MapPlot {
           }
         });
 
-
       // Remove the world map data
       // dataSelection.exit().remove()
 
@@ -525,7 +532,6 @@ class MapPlot {
       updateCountryName(d.name);
 
       // display reset button and country name
-      document.getElementById('resetText').style.visibility = 'visible';
       document.getElementById("countryLabel").style.visibility = 'visible';
     }
   }
@@ -545,6 +551,11 @@ class MapPlot {
     this.svg.selectAll("circle").remove();
     this.svg.selectAll("text").remove();
 
+    if(this.currentDatasetName != "cv") {
+      this.render()
+    }
+   
+
     d3.selectAll("path")
       .transition()
       .attrTween("d", this.zoomRotateFactory(this.clickedRotate, this.clickedScale, this.resetRotate, this.resetScale))
@@ -552,20 +563,18 @@ class MapPlot {
       .on("end", () => {
         if (!already_triggered) {
           this.initializeZoom();
-
+          this.render();
           already_triggered = true;
-
-          this.render()
           // Allow clicks after transition is done
           d3.select(".wrapper").style("pointer-events", "all")
         }
       })
 
     //show global chart
-    //showGlobalChart(this.currentData);
+    updateGlobalCharts(this.UNColorScale, this.allData);
+    hideCharts();
 
     // Remove reset button and country label
-    document.getElementById('resetText').style.visibility = 'hidden';
     document.getElementById("countryLabel").style.visibility = 'hidden';
 
   }
@@ -596,6 +605,7 @@ class MapPlot {
       .data(this.map_data_50)
       .enter().append("path")
       .attr("class", "globe")
+      .attr("fill-opacity", function(d) {if(d.name == country_sel.name) {return "1"} return "0.7"})
       .attr("d", this.path)
       .on("click", () => {
         this.resetClick(false)
@@ -662,6 +672,7 @@ class MapPlot {
     this.render();
     // change labels depending on dataset
     updateLabels(`${this.currentDatasetName}`, `${this.currentModeName}`);
+    document.getElementById('info_about_measurments').innerText = info_measurements[this.currentModeName][this.currentDatasetName];
 
   }
 

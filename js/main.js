@@ -10,9 +10,26 @@ let opts = {
   className: 'spinner', // The CSS class to assign to the spinner
 };
 
+let info_measurements = {
+  UN: {
+    ndr: "A deficit in water quality regulation can be measured by nitrogen export, the amount not retained by vegetation that therefore enters waterways and drinking water supplies as pollution.",
+    poll: "A deficit in pollination can be measured as the amount of crop losses due to insufficiently pollinated crops for pollination.",
+    cv: "A deficit in coastal protection can be measured as the exposure to coastal hazards, the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat"
+  },
+  pop: {
+    ndr: "We use rural populations (within 100 km watersheds) as the population exposed because they are presumably less likely to have water treatment options. ",
+    poll: "We consider “local” beneficiaries as populations whose dietary requirements exceed pollinator-independent production within 100 km.",
+    cv: "People living either nearest to the shoreline or between 0 and 10 m above sea level are considered to be the population exposed, since these are the people most susceptible to flooding, especially with sea level rise. "
+  },
+  NC: {
+    ndr: "Nature’s contribution to meeting potential human need is the proportion of total nitrogen pollutant load retained by ecosystems, the pollution avoided.",
+    poll: "Nature’s contribution to pollination is represented by the proportion of total potential pollination- dependent crop output that is produced. ",
+    cv: "Nature’s contribution to meeting potential needs for coastal protection  is the proportion of that coastal storm risk that is attenuated by ecosystems"
+  }
+};
+
 whenDocumentLoaded(() => {
   // Initialize dashboard
-  addMenu()
   is2050 = true;
   colorSchema = {
     UN: [d3.hcl(100, 90, 100), d3.hcl(15, 90, 60)],
@@ -25,6 +42,7 @@ whenDocumentLoaded(() => {
     scenario: new SuperScenarioChart(),
     population: new SuperPopulationChart()
   };
+  
 
   // When the dataset radio buttons are changed: change the dataset
   d3.selectAll(("input[name='radio1']")).on("change", function() {
@@ -40,7 +58,6 @@ whenDocumentLoaded(() => {
 
 
 function switchMode(mode) {
-  console.log("d");
   plot_object.setMode(mode);
   //const elements = document.getElementsByClassName('mode-button');
   //for (let i = 0; i < elements.length; i++) {
@@ -50,35 +67,22 @@ function switchMode(mode) {
 
   showledgend(colorSchema[mode]);
   updateLabels(plot_object.currentDatasetName, mode);
+  document.getElementById('info_about_measurments').innerText = info_measurements[mode][plot_object.currentDatasetName];
 }
 
 
 // Year toggle
 function switchYear(toggle) {
   is2050 = toggle;
-  /*
-  let scenarioRow = document.getElementById('scenario');
-  if (is2050) {
-    scenarioRow.style.opacity = '1';
-    scenarioRow.style.transition = 'opacity 0.5s linear';
-    scenarioRow.style.visibility = 'visible';
-    document.querySelector("input[name='radio2']:checked").dispatchEvent(new Event('change'));
-    document.getElementById('year-button-2015').classList.remove('selected');
-    document.getElementById('year-button-2050').classList.add('selected');
-  } else {
-    scenarioRow.style.visibility = 'collapse';
-    scenarioRow.style.opacity = '0';
-    scenarioRow.style.transition = 'opacity 0.5s linear';
-    scenarioRow.style.transition = 'visibility 0.15s linear';
-    plot_object.setScenario("c");
-    document.getElementById('year-button-2015').classList.add('selected');
-    document.getElementById('year-button-2050').classList.remove('selected');
-  }*/
 };
 
 function showledgend(color) {
-  const w = 150,
-    h = 25;
+
+  let hej = d3.interpolateHcl(d3.hcl(100, 90, 100), d3.hcl(15, 90, 60));
+
+  let test = d3.quantize(hej,7);
+  const h = 150,
+    w = 25;
   d3.selectAll(".legend")
     .remove()
     .exit()
@@ -93,10 +97,10 @@ function showledgend(color) {
   let legend = key.append("defs")
     .append("svg:linearGradient")
     .attr("id", "gradient")
-    .attr("x1", "0%")
+    .attr("x1", "100%")
     .attr("y1", "100%")
     .attr("x2", "100%")
-    .attr("y2", "100%")
+    .attr("y2", "0%")
     .attr("spreadMethod", "pad");
 
   legend.append("stop")
@@ -113,35 +117,61 @@ function showledgend(color) {
     .attr("class", "legend")
     .attr("width", w)
     .attr("height", h)
+    .attr("x", 3)
     .style("fill", "url(#gradient)");
 }
 
 function updateLabels(dataset, mode) {
+  const labels_low = {
+    UN: {
+      ndr: "Low Nitrogen Export",
+      poll: "Small Lost crop production",
+      cv: "Low Coastal Hazard"
+    },
+    pop: {
+      ndr: "Small Rural Population",
+      poll: "Small Pollination-dependant Population",
+      cv: "Small Coastal Population"
+    },
+    NC: {
+      ndr: "Nitrogen Pollution not Avoided",
+      poll: "Pollination Need not Met",
+      cv: "Low Coastal Risk Reduction"
+    }
+  };
+  const labels_high = {
+    UN: {
+      ndr: "High Nitrogen Export",
+      poll: "High Lost crop production",
+      cv: "High Coastal Hazard"
+    },
+    pop: {
+      ndr: "Big Rural Population",
+      poll: "Big Pollination-dependant Population",
+      cv: "Big Coastal Population"
+    },
+    NC: {
+      ndr: "Nitrogen Pollution Avoided",
+      poll: "Pollination Need Met",
+      cv: "High Coastal Risk Reduction"
+    }
+  };
   const labels = {
     UN: {
       ndr: "Nitrogen Export",
       poll: "Lost crop production",
       cv: "Coastal Hazard"
     },
-    pop: {
-      ndr: "Rural Population",
-      poll: "Pollination-dependant Population",
-      cv: "Coastal Population"
-    },
-    NC: {
-      ndr: "Nitrogen Pollution Avoided",
-      poll: "Pollination Need Met",
-      cv: "Coastal Risk Reduction"
-    }
   };
-  document.getElementById('legendText-low').innerHTML = "Low <br>" + labels[mode][dataset];
-  document.getElementById('legendText-high').innerHTML = "High <br>" + labels[mode][dataset];
+
+  document.getElementById('legendText-low').innerHTML =  labels_low[mode][dataset];
+  document.getElementById('legendText-high').innerHTML =  labels_high[mode][dataset];
   document.getElementById('distri-y-axis').innerHTML = labels['UN'][dataset];
 
 }
 
 function updateCountryName(name) {
-  document.getElementById("countryLabel").innerHTML = name;
+  document.getElementById("countryLabel").innerHTML = name + " &#x2716";
 }
 
 function updateCharts(focusedData, colorScale, allfocusedCountryData) {
@@ -156,19 +186,18 @@ function updateCharts(focusedData, colorScale, allfocusedCountryData) {
   document.getElementById('compare-scenarios').style.visibility = 'visible';
 }
 
-function showGlobalChart(focusedData) {
-  hideCharts()
+function updateGlobalCharts(UNColorScale, allData){
+  charts.scenario.update(allData);
+  charts.population.update(allData);
 }
 
 function hideCharts() {
   document.getElementById('distribution-chart').style.visibility = 'hidden';
-  document.getElementById('compare-scenarios').style.visibility = 'hidden';
 }
 
 
 function backToGlobe() {
   plot_object.resetClick();
-  document.getElementById('resetText').style.visibility = 'hidden';
   document.getElementById("countryLabel").style.visibility = 'hidden';
 }
 
@@ -190,4 +219,8 @@ function hideInfo() {
 // For showing the INFO popup window
 function showNow() {
   document.getElementById('greyOut').style.visibility = "visible";
+}
+function removeCharts() {
+  charts.scenario.remove();
+  charts.population.remove();
 }

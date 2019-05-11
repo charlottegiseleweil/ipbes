@@ -1,5 +1,5 @@
 whenDocumentLoaded(() => {
-    addMenu();
+   
 });
 
 function whenDocumentLoaded(action) {

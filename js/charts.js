@@ -294,7 +294,7 @@ class SuperScenarioChart {
   constructor() {
     // Initialize the barchart
     const svgWidth = 255;
-    const svgHeight = 180;
+    const svgHeight = 250;
     this.margin = {
       top: 20,
       right: 2,
@@ -596,7 +596,7 @@ class SuperPopulationChart {
   constructor() {
     // Initialize the barchart
     const svgWidth = 255;
-    const svgHeight = 180;
+    const svgHeight = 200;
     this.margin = {
       top: 20,
       right: 2,

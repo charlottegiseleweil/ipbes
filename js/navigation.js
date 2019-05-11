@@ -66,9 +66,25 @@ function addMenu() {
    
   }
   function showInfo(info) {
-    document.getElementById(info).style.width = "100%";
+    document.getElementById(info).style.top = document.getElementById(info).parentElement.offsetTop + "px";
+    document.getElementById(info).style.right = document.getElementById(info).parentElement.offsetRight + "px";
+    document.getElementById(info).style.width = document.getElementById(info).parentElement.offsetWidth + "px";
+
   }
   
   function hideInfo(info) {
     document.getElementById(info).style.width = "0%";
+  }
+  whenDocumentLoaded(() => {
+    // Initialize dashboard
+    addMenu();
+});
+
+  function whenDocumentLoaded(action) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", action);
+    } else {
+      // `DOMContentLoaded` already fired
+      action();
+    }
   }

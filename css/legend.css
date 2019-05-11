@@ -1,12 +1,13 @@
 #legend {
   color: white;
   padding: 0.3rem 0.3rem 0.5rem 0.3rem;
-  margin: 1rem;
+  margin: 0 1vh;
   font-size: 1rem;
   z-index: 1;
   position: absolute;
-  bottom: 1.5vh;
+  bottom: 0;
   left: 1.5vh;
+  width: 3rem;
 }
 
 #legendBar {
@@ -16,8 +17,6 @@
 
 .legendText {
   display: inline-block;
-  font-size: 0.5rem;
-  vertical-align: middle;
-  text-align: center;
-  width: 2.5rem;
+  font-size: 0.6rem;
+  width: 4.5rem;
 }
