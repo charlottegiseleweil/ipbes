@@ -1,7 +1,3 @@
-@font-face {
-  font-family: ourFont;
-  src: url("../fonts/OpenSans-Regular.ttf");
-}
 
 html, body, #mapid {
   height: 100%;

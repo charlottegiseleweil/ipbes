@@ -31,6 +31,7 @@
 .menu_dropdown {
     float: left;
     overflow: hidden;
+    cursor: pointer;
 }
   
 .menu_dropdown .menu_dropbtn {

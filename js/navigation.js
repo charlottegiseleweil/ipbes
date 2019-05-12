@@ -32,14 +32,13 @@ function addMenu() {
         poll.href = 'index.html';
         poll.innerHTML = "Pollination <span class='glyphicon glyphicon-grain'> </span>";
     let wq = document.createElement('a');
-        wq.href = 'index.html';
+        wq.href = 'wq.html';
         wq.innerHTML = "Water quality <i class='fa fa-tint' viewBox = '0 0 15 15'>";
     let coast = document.createElement('a');
         coast.href = 'index.html';
         coast.innerHTML = "Coastal Risk <i class='fas fa-water'></i>";
 
     let services = document.createElement('a');
-        services.href = 'index.html';
         services.innerHTML = "Ecosystem Services ";
     services.appendChild(dropSymbol);
     dropdown.appendChild(services);
