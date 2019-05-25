@@ -7,7 +7,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Water Quality</title>
+	<title>Coastal Risk</title>
 	<meta name="author" content="Anna Häägg">
 	
 	<link rel="stylesheet" href="css/bootstrap.css">
@@ -22,7 +22,6 @@
 	
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-	<script src="../viz/libraries/noframework.waypoints.min.js"></script>
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
 	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -79,7 +78,8 @@
 			
 			<br>
 
-			<div id="info_about_measurments">A deficit in water quality regulation can be measured by nitrogen export, the amount not retained by vegetation that therefore enters waterways and drinking water supplies as pollution.
+			<div id="info_about_measurments">A deficit in coastal protection can be measured as the exposure to coastal hazards, 
+					the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat.
 			</div>
 
 		</div>
@@ -101,12 +101,12 @@
 				<p class="info_exit" onClick="hideInfo('info-overlay')">&#x2716;</p>
 						<h2 class="info_head">How to read these maps?</h2>
 						<p class="info_text"></p><br> 
-
+						
 				</div>
 			</div>
 			<div id="service_info">
-				<h1>Water Quality</h1>
-				<p id="service_info_text">Fertilizers like nitrogen are a major source pollution to freshwater systems and drinking water. However, some of it may be retained by healthy ecosystems, and this nitrogen retention regulating drinking water quality is one of nature’s contributions to people.</p>
+				<h1>Coastal Risk</h1>
+				<p id="service_info_text">Coastal habitats such as coral reefs, mangroves, salt marsh, or sea grass, attenuate waves and protect the shorelines from the impacts of storms, such as floods and erosion.</p>
 			</div>
 		</div>
 		
@@ -115,9 +115,6 @@
 	<div id="second">
 		<div id="modelling_method">
 			<h1>Modelling Method</h1>
-
-			
-
 			<div class="modellingSection" >
 					<div class="modelling_left" >
 						<h2>Nature's Contributions to People (NCP) Framework</h2>
@@ -134,25 +131,27 @@
 			<br>
 			<div class="modellingSection" >
 					<div class="modelling_left" >
-							<img src="viz/images/methods/framework_wq.png" alt="Water Framework" style="width:96%; border: 8px solid #dde4f2">
+							<img src="viz/images/methods/framework_coastal.png" alt="Coastal Framework" style="width:96%; border: 8px solid #dde4f2">
 					</div>
 					<div class="modelling_right" >
-						<p>In the case of water quality regulation, the human pressure that creates a potential need for it in a given region or watershed is the total amount of pollutant (i.e. nitrogen load) requiring retention by vegetation in that area. We use rural populations
-								(within 100 km watersheds) as the population exposed because they are presumably less likely to have water treatment options. The need met by nature is nitrogen pollution retention; and we can characterize the biophysical portion of nature’s contribution
-								to potential need as the proportion of total nitrogen pollutant load retained by ecosystems.</p>
+						<p>The potential human need for coastal protection is the physical exposure to coastal storms (based on wind, waves, sea level rise, geomorphology, etc) in the absence of coastal habitat like coral reefs or mangroves. People living either nearest to
+								the shoreline or between 0 and 10 m above sea level are considered to be the population exposed, since these are the people most susceptible to flooding, especially with sea level rise. The need met by nature is the attenuation of that storm surge,
+								and nature’s (biophysical) contribution is the proportion of that coastal storm risk reduced by ecosystems.</p>
 					</div>
 			</div>
 
 			<br>
 			<div class="modellingSection" >
 					<div class="modelling_left" >
-						<h2>Modeling Water Quality Regulation</h2>
-						<p>We first model nitrogen load, export, and retention (the difference between load and export) via the <a href="http://data.naturalcapitalproject.org/invest-releases/3.5.0/userguide/ndr.html">InVEST Nutrient Delivery Ratio model</a>. This model maps
-							nutrient sources from watersheds and their transport to the stream. The model does not represent the details of the nutrient cycle but rather represents the long-term, steady-state flow of nutrients through empirical relationships. Sources of nutrient
-							across the landscape, also called nutrient loads, are determined based on the LULC map and associated loading rates, and delivery factors are computed for each pixel based on the properties of pixels belonging to the same flow path (in particular
-							their slope and retention efficiency of the land use).</p>
+						<h2> Modeling Coastal Protection</h2>
+
+						<p>To estimate Nature’s Contribution to People (NCP) in terms of coastal protection, specifically attenuation of storm surge and related risks, <strong>exposure to coastal risk</strong> is assessed through a ranked index based on a variety of different
+							physical factors determining the exposure of a piece of coastline to storm surge, and the contribution of coastal habitats (such as coral reefs, mangroves, sea grass and saltmarsh) to mitigating that risk is considered in terms of the difference
+							in coastal risk with and without that habitat present. Our model for the contribution of coastal habitat to storm surge mitigation is based on the variant of the <a href="http://data.naturalcapitalproject.org/nightly-build/invest-users-guide/html/coastal_vulnerability.html">InVEST Coastal Vulnerability model</a>      (Arkema, 2013), which produces a qualitative index of coastal exposure to erosion and inundation in the range of 1 (lowest risk) to 5 (highest risk). Coastal exposure is estimated as the geometric mean of individual risk indices calculated from
+							six bio-geophysical variables: natural habitats, sea level change, wind exposure, wave exposure, relief, and surge potential depth contour. </p>
+					
+						<p>We use these outputs along with populations along coastlines and living less than 10 meters above sea level to determine humanity’s needs and nature’s contributions, as the dual components of NCP </p>
 						
-							<p>We then use these outputs along with data on rural populations (which we assume to have lower access to water treatment) to determine humanity’s needs and nature’s contributions, as the dual components of NCP.</p>
 					</div>
 					<div class="modelling_right" >
 						<h2>Data</h2>
@@ -193,7 +192,7 @@
 	</script>
 	<script src="lib/topojson.min.js"></script>
     <script src="js/navigation.js"></script>
-	<script src="js/main_wq.js"></script>
+	<script src="js/main_coastal.js"></script>
 	<script src="js/highRezMaps.js"></script>
 	
 </body>

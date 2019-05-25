@@ -9,6 +9,9 @@ html, body, figure {
     padding: 0;
     margin: 0;
     border: 0;
+    background-image:linear-gradient(to bottom right,
+     rgb(0, 0, 0) 0%,
+     rgb(20, 35, 56) 80%);
 }
 
 body {
@@ -18,9 +21,7 @@ body {
     flex-flow: row nowrap;
     justify-content: center;
     align-content: center;
-    background-image:linear-gradient(to bottom right,
-     rgb(0, 0, 0) 0%,
-     rgb(20, 35, 56) 80%);
+    
     color: white;
     font-family: 'Helvetica', 'Arial', sans-serif; 
     font-weight: 300;
@@ -46,6 +47,10 @@ h3{
     color:   var(--inprinted_c);
     padding: 14px 16px 0 8px;
     margin: 0;
+}
+a{
+    text-decoration: none;
+    color: var(--light_blue)
 }
 
 .content-wrapper{
@@ -124,4 +129,6 @@ h3{
     left: 1vh; 
     margin:0;
 }
-
+#selectedTab{
+    color: var(--light_blue);
+}

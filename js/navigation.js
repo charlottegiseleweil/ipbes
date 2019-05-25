@@ -1,12 +1,12 @@
-function addMenu() {
+function addMenu(current = 1) {
     let menu = document.getElementById('main_menu');
 
 
     let first = document.createElement('div')
         first.classList.add('menu_element');
     let today = document.createElement('a');
-       today.href = 'index.html';
-       today.innerHTML = "Where are people most at risk today?";
+        today.href = 'index.html';
+        today.innerHTML = "Where are people most at risk today?";
     first.appendChild(today);
 
 
@@ -29,13 +29,13 @@ function addMenu() {
         dropSymbol.classList.add('fa');
         dropSymbol.classList.add('fa-caret-down');
     let poll = document.createElement('a');
-        poll.href = 'index.html';
+        poll.href = 'poll.html';
         poll.innerHTML = "Pollination <span class='glyphicon glyphicon-grain'> </span>";
     let wq = document.createElement('a');
         wq.href = 'wq.html';
         wq.innerHTML = "Water quality <i class='fa fa-tint' viewBox = '0 0 15 15'>";
     let coast = document.createElement('a');
-        coast.href = 'index.html';
+        coast.href = 'coastal.html';
         coast.innerHTML = "Coastal Risk <i class='fas fa-water'></i>";
 
     let services = document.createElement('a');
@@ -56,7 +56,22 @@ function addMenu() {
         about.innerHTML = "About";
     forth.appendChild(about);
 
-
+    switch(current) {
+        case 1:
+            today.setAttribute("id", "selectedTab");
+            break;
+        case 2:
+            future.setAttribute("id", "selectedTab");
+            break;
+        case 3:
+            services.setAttribute("id", "selectedTab");
+            break;
+        case 4:
+            about.setAttribute("id", "selectedTab");
+            break;
+        default:
+          // code block
+      }
 
     menu.appendChild(first);
     menu.appendChild(second);
@@ -65,7 +80,7 @@ function addMenu() {
    
   }
   function showInfo(info) {
-    document.getElementById(info).style.top = document.getElementById(info).parentElement.offsetTop + "px";
+    document.getElementById(info).style.top = document.getElementById(info).parentElement.offsetTop - 1 + "px";
     document.getElementById(info).style.right = document.getElementById(info).parentElement.offsetRight + "px";
     document.getElementById(info).style.width = document.getElementById(info).parentElement.offsetWidth + "px";
 
@@ -74,9 +89,10 @@ function addMenu() {
   function hideInfo(info) {
     document.getElementById(info).style.width = "0%";
   }
+
   whenDocumentLoaded(() => {
     // Initialize dashboard
-    addMenu();
+    //addMenu();
 });
 
   function whenDocumentLoaded(action) {

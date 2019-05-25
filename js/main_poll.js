@@ -1,8 +1,8 @@
 let info_measurements = {
-    UN: "A deficit in water quality regulation can be measured by nitrogen export, the amount not retained by vegetation that therefore enters waterways and drinking water supplies as pollution.",
-    pop: "We use rural populations (within 100 km watersheds) as the population exposed because they are presumably less likely to have water treatment options. ",
-    NC: "Nature’s contribution to meeting potential human need is the proportion of total nitrogen pollutant load retained by ecosystems, the pollution avoided.",
-    PN: "The human pressure that creates a potential need for it in a given region or watershed is the total amount of pollutant (i.e. nitrogen load) requiring retention by vegetation in that area.",
+    UN: "A deficit in pollination can be measured as the amount of crop losses due to insufficiently pollinated crops for pollination.",
+    pop: "We consider “local” beneficiaries as populations whose dietary requirements exceed pollinator-independent production within 100 km.",
+    NC: "Nature’s contribution to pollination is represented by the proportion of total potential pollination- dependent crop output that is produced.",
+    PN: "The potential human need for benefits of nature is manifested by the total agricultural crop output that is dependent to some degree on insect pollination.",
 };
 
 let tileLayers = {

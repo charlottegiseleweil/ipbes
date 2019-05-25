@@ -5,9 +5,9 @@
   font-size: 1rem;
   z-index: 1;
   position: absolute;
-  bottom: 0;
+  bottom: 0.5rem;
   left: 1.5vh;
-  width: 3rem;
+  width: 150px;
 }
 
 #legendBar {
@@ -15,8 +15,47 @@
   vertical-align: middle;
 }
 
-.legendText {
+#legendHeader {
   display: inline-block;
   font-size: 0.6rem;
-  width: 4.5rem;
+  width: inherit;
+  text-align: center;
+}
+
+.legendMinMax{
+  display: inline-block;
+  font-size: 0.6rem;
+  margin: 3px 0 0.5rem 0;
+}
+
+#legendValue_max{
+  float: right;
+}
+#legendValue_min{
+  float: left;
+  padding-left: 3px;
+}
+
+.leaflet-left{
+  margin-bottom: 35px;
+}
+
+.leaflet-bottom .leaflet-control {
+  background-color:rgba(5, 13, 24, 0.692);
+  padding: 0.3rem;
+  padding-right: 0;
+  padding-left: 0.6rem;
+}
+
+.legendList {
+  font-size:30px;
+  line-height: 50%;
+}
+
+li span {
+  font-size:12px;
+  position: relative;
+  left: -20px;
+  bottom: 4px;
+  color: white;
 }

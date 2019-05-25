@@ -23,7 +23,6 @@
 	<link rel="stylesheet" href="css/left-menu.css">
 	<link rel="stylesheet" href="css/info.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-	<script src="../viz/libraries/noframework.waypoints.min.js"></script>
 
 </head>
 
@@ -71,13 +70,13 @@
 			<h3>Scenarios</h3>
 
 			<input type="radio" class="no_show" name="radio2" id="b_radio-2" value="3" checked="checked" />
-			<label for="b_radio-2" class="left-menu-header" >Regional Rivalry</label>
+			<label for="b_radio-2" class="left-menu-header" style="color: rgb(184,152,13)">Regional Rivalry</label>
 
 			<input type="radio" class="no_show" name="radio2" id="b_radio-1" value="1">
-			<label for="b_radio-1" class="left-menu-header" >Green Growth</label>
+			<label for="b_radio-1" class="left-menu-header" style="color: rgb(42,129,43)" >Green Growth</label>
 
 			<input type="radio" class="no_show" name="radio2" id="b_radio-3" value="5" />
-			<label for="b_radio-3" class="left-menu-header" >Fossil Fuels</label>
+			<label for="b_radio-3" class="left-menu-header" style="color: rgb(112,12,151)">Fossil Fuels</label>
 
 			<div class="section_marker"> </div>
 			<h3>What to visualize?</h3>
@@ -108,10 +107,10 @@
 			<div id="countryLabel" onclick="backToGlobe()"></div>
 
 			<div id="legend">
-				
-				<p class="legendText" id="legendText-high"></p>
+				<p id="legendHeader"></p>
 				<svg id="legendBar"></svg>
-				<p class="legendText" id="legendText-low"></p>
+				<span class="legendMinMax" id="legendValue_min">  0</span>
+				<span class="legendMinMax" id="legendValue_max">Max</span>
 				
 			</div> 
 

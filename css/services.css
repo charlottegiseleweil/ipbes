@@ -1,5 +1,10 @@
+body{
+    min-height: 160%;
+}
+#main_content_container{
+    flex-direction: column;
+}
 #maps{
-    
     flex-grow: 2;
     margin: 0.6rem;
     flex-direction: column;
@@ -7,12 +12,12 @@
     justify-content: space-between;
 }
 
-
 .map{
     background: rgba(61, 61, 61, 0.212);
     width: 100%;
     height: 49.3%;
 }
+
 #service_info{
     max-width: 19rem;
     padding: 0;
@@ -20,7 +25,54 @@
     flex-grow: 1;
     background: rgba(61, 61, 61, 0.212);
 }
+
 #service_info_text{
     padding: 1rem;
     color: rgb(190, 190, 190);
+}
+
+#first{
+    display: flex;
+    min-height: 100%;
+}
+#second{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: rgb(20, 35, 56);
+}
+
+#mapTitle2050{
+    z-index: 1000;
+    position: absolute;
+    left: 4rem;
+    top: 0rem;
+    color: black;
+}
+#mapTitle2015{
+    z-index: 1000;
+    position: absolute;
+    left: 4rem;
+    top: 21rem;
+    color: black;
+}
+
+
+.info-button{
+    top: 2.5vh;
+    right: 45vh;
+    z-index: 1000;
+}
+
+#info-overlay {
+    position: absolute;
+    bottom: 0.6rem;
+    height: inherit;
+    right: 19.6rem;
+    background-color: rgba(29, 29, 29, 0.925);
+    overflow: hidden;
+    width: 0;
+    transition: .5s ease;
+    z-index: 1000;
 }

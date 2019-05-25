@@ -4,7 +4,7 @@
   background-color:rgb(5, 13, 24);
   top: 0;
   left: 0;
-  bottom: 0;
+  bottom: 0.6rem;
   color: white;
 }
 
@@ -56,11 +56,11 @@ input:checked  + .left-menu-header  {
 /*hovering effects*/
 .left-menu-header:hover + .left-menu-text {
   transition-delay: 0.7s;
-  height: 15vh;
+  height: 16vh;
 }
 .left-menu-text:hover{
   transition-delay: 0.7s;
-  height: 15vh;
+  height: 16vh;
 }
 
 

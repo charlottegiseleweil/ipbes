@@ -30,6 +30,7 @@ let info_measurements = {
 
 whenDocumentLoaded(() => {
   // Initialize dashboard
+  addMenu(2);
   is2050 = true;
   colorSchema = {
     UN: [d3.hcl(100, 90, 100), d3.hcl(15, 90, 60)],
@@ -59,11 +60,6 @@ whenDocumentLoaded(() => {
 
 function switchMode(mode) {
   plot_object.setMode(mode);
-  //const elements = document.getElementsByClassName('mode-button');
-  //for (let i = 0; i < elements.length; i++) {
-    //elements[i].classList.remove('selected');
-  //}
-  //document.getElementById(mode + '-button').classList.add('selected');
 
   showledgend(colorSchema[mode]);
   updateLabels(plot_object.currentDatasetName, mode);
@@ -77,12 +73,7 @@ function switchYear(toggle) {
 };
 
 function showledgend(color) {
-
-  let hej = d3.interpolateHcl(d3.hcl(100, 90, 100), d3.hcl(15, 90, 60));
-
-  let test = d3.quantize(hej,7);
-  const h = 150,
-    w = 25;
+  const h = 25, w = 150;
   d3.selectAll(".legend")
     .remove()
     .exit()
@@ -97,10 +88,10 @@ function showledgend(color) {
   let legend = key.append("defs")
     .append("svg:linearGradient")
     .attr("id", "gradient")
-    .attr("x1", "100%")
+    .attr("x1", "0%")
     .attr("y1", "100%")
     .attr("x2", "100%")
-    .attr("y2", "0%")
+    .attr("y2", "100%")
     .attr("spreadMethod", "pad");
 
   legend.append("stop")
@@ -122,40 +113,24 @@ function showledgend(color) {
 }
 
 function updateLabels(dataset, mode) {
-  const labels_low = {
+  const legendLabels = {
     UN: {
-      ndr: "Low Nitrogen Export",
-      poll: "Small Lost crop production",
-      cv: "Low Coastal Hazard"
+      ndr: "Nitrogen Export",
+      poll: "Lost crop production",
+      cv: "Coastal Hazard"
     },
     pop: {
-      ndr: "Small Rural Population",
-      poll: "Small Pollination-dependant Population",
-      cv: "Small Coastal Population"
-    },
-    NC: {
-      ndr: "Nitrogen Pollution not Avoided",
-      poll: "Pollination Need not Met",
-      cv: "Low Coastal Risk Reduction"
-    }
-  };
-  const labels_high = {
-    UN: {
-      ndr: "High Nitrogen Export",
-      poll: "High Lost crop production",
-      cv: "High Coastal Hazard"
-    },
-    pop: {
-      ndr: "Big Rural Population",
-      poll: "Big Pollination-dependant Population",
-      cv: "Big Coastal Population"
+      ndr: "Rural Population at risk",
+      poll: "Pollination-dependant Population",
+      cv: "Coastal Population at risk"
     },
     NC: {
       ndr: "Nitrogen Pollution Avoided",
       poll: "Pollination Need Met",
-      cv: "High Coastal Risk Reduction"
+      cv: "Coastal Risk Reduction"
     }
   };
+  
   const labels = {
     UN: {
       ndr: "Nitrogen Export",
@@ -164,8 +139,8 @@ function updateLabels(dataset, mode) {
     },
   };
 
-  document.getElementById('legendText-low').innerHTML =  labels_low[mode][dataset];
-  document.getElementById('legendText-high').innerHTML =  labels_high[mode][dataset];
+  document.getElementById('legendHeader').innerHTML =  legendLabels[mode][dataset];
+  document.getElementById('legendValue_max').innerHTML =  round(plot_object.dataExtent[1]);
   document.getElementById('distri-y-axis').innerHTML = labels['UN'][dataset];
 
 }
@@ -223,4 +198,15 @@ function showNow() {
 function removeCharts() {
   charts.scenario.remove();
   charts.population.remove();
+}
+
+function round(value) {
+  if (Math.abs(value) > 1000000) {
+      return (value / 1000000).toFixed(1) + 'Milj';
+  } else if (Math.abs(value) > 1000) {
+      return (value / 1000).toFixed(0) + 'K';
+  } else if(value < 1){
+      return 1;
+  } else
+      return value.toFixed(0);
 }
