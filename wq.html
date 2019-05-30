@@ -14,7 +14,7 @@
   	<link rel="stylesheet" type="text/css" href="css/commonStyle.css" />
   	<link rel="stylesheet" type="text/css" href="css/menu.css" />
 	<link rel="stylesheet" type="text/css" href="css/left-menu.css" />
-	<link rel="stylesheet" type="text/css" href="css/modellingInfo.css" />
+	<link rel="stylesheet" type="text/css" href="css/modelingInfo.css" />
 	<link rel="stylesheet" href="css/services.css">
 	<link rel="stylesheet" href="css/legend.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -22,7 +22,6 @@
 	
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-	<script src="../viz/libraries/noframework.waypoints.min.js"></script>
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
 	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -81,6 +80,7 @@
 
 			<div id="info_about_measurments">A deficit in water quality regulation can be measured by nitrogen export, the amount not retained by vegetation that therefore enters waterways and drinking water supplies as pollution.
 			</div>
+			<div id="mapLegend"></div>
 
 		</div>
 		<!--End of left menu-->
@@ -89,9 +89,7 @@
 	<div id="main_content_container">
 		<div id="first">
 			<div id="maps">
-				<h1 id="mapTitle2050">2050</h1>
 				<div class="map" id="map_2050"></div>
-				<h1 id="mapTitle2015">2015</h1>
 				<div class="map"id="map_2015"></div>
 				
 				
@@ -113,13 +111,13 @@
 		
 	</div>
 	<div id="second">
-		<div id="modelling_method">
-			<h1>Modelling Method</h1>
+		<div id="modeling_method">
+			<h1>Modeling Method</h1>
 
 			
 
-			<div class="modellingSection" >
-					<div class="modelling_left" >
+			<div class="modelingSection" >
+					<div class="modeling_left" >
 						<h2>Nature's Contributions to People (NCP) Framework</h2>
 						<p>This framework for assessing Nature’s Contributions to People (NCP), is based on:</p>
 						<ul>
@@ -127,16 +125,16 @@
 							<li><strong>nature’s contribution</strong> to meeting such needs. </li>
 						</ul>
 					</div>
-					<div class="modelling_right" >
+					<div class="modeling_right" >
 							<img src="viz/images/methods/framework.png" alt="NCP Framework" style="width:96%; border: 8px solid #dde4f2">
 					</div>
 			</div>
 			<br>
-			<div class="modellingSection" >
-					<div class="modelling_left" >
+			<div class="modelingSection" >
+					<div class="modeling_left" >
 							<img src="viz/images/methods/framework_wq.png" alt="Water Framework" style="width:96%; border: 8px solid #dde4f2">
 					</div>
-					<div class="modelling_right" >
+					<div class="modeling_right" >
 						<p>In the case of water quality regulation, the human pressure that creates a potential need for it in a given region or watershed is the total amount of pollutant (i.e. nitrogen load) requiring retention by vegetation in that area. We use rural populations
 								(within 100 km watersheds) as the population exposed because they are presumably less likely to have water treatment options. The need met by nature is nitrogen pollution retention; and we can characterize the biophysical portion of nature’s contribution
 								to potential need as the proportion of total nitrogen pollutant load retained by ecosystems.</p>
@@ -144,8 +142,8 @@
 			</div>
 
 			<br>
-			<div class="modellingSection" >
-					<div class="modelling_left" >
+			<div class="modelingSection" >
+					<div class="modeling_left" >
 						<h2>Modeling Water Quality Regulation</h2>
 						<p>We first model nitrogen load, export, and retention (the difference between load and export) via the <a href="http://data.naturalcapitalproject.org/invest-releases/3.5.0/userguide/ndr.html">InVEST Nutrient Delivery Ratio model</a>. This model maps
 							nutrient sources from watersheds and their transport to the stream. The model does not represent the details of the nutrient cycle but rather represents the long-term, steady-state flow of nutrients through empirical relationships. Sources of nutrient
@@ -154,7 +152,7 @@
 						
 							<p>We then use these outputs along with data on rural populations (which we assume to have lower access to water treatment) to determine humanity’s needs and nature’s contributions, as the dual components of NCP.</p>
 					</div>
-					<div class="modelling_right" >
+					<div class="modeling_right" >
 						<h2>Data</h2>
 						<p>All data displayed is publicly available <a href="http://ipbes-natcap-ecoshard-data-for-publication.ecoshard.org/">here</a></p>
 						<p>Full methods will be available upon publication, in the Supplementary information of Chaplin-Kramer (in review).</p>

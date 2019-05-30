@@ -294,7 +294,7 @@ class SuperScenarioChart {
   constructor() {
     // Initialize the barchart
     const svgWidth = 255;
-    const svgHeight = 250;
+    const svgHeight = 200;
     this.margin = {
       top: 20,
       right: 2,
@@ -596,7 +596,7 @@ class SuperPopulationChart {
   constructor() {
     // Initialize the barchart
     const svgWidth = 255;
-    const svgHeight = 200;
+    const svgHeight = 190;
     this.margin = {
       top: 20,
       right: 2,
@@ -771,7 +771,7 @@ function min(a, b) {
 
 function round(value) {
   if (Math.abs(value) > 1000000) {
-    return (value / 1000000).toFixed(1) + 'Milj';
+    return (value / 1000000).toFixed(1) + 'mil';
   } else if (Math.abs(value) > 1000) {
     return (value / 1000).toFixed(0) + 'K';
   } else

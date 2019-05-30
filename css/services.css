@@ -43,25 +43,16 @@ body{
     background-color: rgb(20, 35, 56);
 }
 
-#mapTitle2050{
-    z-index: 1000;
-    position: absolute;
-    left: 4rem;
-    top: 0rem;
+.mapTitle{
     color: black;
-}
-#mapTitle2015{
-    z-index: 1000;
-    position: absolute;
-    left: 4rem;
-    top: 21rem;
-    color: black;
+    margin: 0;
+    font-size: 2rem;
 }
 
 
 .info-button{
-    top: 2.5vh;
-    right: 45vh;
+    top: 1rem;
+    right: 1rem;
     z-index: 1000;
 }
 
@@ -75,4 +66,8 @@ body{
     width: 0;
     transition: .5s ease;
     z-index: 1000;
+}
+
+#mapLegend{
+    margin: 1rem;
 }

@@ -202,11 +202,11 @@ function removeCharts() {
 
 function round(value) {
   if (Math.abs(value) > 1000000) {
-      return (value / 1000000).toFixed(1) + 'Milj';
+      return (value / 1000000).toFixed(1) + 'mil';
   } else if (Math.abs(value) > 1000) {
       return (value / 1000).toFixed(0) + 'K';
   } else if(value < 1){
-      return 1;
+    return value.toFixed(1);
   } else
       return value.toFixed(0);
 }

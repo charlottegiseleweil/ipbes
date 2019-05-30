@@ -19,6 +19,8 @@ let map2050 = L.map('map_2050', {
 map2015.sync(map2050);
 map2050.sync(map2015);
 
+
+
 let current_scenario = "ssp1";
 let current_mode = "UN";
 
@@ -79,24 +81,16 @@ function switchScenario(scenario){
     updateMap(current_mode, current_scenario);
 }
 
-var legend = L.control({position: 'bottomleft'});
+
 
 
 function makeLegend() {
-  legend.onAdd = function (map2015) {
+    var div = document.getElementById('mapLegend');
 
-      var div = L.DomUtil.create('div', 'info legend');
-
-      //div.innerHTML = "<strong style=color:white>Legend</strong>"
-      // loop through our density intervals and generate a label with a colored square for each interval
-      for (var key in colors[current_mode]) {
-        div.innerHTML +=
-            "<li class='legendList' style=color:"+colors[current_mode][key]+"; float:left; margin-right:10px;><span> " + values[current_mode][key]+" </span></li>";
-      }
-      return div;
-  };
-
-  legend.addTo(map2015);
+    for (var key in colors[current_mode]) {
+      div.innerHTML +=
+          "<li class='legendList' style=color:"+colors[current_mode][key]+"; float:left; margin-right:10px;><span> " + values[current_mode][key]+" </span></li>";
+    }
 }
 
 function updateMap(mode, scenario, changeMode = false) {
@@ -118,6 +112,30 @@ function updateMap(mode, scenario, changeMode = false) {
 
       makeLegend()
 }
+
+var title2015 = L.control({position: 'topright'});
+var title2050 = L.control({position: 'topright'});
+
+function makeTitles() {
+  title2015.onAdd = function () {
+
+      var div = L.DomUtil.create('div', 'info');
+      div.innerHTML = "<h1 class='mapTitle'>2015</h1>";
+      return div;
+  };
+  title2050.onAdd = function () {
+
+    var div = L.DomUtil.create('div', 'info');
+    div.innerHTML = "<h1 class='mapTitle'>2050</h1>";
+    return div;
+};
+
+  title2015.addTo(map2015);
+  title2050.addTo(map2050);
+}
+
+makeTitles();
+
 
 
 
