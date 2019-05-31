@@ -86,6 +86,7 @@ function switchScenario(scenario){
 
 function makeLegend() {
     var div = document.getElementById('mapLegend');
+    div.innerHTML = "";
 
     for (var key in colors[current_mode]) {
       div.innerHTML +=
