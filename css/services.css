@@ -1,6 +1,9 @@
 body{
     min-height: 160%;
 }
+h2{
+    color: var(--primary_c);
+}
 #main_content_container{
     flex-direction: column;
 }

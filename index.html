@@ -13,10 +13,11 @@
   <link rel="stylesheet" type="text/css" href="css/menu.css" />
   <link rel="stylesheet" type="text/css" href="css/left-menu.css" />
   <link rel="stylesheet" type="text/css" href="css/index-map.css" />
+  <link rel="stylesheet" type="text/css" href="css/tour.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+  <link href="css/bootstrap-tour-standalone.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -27,6 +28,8 @@
   <script src="js/lib/topojson.min.js"></script>
   <script src="js/lib/d3-tip.js"></script>
   <script src="js/lib/d3-geo-projection.v2.min.js"></script>
+  <script src="js/bootstrap-tour-standalone.min.js"></script>
+  <script src="js/guideTour.js"></script>
 
 
   <!-- Menu Navbar -->
@@ -39,7 +42,7 @@
   <div class="content-wrapper">
      <!--left menu-->
      <div id="left-menu">
-        <h3>Ecosystem Services</h3>
+        <h3 id ="ecosystemServices">Ecosystem Services</h3>
 
         <input id="pollination-box" type="radio" name="button-global" onclick="load_pollination_data()" value="pollination" autocomplete="off" checked  class="no_show">
         <label for="pollination-box" class="left-menu-header" id="left-menu-header-1">Pollination <span class="glyphicon glyphicon-grain"> </span> </label>
@@ -80,7 +83,7 @@
                 <p id="label2DLegendY">Demand &#8594;</p>
               </div>
               <!--Information containter-->
-              <i class="info-button fas fa-info-circle" onclick="showInfo('info-overlay')"></i>
+              <i id="infoButton" class="info-button fas fa-info-circle" onclick="showInfo('info-overlay')"></i>
               <div id="info-overlay">
                 <p class="info_exit" onClick="hideInfo('info-overlay')">&#x2716;</p>
                       <h2 class="info_head">How to read these maps?</h2>
@@ -96,6 +99,9 @@
                       <p class="info_text">Finally, areas where Nature's Contribution to People is relatively high, 
                         despite a relatively low "need" (either because there is little biophysical need, such as little pollution, 
                         or because population density is low) are colored in green.</p><br> 
+
+                      <p class="info_text"><a style="cursor:pointer;" onclick="hideInfo('info-overlay'); tour.restart();">Start tutorial</a></p><br> 
+                      
 
               </div>
           </div>

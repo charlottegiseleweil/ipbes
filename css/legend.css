@@ -57,5 +57,5 @@ li span {
   position: relative;
   left: -20px;
   bottom: 4px;
-  color: white;
+  color: var(--primary_c);
 }

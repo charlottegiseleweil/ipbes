@@ -15,6 +15,7 @@ function addMenu(current = 1) {
     let future = document.createElement('a');
        future.href = 'risk_index.html';
        future.innerHTML = "In which contries are people most at risk?";
+       future.setAttribute("id", "futureTab");
     second.appendChild(future);
 
 
@@ -40,6 +41,7 @@ function addMenu(current = 1) {
 
     let services = document.createElement('a');
         services.innerHTML = "Ecosystem Services ";
+        services.setAttribute("id", "servicesTab");
     services.appendChild(dropSymbol);
     dropdown.appendChild(services);
     dropdown_content.appendChild(poll);
@@ -54,6 +56,7 @@ function addMenu(current = 1) {
     let about = document.createElement('a');
         about.href = 'about.html';
         about.innerHTML = "About";
+        about.setAttribute("id", "aboutTab");
     forth.appendChild(about);
 
     switch(current) {
