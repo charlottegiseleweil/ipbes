@@ -160,9 +160,8 @@
 
 #info-overlay {
   position: absolute;
- 
   bottom: 1.5vh;
-  right: 39vh;
+  right: 17.5rem;
   background-color: rgba(29, 29, 29, 0.925);
   overflow: hidden;
   width: 0;
