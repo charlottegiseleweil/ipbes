@@ -3,7 +3,7 @@ class DistributionChart {
   constructor() {
     // Initialize the barchart
     const svgWidth = 230;
-    const svgHeight = 170;
+    const svgHeight = 200;
     this.margin = {
       top: 15,
       right: 60,
@@ -412,6 +412,21 @@ class SuperScenarioChart {
       .style("width", x.bandwidth())
       .style("height", 20)
       .text((d, i) => d);
+   
+    // nodata label
+    let checkingData = [data[0],data[3],data[6]];
+     this.g.append("g")
+      .attr("class", "labelText")
+      .selectAll(".textlabel")
+      .data(this.serviceLabels)
+      .enter()
+      .append("text")
+      .attr("class", "textlabel")
+      .attr("x", (d, i) => x(d) + x.bandwidth() / 2)
+      .attr("y", y(0) - 20)
+      .style("width", x.bandwidth())
+      .style("height", 20)
+      .text((d, i) => Math.abs(checkingData[i]) > 0 ? "" : "no data");
   }
   remove() {
     this.g.selectAll(".bar.greenGrowth")
@@ -632,6 +647,7 @@ class SuperPopulationChart {
 
     // calculate changes
     let data = this.getTotalPopulation(focusedData);
+
     // Scale axis
     const y = d3.scaleLinear()
       .range([this.height, 0])
@@ -716,6 +732,22 @@ class SuperPopulationChart {
       .style("width", x.bandwidth())
       .style("height", 20)
       .text((d, i) => d);
+
+      let checkingData = [data[0],data[3],data[6]];
+
+     // nodata label
+     this.g.append("g")
+     .attr("class", "labelText")
+     .selectAll(".textlabel")
+     .data(this.serviceLabels)
+     .enter()
+     .append("text")
+     .attr("class", "textlabel")
+     .attr("x", (d, i) => x(d) + x.bandwidth() / 2)
+     .attr("y", y(0) - 20)
+     .style("width", x.bandwidth())
+     .style("height", 20)
+     .text((d, i) => checkingData[i] > 0 ? "" : "no data");
   }
   remove() {
     this.g.selectAll(".bar.greenGrowth")
@@ -733,9 +765,12 @@ class SuperPopulationChart {
   }
 
   getTotalPopulation(allData) {
-    return this.getPopulation(allData.cv)
-      .concat(this.getPopulation(allData.ndr))
-      .concat(this.getPopulation(allData.poll))
+    let cvPop = this.getPopulation(allData.cv);
+    let ndrPop = this.getPopulation(allData.ndr);
+    let pollPop = this.getPopulation(allData.poll);
+    return cvPop
+      .concat(ndrPop)
+      .concat(pollPop)
 
   }
 
