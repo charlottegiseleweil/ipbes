@@ -57,10 +57,10 @@ input:checked  + .left-menu-header  {
 /*hovering effects*/
 .left-menu-header:hover + .left-menu-text {
   transition-delay: 0.7s;
-  height: 17vh;
+  height: 6rem;
 }
 .left-menu-text:hover{
-  height: 17vh;
+  height: 6rem;
 }
 
 
