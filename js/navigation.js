@@ -90,6 +90,12 @@ function addMenu(current = 1) {
     document.getElementById(info).style.width = "0%";
   }
 
+  function scrollToModelling(){
+    document.querySelector('#modeling_method').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+  }
+
   whenDocumentLoaded(() => {
     // Initialize dashboard
     //addMenu();
