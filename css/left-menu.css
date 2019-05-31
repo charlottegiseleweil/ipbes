@@ -51,16 +51,16 @@ input:checked  + .left-menu-header  {
   height: 0;
   overflow: hidden;
   transition: .5s ease;
+  transition-delay: 0.7s;
 }
 
 /*hovering effects*/
 .left-menu-header:hover + .left-menu-text {
   transition-delay: 0.7s;
-  height: 16vh;
+  height: 17vh;
 }
 .left-menu-text:hover{
-  transition-delay: 0.7s;
-  height: 16vh;
+  height: 17vh;
 }
 
 
