@@ -21,27 +21,20 @@
 
 <body>
 
-  <script src="viz/libraries/jquery.min.js"></script>
-  <script src="viz/libraries/papaparse.js"></script>
-
-  <script src="viz/libraries/d3.js"></script>
-  <script src="viz/libraries/papaparse.js"></script>
-  <script src="viz/libraries/topojson.v1.min.js"></script>
-  <script src="viz/libraries/versor.min.js"></script>
-  <script src="viz/libraries/d3-inertia.min.js"></script>
-  <script src="viz/libraries/d3-simple-slider.js"></script>
-
-  <script src="viz/libraries/d3-scale-chromatic.v1.min.js"></script>
-  <script src="viz/libraries/d3-geo-projection.v2.min.js"></script>
-  <script src="viz/libraries/d3-legend.js"></script>
-  <script src="viz/libraries/d3-tip.js"></script>
-
-  <script src="viz/libraries/noframework.waypoints.min.js"></script>
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/d3.js"></script>
+  <script src="js/lib/papaparse.js"></script>
+  <script src="js/lib/topojson.min.js"></script>
+  <script src="js/lib/d3-tip.js"></script>
+  <script src="js/lib/d3-geo-projection.v2.min.js"></script>
 
 
   <!-- Menu Navbar -->
  <div id="main_menu"></div>
   <!-- End Menu Navbar -->
+  <div id="landingpage">
+    <h3 id="landing-page-loader">loading ...</h3>
+  </div>
 
   <div class="content-wrapper">
      <!--left menu-->
@@ -82,7 +75,7 @@
               </div>
               <div id="index-map-legend">
                   <p class="title2DLegend"> Pollination Key Areas </p>
-                <img src="viz/images/legend2d.png" class="img-legend"> </img>
+                <img src="static/images/legend2d.png" class="img-legend"> </img>
                 <p id="label2DLegendX">Nature's Contributions &#8594; </p>
                 <p id="label2DLegendY">Demand &#8594;</p>
               </div>
@@ -110,21 +103,11 @@
 </div>
 
 
-
-        <script src="viz/js/statFunctions.js"></script>
-        <script src="viz/js/lineGraph.js"></script>
-        <script src="viz/js/barGraph.js"></script>
-        <script src="viz/js/popup.js"></script>
-        <script src="viz/js/zoom.js"></script>
-        <script src="viz/js/projection.js"></script>
-        <script src="viz/js/projection_3d.js"></script>
-        <script src="viz/js/projection_2d.js"></script>
-        <script src="viz/js/legend.js"></script>
-        <script src="viz/js/arcs.js"></script>
-        <script src="viz/js/projection_global.js"></script>
-        <script src="viz/js/slider.js"></script>
-        <script src="js/navigation.js"></script>
-        <script src="js/index_main.js"></script>
+    <script src="js/statFunctions.js"></script>
+    <script src="js/zoom.js"></script>
+    <script src="js/projection_global.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/index_main.js"></script>
 </body>
 
 </html>
