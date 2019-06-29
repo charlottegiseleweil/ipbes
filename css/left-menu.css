@@ -48,19 +48,21 @@ input:checked  + .left-menu-header  {
   margin: 0;
   padding: 0 2vh;
   color:var(--inprinted_c);
-  height: 0;
+  max-height: 0;
   overflow: hidden;
-  transition: .5s ease;
+  transition:0.5s ease-out;
   transition-delay: 0.7s;
 }
 
 /*hovering effects*/
 .left-menu-header:hover + .left-menu-text {
   transition-delay: 0.7s;
-  height: 6rem;
+  height: fit-content;
+  max-height: 10rem;
 }
 .left-menu-text:hover{
-  height: 6rem;
+  height: fit-content;
+  max-height: 10rem;
 }
 
 

@@ -36,12 +36,9 @@
   padding-left: 3px;
 }
 
-.leaflet-left{
-  margin-bottom: 35px;
-}
 
 .leaflet-bottom .leaflet-control {
-  background-color:rgba(5, 13, 24, 0.692);
+  background-color:rgba(5, 13, 24, 0.392);
   padding: 0.3rem;
   padding-right: 0;
   padding-left: 0.6rem;
@@ -57,5 +54,10 @@ li span {
   position: relative;
   left: -20px;
   bottom: 4px;
-  color: var(--primary_c);
+  color: white;
 }
+
+.leaflet-control-attribution {
+  margin-left: 10rem !important;
+}
+

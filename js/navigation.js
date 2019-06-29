@@ -14,7 +14,7 @@ function addMenu(current = 1) {
         second.classList.add('menu_element');
     let future = document.createElement('a');
        future.href = 'risk_index.html';
-       future.innerHTML = "In which contries are people most at risk?";
+       future.innerHTML = "In which countries are people most at risk?";
        future.setAttribute("id", "futureTab");
     second.appendChild(future);
 

@@ -49,7 +49,7 @@ h2{
 .mapTitle{
     color: black;
     margin: 0;
-    font-size: 2rem;
+    font-size: 3.5rem;
 }
 
 
@@ -71,6 +71,9 @@ h2{
     z-index: 1000;
 }
 
-#mapLegend{
-    margin: 1rem;
+.legendTitle{
+    margin: 0;
+    margin-right: 0.7rem;
+    font-weight: 200;
 }
+

@@ -1,6 +1,6 @@
 // Global variables
 // Map
-let minZoom = 3;
+let minZoom = 1;
 let maxZoom = 10;
 
 let map2015 = L.map('map_2015', {
@@ -54,7 +54,6 @@ let colors = {
   }
 };
 
-
 let promise_layer = new Promise(function(resolve, reject) {
     L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
       attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
@@ -82,18 +81,6 @@ function switchScenario(scenario){
 }
 
 
-
-
-function makeLegend() {
-    var div = document.getElementById('mapLegend');
-    div.innerHTML = "";
-
-    for (var key in colors[current_mode]) {
-      div.innerHTML +=
-          "<li class='legendList' style=color:"+colors[current_mode][key]+"; float:left; margin-right:10px;><span> " + values[current_mode][key]+" </span></li>";
-    }
-}
-
 function updateMap(mode, scenario, changeMode = false) {
     if(changeMode) {
         map2015.eachLayer(function(layer) {
@@ -111,13 +98,14 @@ function updateMap(mode, scenario, changeMode = false) {
       });
       tileLayers[scenario][mode].addTo(map2050);
 
-      makeLegend()
+      updateLegend()
 }
 
+/*Add map titles*/
 var title2015 = L.control({position: 'topright'});
 var title2050 = L.control({position: 'topright'});
 
-function makeTitles() {
+function addTitles() {
   title2015.onAdd = function () {
 
       var div = L.DomUtil.create('div', 'info');
@@ -135,7 +123,39 @@ function makeTitles() {
   title2050.addTo(map2050);
 }
 
-makeTitles();
+addTitles();
+
+/*Add and uppdate legends */
+var legend2015 = L.control({position: 'bottomleft'});
+var legend2050 = L.control({position: 'bottomleft'});
+
+function updateLegend() {
+  legend2015.onAdd = function () {
+
+      let div = L.DomUtil.create('div', 'mapLegend');
+      div.innerHTML = "<h4 class='legendTitle'>Some interesting title</h4>"
+      for (let key in colors[current_mode]) {
+        div.innerHTML +=
+            "<li class='legendList' style=color:"+colors[current_mode][key]+"; float:left; margin-right:10px;><span> " + values[current_mode][key]+" </span></li>";
+      }
+      return div;
+  };
+  legend2050.onAdd = function () {
+
+    var div = L.DomUtil.create('div', 'info');
+    div.innerHTML = "<h4 class='legendTitle'>Change in %</h4>"
+    for (let key in colors[current_mode]) {
+      div.innerHTML +=
+          "<li class='legendList' style=color:"+colors[current_mode][key]+"; float:left; margin-right:10px;><span> " + values[current_mode][key]+" </span></li>";
+    }
+    return div;
+};
+
+  legend2015.addTo(map2015);
+  legend2050.addTo(map2050);
+}
+
+updateLegend();
 
 
 
