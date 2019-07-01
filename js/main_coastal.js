@@ -5,49 +5,66 @@ let info_measurements = {
     PN: "The potential human need for coastal protection is the physical exposure to coastal storms (based on wind, waves, sea level rise, geomorphology, etc) in the absence of coastal habitat like coral reefs or mangroves.",
 };
 
+let ipbes_CV_cp_wms_url = 'http://viewer.ecoshard.org:8080/geoserver/ipbes_cv_styles/wms';
+
+
+
 let tileLayers = {
     cur:{
-        UN: L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-            attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
-        pop: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}), 
-        NC: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'}),
-        PN: L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/{z}/{x}/{y}.png', {
-            attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> | Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
+        UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_deficit_cur'],transparent:true,attribution: "UN 2015"}),
+        pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_pop_cur'],transparent:true,attribution: "Pop 2015"}),
+        NC: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_NC_cur'],transparent:true,attribution: "NC 2015"}),
+        PN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_potential_cur'],transparent:true,attribution: "PN 2015"}),
     },
     ssp1:{
-        UN: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
-        pop: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'}),
-        NC:L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/{z}/{x}/{y}.png', {
-            attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> | Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
-        PN:L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-            attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }),
+        UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_deficit_change_ssp1'],transparent:true,attribution: "UN SSP1"}),
+        pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_pop_change_ssp1'],transparent:true,attribution: "Pop SSP1"}),
+        NC:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_NC_change_ssp1'],transparent:true,attribution: "NC SSP1"}),
+        PN:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_potential_change_ssp1'],transparent:true,attribution: "PN SSP1"}),
     },
     ssp3:{
-        UN: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
-        pop: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'}),
-        NC:L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/{z}/{x}/{y}.png', {
-            attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> | Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
-        PN:L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-            attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }),
+        UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_deficit_change_ssp3'],transparent:true,attribution: "UN SSP3"}),
+        pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_pop_change_ssp3'],transparent:true,attribution: "Pop SSP3"}),
+        NC:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_NC_change_ssp3'],transparent:true,attribution: "NC SSP3"}),
+        PN:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_potential_change_ssp3'],transparent:true,attribution: "PN SSP3"}),
     },
     ssp5:{
-        UN: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
-        pop: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'}),
-        NC: L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/{z}/{x}/{y}.png', {
-            attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> | Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
-        PN: L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-            attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }),
+        UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_deficit_change_ssp5'],transparent:true,attribution: "UN SSP5"}),
+        pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_pop_change_ssp5'],transparent:true,attribution: "Pop SSP5"}),
+        NC:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_NC_change_ssp5'],transparent:true,attribution: "NC SSP5"}),
+        PN:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
+            layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
+            format: 'image/png',styles: ['coastal_potential_change_ssp5'],transparent:true,attribution: "PN SSP5"}),
     },
 }
 

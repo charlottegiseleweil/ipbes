@@ -55,9 +55,9 @@ let colors = {
 };
 
 let promise_layer = new Promise(function(resolve, reject) {
-    L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+    /*L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
       attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-    }).addTo(map2015);
+    }).addTo(map2015);*/
 
     L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
       attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
@@ -99,6 +99,7 @@ function updateMap(mode, scenario, changeMode = false) {
       tileLayers[scenario][mode].addTo(map2050);
 
       updateLegend()
+    console.log('Updating Map: '+ mode+' '+scenario)
 }
 
 /*Add map titles*/
