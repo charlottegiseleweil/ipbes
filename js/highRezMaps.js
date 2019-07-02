@@ -54,14 +54,37 @@ let colors = {
   }
 };
 
-let promise_layer = new Promise(function(resolve, reject) {
-    /*L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
-      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-    }).addTo(map2015);*/
+/*Add a labelsCheckbox */
 
-    L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
-      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-    }).addTo(map2050);
+let basemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles: Esri',
+  maxZoom: 13
+});
+
+let basemap1  = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles: Esri',
+  maxZoom: 13
+});
+
+/* Else if $("labelsCheckbox").checked 
+
+let basemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: 'Tiles: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+});
+
+let basemap1  = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: 'Tiles: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+});
+
+*/
+
+let promise_layer = new Promise(function(resolve, reject) {
+    basemap1.addTo(map2015);
+    basemap.addTo(map2050);
     
     setTimeout(() => resolve(1), 10);
   });
@@ -84,7 +107,7 @@ function switchScenario(scenario){
 function updateMap(mode, scenario, changeMode = false) {
     if(changeMode) {
         map2015.eachLayer(function(layer) {
-            if (layer._url != "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png") {
+            if (layer._url != basemap1._url) {
               map2015.removeLayer(layer);
             }
           });
@@ -92,7 +115,7 @@ function updateMap(mode, scenario, changeMode = false) {
     }
    
     map2050.eachLayer(function(layer) {
-        if (layer._url != "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png") {
+        if (layer._url != basemap._url) {
           map2050.removeLayer(layer);
         }
       });

@@ -13,58 +13,58 @@ let tileLayers = {
     cur:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_cur'],transparent:true,attribution: "UN 2015"}),
+            format: 'image/png',styles: ['coastal_deficit_cur'],transparent:true,attribution: "NatCap &mdash; Deficit 2015"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_pop_cur'],transparent:true,attribution: "Pop 2015"}),
+            format: 'image/png',styles: ['coastal_pop_cur'],transparent:true,attribution: "NatCap &mdash; Population 2015"}),
         NC: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_NC_cur'],transparent:true,attribution: "NC 2015"}),
+            format: 'image/png',styles: ['coastal_NC_cur'],transparent:true,attribution: "NatCap &mdash; NC 2015"}),
         PN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_potential_cur'],transparent:true,attribution: "PN 2015"}),
+            format: 'image/png',styles: ['coastal_potential_cur'],transparent:true,attribution: "NatCap &mdash; PN 2015"}),
     },
     ssp1:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_change_ssp1'],transparent:true,attribution: "UN SSP1"}),
+            format: 'image/png',styles: ['coastal_deficit_change_ssp1'],transparent:true,attribution: "NatCap &mdash; Deficit SSP1"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_pop_change_ssp1'],transparent:true,attribution: "Pop SSP1"}),
+            format: 'image/png',styles: ['coastal_pop_change_ssp1'],transparent:true,attribution: "NatCap &mdash; Population SSP1"}),
         NC:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_NC_change_ssp1'],transparent:true,attribution: "NC SSP1"}),
+            format: 'image/png',styles: ['coastal_NC_change_ssp1'],transparent:true,attribution: "NatCap &mdash; NC SSP1"}),
         PN:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_potential_change_ssp1'],transparent:true,attribution: "PN SSP1"}),
+            format: 'image/png',styles: ['coastal_potential_change_ssp1'],transparent:true,attribution: "NatCap &mdash; PN SSP1"}),
     },
     ssp3:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_change_ssp3'],transparent:true,attribution: "UN SSP3"}),
+            format: 'image/png',styles: ['coastal_deficit_change_ssp3'],transparent:true,attribution: "NatCap &mdash; Deficit SSP3"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_pop_change_ssp3'],transparent:true,attribution: "Pop SSP3"}),
+            format: 'image/png',styles: ['coastal_pop_change_ssp3'],transparent:true,attribution: "NatCap &mdash; Population SSP3"}),
         NC:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_NC_change_ssp3'],transparent:true,attribution: "NC SSP3"}),
+            format: 'image/png',styles: ['coastal_NC_change_ssp3'],transparent:true,attribution: "NatCap &mdash; NC SSP3"}),
         PN:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_potential_change_ssp3'],transparent:true,attribution: "PN SSP3"}),
+            format: 'image/png',styles: ['coastal_potential_change_ssp3'],transparent:true,attribution: "NatCap &mdash; PN SSP3"}),
     },
     ssp5:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_change_ssp5'],transparent:true,attribution: "UN SSP5"}),
+            format: 'image/png',styles: ['coastal_deficit_change_ssp5'],transparent:true,attribution: "NatCap &mdash; Deficit SSP5"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_pop_change_ssp5'],transparent:true,attribution: "Pop SSP5"}),
+            format: 'image/png',styles: ['coastal_pop_change_ssp5'],transparent:true,attribution: "NatCap &mdash; Population SSP5"}),
         NC:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_NC_change_ssp5'],transparent:true,attribution: "NC SSP5"}),
+            format: 'image/png',styles: ['coastal_NC_change_ssp5'],transparent:true,attribution: "NatCap &mdash; NC SSP5"}),
         PN:L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_potential_change_ssp5'],transparent:true,attribution: "PN SSP5"}),
+            format: 'image/png',styles: ['coastal_potential_change_ssp5'],transparent:true,attribution: "NatCap &mdash; PN SSP5"}),
     },
 }
 
