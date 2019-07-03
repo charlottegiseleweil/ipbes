@@ -67,34 +67,136 @@ let tileLayers = {
     },
 }
 
-let values = {
-    UN:{
-      0: 0,
-      1: 25,
-      2: 50,
-      3: 75,
-      4: 100},
-    pop:{
-        0: 0,
-        1: 25,
-        2: 50,
-        3: 75,
-        4: 100 },
-    NC:{
-        0: 0,
-        1: 25,
-        2: 50,
-        3: 75,
-        4: 100 },
-    PN:{
-        0: 0,
-        1: 25,
-        2: 50,
-        3: 75,
-        4: 100 }
+let legend_title_2015 = {
+    UN: "Lost Crop Production <br> (kcal/year)",
+    pop: "Pollination Dependant <br> Population",
+    NC: "Pollination Need Met <br> (%)",
+    PN: "Pollination-Dependant <br> Crop Production <br> (kcal/year)",
+};
+
+let legend_colors_values_2015 = {
+        UN:{
+            0: '#fffff6',
+            1: '#ffffd4',
+            10: '#fed98e',
+            20: '#fe9929',
+            30: '#d95f0e',
+            40: '#993404',
+            50: '#711515'},
+        pop:{
+            0: "#ffffff",
+            1: '#bfd6e8',
+            10: '#9cacd2',
+            250: '#8a7cba',
+            500: '#45114d',
+            1000: '#000000'
+        },
+        NC:{
+            0: '#ffffff',
+            1: '#fafff7',
+            25: '#caeac3',
+            50: '#7bc87c',
+            75: '#2a924a',
+            90: '#00441b'
+        },
+        PN:{
+            0: '#fffff6',
+            1: '#ffffd4',
+            10: '#fed98e',
+            20: '#fe9929',
+            30: '#d95f0e',
+            40: '#993404',
+            50: '#711515'},
     };
 
+let legend_title_2050 = {
+    UN: "Proportional Change <br> (%)",
+    pop: "Proportional Change <br> (%)",
+    NC: "Proportional Change <br> (%)",
+    PN: "Absolute Change <br> (kcal/year)",
+};
 
+let legend_colors_2050 = {
+        UN:{
+          0: '#2c7bb6',
+          1: '#5b93b6',
+          2: '#abd9e9',
+          3: '#ffffff',
+          4: '#fdae61',
+          5: '#d7191c' ,
+          6: '#96191c',
+          7: '#441115',
+    },
+        pop:{
+            0: '#2c7bb6',
+            1: '#5b93b6',
+            2: '#abd9e9',
+            3: '#ffffff',
+            4: '#fdae61',
+            5:'#d7191c' ,
+            6:'#96191c',
+            7:'#441115',
+        },
+        NC:{
+            0: '#2c7bb6',
+            1: '#5b93b6',
+            2: '#abd9e9',
+            3: '#ffffff',
+            4: '#fdae61',
+            5:'#d7191c' ,
+            6:'#96191c',
+        },
+        PN:{
+            0: '#2c7bb6',
+            1: '#5b93b6',
+            2: '#abd9e9',
+            3: '#ffffff',
+            4: '#fdae61',
+            5: '#d7191c' ,
+            6: '#96191c',
+        }
+    };
+      
+let legend_values_2050 = {
+    UN:{
+        0: '-100',
+        1: '-50',
+        2: '-10',
+        3: '0',
+        4: '10',
+        5: '50' ,
+        6: '100',
+        7: '1000',
+    },
+    pop:{
+        0: '-100',
+        1: '-50',
+        2: '-10',
+        3: '0',
+        4: '10',
+        5: '50' ,
+        6: '100',
+        7: '1000',
+        },
+    NC:{
+        0: '-100',
+        1: '-50',
+        2: '-10',
+        3: '0',
+        4: '10',
+        5: '50' ,
+        6: '100',
+        },
+    PN:{
+        0: '-1000',
+        1: '-50',
+        2: '-10',
+        3: '0',
+        4: '10',
+        5: '50',
+        6: '1000'
+    }
+};
 
 whenDocumentLoaded(() => {
     // Initialize dashboard

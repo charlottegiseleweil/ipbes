@@ -19,40 +19,9 @@ let map2050 = L.map('map_2050', {
 map2015.sync(map2050);
 map2050.sync(map2015);
 
-
-
 let current_scenario = "ssp1";
 let current_mode = "UN";
 
-let colors = {
-  UN:{
-    0: '#f7cf5',
-    1: '#caeac3',
-    2: '#7bc87c',
-    3: '#2a924a',
-    4: '#00441b'},
-  pop:{
-    0: '#f7cf5',
-    1: '#caeac3',
-    2: '#7bc87c',
-    3: '#2a924a',
-    4: '#00441b'
-  },
-  NC:{
-    0: '#f7cf5',
-    1: '#caeac3',
-    2: '#7bc87c',
-    3: '#2a924a',
-    4: '#00441b'
-  },
-  PN:{
-    0: '#f7cf5',
-    1: '#caeac3',
-    2: '#7bc87c',
-    3: '#2a924a',
-    4: '#00441b'
-  }
-};
 
 /*Add a labelsCheckbox */
 
@@ -157,20 +126,20 @@ function updateLegend() {
   legend2015.onAdd = function () {
 
       let div = L.DomUtil.create('div', 'mapLegend');
-      div.innerHTML = "<h4 class='legendTitle'>Some interesting title</h4>"
-      for (let key in colors[current_mode]) {
+      div.innerHTML = "<h4 class='legendTitle'>"+legend_title_2015[current_mode]+"</h4>"
+      for (let key in legend_colors_values_2015[current_mode]) {
         div.innerHTML +=
-            "<li class='legendList' style=color:"+colors[current_mode][key]+"; float:left; margin-right:10px;><span> " + values[current_mode][key]+" </span></li>";
+            "<li class='legendList' style=color:"+legend_colors_values_2015[current_mode][key]+"; float:left; margin-right:10px;><span> " + key+" </span></li>";
       }
       return div;
   };
   legend2050.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info');
-    div.innerHTML = "<h4 class='legendTitle'>Change in %</h4>"
-    for (let key in colors[current_mode]) {
+    div.innerHTML = "<h4 class='legendTitle'>"+legend_title_2050[current_mode]+"</h4>"
+    for (let key in legend_colors_2050[current_mode]) {
       div.innerHTML +=
-          "<li class='legendList' style=color:"+colors[current_mode][key]+"; float:left; margin-right:10px;><span> " + values[current_mode][key]+" </span></li>";
+          "<li class='legendList' style=color:"+legend_colors_2050[current_mode][key]+"; float:left; margin-right:10px;><span> " + legend_values_2050[current_mode][key] +" </span></li>";
     }
     return div;
 };
