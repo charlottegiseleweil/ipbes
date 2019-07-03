@@ -22,8 +22,7 @@ map2050.sync(map2015);
 let current_scenario = "ssp1";
 let current_mode = "UN";
 
-
-/*Add a labelsCheckbox */
+let showlabels = false;
 
 let basemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Tiles: Esri',
@@ -35,21 +34,55 @@ let basemap1  = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/service
   maxZoom: 13
 });
 
-/* Else if $("labelsCheckbox").checked 
+// Basemaps with labels
 
-let basemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+let labelbasemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
   attribution: 'Tiles: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attributions">CARTO</a>',
   subdomains: 'abcd',
   maxZoom: 19
 });
 
-let basemap1  = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+let labelbasemap1  = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
   attribution: 'Tiles: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attributions">CARTO</a>',
   subdomains: 'abcd',
   maxZoom: 19
 });
 
-*/
+/*Add a labelsCheckbox */
+function labelsCheckbox() {
+  showlabels = !showlabels;
+  console.log(showlabels);
+  if(showlabels == true) {
+    map2015.eachLayer(function(layer) {
+        map2015.removeLayer(layer);
+    });
+    map2050.eachLayer(function(layer) {
+      map2050.removeLayer(layer);
+    });
+    let promise_layer = new Promise(function(resolve, reject) {
+      labelbasemap1.addTo(map2015);
+      labelbasemap.addTo(map2050);
+      
+      setTimeout(() => resolve(1), 10);
+    });
+    promise_layer.then(function(result) {
+      updateMap(current_mode, current_scenario, true);
+    });
+  }
+  else {
+    let promise_layer = new Promise(function(resolve, reject) {
+      basemap1.addTo(map2015);
+      basemap.addTo(map2050);
+      
+      setTimeout(() => resolve(1), 10);
+    });
+    promise_layer.then(function(result) {
+      updateMap(current_mode, current_scenario, true);
+    });
+
+  }
+}
+
 
 let promise_layer = new Promise(function(resolve, reject) {
     basemap1.addTo(map2015);
@@ -76,7 +109,7 @@ function switchScenario(scenario){
 function updateMap(mode, scenario, changeMode = false) {
     if(changeMode) {
         map2015.eachLayer(function(layer) {
-            if (layer._url != basemap1._url) {
+            if (layer._url != basemap1._url && layer._url != labelbasemap1._url) {
               map2015.removeLayer(layer);
             }
           });
@@ -84,7 +117,7 @@ function updateMap(mode, scenario, changeMode = false) {
     }
    
     map2050.eachLayer(function(layer) {
-        if (layer._url != basemap._url) {
+        if (layer._url != basemap._url && layer._url != labelbasemap._url) {
           map2050.removeLayer(layer);
         }
       });
@@ -131,6 +164,11 @@ function updateLegend() {
         div.innerHTML +=
             "<li class='legendList' style=color:"+legend_colors_values_2015[current_mode][key]+"; float:left; margin-right:10px;><span> " + key+" </span></li>";
       }
+      
+      if(showlabels) 
+        div.innerHTML += "<label class='labelcontainer'>Show Labels <input type='checkbox' id='labelCheckbox' onclick='labelsCheckbox()' checked><span class='labelcheckmark'></span></label>";
+      else
+      div.innerHTML += "<label class='labelcontainer'>Show Labels <input type='checkbox' id='labelCheckbox' onclick='labelsCheckbox()'><span class='labelcheckmark'></span></label>";
       return div;
   };
   legend2050.onAdd = function () {
