@@ -75,6 +75,13 @@ let legend_title_2015 = {
     PN: "Coastal Hazard <br> Exposure <br> (risk index)",
 };
 
+let legend_title_2050 = {
+    UN: "Change in <br> Hazards Exposure",
+    pop: "Change in <br> Coastal Population",
+    NC: "Change in <br> Risk Reduced",
+    PN: "Change in <br> Coastal Hazard <br> Exposure",
+};
+
 let legend_colors_values_2015 = {
         UN:{
           1: '#fffff6',
@@ -107,13 +114,6 @@ let legend_colors_values_2015 = {
             400: '#d95f0e',
             1000: '#993404'},
     };
-
-let legend_title_2050 = {
-    UN: "Proportional Change <br> (%)",
-    pop: "Proportional Change <br> (%)",
-    NC: "Proportional Change <br> (%)",
-    PN: "Proportional Change <br> (%)",
-};
 
 let legend_colors_2050 = {
         UN:{
@@ -159,43 +159,43 @@ let legend_colors_2050 = {
       
 let legend_values_2050 = {
     UN:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
     },
     pop:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
         },
     NC:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
         },
     PN:{
-        0: '-1000',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50',
-        6: '1000',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
     }
 };
 

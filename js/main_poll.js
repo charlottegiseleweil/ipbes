@@ -68,10 +68,17 @@ let tileLayers = {
 }
 
 let legend_title_2015 = {
-    UN: "Lost Crop Production <br> (kcal/year)",
+    UN: "Lost Crop Production <br> (in people fed)",
     pop: "Pollination Dependant <br> Population",
     NC: "Pollination Need Met <br> (%)",
-    PN: "Pollination-Dependant <br> Crop Production <br> (kcal/year)",
+    PN: "Pollination-Dependant <br> Crop Production <br> (in people fed)",
+};
+
+let legend_title_2050 = {
+    UN: "Change in <br> Lost Crop Production ",
+    pop: "Change in <br> Poll-dep Population",
+    NC: "Change in <br> Pollination Need Met",
+    PN: "Absolute Change in <br> Poll-dep Crop Production <br> (in people fed)",
 };
 
 let legend_colors_values_2015 = {
@@ -109,12 +116,7 @@ let legend_colors_values_2015 = {
             50: '#711515'},
     };
 
-let legend_title_2050 = {
-    UN: "Proportional Change <br> (%)",
-    pop: "Proportional Change <br> (%)",
-    NC: "Proportional Change <br> (%)",
-    PN: "Absolute Change <br> (kcal/year)",
-};
+
 
 let legend_colors_2050 = {
         UN:{
@@ -159,42 +161,43 @@ let legend_colors_2050 = {
       
 let legend_values_2050 = {
     UN:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
     },
     pop:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
         },
     NC:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
         },
     PN:{
         0: '-1000',
         1: '-50',
         2: '-10',
         3: '0',
-        4: '10',
-        5: '50',
-        6: '1000'
+        4: '+10',
+        5: '+50',
+        6: '+1000',
+        7: '+1000',
     }
 };
 

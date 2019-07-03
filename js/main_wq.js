@@ -71,7 +71,14 @@ let legend_title_2015 = {
     UN: "Nitrogen Export <br> (kg/year)",
     pop: "Rural Population",
     NC: "Pollution Avoided <br> (%)",
-    PN: "Nitrogen Pollutant Load <br> Crop Production <br> (kg/year)",
+    PN: "Nitrogen Pollutant Load <br> (kg/year)",
+};
+
+let legend_title_2050 = {
+    UN: "Change in <br> Nitrogen Export",
+    pop: "Change in <br> Rural Population",
+    NC: "Change in <br> Pollution Avoided",
+    PN: "Change in <br> Nitrogen Pollutant Load",
 };
 
 let legend_colors_values_2015 = {
@@ -107,12 +114,6 @@ let legend_colors_values_2015 = {
             1000: '#993404'},
     };
 
-let legend_title_2050 = {
-    UN: "Proportional Change <br> (%)",
-    pop: "Proportional Change <br> (%)",
-    NC: "Proportional Change <br> (%)",
-    PN: "Proportional Change <br> (%)",
-};
 
 let legend_colors_2050 = {
         UN:{
@@ -158,43 +159,43 @@ let legend_colors_2050 = {
       
 let legend_values_2050 = {
     UN:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
     },
     pop:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
         },
     NC:{
-        0: '-100',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50' ,
-        6: '100',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
         },
     PN:{
-        0: '-1000',
-        1: '-50',
-        2: '-10',
+        0: '-100%',
+        1: '-50%',
+        2: '-10%',
         3: '0',
-        4: '10',
-        5: '50',
-        6: '1000',
-        7: '1000',
+        4: '+10%',
+        5: '+50%' ,
+        6: '+100%',
+        7: '+1000%',
     }
 };
 
