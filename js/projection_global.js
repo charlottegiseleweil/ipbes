@@ -98,7 +98,7 @@ function load_coastalrisk_data() {
 
 // Load pollination data 2D
 function ready_global(g, path) {
-  d3.json("data/world/countries.json", function(error, data) {
+  d3.json("Data/world/countries.json", function(error, data) {
     if (error) throw error;
 
     let features = topojson.feature(data, data.objects.units).features;
