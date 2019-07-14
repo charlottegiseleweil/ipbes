@@ -40,7 +40,7 @@ function addMenu(current = 1) {
         coast.innerHTML = "Coastal Risk <i class='fas fa-water'></i>";
 
     let services = document.createElement('a');
-        services.innerHTML = "Ecosystem Services ";
+        services.innerHTML = "High Resolution Maps ";
         services.setAttribute("id", "servicesTab");
     services.appendChild(dropSymbol);
     dropdown.appendChild(services);
