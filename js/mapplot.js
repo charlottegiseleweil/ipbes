@@ -112,6 +112,11 @@ class MapPlot {
 
       this.countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip");
 
+      // last line on tooltip depends on service
+      
+
+      console.log(this.currentDatasetName)
+
       // the main globe object
       let that = this;
       this.svg.selectAll("path")
@@ -124,9 +129,10 @@ class MapPlot {
           let info = that.getShortInfo(d);
           if(info){
             that.countryTooltip.html(d.name + 
-              "<br><p class='tooltipInfo'>Natures Contribution: " + (100 * info.nc).toFixed(0) + "%" +
+              "<br><p class='tooltipInfo'>Nature's Contribution: " + (100 * info.nc).toFixed(0) + "%" +
               "<br>People Exposed: " + round(info.pop) +
-              "<br> Potential Benefit: " + round(info.potentialBenefit) + "</p>")
+              "<br>" + legendLabels['UN'][that.currentDatasetName] + ":<br>  &nbsp &nbsp" 
+              + round(info.potentialBenefit) +" "+ legendLabelsUnits['UN'][that.currentDatasetName]+ "</p>")
               .style("left", (d3.event.pageX + 7) + "px")
               .style("top", (d3.event.pageY - 15) + "px")
               .style("display", "block")
@@ -669,7 +675,7 @@ class MapPlot {
         let info = that.getShortInfo(d);
         if(info){
           that.countryTooltip.html(d.name + 
-            "<br><p class='tooltipInfo'>Natures Contribution: " + (100 * info.nc).toFixed(0) + "%" +
+            "<br><p class='tooltipInfo'>Nature's Contribution: " + (100 * info.nc).toFixed(0) + "%" +
             "<br>People Exposed: " + round(info.pop) +
             "<br> Potential Benefit: " + round(info.potentialBenefit) + "</p>")
             .style("left", (d3.event.pageX + 7) + "px")

@@ -69,9 +69,9 @@ let tileLayers = {
 
 let legend_title_2015 = {
     UN: "Lost Crop Production <br> (in people fed/900m2)",
-    pop: "Pollination Dependant <br> Population",
+    pop: "Pollination Dependent <br> Population",
     NC: "Pollination Need Met <br> (%)",
-    PN: "Pollination-Dependant <br> Crop Production <br> (in people fed)",
+    PN: "Pollination-Dependent <br> Crop Production <br> (in people fed)",
 };
 
 let legend_title_2050 = {

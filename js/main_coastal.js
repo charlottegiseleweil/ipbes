@@ -69,17 +69,17 @@ let tileLayers = {
 }
 
 let legend_title_2015 = {
-    UN: "Hazards Exposure <br> (risk index)",
+    UN: "Hazard Exposure <br> (risk index)",
     pop: "Coastal Population <br> (Population Density)",
     NC: "Risk Reduced",
-    PN: "Coastal Hazard <br> Exposure <br> (risk index)",
+    PN: "Potential Hazard <br> Exposure",
 };
 
 let legend_title_2050 = {
-    UN: "Change in <br> Hazards Exposure",
+    UN: "Change in <br> Hazard Exposure",
     pop: "Change in <br> Coastal Population",
     NC: "Change in <br> Risk Reduced",
-    PN: "Change in <br> Coastal Hazard <br> Exposure",
+    PN: "Change in <br> Potential Hazard <br> Exposure",
 };
 
 let legend_colors_values_2015 = {

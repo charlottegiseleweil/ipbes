@@ -135,8 +135,10 @@ let tip_global = d3.tip()
   .offset([0, 0])
   // Here d -> is basically the data which is given to the circle -> right now it is just lat long
   .html(function(d) {
+    console.log(d);
     return "<strong>" + region_text_global + "<br>" +
       "<strong>" + "NC" + ": <span>" + Number(d['NCP_cur']).toFixed(2) + " % </span></strong> <br>" +
+      "<strong>" + "People" + ": <span>" + Number(d['pop_cur']).toFixed(2) + " % </span></strong> <br>" +
       "<strong>" + "Deficit" + ": <span>" + roundNumber(Number(d['PNpop_c_norm']).toFixed(2)) + "</span></strong> <br>";
   })
 // Adding tip to the svg

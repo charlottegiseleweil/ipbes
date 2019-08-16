@@ -28,6 +28,42 @@ let info_measurements = {
   }
 };
 
+const legendLabels = {
+  UN: {
+    ndr: "Nitrogen Export",
+    poll: "Lost crop production",
+    cv: "Coastal Hazard Index"
+  },
+  pop: {
+    ndr: "Rural Population at risk",
+    poll: "Pollination-dependent Population",
+    cv: "Coastal Population at risk"
+  },
+  NC: {
+    ndr: "Nitrogen Pollution Avoided",
+    poll: "Pollination Need Met",
+    cv: "Coastal Risk Reduction"
+  }
+};
+
+const legendLabelsUnits = {
+  UN: {
+    ndr: "kg/year",
+    poll: "eq people fed",
+    cv: ""
+  },
+  pop: {
+    ndr: "",
+    poll: "",
+    cv: ""
+  },
+  NC: {
+    ndr: "",
+    poll: "",
+    cv: ""
+  }
+};
+
 whenDocumentLoaded(() => {
   // Initialize dashboard
   addMenu(2);
@@ -113,35 +149,10 @@ function showledgend(color) {
 }
 
 function updateLabels(dataset, mode) {
-  const legendLabels = {
-    UN: {
-      ndr: "Nitrogen Export",
-      poll: "Lost crop production",
-      cv: "Coastal Hazard"
-    },
-    pop: {
-      ndr: "Rural Population at risk",
-      poll: "Pollination-dependant Population",
-      cv: "Coastal Population at risk"
-    },
-    NC: {
-      ndr: "Nitrogen Pollution Avoided",
-      poll: "Pollination Need Met",
-      cv: "Coastal Risk Reduction"
-    }
-  };
-  
-  const labels = {
-    UN: {
-      ndr: "Nitrogen Export",
-      poll: "Lost crop production",
-      cv: "Coastal Hazard"
-    },
-  };
 
   document.getElementById('legendHeader').innerHTML =  legendLabels[mode][dataset];
   document.getElementById('legendValue_max').innerHTML =  round(plot_object.dataExtent[1]);
-  document.getElementById('distri-y-axis').innerHTML = labels['UN'][dataset];
+  document.getElementById('distri-y-axis').innerHTML = legendLabels['UN'][dataset];
 
 }
 
@@ -203,7 +214,7 @@ function removeCharts() {
 function round(value) {
   value = parseFloat(value);
   if (Math.abs(value) > 1000000) {
-      return (value / 1000000).toFixed(1) + 'M';
+      return (value / 1000000).toFixed(0) + ' million';
   } else if (Math.abs(value) > 1000) {
       return (value / 1000).toFixed(0) + 'K';
   } else if(value < 1){
