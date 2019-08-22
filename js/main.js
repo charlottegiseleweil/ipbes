@@ -12,9 +12,9 @@ let opts = {
 
 let info_measurements = {
   UN: {
-    ndr: "A deficit in water quality regulation can be measured by nitrogen export, the amount not retained by vegetation that therefore enters waterways and drinking water supplies as pollution.",
-    poll: "A deficit in pollination can be measured as the amount of crop losses due to insufficiently pollinated crops for pollination.",
-    cv: "A deficit in coastal protection can be measured as the exposure to coastal hazards, the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat"
+    ndr: "A Benefit Gap in water quality regulation can be measured by nitrogen export, the amount not retained by vegetation that therefore enters waterways and drinking water supplies as pollution.",
+    poll: "A Benefit Gap in pollination can be measured as the amount of crop losses due to insufficiently pollinated crops for pollination.",
+    cv: "A Benefit Gap in coastal protection can be measured as the exposure to coastal hazards, the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat"
   },
   pop: {
     ndr: "We use rural populations (within 100 km watersheds) as the population exposed because they are presumably less likely to have water treatment options. ",

@@ -1,5 +1,5 @@
 let info_measurements = {
-    UN: "A deficit in coastal risk reduction can be measured as the exposure to coastal hazards, the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat.",
+    UN: "A Benefit Gap in coastal risk reduction can be measured as the exposure to coastal hazards, the magnitude of exposure still remaining after the attenuation of storm surge by any coastal habitat.",
     pop:"People living either nearest to the shoreline or between 0 and 10 m above sea level are considered to be the population exposed, since these are the people most susceptible to flooding, especially with sea level rise. Population density nearest to the shoreline is shown here as the population exposed. At larger scales (aggregated up to 100 km; see 'In which country are people most at risk') we consider the population living between 0 and 10 m above sea level, since these these are the people most susceptible to flooding, especially with sea level rise.",
     NC: "Nature’s contribution to coastal risk reduction is the proportion of that coastal storm risk that is attenuated by ecosystems.",
     PN: "The potential human need for coastal risk reduction is the physical exposure to coastal storms (based on wind, waves, sea level rise, geomorphology, etc) in the absence of coastal habitat like coral reefs or mangroves. ->The maximum potential benefit, which in this case is mitigating a potential harm, is based on the physical exposure to coastal risks such as erosion and flooding (due to wind, waves, surge potential, elevation, and sea level rise) in the absence of coastal habitat like coral reefs, mangroves, sea grass and salt marshes.",
@@ -13,7 +13,7 @@ let tileLayers = {
     cur:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_cur'],transparent:true,attribution: "NatCap &mdash; Deficit 2015"}),
+            format: 'image/png',styles: ['coastal_deficit_cur'],transparent:true,attribution: "NatCap &mdash; Benefit Gap 2015"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
             format: 'image/png',styles: ['coastal_pop_cur'],transparent:true,attribution: "NatCap &mdash; Population 2015"}),
@@ -27,7 +27,7 @@ let tileLayers = {
     ssp1:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_change_ssp1'],transparent:true,attribution: "NatCap &mdash; Deficit SSP1"}),
+            format: 'image/png',styles: ['coastal_deficit_change_ssp1'],transparent:true,attribution: "NatCap &mdash; Benefit Gap SSP1"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
             format: 'image/png',styles: ['coastal_pop_change_ssp1'],transparent:true,attribution: "NatCap &mdash; Population SSP1"}),
@@ -41,7 +41,7 @@ let tileLayers = {
     ssp3:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_change_ssp3'],transparent:true,attribution: "NatCap &mdash; Deficit SSP3"}),
+            format: 'image/png',styles: ['coastal_deficit_change_ssp3'],transparent:true,attribution: "NatCap &mdash; Benefit Gap SSP3"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
             format: 'image/png',styles: ['coastal_pop_change_ssp3'],transparent:true,attribution: "NatCap &mdash; Population SSP3"}),
@@ -55,7 +55,7 @@ let tileLayers = {
     ssp5:{
         UN: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
-            format: 'image/png',styles: ['coastal_deficit_change_ssp5'],transparent:true,attribution: "NatCap &mdash; Deficit SSP5"}),
+            format: 'image/png',styles: ['coastal_deficit_change_ssp5'],transparent:true,attribution: "NatCap &mdash; Benefit Gap SSP5"}),
         pop: L.tileLayer.wms(ipbes_CV_cp_wms_url,{
             layers: 'ipbes_cv_styles:cv_coastal_points_ipbes',
             format: 'image/png',styles: ['coastal_pop_change_ssp5'],transparent:true,attribution: "NatCap &mdash; Population SSP5"}),
