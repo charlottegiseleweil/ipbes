@@ -132,3 +132,8 @@ a{
 #selectedTab{
     color: var(--light_blue);
 }
+.tooltipInfo{
+    font-size: 13px;
+    margin-top: 5px;
+    text-shadow: 1px 1px rgba(59, 59, 59, 0.726);
+}
