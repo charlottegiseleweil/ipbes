@@ -717,7 +717,13 @@ class SuperPopulationChart {
 
       .attr("class", "axis")
       .call(d3.axisLeft(y)
-        .ticks(5, "s"));
+        .ticks(5)
+        .tickFormat(function(d) {
+          return d3.format("~s")(d).replace(/G/,"B");
+        }));
+          
+          
+        
 
     // Append Service labels
     this.g.append("g")
