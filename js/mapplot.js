@@ -112,11 +112,6 @@ class MapPlot {
 
       this.countryTooltip = d3.select("body").append("div").attr("class", "countryTooltip");
 
-      // last line on tooltip depends on service
-      
-
-      console.log(this.currentDatasetName)
-
       // the main globe object
       let that = this;
       this.svg.selectAll("path")
