@@ -21,7 +21,7 @@ function addMenu(current = 1) {
     let home = document.createElement('div')
         home.classList.add('menu_element');
     let landingpage = document.createElement('a');
-        landingpage.href = 'home2.html';
+        landingpage.href = 'index.html';
         landingpage.innerHTML = "<i class='fas fa-home'></i>";
     home.appendChild(landingpage);
 

@@ -78,7 +78,7 @@ let legend_title_2015 = {
 let legend_title_2050 = {
     UN: "Change in <br> Hazard Exposure",
     pop: "Change in <br> Coastal Population",
-    NC: "Change in <br> Risk Reduced",
+    NC: "Change in <br> Risk Reduction",
     PN: "Change in <br> Potential Hazard <br> Exposure",
 };
 
