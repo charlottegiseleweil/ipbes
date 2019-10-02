@@ -36,14 +36,14 @@ function addMenu(current = 1) {
         coastalTab.classList.add('menu_element');
     let coastal = document.createElement('a');
         coastal.href = 'coastal.html';
-        coastal.innerHTML = "Coastal Risk <i class='fas fa-water'></i>";
+        coastal.innerHTML = "Coastal risk <i class='fas fa-water'></i>";
     coastalTab.appendChild(coastal);
 
     let pollTab = document.createElement('div')
         pollTab.classList.add('menu_element');
     let polli = document.createElement('a');
         polli.href = 'poll.html';
-        polli.innerHTML = "Crop Pollination <span class='glyphicon glyphicon-grain'> </span>";
+        polli.innerHTML = "Crop pollination <span class='glyphicon glyphicon-grain'> </span>";
     pollTab.appendChild(polli);
 
 
