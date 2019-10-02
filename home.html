@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+  <title>NCP Viewer Home</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/commonStyle.css" />
+  <link rel="stylesheet" type="text/css" href="css/menu.css" />
+  <link rel="stylesheet" type="text/css" href="css/left-menu.css" />
+  <link rel="stylesheet" type="text/css" href="css/index-map.css" />
+  <link rel="stylesheet" type="text/css" href="css/tour.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link href="css/bootstrap-tour-standalone.min.css" rel="stylesheet">
+
+  <!--w3 styles-->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+</head>
+
+
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+.w3-third img{margin-bottom: -6px; cursor: pointer}
+.w3-third img:hover{opacity: 0.6; transition: 0.3s}
+.coolButton {
+      background-color: rgb(255,255,255,0);
+      color: white;
+      border: 2px solid white;
+      position: relative;
+      top: -5vh;
+      background-color: black;
+     opacity: 0.6;
+     font-size: larger; /* x-large */
+    }
+</style>
+
+
+<body>
+  <!-- Menu Navbar -->
+ <div id="main_menu"></div>
+  <!-- End Menu Navbar -->
+
+ <!-- Photo grid -->
+  <div class="w3-row w3-grayscale-min">
+    <div class="w3-third" align="center">
+      <img src="static/images/wq.jpg" style="width:100%" onClick="location.href='wq.html';" alt="Water Quality Regulation">
+      <button class="coolButton" onClick="location.href='wq.html';">Water Quality Regulation</button>
+   </div>
+    
+   <div class="w3-third" align="center">
+      <img src="static/images/bumblebee.jpg" style="width:100%" onClick="location.href='poll.html';" alt="Crop Pollination">
+      <button class="coolButton" onClick="location.href='poll.html';">Crop Pollination</button>
+    </div>
+    
+    <div class="w3-third" align="center">
+      <img src="static/images/cv.jpg" style="width:100%" onClick="location.href='coastal.html';" alt="Coastal Risk Reduction" class="w3-image">
+      <button class="coolButton" onClick="location.href='coastal.html';">Coastal Risk Reduction</button>
+    </div>
+
+  </div>
+
+  <div class="w3-row w3-grayscale-min" align="center">
+      <img src="static/images/world1.jpg" style="width:100%" onClick="location.href='index.html';" alt="World">
+
+        <button class="coolButton" style="top:-30vh" onClick="location.href='index.html';">Where are Nature Contributions to People today?</button>
+        <button class="coolButton" style="top:-20vh"onClick="location.href=index_risk.html';">Where & how much may people be impacted by 2050?</button>
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/d3.js"></script>
+  <script src="js/lib/papaparse.js"></script>
+  <script src="js/lib/topojson.min.js"></script>
+  <script src="js/lib/d3-tip.js"></script>
+  <script src="js/lib/d3-geo-projection.v2.min.js"></script>
+  <script src="js/bootstrap-tour-standalone.min.js"></script>
+  <script src="js/guideTour.js"></script>
+
+
+
+  
+
+
+
+
+
+    <script src="js/statFunctions.js"></script>
+    <script src="js/zoom.js"></script>
+    <script src="js/projection_global.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/index_main.js"></script>
+</body>
+
+</html>
+
+
