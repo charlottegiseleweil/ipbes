@@ -203,7 +203,7 @@ let legend_values_2050 = {
 
 whenDocumentLoaded(() => {
     // Initialize dashboard
-    addMenu(3);
+    addMenu(2);
     d3.selectAll("#landingpage").attr("class", "hidden");
 });
 

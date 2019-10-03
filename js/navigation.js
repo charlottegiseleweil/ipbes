@@ -1,7 +1,6 @@
 function addMenu(current = 1) {
     let menu = document.getElementById('main_menu');
 
-
     let todayTab = document.createElement('div')
         todayTab.classList.add('menu_element');
     let today = document.createElement('a');

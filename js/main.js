@@ -66,7 +66,7 @@ const legendLabelsUnits = {
 
 whenDocumentLoaded(() => {
   // Initialize dashboard
-  addMenu(2);
+  addMenu(6);
   is2050 = true;
   colorSchema = {
     UN: [d3.hcl(100, 90, 100), d3.hcl(15, 90, 60)],
