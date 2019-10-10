@@ -34,28 +34,41 @@ let basemap1  = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/service
   maxZoom: 13
 });
 
+// Basemaps with labels
 
+let labelbasemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: 'Tiles: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+});
 
-// Labels Checkbox
+let labelbasemap1  = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: 'Tiles: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+});
+
+/*Add a labelsCheckbox */
 function labelsCheckbox() {
   showlabels = !showlabels;
   console.log(showlabels);
   if(showlabels == true) {
-    let labelbasemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  subdomains: 'abcd',
-  maxZoom: 19
+    map2015.eachLayer(function(layer) {
+        map2015.removeLayer(layer);
     });
-    let labelbasemap1  = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
+    map2050.eachLayer(function(layer) {
+      map2050.removeLayer(layer);
     });
-
-    labelbasemap1.addTo(map2015);
-    labelbasemap.addTo(map2050);
-      }
-
+    let promise_layer = new Promise(function(resolve, reject) {
+      labelbasemap1.addTo(map2015);
+      labelbasemap.addTo(map2050);
+      
+      setTimeout(() => resolve(1), 10);
+    });
+    promise_layer.then(function(result) {
+      updateMap(current_mode, current_scenario, true);
+    });
+  }
   else {
     let promise_layer = new Promise(function(resolve, reject) {
       basemap1.addTo(map2015);
@@ -69,6 +82,7 @@ function labelsCheckbox() {
 
   }
 }
+
 
 let promise_layer = new Promise(function(resolve, reject) {
     basemap1.addTo(map2015);
@@ -95,7 +109,7 @@ function switchScenario(scenario){
 function updateMap(mode, scenario, changeMode = false) {
     if(changeMode) {
         map2015.eachLayer(function(layer) {
-            if (layer._url != basemap1._url) {
+            if (layer._url != basemap1._url && layer._url != labelbasemap1._url) {
               map2015.removeLayer(layer);
             }
           });
@@ -103,7 +117,7 @@ function updateMap(mode, scenario, changeMode = false) {
     }
    
     map2050.eachLayer(function(layer) {
-        if (layer._url != basemap._url) {
+        if (layer._url != basemap._url && layer._url != labelbasemap._url) {
           map2050.removeLayer(layer);
         }
       });
@@ -111,22 +125,6 @@ function updateMap(mode, scenario, changeMode = false) {
 
       updateLegend()
     console.log('Updating Map: '+ mode+' '+scenario)
-
-    if(showlabels) {
-      console.log('... with labels')
-          let labelbasemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
-        });
-          let labelbasemap1  = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 19
-        });
-          labelbasemap1.addTo(map2015);
-          labelbasemap.addTo(map2050);
-    }
 }
 
 /*Add map titles*/
