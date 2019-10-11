@@ -13,3 +13,7 @@ function whenDocumentLoaded(action) {
       action();
     }
   }
+
+  function removeOverlay(){
+    document.getElementById("new_user_overlay").remove();
+  }

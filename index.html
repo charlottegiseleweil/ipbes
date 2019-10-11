@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 
-  <link rel="stylesheet" type="text/css" href="css/landing-page.css" />
+ 
 </head>
 
 
@@ -71,6 +71,24 @@ a:active, a:hover {
 
 
 <body>
+   
+
+  <!-- New user overlay -->
+ <div id="new_user_overlay">
+  <h1 id="new_user_overlay_h1"> Nature’s Contribution to People</h1>
+  <h3 id="new_user_overlay_h3"> An interactive viewer supporting <a href='https://science.sciencemag.org/lookup/doi/10.1126/science.aaw3372' style="color: var(--primary_c)">Chaplin-Kramer et al. 2019 (Science)</a></h3>
+  <h4 id="explore_button" onclick="removeOverlay()"> Explore! </h4>
+  <h5 id="new_user_overlay_h5"> Use Chrome or Firefox on <strong>computer</strong> for the best experience</h5>
+
+ </div>
+ <script>
+    if (!localStorage['newUser']) {
+        localStorage['newuser'] = 'no';
+        document.getElementById("new_user_overlay").style.display = "block";
+    }
+ </script>
+ <!-- end new user overlay -->
+
   <!-- Menu Navbar -->
  <div id="main_menu"></div>
   <!-- End Menu Navbar -->
@@ -80,7 +98,7 @@ a:active, a:hover {
 
 <!-- READ THE PAPER -->
   <center>An interactive viewer supporting <a href='https://science.sciencemag.org/lookup/doi/10.1126/science.aaw3372'>Chaplin-Kramer et al. 2019 (Science)</a>
-    <!--<<p> Due to high traffic, we are experiencing (very) slow rendering of the high-resolution maps. Visit the Summary pages!</p>p> <a href='today.html'> Where is nature contributing to people today?</a> </p><p><a href='future.html'> Where & how may people be impacted by 2050?</a> </p>--><p> Use Chrome or Firefox on <strong>computer</strong> for the best experience </p></center><br>
+    <!--<<p> Due to high traffic, we are experiencing (very) slow rendering of the high-resolution maps. Visit the Summary pages!</p>p> <a href='today.html'> Where is nature contributing to people today?</a> </p><p><a href='future.html'> Where & how may people be impacted by 2050?</a> </p>-->
 
 
  <!-- Photo grid -->
